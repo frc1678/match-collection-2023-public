@@ -22,13 +22,13 @@ class QRGenerateActivity : CollectionActivity() {
     // Define regex to validate that QR only contains acceptable characters.
     private var regex: Pattern = Pattern.compile("[A-Z0-9" + escape("$%*+-./: ") + "]+")
 
-    // Read the YAML schema file and return its contents as a HashMap.
+    // Read YAML schema file and return its contents as a HashMap.
     private fun schemaRead(context: Context): HashMap<String, HashMap<String, Any>> {
         val inputStream = context.resources.openRawResource(R.raw.match_collection_qr_schema)
         return Yaml().load(inputStream) as HashMap<String, HashMap<String, Any>>
     }
 
-    // Write a message to a text file in the specified directory.
+    // Write message to a text file in the specified directory.
     private fun writeToFile(fileName: String, message: String) {
         val file = BufferedWriter(
             FileWriter(
@@ -89,14 +89,13 @@ class QRGenerateActivity : CollectionActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
-    // When activity is entered, initialize proceed button, generate QR code, and save its contents to a file.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_generate_activity)
 
         initProceedButton()
 
-        // Populate QR code content and display QR if it is valid (only contains compression characters).
+        // Populate QR code content and display QR if valid (only contains compression characters).
         val qrContents = compress(schema = schemaRead(context = this))
         if (regex.matcher(qrContents).matches()) {
             displayQR(contents = qrContents)

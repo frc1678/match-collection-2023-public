@@ -8,8 +8,7 @@ import android.os.Bundle
 import android.view.KeyEvent
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
 
-// Activity for subjective match collection to rank the three teams on a single alliance
-// relative to one another, based on subjective traits (i.e. rendezvous agility, agility).
+// Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
     private lateinit var panelOne: SubjectiveRankingCounterPanel
     private lateinit var panelTwo: SubjectiveRankingCounterPanel
@@ -19,16 +18,13 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private lateinit var teamNumberTwo: String
     private lateinit var teamNumberThree: String
 
-    // Get intent extras from MatchInformationInputActivity.kt to retrieve team numbers
-    // to be displayed on subjective_ranking_counter panels and used for recording data on specific attributes.
     private fun getExtras() {
         teamNumberOne = intent.extras?.getString("team_one").toString()
         teamNumberTwo = intent.extras?.getString("team_two").toString()
         teamNumberThree = intent.extras?.getString("team_three").toString()
     }
 
-    // Create list of teams from best to worst of specific robot gameplay characteristic
-    // (i.e. rendezvous agility, agility).
+    // Create list of teams ranked by a specific robot gameplay characteristic.
     private fun recordRankingData(dataName: String): ArrayList<String> {
         val tempRankingList: ArrayList<String> = arrayListOf("rankOne", "rankTwo", "rankThree")
 
@@ -39,7 +35,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         return tempRankingList
     }
 
-    // Initiate subjective_ranking_counter panels for the three different teams.
+    // Initiate subjective_ranking_counter panels for the three teams.
     private fun initPanels() {
         panelOne =
             supportFragmentManager.findFragmentById(R.id.robotOne) as SubjectiveRankingCounterPanel
@@ -64,7 +60,8 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             rendezvous_agility_rankings = recordRankingData(dataName = "Rendezvous")
             agility_rankings = recordRankingData(dataName = "Agility")
 
-            // If no robots share the same rendezvous agility and agility rankings, continue to MatchInformationEditActivity.kt.
+            // If no robots share the same rendezvous agility and agility rankings, continue.
+            // Otherwise, create error message.
             if (rendezvous_agility_rankings.toString().contains("rank") or agility_rankings.toString().contains("rank")) {
                 createErrorMessage(message = getString(R.string.error_same_rankings), view = view)
             } else {
@@ -101,8 +98,6 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
-    // When activity is entered, set view to subjective match collection user interface, get extras
-    // to populate ranking panels and initialize elements.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_subjective_activity)

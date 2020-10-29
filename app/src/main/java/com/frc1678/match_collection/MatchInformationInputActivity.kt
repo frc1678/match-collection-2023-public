@@ -24,8 +24,7 @@ import java.io.File
 import java.io.FileReader
 import java.lang.Integer.parseInt
 
-// Activity to input the information of the match before the start of the match
-// (i.e. team number(s), match number).
+// Activity to input the match information before the start of the match.
 class MatchInformationInputActivity : MatchInformationActivity() {
     private var leftToggleButtonColor: Int = 0
     private var rightToggleButtonColor: Int = 0
@@ -35,7 +34,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     private lateinit var leftToggleButton: Button
     private lateinit var rightToggleButton: Button
 
-    // Read CSV file (match_schedule.csv) and returns line-by-line as a list of strings.
+    // Read match_schedule.csv and return line-by-line as a list of strings.
     private fun csvFileRead(): MutableList<String> {
         val csvFile =
             File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.csv")
@@ -54,7 +53,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 currentMutableLine += " $lineContents"
             }
 
-            // Add the current line's data to the list of the CSV file's contents (csvFileContents).
             csvFileContents.add(currentMutableLine)
             currentLine = csvReader.readNext()
         }
@@ -63,7 +61,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         return csvFileContents
     }
 
-    // Create a collection of every match with the key being the match number and the value being its teams.
+    // Create a hashmap of every match with the key being the match number and the value being its teams.
     private fun splitMatchScheduleCsvIntoMap(matchSchedule: MutableList<String>): HashMap<String, String> {
         val matchScheduleMap: HashMap<String, String> = HashMap()
 
@@ -105,7 +103,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         return teamsOfGivenMatchList[teamId - 1]
     }
 
-    // Assign team number and alliance color for objective collection user based on scout ID.
+    // Assign team number and alliance color for Objective Scout based on scout ID.
     private fun assignTeamByScoutIdObjective(
         teamInput: EditText,
         scoutId: Int,
@@ -134,7 +132,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
     }
 
-    // Assign team numbers for collection subjective based on alliance color.
+    // Assign team numbers for Subjective Scout based on alliance color.
     private fun assignTeamByScoutIdSubjective(
         teamInput: EditText, allianceColor: Constants.AllianceColor,
         matchNumber: String, iterationNumber: Int
@@ -164,7 +162,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     private fun autoAssignTeamInputsGivenMatch() {
         if (File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.csv").exists()) {
             if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
-                // For objective collection, assign three scouts per robot based on scout ID.
+                // Assign three scouts per robot based on scout ID in Objective Match Collection.
                 if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
                     if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
                         assignTeamByScoutIdObjective(
@@ -174,6 +172,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                         )
                     }
                 } else {
+                    // Assign an alliance to a scout based on alliance color in Subjective Match Collection.
                     var iterationNumber = 0
                     listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
                         assignTeamByScoutIdSubjective(
@@ -223,9 +222,9 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         toggleButton.background = backgroundDrawable
     }
 
-    // Update toggle button with un-bordered (unselected) backgrounds.
+    // Update alliance color toggle button with unselected backgrounds.
     private fun resetBackground() {
-        // Create the un-bordered left toggle.
+        // Create the unselected alliance color left toggle.
         createToggleButton(
             isBordered = false,
             toggleButton = leftToggleButton,
@@ -233,7 +232,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             toggleButtonColorDark = leftToggleButtonColorDark
         )
 
-        // Create the un-bordered right toggle.
+        // Create the unselected alliance color right toggle.
         createToggleButton(
             isBordered = false,
             toggleButton = rightToggleButton,
@@ -242,11 +241,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         )
     }
 
-    // Apply border to red alliance toggle (used when red alliance is selected).
+    // Apply border to red alliance toggle when red alliance selected.
     private fun switchBorderToRedToggle() {
         resetBackground()
 
-        // Toggle button for selected red toggle by displaying border.
+        // Create selected red toggle.
         createToggleButton(
             isBordered = true,
             toggleButton = rightToggleButton,
@@ -255,11 +254,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         )
     }
 
-    // Apply border to blue alliance toggle (used when blue alliance is selected).
+    // Apply border to blue alliance toggle when blue alliance is selected.
     private fun switchBorderToBlueToggle() {
         resetBackground()
 
-        // Toggle button for selected blue toggle by displaying border.
+        // Create selected blue toggle.
         createToggleButton(
             isBordered = true,
             toggleButton = leftToggleButton,
@@ -290,7 +289,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
         }
 
-        // Set onClickListeners to set alliance color and when clicked in objective collection mode.
+        // Set onClickListeners to set alliance color when in objective collection mode.
         leftToggleButton.setOnClickListener {
             if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
                 alliance_color = Constants.AllianceColor.BLUE
@@ -304,7 +303,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
         }
 
-        // Set onLongClickListeners to set alliance color in subjective collection only when long clicked.
+        // Set onLongClickListeners to set alliance color in subjective collection mode when long clicked.
         leftToggleButton.setOnLongClickListener {
             if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
                 alliance_color = Constants.AllianceColor.BLUE
@@ -325,8 +324,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         }
     }
 
-    // Return a list of the contents of the scout ID collection based on NUMBER_OF_ACTIVE_SCOUTS
-    // defined in Constants.kt.
+    // Return a list of the scout IDs based on NUMBER_OF_ACTIVE_SCOUTS defined in Constants.kt.
     private fun scoutIdContentsList(): ArrayList<Any> {
         val scoutIdContents = ArrayList<Any>()
         scoutIdContents.add(Constants.NONE_VALUE)
@@ -411,7 +409,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     value = position
                 )
 
-                // Automatically assign teams if in automatic assignment mode, and disable user input.
+                // Automatically assign teams if in automatic assignment mode and disable user input.
                 // Otherwise, enable team number edit texts and alliance color toggles.
                 if (position == 0) {
                     assign_mode = Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT
@@ -443,15 +441,12 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     // Transition into the next activity and set timestamp for specific match.
     private fun startMatchActivity() {
-        // Set match number from edit text and timestamp.
         match_number = parseInt(et_match_number.text.toString())
         timestamp = System.currentTimeMillis() / 1000
 
-        // Save match number and alliance color to internal storage.
         putIntoStorage(context = this, key = "match_number", value = match_number)
         putIntoStorage(context = this, key = "alliance_color", value = alliance_color)
 
-        // Proceed to objective match collection if objective and subjective match collection if subjective.
         if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
             team_number = et_team_one.text.toString()
             val intent = Intent(this, CollectionObjectiveActivity::class.java)
@@ -463,7 +458,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             )
         } else {
             val intent = Intent(this, CollectionSubjectiveActivity::class.java)
-            // Add alliance teams to the intent to be used in the CollectionSubjectiveActivity
             intent.putExtra("team_one", et_team_one.text.toString())
                 .putExtra("team_two", et_team_two.text.toString())
                 .putExtra("team_three", et_team_three.text.toString())
@@ -477,7 +471,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     }
 
     // Make inputs visible and invisible depending on collection mode.
-    // If subjective, make teams two and three inputs visible, and make scout name and ID spinners invisible.
+    // TODO CHANGE FUNCTION NAME
     private fun checkCollectionMode() {
         if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
             makeViewVisible(
@@ -517,8 +511,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
-    // When activity is entered, set view to match information input user interface, hide keyboard,
-    // set device serial number, and initialize and populate elements with information from internal storage.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.match_information_input_activity)

@@ -3,8 +3,8 @@ package com.frc1678.match_collection
 
 import java.util.*
 
-// Function to create compressed string to display in QR from collected data stored in References.kt
-// compressed by schema in match_collection_qr_schema.yml file.
+// Function to create compressed string displayed in QR.
+// String takes collected data stored in References.kt compressed by Match Collection schema.
 fun compress(
     schema: HashMap<String, HashMap<String, Any>>
 ): String {
@@ -47,7 +47,7 @@ fun compress(
     val compressAgilityRankings =
         subjectiveData.getValue("agility_rankings").toString().split(",")[0]
 
-    // Compress and add data that is shared between the objective and subjective.
+    // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
         compressSchemaVersion + schemaVersion + genericSeparator +
                 compressSerialNumber + serial_number + genericSeparator +
@@ -57,7 +57,7 @@ fun compress(
                 compressScoutName + scout_name.toUpperCase(Locale.US) +
                 genericSectionSeparator
 
-    // Compress and add data specific to objective match collection.
+    // Compress and add data specific to Objective Match Collection.
     if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
         // Compress timeline actions if timeline exists.
         var compressTimelineActions = ""
@@ -72,14 +72,14 @@ fun compress(
                 )
             }
         }
-        // Compress and add all objective match collection data, including previously compressed
+        // Compress and add all Objective Match Collection data, including previously compressed
         // timeline actions.
         compressedMatchInformation = objectiveStartCharacter + compressedMatchInformation +
                 compressTeamNumber + team_number + objectiveSeparator +
                 compressScoutId + scout_id + objectiveSeparator +
                 compressTimeline + compressTimelineActions
     }
-    // Compress and add subjective relative data collection.
+    // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
         // Compress rendezvous agility and agility rankings.
         val compressRendezvousAgilityValues = rendezvous_agility_rankings[0] + subjectiveSeparatorInternal +
@@ -89,8 +89,8 @@ fun compress(
                 agility_rankings[1] + subjectiveSeparatorInternal +
                 agility_rankings[2]
 
-        // Compress and add all subjective match collection data, including previously compressed
-        // rendezvous agility and agility rankings.
+        // Compress and add all Subjective Match Collection data including previously compressed
+        // timeline actions.
         compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation +
                 compressRendezvousAgilityRankings + compressRendezvousAgilityValues + subjectiveSeparator +
                 compressAgilityRankings + compressAgilityRankingsValues

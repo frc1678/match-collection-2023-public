@@ -23,16 +23,16 @@ class TimerUtility {
             }
         }
 
-        // When timer is run, it begins a CountDownTimer.
+        // Begins CountDownTimer when timer button is clicked.
         private fun run(
             context: Context,
             btn_timer: Button,
             btn_proceed: Button,
             layout: LinearLayout
         ) {
+            // Create a CountDownTimer that will count down in by seconds starting from 150 seconds.
             match_timer = object : CountDownTimer(150000, 1000) {
-                // Create a CountDownTimer that will count in intervals of 1000 milliseconds from 150000 milliseconds.
-                // Executes tasks ever 1000 milliseconds.
+                // Executes tasks every second.
                 override fun onTick(millisUntilFinished: Long) {
                     time = millisUntilFinished / 1000f
 
@@ -49,7 +49,7 @@ class TimerUtility {
                         layout.setBackgroundColor(Color.RED)
                     }
                 }
-
+                // Display 0 and change button states when countdown finishes.
                 override fun onFinish() {
                     btn_timer.text = context.getString(
                         R.string.tv_time_display,
@@ -61,7 +61,6 @@ class TimerUtility {
                     btn_proceed.isEnabled = true
                     is_teleop_activated = true
                 }
-                // Start the thread
             }.start()
         }
 

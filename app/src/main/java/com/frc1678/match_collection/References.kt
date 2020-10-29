@@ -18,12 +18,12 @@ var timestamp: Long = 0
 var match_collection_version_number: String = "1.1.0"
 var scout_name: String = Constants.NONE_VALUE
 
-// Data specific to objective match collection QR.
+// Data specific to Objective Match Collection QR.
 var team_number: String = ""
 var scout_id: String = Constants.NONE_VALUE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 
-// Subjective relative data collection variables.
+// Data specific to Subjective Match Collection QR.
 var rendezvous_agility_rankings: ArrayList<String> = ArrayList()
 var agility_rankings: ArrayList<String> = ArrayList()
 

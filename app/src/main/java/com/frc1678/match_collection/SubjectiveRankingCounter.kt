@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import kotlinx.android.synthetic.main.subjective_ranking_counter.view.*
 
-// Class to create and customize a subjective_ranking_counter for a single attribute of a single team of subjective collection.
+// Class to create and customize a subjective_ranking_counter for one attribute of a team in Subjective Collection.
 class SubjectiveRankingCounter(context: Context, attrs: AttributeSet) :
     RelativeLayout(context, attrs) {
     private var max: Int

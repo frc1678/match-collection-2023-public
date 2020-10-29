@@ -34,11 +34,12 @@ class SubjectiveRankingCounterPanel : Fragment() {
         }
     }
 
-    // Retrieve inputted subjective data of specific team in HashMap of data points to their rankings.
+    // Retrieve a HashMap of inputted data of a subjective team counter panel.
     fun getRankingData(): HashMap<String, Int> {
         val rankingData = HashMap<String, Int>()
         val rootLayout = view as RelativeLayout
         var counter: SubjectiveRankingCounter
+
         for (i in 0 until (view as RelativeLayout).childCount - 1) {
             counter = rootLayout.getChildAt(i + 1) as SubjectiveRankingCounter
             rankingData[counter.dataName] = counter.value

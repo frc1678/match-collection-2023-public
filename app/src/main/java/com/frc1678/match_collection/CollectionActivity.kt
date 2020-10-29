@@ -6,7 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 
-// Super class of all activity-based classes for match collection.
+// Super class of all activity-based classes for the Match Collection app.
 // Used to implement class mechanisms that all activities should comprise.
 open class CollectionActivity : AppCompatActivity() {
     // Put data into the device's internal storage using the SharedPreferences library.
@@ -25,6 +25,6 @@ open class CollectionActivity : AppCompatActivity() {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
     }
 
-    // Prevent user from going back to previous screen unless it is a long click.
+    // Prevent user from returning to previous screen unless back button is long clicked.
     override fun onBackPressed() {}
 }

@@ -10,7 +10,7 @@ import android.view.WindowManager
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
 import java.lang.Integer.parseInt
 
-// Class to edit previously inputted match information (i.e. team number(s), match number).
+// Class to edit previously inputted match information.
 class MatchInformationEditActivity : MatchInformationActivity() {
     private lateinit var teamNumberOne: String
     private lateinit var teamNumberTwo: String
@@ -24,7 +24,6 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     }
 
     // Populate edit texts with previously inputted match information data.
-    // Match information that is populated is dependent on collection mode.
     private fun populateData() {
         et_match_number.setText(match_number.toString())
         if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
@@ -55,7 +54,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         }
     }
 
-    // Update match information and proceed to QRGenerateActivity.kt.
+    // Call updateMatchInformation() and proceed to QRGenerateActivity.kt.
     private fun generateQR() {
         updateMatchInformation()
 
@@ -68,7 +67,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         )
     }
 
-    // Initialize proceed button to set edited, updated values and start QRGenerateActivity.kt.
+    // Initialize proceed button to set the updated values and start QRGenerateActivity.kt.
     private fun initProceedButton() {
         btn_proceed_qr_generate.setOnClickListener { view ->
             if (safetyCheck(view = view)) {
@@ -95,8 +94,6 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
-    // When activity is entered, set view to edit match information user interface, hide keyboard,
-    // populate data, and initialize elements.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_match_information_activity)

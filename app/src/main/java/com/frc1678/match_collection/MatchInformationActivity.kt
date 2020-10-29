@@ -83,8 +83,6 @@ open class MatchInformationActivity : CollectionActivity() {
     }
 
     // Set safeties to create error messages if not all information is inputted.
-    // Necessary information to input is specific to objective or subjective mode.
-    // Return true if passes all safety checks; return false if it does not.
     fun safetyCheck(view: View): Boolean {
         if (getSerialNum(context = this) == null) {
             createErrorMessage(message = getString(R.string.error_serial_num), view = view)

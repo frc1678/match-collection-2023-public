@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.app.ActivityCompat
 
-// Retrieve the serial number of the device.
+// Retrieve serial number of device.
 fun getSerialNum(context: Context): String? {
     if (ActivityCompat.checkSelfPermission(
             context,

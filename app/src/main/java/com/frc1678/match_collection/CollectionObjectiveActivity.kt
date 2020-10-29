@@ -11,8 +11,7 @@ import android.view.View
 import kotlinx.android.synthetic.main.collection_objective_activity.*
 import java.lang.Integer.parseInt
 
-// Activity for objective match collection to scout the objective gameplay of a single team in a match.
-// Determine the functions for UI elements (i.e. buttons, toggleButtons).
+// Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionOne = 0
     private var numActionTwo = 0
@@ -40,7 +39,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
         enableButtons()
     }
 
-    // Add to timeline with time value dictated by stage if stage and time contradict.
+    // If stage and time contradict when action is recorded, add action to timeline with time value
+    // dictated by stage.
     private fun timelineAddWithStage(action_type: Constants.ActionType) {
         if (!is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time)))) {
             timelineAdd(match_time = getString(R.string.final_auto_time), action_type = action_type)
@@ -56,7 +56,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Remove previously inputted action from timeline.
     private fun timelineRemove() {
-        // Decrement action values and display on action counters if removing a subjective_ranking_counter action from the timeline.
+        // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
             Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
                 numActionOne--
@@ -68,7 +68,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         }
 
-        // Add removed action to removedTimelineActions so they can be redone.
+        // Add removed action to removedTimelineActions so it can be redone if needed.
         removedTimelineActions.add(timeline[timeline.size - 1])
 
         // Remove most recent timeline entry.
@@ -79,10 +79,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Pull from removedTimelineActions to redo timeline actions after undo.
     private fun timelineReplace() {
-        // Add most recently undone action from removedTimelineActions to timeline.
+        // Add most recently undone action from removedTimelineActions back to timeline.
         timeline.add(removedTimelineActions[removedTimelineActions.size - 1])
 
-        // Increment action values and display on action counters if re-adding a subjective_ranking_counter action from the timeline.
+        // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
             Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
                 numActionOne++
@@ -100,7 +100,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         enableButtons()
     }
 
-    // Enable and disable buttons based on actions in timeline and whether the stage of the timer.
+    // Enable and disable buttons based on actions in timeline and timer stage.
     private fun enableButtons() {
         var isIncap = false
         var hasClimbed = false
@@ -108,7 +108,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         var positionActivated = false
         var rotationActivated = false
 
-        // Define condition booleans based on actions in timeline, only if there are actions in timeline.
+        // Define condition booleans based on actions in timeline, if existent.
         if (timeline.size > 0) {
             isIncap =
                 timeline[timeline.size - 1].containsValue(Constants.ActionType.START_INCAP.toString())
@@ -138,6 +138,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         tb_action_four.isEnabled = !(!is_teleop_activated or isIncap or hasClimbed)
         tb_action_four.isChecked = (isClimbing)
+
         if (hasClimbed) {
             tb_action_four.text = getString(R.string.tb_action_bool_four_disabled)
         }
@@ -148,7 +149,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated)
     }
 
-    // Function to end incap or climb if still activated at the end of the match.
+    // Function to end incap or climb if still activated at end of the match.
     private fun endAction() {
         if (tb_action_three.isChecked) {
             tb_action_three.isChecked = false
@@ -160,7 +161,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
     }
 
-    // Set high and low goal subjective_ranking_counter values.
+    // Set high and low goal counter values.
     private fun setCounterTexts() {
         btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
         btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
@@ -168,8 +169,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Initialize button and toggle button onClickListeners.
     private fun initOnClicks() {
-        // Go to teleop, enable buttons, and activate teleop if teleop is not yet activated.
-        // Otherwise, proceed to QRGenerateActivity.kt.
         btn_proceed_edit.setOnClickListener {
             if (!is_teleop_activated) {
                 is_teleop_activated = true
@@ -221,14 +220,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
             return@OnLongClickListener true
         })
 
-        // Increment button action one (high goal) by one when clicked and add action to timeline.
+        // Increment button action one by one when clicked and add action to timeline.
         btn_action_one.setOnClickListener {
             numActionOne++
             setCounterTexts()
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH)
         }
 
-        // Increment button action two (low goal) by one when clicked and add action to timeline.
+        // Increment button action two by one when clicked and add action to timeline.
         btn_action_two.setOnClickListener {
             numActionTwo++
             setCounterTexts()
@@ -252,7 +251,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Start incap if clicking the incap toggle button checks the toggle button.
-        // Otherwise, end the incap.
+        // Otherwise, end incap.
         tb_action_three.setOnClickListener {
             if (tb_action_three.isChecked) {
                 timelineAdd(match_time = match_time, action_type = Constants.ActionType.START_INCAP)
@@ -262,7 +261,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Start climb if clicking the climb toggle button checks the toggle button.
-        // Otherwise, end the climb.
+        // Otherwise, end climb.
         tb_action_four.setOnClickListener {
             if (tb_action_four.isChecked) {
                 timelineAdd(match_time = match_time, action_type = Constants.ActionType.START_CLIMB)
@@ -310,8 +309,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
-    // When activity is entered, set view to objective match collection user interface, reset timer,
-    // set subjective_ranking_counter texts, and initiate on clicks and team number.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_objective_activity)

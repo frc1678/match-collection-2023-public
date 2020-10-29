@@ -9,7 +9,7 @@ import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.mode_collection_select_activity.*
 
-// Activity for selecting which match collection implementation to use (objective or subjective).
+// Activity for selecting objective or subjective mode.
 class ModeCollectionSelectActivity : CollectionActivity() {
     // Initialize button onClickListeners for the objective and subjective mode selection buttons.
     // When clicked, buttons set collection_mode and start MatchInformationInputActivity.kt.
@@ -26,7 +26,6 @@ class ModeCollectionSelectActivity : CollectionActivity() {
 
     // Create the intent to start the respective mode activity.
     private fun startMatchInformationInputActivity() {
-        // Store collection mode in internal storage.
         putIntoStorage(context = this, key = "collection_mode", value = collection_mode)
         // Start respective mode activity.
         when (collection_mode) {
@@ -84,14 +83,11 @@ class ModeCollectionSelectActivity : CollectionActivity() {
         }
     }
 
-    // When activity is entered, set view to mode collection select user interface
-    // and determine whether to continue with activity or proceed to next activity.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mode_collection_select_activity)
 
-        // If the collection mode exists on the device, retrieve it and skip to the correct mode
-        // match information input.
+        // If the collection mode exists on the device, retrieve it and skip to its match input screen.
         // Otherwise, don't skip and prompt for the mode selection input.
         if (this.getSharedPreferences(
                 "PREFS",
