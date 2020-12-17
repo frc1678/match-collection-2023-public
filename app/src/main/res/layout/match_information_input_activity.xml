@@ -47,11 +47,17 @@
 
             <Spinner
                 android:id="@+id/spinner_assign_mode"
-                style="@style/btn_white" />
+                style="@style/btn_white"
+                 />
+
+            <View
+                style="@style/view_separator_horizontal"
+                android:layout_height="@dimen/smaller_than_very_small" />
 
             <Spinner
                 android:id="@+id/spinner_scout_name"
-                style="@style/btn_white" />
+                style="@style/btn_white"
+                />
 
         </LinearLayout>
 
@@ -60,17 +66,31 @@
             style="@style/view_separator_horizontal"
             android:layout_height="@dimen/very_small" />
 
-        <Button
-            android:id="@+id/btn_scout_id"
-            style="@style/btn_white"
-            android:layout_weight="0.5"
-            android:text="@string/btn_id_default" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/tv_version_number"
-            style="@style/btn_white"
-            android:layout_weight="0.5"
-            android:text="@string/tv_version_num" />
+            <Button
+                android:id="@+id/btn_scout_id"
+                style="@style/btn_white"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:text="@string/btn_id_default" />
+
+            <View
+                style="@style/view_separator_horizontal"
+                android:layout_height="@dimen/very_very_small" />
+
+            <TextView
+                android:id="@+id/tv_version_number"
+                style="@style/btn_white"
+                android:background="@color/white"
+                android:layout_weight="1"
+                android:text="@string/tv_version_num" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -183,6 +203,7 @@
         <Button
             android:id="@+id/btn_proceed_match_start"
             style="@style/btn_white"
+            android:background="@color/white"
             android:text="@string/btn_proceed" />
 
     </LinearLayout>
