@@ -119,8 +119,7 @@
             <EditText
                 android:id="@+id/et_match_number"
                 style="@style/et_standard_linear_layout_number"
-                android:maxLength="3"
-                android:text="" />
+                android:maxLength="3" />
 
         </LinearLayout>
 
