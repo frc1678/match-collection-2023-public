@@ -125,13 +125,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
         btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
 
-        tb_action_one.isEnabled =
-            !(!is_teleop_activated or isClimbing or isIncap or positionActivated or rotationActivated)
-        tb_action_one.isChecked = (rotationActivated)
-
-        tb_action_two.isEnabled =
-            !(!is_teleop_activated or isClimbing or isIncap or positionActivated)
-        tb_action_two.isChecked = (positionActivated)
+        //todo Un-Comment when we are using the control panel (Chezy temporary change)
+//        tb_action_one.isEnabled =
+//            !(!is_teleop_activated or isClimbing or isIncap or positionActivated or rotationActivated)
+//        tb_action_one.isChecked = (rotationActivated)
+//
+//        tb_action_two.isEnabled =
+//            !(!is_teleop_activated or isClimbing or isIncap or positionActivated)
+//        tb_action_two.isChecked = (positionActivated)
 
         tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing)
         tb_action_three.isChecked = (isIncap)
