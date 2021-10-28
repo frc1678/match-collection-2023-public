@@ -24,8 +24,8 @@ var scout_id: String = Constants.NONE_VALUE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 
 // Data specific to Subjective Match Collection QR.
-var rendezvous_agility_rankings: ArrayList<String> = ArrayList()
-var agility_rankings: ArrayList<String> = ArrayList()
+var quickness_rankings: ArrayList<String> = ArrayList()
+var field_awareness_rankings: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
 fun resetReferences() {
@@ -36,6 +36,6 @@ fun resetReferences() {
     team_number = ""
     timeline = ArrayList()
 
-    rendezvous_agility_rankings = ArrayList()
-    agility_rankings = ArrayList()
+    quickness_rankings = ArrayList()
+    field_awareness_rankings = ArrayList()
 }

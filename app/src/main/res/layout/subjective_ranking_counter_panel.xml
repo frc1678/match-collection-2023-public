@@ -14,19 +14,19 @@
         android:textSize="@dimen/medium_text" />
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
-        android:id="@+id/counter_rendezvous_agility"
+        android:id="@+id/counter_quickness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_team_number"
         android:layout_marginEnd="@dimen/small"
-        custom:dataName="Rendezvous" />
+        custom:dataName="Quickness" />
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
-        android:id="@+id/counter_agility"
+        android:id="@+id/counter_field_awareness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_team_number"
         android:layout_marginStart="@dimen/small"
-        android:layout_toEndOf="@+id/counter_rendezvous_agility"
-        custom:dataName="Agility" />
+        android:layout_toEndOf="@+id/counter_quickness"
+        custom:dataName="Field Awareness" />
 </RelativeLayout>

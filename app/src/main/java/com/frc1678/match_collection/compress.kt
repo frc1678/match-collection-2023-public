@@ -43,9 +43,9 @@ fun compress(
     val subjectiveSeparator = subjectiveData.getValue("_separator").toString()
     val subjectiveSeparatorInternal = subjectiveData.getValue("_separator_internal").toString()
     // Define compression characters for subjective data.
-    val compressRendezvousAgilityRankings = subjectiveData.getValue("rendezvous_agility_rankings").toString().split(",")[0]
-    val compressAgilityRankings =
-        subjectiveData.getValue("agility_rankings").toString().split(",")[0]
+    val compressQuicknessRankings = subjectiveData.getValue("quickness_rankings").toString().split(",")[0]
+    val compressFieldAwarenessRankings =
+        subjectiveData.getValue("field_awareness_rankings").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -82,18 +82,18 @@ fun compress(
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
         // Compress rendezvous agility and agility rankings.
-        val compressRendezvousAgilityValues = rendezvous_agility_rankings[0] + subjectiveSeparatorInternal +
-                rendezvous_agility_rankings[1] + subjectiveSeparatorInternal +
-                rendezvous_agility_rankings[2]
-        val compressAgilityRankingsValues = agility_rankings[0] + subjectiveSeparatorInternal +
-                agility_rankings[1] + subjectiveSeparatorInternal +
-                agility_rankings[2]
+        val compressQuicknessRankingsValues = quickness_rankings[0] + subjectiveSeparatorInternal +
+                quickness_rankings[1] + subjectiveSeparatorInternal +
+                quickness_rankings[2]
+        val compressFieldAwarenessRankingsValues = field_awareness_rankings[0] + subjectiveSeparatorInternal +
+                field_awareness_rankings[1] + subjectiveSeparatorInternal +
+                field_awareness_rankings[2]
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.
         compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation +
-                compressRendezvousAgilityRankings + compressRendezvousAgilityValues + subjectiveSeparator +
-                compressAgilityRankings + compressAgilityRankingsValues
+                compressQuicknessRankings + compressQuicknessRankingsValues + subjectiveSeparator +
+                compressFieldAwarenessRankings + compressFieldAwarenessRankingsValues
     }
 
     // Remove unnecessary brackets left from type conversion.
