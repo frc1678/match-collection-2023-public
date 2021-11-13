@@ -28,7 +28,7 @@ generic_data:
 objective_tim:
   _start_character: '+' # First character in QR used to identify QR type
   _separator: '$' # Separates key:value pairs
-  team_number: [Z, int] # int properties not needed but int is more intuitive
+  team_number: [Z, str] # int properties not needed but int is more intuitive
   scout_id: [X, int] # Used to determine which tablets have not submitted
   timeline: [W, list, dict] # List of dictionaries
 
