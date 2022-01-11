@@ -97,9 +97,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_match_information_activity)
-
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
         populateData()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
         initProceedButton()
