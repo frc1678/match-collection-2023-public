@@ -21,8 +21,14 @@ class Constants {
     }
 
     enum class ActionType {
-        SCORE_BALL_HIGH,
-        SCORE_BALL_LOW,
+        SCORE_BALL_HIGH_NEAR_HUB,
+        SCORE_BALL_HIGH_TARMAC,
+        SCORE_BALL_HIGH_LAUNCHPAD,
+        SCORE_BALL_HIGH_NEAR_OTHER,
+        SCORE_BALL_HIGH_FAR_HUB,
+        SCORE_BALL_HIGH_FAR_OTHER,
+        SCORE_BALL_LOW_NEAR_HUB,
+        SCORE_BALL_LOW_FAR_HUB,
         START_INCAP,
         END_INCAP,
         CONTROL_PANEL_ROTATION,
