@@ -17,7 +17,7 @@
         <ToggleButton
             android:id="@+id/tb_action_four"
             style="@style/tb_climb"
-            android:textOff="@string/tb_action_bool_four_off"
+            android:textOff="@string/btn_climb"
             android:textOn="@string/tb_action_bool_four_on" />
 
         <Button
@@ -69,13 +69,13 @@
 
         <ToggleButton
             android:id="@+id/tb_action_one"
-            style="@style/tb_control"
+            style="@style/tb_low_high"
             android:textOff="@string/tb_action_bool_one_off"
             android:textOn="@string/tb_action_bool_one_on" />
 
         <ToggleButton
             android:id="@+id/tb_action_two"
-            style="@style/tb_control"
+            style="@style/tb_low_high"
             android:textOff="@string/tb_action_bool_two_off"
             android:textOn="@string/tb_action_bool_two_on" />
     </LinearLayout>

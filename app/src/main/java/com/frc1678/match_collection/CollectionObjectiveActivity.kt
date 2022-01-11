@@ -235,21 +235,21 @@ class CollectionObjectiveActivity : CollectionActivity() {
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_LOW)
         }
 
-        // Add rotation control to timeline when clicked.
-        tb_action_one.setOnClickListener {
-            timelineAdd(
-                match_time = match_time,
-                action_type = Constants.ActionType.CONTROL_PANEL_ROTATION
-            )
-        }
-
-        // Add position control to timeline when clicked.
-        tb_action_two.setOnClickListener {
-            timelineAdd(
-                match_time = match_time,
-                action_type = Constants.ActionType.CONTROL_PANEL_POSITION
-            )
-        }
+//        // Add rotation control to timeline when clicked.
+//        tb_action_one.setOnClickListener {
+//            timelineAdd(
+//                match_time = match_time,
+//                action_type = Constants.ActionType.CONTROL_PANEL_ROTATION
+//            )
+//        }
+//
+//        // Add position control to timeline when clicked.
+//        tb_action_two.setOnClickListener {
+//            timelineAdd(
+//                match_time = match_time,
+//                action_type = Constants.ActionType.CONTROL_PANEL_POSITION
+//            )
+//        }
 
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
@@ -312,7 +312,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.collection_objective_activity)
+        setContentView(R.layout.draft_collection_objective_activity)
 
         timerReset()
         setCounterTexts()
