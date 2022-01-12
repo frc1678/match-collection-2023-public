@@ -449,7 +449,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
             team_number = et_team_one.text.toString()
-            val intent = Intent(this, CollectionObjectiveActivity::class.java)
+            val intent = Intent(this, StartingPositionObjectiveActivity::class.java)
             startActivity(
                 intent, ActivityOptions.makeSceneTransitionAnimation(
                     this,

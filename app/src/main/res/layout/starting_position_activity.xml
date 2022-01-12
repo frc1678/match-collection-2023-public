@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_starting_position_map"
+        style="@style/iv_starting_position_map"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_one"
+            style="@style/btn_starting_position"
+            android:text="1"/>
+
+        <Button
+            android:id="@+id/btn_two"
+            style="@style/btn_starting_position"
+            android:text="2"/>
+
+        <Button
+            android:id="@+id/btn_three"
+            style="@style/btn_starting_position"
+            android:text="3"/>
+
+        <Button
+            android:id="@+id/btn_four"
+            style="@style/btn_starting_position"
+            android:text="4"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_switch_orientation"
+            style="@style/btn_switch_orientation"
+            android:text="@string/btn_switch_orientation"/>
+
+        <Button
+            android:id="@+id/btn_proceed_starting_position"
+            style="@style/btn_starting_position_proceed"
+            android:text="@string/btn_proceed" />
+
+    </LinearLayout>
+
+</LinearLayout>

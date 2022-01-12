@@ -29,6 +29,15 @@
     <color name="redo_green">#7CCC77</color>
     <color name="redo_green_pressed">#4CB944</color>
 
+    <color name="red_start_one">#FF7E7E</color>
+    <color name="red_start_two">#FF5353</color>
+    <color name="red_start_three">#FF0505</color>
+    <color name="red_start_four">#AF0000</color>
+    <color name="blue_start_one">#BAC6FF</color>
+    <color name="blue_start_two">#8196FF</color>
+    <color name="blue_start_three">#4E6BFF</color>
+    <color name="blue_start_four">#0022CA</color>
+
     <color name="plus_green">#b7e1cd</color>
     <color name="plus_green_pressed">#A5CA9E</color>
     <color name="minus_red">#f4c7c3</color>

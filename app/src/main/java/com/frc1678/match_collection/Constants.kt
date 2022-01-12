@@ -20,6 +20,14 @@ class Constants {
         NONE
     }
 
+    enum class StartingPosition {
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        NONE
+    }
+
     enum class ActionType {
         SCORE_BALL_HIGH,
         SCORE_BALL_LOW,
