@@ -13,9 +13,17 @@ import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
-    private var numActionOne = 0
-    private var numActionTwo = 0
+    private var numActionOne = 0 //SCORE_BALL_HIGH_NEAR_HUB
+    private var numActionTwo = 0 //SCORE_BALL_HIGH_FAR_HUB
+    private var numActionThree = 0 //SCORE_BALL_HIGH_NEAR_OTHER
+    private var numActionFour = 0 //SCORE_BALL_HIGH_FAR_OTHER
+    private var numActionFive = 0 //SCORE_BALL_LAUNCHPAD
+    private var numActionSeven = 0  //SCORE_BALL_LOW_NEAR_HUB
+    private var numActionEight = 0 //SCORE_BALL_LOW_FAR_HUB
     private var isTimerRunning = false
+    //FALSE = LOW
+    private var goalTypeIsHigh = false
+    private var numActionSix = 0 //NUMBER OF INTAKES
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
 
     // Set timer to start match when timer is started or reset.
@@ -58,12 +66,42 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun timelineRemove() {
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
-            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
+            Constants.ActionType.HIGH_LOW_TOGGLE.toString() -> {
+                goalTypeIsHigh = !goalTypeIsHigh
+                setCounterTexts()
+                setBackgrounds()
+                enableButtons()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_NEAR_HUB.toString() -> {
                 numActionOne--
                 setCounterTexts()
             }
-            Constants.ActionType.SCORE_BALL_LOW.toString() -> {
+            Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD.toString() -> {
+                numActionFive--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_NEAR_OTHER.toString() -> {
+                numActionThree--
+                setCounterTexts()
+            }
+            Constants.ActionType.INTAKE.toString() -> {
+                numActionSix--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_FAR_HUB.toString() -> {
                 numActionTwo--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_FAR_OTHER.toString() -> {
+                numActionFour--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_LOW_NEAR_HUB.toString() -> {
+                numActionSeven--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_LOW_FAR_HUB.toString() -> {
+                numActionEight--
                 setCounterTexts()
             }
         }
@@ -84,12 +122,42 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
-            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
+            Constants.ActionType.HIGH_LOW_TOGGLE.toString() -> {
+                goalTypeIsHigh = !goalTypeIsHigh
+                setCounterTexts()
+                setBackgrounds()
+                enableButtons()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_NEAR_HUB.toString() -> {
                 numActionOne++
                 setCounterTexts()
             }
-            Constants.ActionType.SCORE_BALL_LOW.toString() -> {
+            Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD.toString() -> {
+                numActionFive++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_NEAR_OTHER.toString() -> {
+                numActionThree++
+                setCounterTexts()
+            }
+            Constants.ActionType.INTAKE.toString() -> {
+                numActionSix++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_FAR_HUB.toString() -> {
                 numActionTwo++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_HIGH_FAR_OTHER.toString() -> {
+                numActionFour++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_LOW_NEAR_HUB.toString() -> {
+                numActionSeven++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_BALL_LOW_FAR_HUB.toString() -> {
+                numActionEight++
                 setCounterTexts()
             }
         }
@@ -105,8 +173,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         var isIncap = false
         var hasClimbed = false
         var isClimbing = false
-        var positionActivated = false
-        var rotationActivated = false
 
         // Define condition booleans based on actions in timeline, if existent.
         if (timeline.size > 0) {
@@ -115,24 +181,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
             hasClimbed = timeline.toString().contains(Constants.ActionType.END_CLIMB.toString())
             isClimbing =
                 timeline[timeline.size - 1].containsValue(Constants.ActionType.START_CLIMB.toString())
-            positionActivated = timeline.toString()
-                .contains(Constants.ActionType.CONTROL_PANEL_POSITION.toString())
-            rotationActivated = timeline.toString()
-                .contains(Constants.ActionType.CONTROL_PANEL_ROTATION.toString())
         }
 
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
-        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+        btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
+        btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
+        btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
 
-        //todo Un-Comment when we are using the control panel (Chezy temporary change)
-//        tb_action_one.isEnabled =
-//            !(!is_teleop_activated or isClimbing or isIncap or positionActivated or rotationActivated)
-//        tb_action_one.isChecked = (rotationActivated)
-//
-//        tb_action_two.isEnabled =
-//            !(!is_teleop_activated or isClimbing or isIncap or positionActivated)
-//        tb_action_two.isChecked = (positionActivated)
+        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
+
+        tb_action_two.isEnabled = !(isClimbing or isIncap)
+        tb_action_two.isChecked = (goalTypeIsHigh)
 
         tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing)
         tb_action_three.isChecked = (isIncap)
@@ -164,8 +225,37 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Set high and low goal counter values.
     private fun setCounterTexts() {
-        btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
-        btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
+        if (!goalTypeIsHigh) {
+            btn_action_one.text = getString(R.string.btn_action_one, numActionSeven.toString())
+            btn_action_two.text = getString(R.string.btn_action_one, numActionEight.toString())
+        } else {
+            btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
+            btn_action_two.text = getString(R.string.btn_action_one, numActionTwo.toString())
+        }
+        btn_action_three.text = getString(R.string.btn_action_three, numActionThree.toString())
+        btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
+        btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
+        btn_action_six.text = getString(R.string.btn_action_six, numActionSix.toString())
+    }
+
+    private fun setBackgrounds() {
+        if (!goalTypeIsHigh) { //if Low
+            btn_action_one.setBackgroundResource(R.drawable.btn_action_selector_low_near)
+            btn_action_three.setBackgroundResource(R.drawable.btn_action_selector_low_near)
+            btn_action_five.setBackgroundResource(R.drawable.btn_action_selector_low_near)
+            btn_action_two.setBackgroundResource(R.drawable.btn_action_selector_low_far)
+            btn_action_four.setBackgroundResource(R.drawable.btn_action_selector_low_far)
+            tv_near.setTextColor(resources.getColor(R.color.low_near))
+            tv_far.setTextColor(resources.getColor(R.color.low_far))
+        } else {
+            btn_action_one.setBackgroundResource(R.drawable.btn_action_selector_high_near)
+            btn_action_three.setBackgroundResource(R.drawable.btn_action_selector_high_near)
+            btn_action_five.setBackgroundResource(R.drawable.btn_action_selector_high_near)
+            btn_action_two.setBackgroundResource(R.drawable.btn_action_selector_high_far)
+            btn_action_four.setBackgroundResource(R.drawable.btn_action_selector_high_far)
+            tv_near.setTextColor(resources.getColor(R.color.high_near))
+            tv_far.setTextColor(resources.getColor(R.color.high_far_pressed))
+        }
     }
 
     // Initialize button and toggle button onClickListeners.
@@ -223,33 +313,59 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment button action one by one when clicked and add action to timeline.
         btn_action_one.setOnClickListener {
-            numActionOne++
+            //FALSE = LOW
+            if (!goalTypeIsHigh){
+                timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_LOW_NEAR_HUB)
+                numActionSeven++
+            } else {
+                timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_NEAR_HUB)
+                numActionOne++
+
+            }
             setCounterTexts()
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH)
         }
 
         // Increment button action two by one when clicked and add action to timeline.
         btn_action_two.setOnClickListener {
-            numActionTwo++
+            //FALSE = LOW
+            if (!goalTypeIsHigh){
+                timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_LOW_FAR_HUB)
+                numActionEight++
+            } else {
+                timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_FAR_HUB)
+                numActionTwo++
+
+            }
             setCounterTexts()
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_LOW)
         }
 
-//        // Add rotation control to timeline when clicked.
-//        tb_action_one.setOnClickListener {
-//            timelineAdd(
-//                match_time = match_time,
-//                action_type = Constants.ActionType.CONTROL_PANEL_ROTATION
-//            )
-//        }
-//
-//        // Add position control to timeline when clicked.
-//        tb_action_two.setOnClickListener {
-//            timelineAdd(
-//                match_time = match_time,
-//                action_type = Constants.ActionType.CONTROL_PANEL_POSITION
-//            )
-//        }
+        // Increment button action three by one when clicked and add action to timeline.
+        btn_action_three.setOnClickListener {
+            numActionThree++
+            setCounterTexts()
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_NEAR_OTHER)
+        }
+
+        // Increment button action four by one when clicked and add action to timeline.
+        btn_action_four.setOnClickListener {
+            numActionFour++
+            setCounterTexts()
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_FAR_OTHER)
+        }
+
+        // Increment button action five by one when clicked and add action to timeline.
+        btn_action_five.setOnClickListener {
+            numActionFive++
+            setCounterTexts()
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD)
+        }
+
+        // Increment button action six by one when clicked and add action to timeline.
+        btn_action_six.setOnClickListener {
+            numActionSix++
+            setCounterTexts()
+            timelineAddWithStage(action_type = Constants.ActionType.INTAKE)
+        }
 
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
@@ -280,6 +396,23 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_redo.setOnClickListener {
             timelineReplace()
         }
+
+        tb_action_two.setOnClickListener {
+            if (tb_action_two.isChecked) {
+                goalTypeIsHigh = true
+                timelineAdd(match_time = match_time, action_type = Constants.ActionType.HIGH_LOW_TOGGLE)
+                setCounterTexts()
+                setBackgrounds()
+                enableButtons()
+            } else {
+                goalTypeIsHigh = false
+                timelineAdd(match_time = match_time, action_type = Constants.ActionType.HIGH_LOW_TOGGLE)
+                setCounterTexts()
+                setBackgrounds()
+                enableButtons()
+            }
+        }
+
     }
 
     // Set team number view to team number defined in References.kt and set team number to alliance color.
@@ -312,7 +445,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.draft_collection_objective_activity)
+        setContentView(R.layout.collection_objective_activity)
 
         timerReset()
         setCounterTexts()
