@@ -27,16 +27,26 @@ class Constants {
         FOUR,
         NONE
     }
+    
+    enum class GoalType {
+        HIGH,
+        LOW
+    }
 
     enum class ActionType {
-        SCORE_BALL_HIGH,
-        SCORE_BALL_LOW,
+        SCORE_BALL_HIGH_NEAR_HUB,
+        SCORE_BALL_HIGH_FAR_HUB,
+        SCORE_BALL_HIGH_NEAR_OTHER,
+        SCORE_BALL_HIGH_FAR_OTHER,
+        SCORE_BALL_HIGH_LAUNCHPAD,
+        SCORE_BALL_LOW_NEAR_HUB,
+        SCORE_BALL_LOW_FAR_HUB,
+        INTAKE,
         START_INCAP,
         END_INCAP,
-        CONTROL_PANEL_ROTATION,
-        CONTROL_PANEL_POSITION,
         START_CLIMB,
-        END_CLIMB
+        END_CLIMB,
+        HIGH_LOW_TOGGLE
     }
 
     enum class Stage {

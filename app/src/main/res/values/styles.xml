@@ -67,8 +67,42 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="btn_action" parent="android:Widget">
-        <item name="android:background">@drawable/btn_action_selector</item>
+    <style name="goal_position_label" parent="android:Widget">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/small_text</item>
+    </style>
+
+    <style name="btn_action_near" parent="android:Widget">
+        <item name="android:background">@drawable/btn_action_selector_low_near</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:layout_margin">@dimen/very_small</item>
+        <item name="android:enabled">false</item>
+    </style>
+
+    <style name="btn_action_far" parent="android:Widget">
+        <item name="android:background">@drawable/btn_action_selector_low_far</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:layout_margin">@dimen/very_small</item>
+        <item name="android:enabled">false</item>
+    </style>
+
+    <style name="btn_action_six" parent="android:Widget">
+        <item name="android:background">@drawable/btn_action_selector_yellow</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">0dp</item>
@@ -90,8 +124,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="tb_control" parent="android:Widget">
-        <item name="android:background">@drawable/tb_control_selector</item>
+    <style name="tb_low_high" parent="android:Widget">
+        <item name="android:background">@drawable/tb_high_low_selector</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">0dp</item>
@@ -114,6 +148,18 @@
         <item name="android:enabled">false</item>
     </style>
 
+    <style name="btn_climb" parent="android:Widget">
+        <item name="android:background">@drawable/tb_climb_selector</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:layout_margin">@dimen/very_small</item>
+        <item name="android:enabled">false</item>
+    </style>
+
     <style name="tb_climb" parent="android:Widget">
         <item name="android:background">@drawable/tb_climb_selector</item>
         <item name="android:textColor">@color/black</item>
@@ -124,6 +170,19 @@
         <item name="android:textSize">@dimen/small_text</item>
         <item name="android:layout_margin">@dimen/very_small</item>
         <item name="android:enabled">false</item>
+    </style>
+
+    <style name="btn_error" parent="android:Widget">
+        <item name="android:background">@drawable/tb_climb_selector</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">130dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:layout_margin">@dimen/very_small</item>
+        <item name="android:enabled">false</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="btn_undo" parent="android:Widget">
