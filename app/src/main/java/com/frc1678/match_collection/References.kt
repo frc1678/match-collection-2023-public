@@ -21,6 +21,8 @@ var scout_name: String = Constants.NONE_VALUE
 // Data specific to Objective Match Collection QR.
 var team_number: String = ""
 var scout_id: String = Constants.NONE_VALUE
+var orientation: Boolean = true //true = UP, false = DOWN
+var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 
 // Data specific to Subjective Match Collection QR.
@@ -38,4 +40,6 @@ fun resetReferences() {
 
     quickness_rankings = ArrayList()
     field_awareness_rankings = ArrayList()
+
+    starting_position = Constants.StartingPosition.NONE
 }

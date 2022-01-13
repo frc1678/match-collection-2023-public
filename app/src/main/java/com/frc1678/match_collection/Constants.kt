@@ -20,6 +20,14 @@ class Constants {
         NONE
     }
 
+    enum class StartingPosition {
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
+        NONE
+    }
+    
     enum class GoalType {
         HIGH,
         LOW

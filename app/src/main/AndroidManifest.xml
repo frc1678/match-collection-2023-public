@@ -45,6 +45,9 @@
         <activity
             android:name="com.frc1678.match_collection.MatchInformationActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.frc1678.match_collection.StartingPositionObjectiveActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
