@@ -18,22 +18,22 @@
         <Button
             android:id="@+id/btn_one"
             style="@style/btn_starting_position"
-            android:text="1"/>
+            android:text="@string/one_starting_position"/>
 
         <Button
             android:id="@+id/btn_two"
             style="@style/btn_starting_position"
-            android:text="2"/>
+            android:text="@string/two_starting_position"/>
 
         <Button
             android:id="@+id/btn_three"
             style="@style/btn_starting_position"
-            android:text="3"/>
+            android:text="@string/three_starting_position"/>
 
         <Button
             android:id="@+id/btn_four"
             style="@style/btn_starting_position"
-            android:text="4"/>
+            android:text="@string/four_starting_position"/>
 
     </LinearLayout>
 

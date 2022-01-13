@@ -41,4 +41,8 @@
     <string name="error_qr">INVALID QR!</string>
     <string name="error_csv">NO MATCH SCHEDULE FILE!</string>
     <string name="btn_switch_orientation">Switch Orientation</string>
+    <string name="one_starting_position">1</string>
+    <string name="two_starting_position">2</string>
+    <string name="three_starting_position">3</string>
+    <string name="four_starting_position">4</string>
 </resources>
