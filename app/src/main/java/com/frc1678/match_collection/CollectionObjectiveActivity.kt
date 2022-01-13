@@ -185,14 +185,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
         btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
+        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
         btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
+
         btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
 
-        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
-        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
-
-        tb_action_two.isEnabled = !(isClimbing or isIncap)
+        tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning)
         tb_action_two.isChecked = (goalTypeIsHigh)
 
         tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing)
@@ -242,7 +242,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         if (!goalTypeIsHigh) { //if Low
             btn_action_one.setBackgroundResource(R.drawable.btn_action_selector_low_near)
             btn_action_three.setBackgroundResource(R.drawable.btn_action_selector_low_near)
-            btn_action_five.setBackgroundResource(R.drawable.btn_action_selector_low_near)
             btn_action_two.setBackgroundResource(R.drawable.btn_action_selector_low_far)
             btn_action_four.setBackgroundResource(R.drawable.btn_action_selector_low_far)
             tv_near.setTextColor(resources.getColor(R.color.low_near))
