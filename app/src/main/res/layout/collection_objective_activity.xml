@@ -153,7 +153,8 @@
             <Button
                 android:id="@+id/btn_error"
                 style="@style/btn_error"
-                android:text="@string/btn_error" />
+                android:text="@string/btn_error"
+                android:enabled="true"/>
 
         </LinearLayout>
 

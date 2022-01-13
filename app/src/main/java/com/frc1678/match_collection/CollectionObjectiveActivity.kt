@@ -396,6 +396,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             timelineReplace()
         }
 
+        btn_error.setOnClickListener {
+            //stuffs
+        }
+
         tb_action_two.setOnClickListener {
             if (tb_action_two.isChecked) {
                 goalTypeIsHigh = true
