@@ -99,7 +99,6 @@
             style="@style/btn_action_near"
             android:text="@string/btn_action_five" />
 
-<!--todo Switch id and style and "ToggleButton" to btn (style already made) and delete Text On/Offs-->
         <ToggleButton
             android:id="@+id/tb_action_four"
             style="@style/tb_climb"
