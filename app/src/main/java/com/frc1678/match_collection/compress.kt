@@ -85,9 +85,9 @@ fun compress(
         val compressQuicknessRankingsValues = quickness_rankings[0] + subjectiveSeparatorInternal +
                 quickness_rankings[1] + subjectiveSeparatorInternal +
                 quickness_rankings[2]
-        val compressFieldAwarenessRankingsValues = field_awareness_rankings[0] + subjectiveSeparatorInternal +
-                field_awareness_rankings[1] + subjectiveSeparatorInternal +
-                field_awareness_rankings[2]
+        val compressFieldAwarenessRankingsValues = driver_field_awareness_far_rankings[0] + subjectiveSeparatorInternal +
+                driver_field_awareness_far_rankings[1] + subjectiveSeparatorInternal +
+                driver_field_awareness_far_rankings[2]
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.

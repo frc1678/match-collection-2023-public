@@ -52,4 +52,5 @@
     <string name="two_starting_position">2</string>
     <string name="three_starting_position">3</string>
     <string name="four_starting_position">4</string>
+    <string name="human_shots">Human Shots Made - %1$s</string>
 </resources>

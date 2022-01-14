@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/action_yellow" />
-    <corners android:radius="3dp" />
+    <solid android:color="@color/alliance_blue_med" />
+    <corners android:radius="3px" />
     <stroke
         android:width="10px"
-        android:color="@color/action_yellow_pressed" />
+        android:color="@color/alliance_blue_dark"/>
+
 </shape>

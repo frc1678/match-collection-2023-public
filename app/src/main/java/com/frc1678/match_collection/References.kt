@@ -27,7 +27,8 @@ var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 
 // Data specific to Subjective Match Collection QR.
 var quickness_rankings: ArrayList<String> = ArrayList()
-var field_awareness_rankings: ArrayList<String> = ArrayList()
+var driver_field_awareness_near_rankings: ArrayList<String> = ArrayList()
+var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
 fun resetReferences() {
@@ -39,7 +40,8 @@ fun resetReferences() {
     timeline = ArrayList()
 
     quickness_rankings = ArrayList()
-    field_awareness_rankings = ArrayList()
+    driver_field_awareness_near_rankings = ArrayList()
+    driver_field_awareness_far_rankings = ArrayList()
 
     starting_position = Constants.StartingPosition.NONE
 }

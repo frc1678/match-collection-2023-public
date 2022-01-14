@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
@@ -37,10 +37,10 @@ class SubjectiveRankingCounterPanel : Fragment() {
     // Retrieve a HashMap of inputted data of a subjective team counter panel.
     fun getRankingData(): HashMap<String, Int> {
         val rankingData = HashMap<String, Int>()
-        val rootLayout = view as RelativeLayout
+        val rootLayout = view as LinearLayout
         var counter: SubjectiveRankingCounter
 
-        for (i in 0 until (view as RelativeLayout).childCount - 1) {
+        for (i in 0 until (view as LinearLayout).childCount - 1) {
             counter = rootLayout.getChildAt(i + 1) as SubjectiveRankingCounter
             rankingData[counter.dataName] = counter.value
         }
