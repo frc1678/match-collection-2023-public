@@ -3,18 +3,17 @@ package com.frc1678.match_collection
 
 import android.app.ActivityOptions
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.transition.Slide
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import kotlinx.android.synthetic.main.collection_objective_activity.*
+import kotlinx.android.synthetic.main.error_pop_up.view.*
 import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
@@ -190,13 +189,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Enable and disable buttons based on values of condition booleans defined previously.
-        btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
         btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
         btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
         btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
         btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
 
         btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+
+        btn_error.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+        if(btn_error.isEnabled){
+            btn_error.setBackgroundResource(R.drawable.tb_climb_selector)
+        }else{
+            btn_error.setBackgroundResource(R.drawable.elmt_disabled)
+        }
 
         tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning)
         tb_action_two.isChecked = (goalTypeIsHigh)
@@ -403,17 +408,49 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         btn_error.setOnClickListener {
+            var errorReport : Int? = null
             // Inflate a custom view using layout inflater
-            val view = View.inflate(this, R.layout.error_pop_up,null)
+            val popupView = View.inflate(this, R.layout.error_pop_up,null)
 
             // Initialize a new instance of popup window
             val popupWindow = PopupWindow(
-                view, // Custom view to show in popup window
+                popupView, // Custom view to show in popup window
                 LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
                 LinearLayout.LayoutParams.WRAP_CONTENT, // Window height
                 true
             )
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+
+            popupView.catch_cargo.setOnClickListener{
+                //TODO Display counts (and increment/decrement counts accordingly, including in undo and redo)
+                //TODO Make it impossible to press both catch cargo and score opp
+                Log.e("popup", "catch cargo")
+                popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                errorReport = 0
+                popupView.done.isEnabled = true
+                popupView.done.setBackgroundResource(R.drawable.btn_done)
+            }
+            popupView.score_opp.setOnClickListener{
+                Log.e("popup", "score opp")
+                popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                errorReport = 1
+                popupView.done.isEnabled = true
+                popupView.done.setBackgroundResource(R.drawable.btn_done)
+            }
+            popupView.cancel.setOnClickListener{
+                Log.e("popup", "cancel")
+                popupWindow.dismiss()
+            }
+            popupView.done.setOnClickListener{
+                Log.e("popup", "done")
+                if (errorReport == 0){
+                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_CARGO)
+                }
+                else if (errorReport == 1){
+                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
+                }
+                popupWindow.dismiss()
+            }
         }
 
         tb_action_two.setOnClickListener {

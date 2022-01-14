@@ -173,7 +173,7 @@
     </style>
 
     <style name="btn_error" parent="android:Widget">
-        <item name="android:background">@drawable/tb_climb_selector</item>
+        <item name="android:background">@drawable/elmt_disabled</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">130dp</item>
@@ -293,6 +293,7 @@
         <item name="android:layout_marginLeft">@dimen/small</item>
         <item name="android:layout_marginTop">@dimen/small</item>
         <item name="android:background">@drawable/btn_error_popup</item>
+        <item name="android:enabled">true</item>
     </style>
 
     <style name="btn_error_score" parent="android:Widget">
@@ -309,6 +310,7 @@
         <item name="android:layout_marginLeft">@dimen/very_small</item>
         <item name="android:layout_marginTop">@dimen/small</item>
         <item name="android:background">@drawable/btn_error_popup</item>
+        <item name="android:enabled">true</item>
     </style>
 
     <style name="btn_error_cancel" parent="android:Widget">
@@ -325,6 +327,7 @@
         <item name="android:layout_marginLeft">@dimen/small</item>
         <item name="android:layout_marginTop">@dimen/very_small</item>
         <item name="android:background">@drawable/btn_cancel</item>
+        <item name="android:enabled">true</item>
     </style>
 
     <style name="btn_error_done" parent="android:Widget">
@@ -340,7 +343,8 @@
         <item name="android:layout_marginBottom">@dimen/small</item>
         <item name="android:layout_marginLeft">@dimen/very_small</item>
         <item name="android:layout_marginTop">@dimen/very_small</item>
-        <item name="android:background">@drawable/btn_done</item>
+        <item name="android:background">@drawable/elmt_disabled</item>
+        <item name="android:enabled">false</item>
     </style>
 
 </resources>
