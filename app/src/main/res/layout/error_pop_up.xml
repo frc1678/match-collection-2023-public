@@ -2,16 +2,43 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/popup_background">
 
-    <Button
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="@dimen/very_small"
-        android:layout_weight="1"
-        android:id="@+id/test"
-        style="@style/btn_white"
-        android:background="@color/alliance_blue_light"
-        android:text="test"/>
+        android:layout_height="0dp"
+        android:layout_weight="2">
+
+        <Button
+            android:id="@+id/catch_cargo"
+            style="@style/btn_error_catch"
+            android:text="Catch"/>
+
+        <Button
+            android:id="@+id/score_opp"
+            style="@style/btn_error_score"
+            android:text="Score Opposing"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/cancel"
+            style="@style/btn_error_cancel"
+            android:text="Cancel"/>
+
+        <Button
+            android:id="@+id/done"
+            style="@style/btn_error_done"
+            android:text="Done"/>
+
+    </LinearLayout>
 
 </LinearLayout>
