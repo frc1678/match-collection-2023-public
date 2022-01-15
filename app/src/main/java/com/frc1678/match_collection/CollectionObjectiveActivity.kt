@@ -203,6 +203,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Enable and disable buttons based on values of condition booleans defined previously.
+        btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
         btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
         btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
         btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
@@ -211,11 +212,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
 
         btn_error.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
-        if(btn_error.isEnabled){
-            btn_error.setBackgroundResource(R.drawable.tb_climb_selector)
-        }else{
-            btn_error.setBackgroundResource(R.drawable.elmt_disabled)
-        }
 
         tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning)
         tb_action_two.isChecked = (goalTypeIsHigh)
@@ -451,7 +447,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         getString(R.string.btn_action_nine, numActionNine.toString())
                     errorReport = 0
                     popupView.done.isEnabled = true
-                    popupView.done.setBackgroundResource(R.drawable.btn_done)
                 }
             }
             popupView.score_opp.setOnClickListener{
@@ -470,7 +465,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         getString(R.string.btn_action_ten, numActionTen.toString())
                     errorReport = 1
                     popupView.done.isEnabled = true
-                    popupView.done.setBackgroundResource(R.drawable.btn_done)
                 }
             }
             popupView.cancel.setOnClickListener{
