@@ -31,6 +31,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private var goalTypeIsHigh = false
     private var numActionSix = 0 //NUMBER OF INTAKES
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
+    private var popupIsOpen = false
 
 
     // Set timer to start match when timer is started or reset.
@@ -203,33 +204,34 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Enable and disable buttons based on values of condition booleans defined previously.
-        btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
-        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
-        btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
-        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
-        btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
+        btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
+        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
+        btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
+        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
+        btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
 
-        btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+        btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
 
-        btn_error.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+        btn_error.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
 
-        tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning)
+        tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning or popupIsOpen)
         tb_action_two.isChecked = (goalTypeIsHigh)
 
-        tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing)
+        tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing or popupIsOpen)
         tb_action_three.isChecked = (isIncap)
 
-        tb_action_four.isEnabled = !(!is_teleop_activated or isIncap or hasClimbed)
+        tb_action_four.isEnabled = !(!is_teleop_activated or isIncap or hasClimbed or popupIsOpen)
         tb_action_four.isChecked = (isClimbing)
 
         if (hasClimbed) {
             tb_action_four.text = getString(R.string.tb_action_bool_four_disabled)
         }
 
-        btn_undo.isEnabled = (timeline.size > 0)
-        btn_redo.isEnabled = (removedTimelineActions.size > 0)
+        btn_undo.isEnabled = (timeline.size > 0) and !popupIsOpen
+        btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popupIsOpen
 
-        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated)
+        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popupIsOpen)
+        btn_proceed_edit.isEnabled = !popupIsOpen
     }
 
     // Function to end incap or climb if still activated at end of the match.
@@ -418,6 +420,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         btn_error.setOnClickListener {
+            popupIsOpen = true
+            enableButtons()
             val popupView = View.inflate(this, R.layout.error_pop_up,null)
             var errorReport : Int? = null
             popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
@@ -476,6 +480,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     numActionTen--
                     popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
                 }
+                popupIsOpen = false
+                enableButtons()
                 popupWindow.dismiss()
             }
             popupView.done.setOnClickListener{
@@ -485,6 +491,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 else if (errorReport == 1){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
                 }
+                popupIsOpen = false
+                enableButtons()
                 popupWindow.dismiss()
             }
         }
