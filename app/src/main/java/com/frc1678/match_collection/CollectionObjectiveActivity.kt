@@ -6,7 +6,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -443,9 +442,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
 
             popupView.catch_cargo.setOnClickListener{
-                //TODO Display counts (and increment/decrement counts accordingly, including in undo and redo)
                 if(errorReport != 0) {
-                    Log.e("popup", "catch cargo")
                     popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup_pressed)
                     if (errorReport == 1) {
                         popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup)
@@ -465,7 +462,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if(errorReport != 1) {
                     popupView.score_opp.text =
                         getString(R.string.btn_action_ten, numActionTen.toString())
-                    Log.e("popup", "score opp")
                     popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup_pressed)
                     if (errorReport == 0) {
                         popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup)
@@ -482,28 +478,22 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 }
             }
             popupView.cancel.setOnClickListener{
-                Log.e("popup", "cancel")
                 if(errorReport==0){
-                    popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup)
                     numActionNine--
                     popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
                 }
                 else if(errorReport==1){
-                    popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup)
                     numActionTen--
                     popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
                 }
                 popupWindow.dismiss()
             }
             popupView.done.setOnClickListener{
-                Log.e("popup", "done")
                 if (errorReport == 0){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_CARGO)
-                    Log.e("popup", "$match_time, ${Constants.ActionType.CATCH_CARGO}")
                 }
                 else if (errorReport == 1){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
-                    Log.e("popup", "$match_time, ${Constants.ActionType.SCORE_OPPOSING_BALL}")
                 }
                 popupWindow.dismiss()
             }
