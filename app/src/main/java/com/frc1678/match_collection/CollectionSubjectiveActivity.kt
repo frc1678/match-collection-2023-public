@@ -6,7 +6,10 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
+import kotlinx.android.synthetic.main.collection_subjective_activity.btn_proceed_edit
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
@@ -17,6 +20,8 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private lateinit var teamNumberOne: String
     private lateinit var teamNumberTwo: String
     private lateinit var teamNumberThree: String
+
+    private var numHumanShots = 0
 
     private fun getExtras() {
         teamNumberOne = intent.extras?.getString("team_one").toString()
@@ -58,11 +63,12 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private fun initProceedButton() {
         btn_proceed_edit.setOnClickListener { view ->
             quickness_rankings = recordRankingData(dataName = "Quickness")
-            field_awareness_rankings = recordRankingData(dataName = "Field Awareness")
+            driver_field_awareness_far_rankings = recordRankingData(dataName = "Near Aware")
+            driver_field_awareness_near_rankings = recordRankingData(dataName = "Far Aware")
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
-            if (quickness_rankings.toString().contains("rank") or field_awareness_rankings.toString().contains("rank")) {
+            if (quickness_rankings.toString().contains("rank") or driver_field_awareness_far_rankings.toString().contains("rank") or driver_field_awareness_near_rankings.toString().contains("rank")) {
                 createErrorMessage(message = getString(R.string.error_same_rankings), view = view)
             } else {
                 // Add alliance teams to the intent to be used in MatchInformationEditActivity.kt.

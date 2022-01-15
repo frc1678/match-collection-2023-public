@@ -9,8 +9,10 @@
     <color name="darker_gray">#8e8e8e</color>
     <color name="transparent">#ffffff00</color>
 
-    <color name="alliance_red_light">#d8675e</color>
+    <color name="alliance_red_light">#FF6659</color>
+    <color name="alliance_red_med">#D0372C</color>
     <color name="alliance_blue_light">#3399ff</color>
+    <color name="alliance_blue_med">#1470CD</color>
     <color name="alliance_red_dark">#8b0000</color>
     <color name="alliance_blue_dark">#00008b</color>
 
