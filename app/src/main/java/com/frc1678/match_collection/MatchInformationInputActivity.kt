@@ -72,7 +72,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 .substring(matchInformation.trim().indexOf(" ") + 1, matchInformation.trim().length)
             matchScheduleMap[matchNumber] = matchTeamList
         }
-
         return matchScheduleMap
     }
 
@@ -485,6 +484,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     // Initialize the onClickListener for the proceed button to go the next screen if inputs pass safety checks.
     private fun initProceedButton() {
         btn_proceed_match_start.setOnClickListener { view ->
+            positionSelected = false
             if (safetyCheck(view = view)) {
                 startMatchActivity()
             }
