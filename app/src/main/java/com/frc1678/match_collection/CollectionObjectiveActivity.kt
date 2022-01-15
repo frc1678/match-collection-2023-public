@@ -113,11 +113,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             Constants.ActionType.CATCH_CARGO.toString() -> {
                 numActionNine--
-                setCounterTexts()
             }
             Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
                 numActionTen--
-                setCounterTexts()
             }
         }
 
@@ -177,11 +175,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             Constants.ActionType.CATCH_CARGO.toString() -> {
                 numActionNine++
-                setCounterTexts()
             }
             Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
                 numActionTen++
-                setCounterTexts()
             }
         }
 
