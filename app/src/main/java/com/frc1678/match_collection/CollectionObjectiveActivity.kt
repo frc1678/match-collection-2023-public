@@ -435,9 +435,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
             popupView.catch_cargo.setOnClickListener{
                 if(errorReport != 0) {
-                    popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                    popupView.catch_cargo.isActivated = true
                     if (errorReport == 1) {
-                        popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup)
+                        popupView.score_opp.isActivated = false
                         numActionTen--
                         popupView.score_opp.text =
                             getString(R.string.btn_action_ten, numActionTen.toString())
@@ -453,9 +453,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if(errorReport != 1) {
                     popupView.score_opp.text =
                         getString(R.string.btn_action_ten, numActionTen.toString())
-                    popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                    popupView.score_opp.isActivated = true
                     if (errorReport == 0) {
-                        popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup)
+                        popupView.catch_cargo.isActivated = false
                         numActionNine--
                         popupView.catch_cargo.text =
                             getString(R.string.btn_action_nine, numActionNine.toString())
