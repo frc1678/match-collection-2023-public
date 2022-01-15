@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/panel_linear_layout">
 
         <com.frc1678.match_collection.SubjectiveRankingCounter
             android:id="@+id/counter_quickness"
