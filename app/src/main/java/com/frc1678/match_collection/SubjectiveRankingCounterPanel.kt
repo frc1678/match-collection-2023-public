@@ -42,8 +42,8 @@ class SubjectiveRankingCounterPanel : Fragment() {
         val rootLayout = panel_linear_layout
         var counter: SubjectiveRankingCounter
 
-        for (i in 0 until (view as LinearLayout).childCount - 1) {
-            counter = rootLayout.getChildAt(i + 1) as SubjectiveRankingCounter
+        for (i in 0 until (rootLayout).childCount) {
+            counter = rootLayout.getChildAt(i) as SubjectiveRankingCounter
             rankingData[counter.dataName] = counter.value
         }
         return rankingData

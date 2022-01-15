@@ -63,8 +63,8 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private fun initProceedButton() {
         btn_proceed_edit.setOnClickListener { view ->
             quickness_rankings = recordRankingData(dataName = "Quickness")
-            driver_field_awareness_far_rankings = recordRankingData(dataName = "Far Field Awareness")
-            driver_field_awareness_near_rankings = recordRankingData(dataName = "Near Field Awareness")
+            driver_field_awareness_far_rankings = recordRankingData(dataName = "Near Aware")
+            driver_field_awareness_near_rankings = recordRankingData(dataName = "Far Aware")
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
