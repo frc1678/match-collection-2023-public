@@ -6,9 +6,13 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import kotlinx.android.synthetic.main.collection_objective_activity.*
+import kotlinx.android.synthetic.main.error_pop_up.view.*
 import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
@@ -20,11 +24,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionFive = 0 //SCORE_BALL_LAUNCHPAD
     private var numActionSeven = 0  //SCORE_BALL_LOW_NEAR_HUB
     private var numActionEight = 0 //SCORE_BALL_LOW_FAR_HUB
+    private var numActionNine = 0 //CATCH_CARGO
+    private var numActionTen = 0 //SCORE_OPPOSING_BALL
     private var isTimerRunning = false
     //FALSE = LOW
     private var goalTypeIsHigh = false
     private var numActionSix = 0 //NUMBER OF INTAKES
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
+    private var popupIsOpen = false
+
 
     // Set timer to start match when timer is started or reset.
     private fun timerReset() {
@@ -104,6 +112,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionEight--
                 setCounterTexts()
             }
+            Constants.ActionType.CATCH_CARGO.toString() -> {
+                numActionNine--
+            }
+            Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
+                numActionTen--
+            }
         }
 
         // Add removed action to removedTimelineActions so it can be redone if needed.
@@ -160,6 +174,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionEight++
                 setCounterTexts()
             }
+            Constants.ActionType.CATCH_CARGO.toString() -> {
+                numActionNine++
+            }
+            Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
+                numActionTen++
+            }
         }
 
         // Remove the redone action from removedTimelineActions.
@@ -184,31 +204,34 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Enable and disable buttons based on values of condition booleans defined previously.
-        btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
-        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
-        btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
-        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
-        btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh)
+        btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
+        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
+        btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
+        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
+        btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
 
-        btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap)
+        btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
 
-        tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning)
+        btn_error.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
+
+        tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning or popupIsOpen)
         tb_action_two.isChecked = (goalTypeIsHigh)
 
-        tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing)
+        tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing or popupIsOpen)
         tb_action_three.isChecked = (isIncap)
 
-        tb_action_four.isEnabled = !(!is_teleop_activated or isIncap or hasClimbed)
+        tb_action_four.isEnabled = !(!is_teleop_activated or isIncap or hasClimbed or popupIsOpen)
         tb_action_four.isChecked = (isClimbing)
 
         if (hasClimbed) {
             tb_action_four.text = getString(R.string.tb_action_bool_four_disabled)
         }
 
-        btn_undo.isEnabled = (timeline.size > 0)
-        btn_redo.isEnabled = (removedTimelineActions.size > 0)
+        btn_undo.isEnabled = (timeline.size > 0) and !popupIsOpen
+        btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popupIsOpen
 
-        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated)
+        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popupIsOpen)
+        btn_proceed_edit.isEnabled = !popupIsOpen
     }
 
     // Function to end incap or climb if still activated at end of the match.
@@ -394,6 +417,84 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Replace previously undone action to timeline when redo button is clicked.
         btn_redo.setOnClickListener {
             timelineReplace()
+        }
+
+        btn_error.setOnClickListener {
+            popupIsOpen = true
+            enableButtons()
+            val popupView = View.inflate(this, R.layout.error_pop_up,null)
+            var errorReport : Int? = null
+            popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
+            popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
+            // Inflate a custom view using layout inflater
+
+            // Initialize a new instance of popup window
+            val popupWindow = PopupWindow(
+                popupView, // Custom view to show in popup window
+                LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
+                600, // Window height
+                false
+            )
+            popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+
+            popupView.catch_cargo.setOnClickListener{
+                if(errorReport != 0) {
+                    popupView.catch_cargo.isActivated = true
+                    if (errorReport == 1) {
+                        popupView.score_opp.isActivated = false
+                        numActionTen--
+                        popupView.score_opp.text =
+                            getString(R.string.btn_action_ten, numActionTen.toString())
+                    }
+                    numActionNine++
+                    popupView.catch_cargo.text =
+                        getString(R.string.btn_action_nine, numActionNine.toString())
+                    errorReport = 0
+                    popupView.done.isEnabled = true
+                }
+            }
+            popupView.score_opp.setOnClickListener{
+                if(errorReport != 1) {
+                    popupView.score_opp.text =
+                        getString(R.string.btn_action_ten, numActionTen.toString())
+                    popupView.score_opp.isActivated = true
+                    if (errorReport == 0) {
+                        popupView.catch_cargo.isActivated = false
+                        numActionNine--
+                        popupView.catch_cargo.text =
+                            getString(R.string.btn_action_nine, numActionNine.toString())
+                    }
+                    numActionTen++
+                    popupView.score_opp.text =
+                        getString(R.string.btn_action_ten, numActionTen.toString())
+                    errorReport = 1
+                    popupView.done.isEnabled = true
+                }
+            }
+            popupView.cancel.setOnClickListener{
+                if(errorReport==0){
+                    numActionNine--
+                    popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
+                }
+                else if(errorReport==1){
+                    numActionTen--
+                    popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
+                }
+                popupIsOpen = false
+                enableButtons()
+                popupWindow.dismiss()
+            }
+            popupView.done.setOnClickListener{
+                if (errorReport == 0){
+                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_CARGO)
+                }
+                else if (errorReport == 1){
+                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
+                }
+                popupIsOpen = false
+                enableButtons()
+                popupWindow.dismiss()
+            }
         }
 
         tb_action_two.setOnClickListener {

@@ -16,6 +16,8 @@
     <color name="alliance_red_dark">#8b0000</color>
     <color name="alliance_blue_dark">#00008b</color>
 
+    <color name="blue_error_popup_borders">#0F5EAE</color>
+
     <color name="action_yellow">#FFF4B8</color>
     <color name="action_yellow_pressed">#FFED87</color>
     <color name="proceed_blue">#2AF5FF</color>
