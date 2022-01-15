@@ -14,12 +14,12 @@
         <Button
             android:id="@+id/catch_cargo"
             style="@style/btn_error_catch"
-            android:text="Catch"/>
+            android:text="@string/btn_action_nine"/>
 
         <Button
             android:id="@+id/score_opp"
             style="@style/btn_error_score"
-            android:text="Score Opposing"/>
+            android:text="@string/btn_action_ten"/>
 
     </LinearLayout>
 
@@ -32,12 +32,12 @@
         <Button
             android:id="@+id/cancel"
             style="@style/btn_error_cancel"
-            android:text="Cancel"/>
+            android:text="@string/cancel"/>
 
         <Button
             android:id="@+id/done"
             style="@style/btn_error_done"
-            android:text="Done"/>
+            android:text="@string/done"/>
 
     </LinearLayout>
 

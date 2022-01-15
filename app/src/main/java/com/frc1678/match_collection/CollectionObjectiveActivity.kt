@@ -25,11 +25,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionFive = 0 //SCORE_BALL_LAUNCHPAD
     private var numActionSeven = 0  //SCORE_BALL_LOW_NEAR_HUB
     private var numActionEight = 0 //SCORE_BALL_LOW_FAR_HUB
+    private var numActionNine = 0 //CATCH_CARGO
+    private var numActionTen = 0 //SCORE_OPPOSING_BALL
     private var isTimerRunning = false
     //FALSE = LOW
     private var goalTypeIsHigh = false
     private var numActionSix = 0 //NUMBER OF INTAKES
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
+
 
     // Set timer to start match when timer is started or reset.
     private fun timerReset() {
@@ -109,6 +112,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionEight--
                 setCounterTexts()
             }
+            Constants.ActionType.CATCH_CARGO.toString() -> {
+                numActionNine--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
+                numActionTen--
+                setCounterTexts()
+            }
         }
 
         // Add removed action to removedTimelineActions so it can be redone if needed.
@@ -163,6 +174,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             Constants.ActionType.SCORE_BALL_LOW_FAR_HUB.toString() -> {
                 numActionEight++
+                setCounterTexts()
+            }
+            Constants.ActionType.CATCH_CARGO.toString() -> {
+                numActionNine++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
+                numActionTen++
                 setCounterTexts()
             }
         }
@@ -408,9 +427,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         btn_error.setOnClickListener {
+            val popupView = View.inflate(this, R.layout.error_pop_up,null)
             var errorReport : Int? = null
             // Inflate a custom view using layout inflater
-            val popupView = View.inflate(this, R.layout.error_pop_up,null)
 
             // Initialize a new instance of popup window
             val popupWindow = PopupWindow(
@@ -423,16 +442,23 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
             popupView.catch_cargo.setOnClickListener{
                 //TODO Display counts (and increment/decrement counts accordingly, including in undo and redo)
-                //TODO Make it impossible to press both catch cargo and score opp
                 Log.e("popup", "catch cargo")
                 popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                if(errorReport==1){
+                    popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup)
+                }
                 errorReport = 0
                 popupView.done.isEnabled = true
                 popupView.done.setBackgroundResource(R.drawable.btn_done)
             }
             popupView.score_opp.setOnClickListener{
+                popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
+                popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
                 Log.e("popup", "score opp")
                 popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                if(errorReport==0){
+                    popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup)
+                }
                 errorReport = 1
                 popupView.done.isEnabled = true
                 popupView.done.setBackgroundResource(R.drawable.btn_done)
@@ -445,9 +471,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 Log.e("popup", "done")
                 if (errorReport == 0){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_CARGO)
+                    Log.e("popup", "$match_time, ${Constants.ActionType.CATCH_CARGO}")
+                    numActionNine++
+                    popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
                 }
                 else if (errorReport == 1){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
+                    Log.e("popup", "$match_time, ${Constants.ActionType.SCORE_OPPOSING_BALL}")
+                    numActionTen++
+                    popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
                 }
                 popupWindow.dismiss()
             }
