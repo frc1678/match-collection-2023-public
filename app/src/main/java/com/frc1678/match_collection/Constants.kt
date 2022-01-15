@@ -44,8 +44,6 @@ class Constants {
         INTAKE,
         START_INCAP,
         END_INCAP,
-        START_CLIMB,
-        END_CLIMB,
         HIGH_LOW_TOGGLE
     }
 

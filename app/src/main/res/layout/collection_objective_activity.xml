@@ -99,11 +99,10 @@
             style="@style/btn_action_near"
             android:text="@string/btn_action_five" />
 
-        <ToggleButton
-            android:id="@+id/tb_action_four"
-            style="@style/tb_climb"
-            android:textOff="@string/tb_climb_off"
-            android:textOn="@string/tb_climb_on"/>
+        <Button
+            android:id="@+id/btn_action_eleven"
+            style="@style/btn_climb"
+            android:text="@string/btn_climb"/>
 
     </LinearLayout>
 

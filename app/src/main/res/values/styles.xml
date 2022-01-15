@@ -172,6 +172,29 @@
         <item name="android:enabled">false</item>
     </style>
 
+    <style name="btn_climb_level" parent="android:Widget">
+        <item name="android:background">@drawable/btn_climb_level_selector</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:padding">@dimen/very_small</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">@dimen/very_very_small</item>
+    </style>
+
+    <style name="btn_climb_timer" parent="android:Widget">
+        <item name="android:background">@drawable/btn_climb_timer_selector</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:layout_width">@dimen/very_large</item>
+        <item name="android:layout_height">@dimen/large</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">@dimen/very_small</item>
+    </style>
+
     <style name="btn_error" parent="android:Widget">
         <item name="android:background">@drawable/tb_climb_selector</item>
         <item name="android:textColor">@color/black</item>
