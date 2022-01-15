@@ -8,6 +8,7 @@ import java.util.*
 fun compress(
     schema: HashMap<String, HashMap<String, Any>>
 ): String {
+/*
     var compressedMatchInformation: String
 
     val schemaVersion = schema.getValue("schema_file").getValue("version").toString()
@@ -100,4 +101,6 @@ fun compress(
     compressedMatchInformation = compressedMatchInformation.replace("[", "")
 
     return compressedMatchInformation
+*/
+    return "Temporarily_Disable_Compression_and_QR_creation"
 }

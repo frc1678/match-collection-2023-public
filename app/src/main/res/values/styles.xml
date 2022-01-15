@@ -196,7 +196,7 @@
     </style>
 
     <style name="btn_error" parent="android:Widget">
-        <item name="android:background">@drawable/tb_climb_selector</item>
+        <item name="android:background">@drawable/btn_error_selector</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">130dp</item>
@@ -236,29 +236,48 @@
         <item name="android:background">@drawable/btn_plus_selector</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:text">@string/btn_plus</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/counter</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/small</item>
     </style>
 
     <style name="btn_minus" parent="android:Widget">
         <item name="android:background">@drawable/btn_minus_selector</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:text">@string/btn_minus</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">@dimen/counter</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/small_text</item>
     </style>
 
-    <style name="tv_standard" parent="android:Widget">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_centerHorizontal">true</item>
+    <style name="tv_subj_data_label" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textAlignment">center</item>
+=        <item name="android:textSize">@dimen/smaller_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="tv_team_number_subj" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="tv_standard" parent="android:Widget">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/small_text</item>
         <item name="android:gravity">center</item>
     </style>
@@ -300,6 +319,74 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">10</item>
+    </style>
+
+    <style name="btn_error_catch" parent="android:Widget">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginRight">@dimen/very_small</item>
+        <item name="android:layout_marginBottom">@dimen/very_small</item>
+        <item name="android:layout_marginLeft">@dimen/small</item>
+        <item name="android:layout_marginTop">@dimen/small</item>
+        <item name="android:background">@drawable/btn_error_popup_selector</item>
+        <item name="android:enabled">true</item>
+    </style>
+
+    <style name="btn_error_score" parent="android:Widget">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginRight">@dimen/small</item>
+        <item name="android:layout_marginBottom">@dimen/very_small</item>
+        <item name="android:layout_marginLeft">@dimen/very_small</item>
+        <item name="android:layout_marginTop">@dimen/small</item>
+        <item name="android:background">@drawable/btn_error_popup_selector</item>
+        <item name="android:enabled">true</item>
+    </style>
+
+    <style name="btn_error_cancel" parent="android:Widget">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginRight">@dimen/very_small</item>
+        <item name="android:layout_marginBottom">@dimen/small</item>
+        <item name="android:layout_marginLeft">@dimen/small</item>
+        <item name="android:layout_marginTop">@dimen/very_small</item>
+        <item name="android:background">@drawable/btn_cancel</item>
+        <item name="android:enabled">true</item>
+    </style>
+
+    <style name="btn_error_done" parent="android:Widget">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:layout_marginRight">@dimen/small</item>
+        <item name="android:layout_marginBottom">@dimen/small</item>
+        <item name="android:layout_marginLeft">@dimen/very_small</item>
+        <item name="android:layout_marginTop">@dimen/very_small</item>
+        <item name="android:background">@drawable/btn_done_selector</item>
+        <item name="android:enabled">false</item>
     </style>
 
 </resources>
