@@ -429,42 +429,70 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_error.setOnClickListener {
             val popupView = View.inflate(this, R.layout.error_pop_up,null)
             var errorReport : Int? = null
+            popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
+            popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
             // Inflate a custom view using layout inflater
 
             // Initialize a new instance of popup window
             val popupWindow = PopupWindow(
                 popupView, // Custom view to show in popup window
-                LinearLayout.LayoutParams.WRAP_CONTENT, // Width of popup window
-                LinearLayout.LayoutParams.WRAP_CONTENT, // Window height
-                true
+                LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
+                600, // Window height
+                false
             )
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
 
             popupView.catch_cargo.setOnClickListener{
                 //TODO Display counts (and increment/decrement counts accordingly, including in undo and redo)
-                Log.e("popup", "catch cargo")
-                popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup_pressed)
-                if(errorReport==1){
-                    popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup)
+                if(errorReport != 0) {
+                    Log.e("popup", "catch cargo")
+                    popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                    if (errorReport == 1) {
+                        popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup)
+                        numActionTen--
+                        popupView.score_opp.text =
+                            getString(R.string.btn_action_ten, numActionTen.toString())
+                    }
+                    numActionNine++
+                    popupView.catch_cargo.text =
+                        getString(R.string.btn_action_nine, numActionNine.toString())
+                    errorReport = 0
+                    popupView.done.isEnabled = true
+                    popupView.done.setBackgroundResource(R.drawable.btn_done)
                 }
-                errorReport = 0
-                popupView.done.isEnabled = true
-                popupView.done.setBackgroundResource(R.drawable.btn_done)
             }
             popupView.score_opp.setOnClickListener{
-                popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
-                popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
-                Log.e("popup", "score opp")
-                popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup_pressed)
-                if(errorReport==0){
-                    popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup)
+                if(errorReport != 1) {
+                    popupView.score_opp.text =
+                        getString(R.string.btn_action_ten, numActionTen.toString())
+                    Log.e("popup", "score opp")
+                    popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup_pressed)
+                    if (errorReport == 0) {
+                        popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup)
+                        numActionNine--
+                        popupView.catch_cargo.text =
+                            getString(R.string.btn_action_nine, numActionNine.toString())
+                    }
+                    numActionTen++
+                    popupView.score_opp.text =
+                        getString(R.string.btn_action_ten, numActionTen.toString())
+                    errorReport = 1
+                    popupView.done.isEnabled = true
+                    popupView.done.setBackgroundResource(R.drawable.btn_done)
                 }
-                errorReport = 1
-                popupView.done.isEnabled = true
-                popupView.done.setBackgroundResource(R.drawable.btn_done)
             }
             popupView.cancel.setOnClickListener{
                 Log.e("popup", "cancel")
+                if(errorReport==0){
+                    popupView.catch_cargo.setBackgroundResource(R.drawable.btn_error_popup)
+                    numActionNine--
+                    popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
+                }
+                else if(errorReport==1){
+                    popupView.score_opp.setBackgroundResource(R.drawable.btn_error_popup)
+                    numActionTen--
+                    popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
+                }
                 popupWindow.dismiss()
             }
             popupView.done.setOnClickListener{
@@ -472,14 +500,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if (errorReport == 0){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_CARGO)
                     Log.e("popup", "$match_time, ${Constants.ActionType.CATCH_CARGO}")
-                    numActionNine++
-                    popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
                 }
                 else if (errorReport == 1){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
                     Log.e("popup", "$match_time, ${Constants.ActionType.SCORE_OPPOSING_BALL}")
-                    numActionTen++
-                    popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
                 }
                 popupWindow.dismiss()
             }

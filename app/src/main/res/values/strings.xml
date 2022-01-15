@@ -12,7 +12,7 @@
     <string name="btn_action_five">Launch Pad - %1$s</string>
     <string name="btn_action_six">Intake - %1$s</string>
     <string name="btn_action_nine">Catch - %1$s</string>
-    <string name="btn_action_ten">Score Opposing - %1$s</string>
+    <string name="btn_action_ten">Score Opp. - %1$s</string>
     <string name="tb_action_bool_one_off">Rotation</string>
     <string name="tb_action_bool_one_on">Rotation Activated</string>
     <string name="tb_action_bool_two_off">Low Goal</string>
