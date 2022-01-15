@@ -44,7 +44,9 @@ class Constants {
         INTAKE,
         START_INCAP,
         END_INCAP,
-        HIGH_LOW_TOGGLE
+        HIGH_LOW_TOGGLE,
+        CATCH_CARGO,
+        SCORE_OPPOSING_BALL
     }
 
     enum class Stage {
