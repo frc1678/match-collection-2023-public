@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.view.KeyEvent
 import kotlinx.android.synthetic.main.starting_position_activity.*
 
-var positionSelected = false
-
 class StartingPositionObjectiveActivity:CollectionActivity() {
 
     private fun setMapImage() {
@@ -49,22 +47,18 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
         btn_one.setOnClickListener {
             starting_position = Constants.StartingPosition.ONE
             setBackgrounds()
-            positionSelected = true
         }
         btn_two.setOnClickListener {
             starting_position = Constants.StartingPosition.TWO
             setBackgrounds()
-            positionSelected = true
         }
         btn_three.setOnClickListener {
             starting_position = Constants.StartingPosition.THREE
             setBackgrounds()
-            positionSelected = true
         }
         btn_four.setOnClickListener {
             starting_position = Constants.StartingPosition.FOUR
             setBackgrounds()
-            positionSelected = true
         }
         btn_switch_orientation.setOnClickListener {
             //true = UP, false = DOWN
@@ -73,7 +67,7 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
         }
         btn_proceed_starting_position.setOnClickListener { view ->
             val intent = Intent(this, CollectionObjectiveActivity::class.java)
-            if (positionSelected) {
+            if (starting_position != Constants.StartingPosition.NONE) {
                 startActivity(
                     intent, ActivityOptions.makeSceneTransitionAnimation(
                         this,
