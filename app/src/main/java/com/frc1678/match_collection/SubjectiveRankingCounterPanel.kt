@@ -40,7 +40,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
     fun getRankingData(): HashMap<String, Int> {
         val rankingData = HashMap<String, Int>()
         val rootLayout = panel_linear_layout
-        var counter: SubjectiveRankingCounter //null
+        var counter: SubjectiveRankingCounter
 
         for (i in 0 until (view as LinearLayout).childCount - 1) {
             counter = rootLayout.getChildAt(i + 1) as SubjectiveRankingCounter

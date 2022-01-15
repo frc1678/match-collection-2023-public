@@ -10,6 +10,7 @@
     <dimen name="very_large">700dp</dimen>
     <dimen name="corner_radius_small">20dp</dimen>
     <dimen name="very_small_text">10sp</dimen>
+    <dimen name="smaller_text">18sp</dimen>
     <dimen name="small_text">25sp</dimen>
     <dimen name="medium_text">35sp</dimen>
     <dimen name="large_text">50sp</dimen>

@@ -104,28 +104,6 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
-    private fun initHumanShotsButton() {
-
-        btn_human_shots.text = getString(R.string.human_shots, numHumanShots.toString())
-
-        if (alliance_color == Constants.AllianceColor.RED) {
-            btn_human_shots.setBackgroundResource(R.drawable.btn_human_player_red_selector)
-        } else {
-            btn_human_shots.setBackgroundResource(R.drawable.btn_human_player_blue_selector)
-        }
-
-        btn_human_shots.setOnClickListener {
-            numHumanShots++
-            btn_human_shots.text = getString(R.string.human_shots, numHumanShots.toString())
-        }
-
-        btn_human_shots.setOnLongClickListener(View.OnLongClickListener {
-            numHumanShots--
-            btn_human_shots.text = getString(R.string.human_shots, numHumanShots.toString())
-            return@OnLongClickListener true
-        })
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_subjective_activity)
@@ -133,6 +111,5 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         getExtras()
         initProceedButton()
         initPanels()
-        initHumanShotsButton()
     }
 }
