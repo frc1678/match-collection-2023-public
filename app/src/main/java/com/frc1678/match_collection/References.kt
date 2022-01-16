@@ -7,13 +7,7 @@ import android.os.CountDownTimer
 var match_timer: CountDownTimer? = null
 var match_time: String = ""
 var is_teleop_activated: Boolean = false
-var climb_timer: CountDownTimer? = null
-var climb_timer_done = false
-var climb_time: Int? = null
-var climb_start_time: String? = null
-var climb_end_time: String? = null
 var popup_open = false
-var climb_level: Int? = null
 var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
@@ -34,6 +28,12 @@ var starting_position: Constants.StartingPosition = Constants.StartingPosition.N
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.ZERO
 
+var climb_timer: CountDownTimer? = null
+var climb_timer_done = false
+var climb_time: Int? = null
+var climb_start_time: String? = null
+var climb_end_time: String? = null
+
 // Data specific to Subjective Match Collection QR.
 var quickness_rankings: ArrayList<String> = ArrayList()
 var driver_field_awareness_near_rankings: ArrayList<String> = ArrayList()
@@ -47,7 +47,7 @@ fun resetReferences() {
     climb_timer_done = false
     climb_time = null
     popup_open = false
-    climb_level = null
+    climb_level = Constants.ClimbLevel.ZERO
 
     timestamp = 0
 
