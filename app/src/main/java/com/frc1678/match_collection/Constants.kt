@@ -27,10 +27,13 @@ class Constants {
         FOUR,
         NONE
     }
-    
-    enum class GoalType {
-        HIGH,
-        LOW
+
+    enum class ClimbLevel {
+        ZERO,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
     }
 
     enum class ActionType {
