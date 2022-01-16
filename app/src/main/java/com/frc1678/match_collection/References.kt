@@ -24,6 +24,7 @@ var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
+var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.ZERO
 
 // Data specific to Subjective Match Collection QR.
 var quickness_rankings: ArrayList<String> = ArrayList()
