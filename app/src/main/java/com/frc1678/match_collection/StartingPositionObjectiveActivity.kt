@@ -6,10 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
-import kotlinx.android.synthetic.main.collection_objective_activity.*
-import kotlinx.android.synthetic.main.match_information_input_activity.*
 import kotlinx.android.synthetic.main.starting_position_activity.*
-
 
 class StartingPositionObjectiveActivity:CollectionActivity() {
 
@@ -68,14 +65,20 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
             orientation = !orientation
             setMapImage()
         }
-        btn_proceed_starting_position.setOnClickListener {
+        btn_proceed_starting_position.setOnClickListener { view ->
             val intent = Intent(this, CollectionObjectiveActivity::class.java)
-            startActivity(
-                intent, ActivityOptions.makeSceneTransitionAnimation(
-                    this,
-                    btn_proceed_starting_position, "proceed_button"
-                ).toBundle()
-            )
+            if (starting_position != Constants.StartingPosition.NONE) {
+                startActivity(
+                    intent, ActivityOptions.makeSceneTransitionAnimation(
+                        this,
+                        btn_proceed_starting_position, "proceed_button"
+                    ).toBundle()
+                )
+            } else {
+                createErrorMessage(
+                    message = getString(R.string.error_missing_information),
+                    view = view
+                )            }
         }
     }
 

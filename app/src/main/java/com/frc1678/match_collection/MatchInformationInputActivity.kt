@@ -72,7 +72,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 .substring(matchInformation.trim().indexOf(" ") + 1, matchInformation.trim().length)
             matchScheduleMap[matchNumber] = matchTeamList
         }
-
         return matchScheduleMap
     }
 
