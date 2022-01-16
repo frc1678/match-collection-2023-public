@@ -2,12 +2,9 @@
 package com.frc1678.match_collection
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
