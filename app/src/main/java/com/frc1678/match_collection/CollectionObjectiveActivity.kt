@@ -33,7 +33,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private var goalTypeIsHigh = false
     private var numActionSix = 0 //NUMBER OF INTAKES
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
-//    private var popupIsOpen = false
 
     // Set timer to start match when timer is started or reset.
     private fun timerReset() {
@@ -73,6 +72,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Remove previously inputted action from timeline.
     private fun timelineRemove() {
+        var removeOneMore = false
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
             Constants.ActionType.HIGH_LOW_TOGGLE.toString() -> {
@@ -119,6 +119,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
                 numActionTen--
             }
+            Constants.ActionType.END_CLIMB.toString() -> {
+                removeOneMore = true
+                climb_timer_done = false
+                climb_timer = null
+            }
         }
 
         // Add removed action to removedTimelineActions so it can be redone if needed.
@@ -128,10 +133,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
         timeline.removeAt(timeline.size - 1)
 
         enableButtons()
+
+        if (removeOneMore) timelineRemove()
     }
 
     // Pull from removedTimelineActions to redo timeline actions after undo.
     private fun timelineReplace() {
+        var replaceOneMore = false
+
         // Add most recently undone action from removedTimelineActions back to timeline.
         timeline.add(removedTimelineActions[removedTimelineActions.size - 1])
 
@@ -181,12 +190,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
                 numActionTen++
             }
+            Constants.ActionType.START_CLIMB.toString() -> {
+                replaceOneMore = true
+                climb_timer_done = true
+                climb_timer = null
+            }
         }
 
         // Remove the redone action from removedTimelineActions.
         removedTimelineActions.removeAt(removedTimelineActions.size - 1)
 
         enableButtons()
+
+        if (replaceOneMore) timelineReplace()
     }
 
     // Enable and disable buttons based on actions in timeline and timer stage.
@@ -402,8 +418,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popupView.btn_climb_timer.setOnClickListener {
                 if (climb_timer == null) { // timer hasn't started
                     TimerUtility.ClimbTimerThread(this, popupView)
+                    climb_start_time = match_time
                 } else if (!climb_timer_done) { // timer is currently running
                     climb_timer!!.onFinish()
+                    climb_end_time = match_time
                 }
             }
             popupView.btn_climb_cancel.setOnClickListener {
@@ -414,6 +432,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 climb_time = null
                 climb_timer_done = false
                 climb_level = null
+                climb_start_time = null
+                climb_end_time = null
                 popupWindow.dismiss()
                 popup_open = false
                 enableButtons()
@@ -422,6 +442,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_action_eleven.isEnabled = false
                 popup_open = false
+                climb_start_time?.let { it1 -> timelineAdd(it1, Constants.ActionType.START_CLIMB) }
+                climb_end_time?.let { it1 -> timelineAdd(it1, Constants.ActionType.END_CLIMB) }
                 enableButtons()
             }
             popupView.btn_climb_lv0.isActivated = true
