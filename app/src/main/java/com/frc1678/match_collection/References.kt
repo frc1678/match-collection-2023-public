@@ -7,6 +7,8 @@ import android.os.CountDownTimer
 var match_timer: CountDownTimer? = null
 var match_time: String = ""
 var is_teleop_activated: Boolean = false
+var popup_open = false
+var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
 
@@ -24,6 +26,13 @@ var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
+var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.ZERO
+
+var climb_timer: CountDownTimer? = null
+var climb_timer_done = false
+var climb_time: Int? = null
+var climb_start_time: String? = null
+var climb_end_time: String? = null
 
 // Data specific to Subjective Match Collection QR.
 var quickness_rankings: ArrayList<String> = ArrayList()
@@ -33,6 +42,12 @@ var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
 // Function to reset References.kt variables for new match.
 fun resetReferences() {
     is_teleop_activated = false
+
+    climb_timer = null
+    climb_timer_done = false
+    climb_time = null
+    popup_open = false
+    climb_level = Constants.ClimbLevel.ZERO
 
     timestamp = 0
 

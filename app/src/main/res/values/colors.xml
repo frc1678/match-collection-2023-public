@@ -32,6 +32,11 @@
     <color name="climb_purple_end">#E7BBE3</color>
     <color name="climb_pressed">#C184BE</color>
     <color name="climb_pressed_border">#A849A7</color>
+    <color name="climb_level_orange">#FFAB40</color>
+    <color name="climb_level_orange_border">#FF6D00</color>
+    <color name="climb_timer_blue">#2AF5FF</color>
+    <color name="climb_timer_blue_border">#23C9D1</color>
+    <color name="climb_timer_blue_pressed">#00EDFE</color>
     <color name="undo_purple">#874CF1</color>
     <color name="undo_purple_pressed">#673AB7</color>
     <color name="redo_green">#7CCC77</color>

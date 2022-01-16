@@ -78,7 +78,8 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
                 createErrorMessage(
                     message = getString(R.string.error_missing_information),
                     view = view
-                )            }
+                )
+            }
         }
     }
 
