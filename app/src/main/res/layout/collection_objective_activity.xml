@@ -147,6 +147,8 @@
                 android:id="@+id/tv_team_number"
                 style="@style/tv_standard"
                 android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@color/white"
                 android:textSize="@dimen/medium_text" />
 

@@ -7,6 +7,7 @@ import android.os.CountDownTimer
 var match_timer: CountDownTimer? = null
 var match_time: String = ""
 var is_teleop_activated: Boolean = false
+var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
 

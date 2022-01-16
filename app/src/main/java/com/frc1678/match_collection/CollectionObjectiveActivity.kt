@@ -231,7 +231,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popupIsOpen
 
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popupIsOpen)
-        btn_proceed_edit.isEnabled = !popupIsOpen
+        btn_proceed_edit.isEnabled = ((!is_teleop_activated) or (is_match_time_ended)) and !popupIsOpen
     }
 
     // Function to end incap or climb if still activated at end of the match.
