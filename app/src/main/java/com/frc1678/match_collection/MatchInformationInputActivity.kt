@@ -19,7 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.opencsv.CSVReader
 import kotlinx.android.synthetic.main.id_scout_dialog.*
-import kotlinx.android.synthetic.main.match_information_input_activity.*
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
 import java.io.File
 import java.io.FileReader
 import java.lang.Integer.parseInt
@@ -512,7 +512,12 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.match_information_input_activity)
+
+        if (collection_mode == Constants.ModeSelection.OBJECTIVE){
+            setContentView(R.layout.match_information_input_activity_objective)
+        } else if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+            setContentView(R.layout.match_information_input_activity_subjective)
+        }
 
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
