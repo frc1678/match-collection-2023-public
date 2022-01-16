@@ -26,6 +26,11 @@
     <color name="incap_gray_activated">#A0B1FF</color>
     <color name="climb_pink_start">#EDCDEA</color>
     <color name="climb_pink_end">#E7BBE3</color>
+    <color name="climb_level_orange">#FFAB40</color>
+    <color name="climb_level_orange_border">#FF6D00</color>
+    <color name="climb_timer_blue">#2AF5FF</color>
+    <color name="climb_timer_blue_border">#23C9D1</color>
+    <color name="climb_timer_blue_pressed">#00EDFE</color>
     <color name="undo_purple">#874CF1</color>
     <color name="undo_purple_pressed">#673AB7</color>
     <color name="redo_green">#7CCC77</color>

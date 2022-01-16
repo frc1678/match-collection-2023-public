@@ -6,11 +6,13 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Gravity
+import android.view.*
 import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import kotlinx.android.synthetic.main.climb_popup.*
+import kotlinx.android.synthetic.main.climb_popup.view.*
 import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.error_pop_up.view.*
 import java.lang.Integer.parseInt
@@ -31,8 +33,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private var goalTypeIsHigh = false
     private var numActionSix = 0 //NUMBER OF INTAKES
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
-    private var popupIsOpen = false
-
 
     // Set timer to start match when timer is started or reset.
     private fun timerReset() {
@@ -72,6 +72,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Remove previously inputted action from timeline.
     private fun timelineRemove() {
+        var removeOneMore = false
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
             Constants.ActionType.HIGH_LOW_TOGGLE.toString() -> {
@@ -118,6 +119,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
                 numActionTen--
             }
+            Constants.ActionType.END_CLIMB.toString() -> {
+                removeOneMore = true
+                climb_timer_done = false
+                climb_timer = null
+            }
         }
 
         // Add removed action to removedTimelineActions so it can be redone if needed.
@@ -127,10 +133,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
         timeline.removeAt(timeline.size - 1)
 
         enableButtons()
+
+        if (removeOneMore) timelineRemove()
     }
 
     // Pull from removedTimelineActions to redo timeline actions after undo.
     private fun timelineReplace() {
+        var replaceOneMore = false
+
         // Add most recently undone action from removedTimelineActions back to timeline.
         timeline.add(removedTimelineActions[removedTimelineActions.size - 1])
 
@@ -180,69 +190,65 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
                 numActionTen++
             }
+            Constants.ActionType.START_CLIMB.toString() -> {
+                replaceOneMore = true
+                climb_timer_done = true
+                climb_timer = null
+            }
         }
 
         // Remove the redone action from removedTimelineActions.
         removedTimelineActions.removeAt(removedTimelineActions.size - 1)
 
         enableButtons()
+
+        if (replaceOneMore) timelineReplace()
     }
 
     // Enable and disable buttons based on actions in timeline and timer stage.
     private fun enableButtons() {
         var isIncap = false
-        var hasClimbed = false
-        var isClimbing = false
 
         // Define condition booleans based on actions in timeline, if existent.
         if (timeline.size > 0) {
             isIncap =
                 timeline[timeline.size - 1].containsValue(Constants.ActionType.START_INCAP.toString())
-            hasClimbed = timeline.toString().contains(Constants.ActionType.END_CLIMB.toString())
-            isClimbing =
-                timeline[timeline.size - 1].containsValue(Constants.ActionType.START_CLIMB.toString())
         }
 
         // Enable and disable buttons based on values of condition booleans defined previously.
-        btn_action_one.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
-        btn_action_two.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
-        btn_action_three.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
-        btn_action_four.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
-        btn_action_five.isEnabled = !(!isTimerRunning or isClimbing or isIncap or !goalTypeIsHigh or popupIsOpen)
+        btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
+        btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
+        btn_action_three.isEnabled = !(!isTimerRunning or popup_open or isIncap or !goalTypeIsHigh)
+        btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap or !goalTypeIsHigh)
+        btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap or !goalTypeIsHigh)
 
-        btn_action_six.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
+        btn_action_six.isEnabled = !(!isTimerRunning or popup_open or isIncap)
 
-        btn_error.isEnabled = !(!isTimerRunning or isClimbing or isIncap or popupIsOpen)
+        btn_error.isEnabled = !(!isTimerRunning or popup_open or isIncap)
 
-        tb_action_two.isEnabled = !(isClimbing or isIncap or !isTimerRunning or popupIsOpen)
+        tb_action_two.isEnabled = !(popup_open or isIncap or !isTimerRunning)
         tb_action_two.isChecked = (goalTypeIsHigh)
 
-        tb_action_three.isEnabled = !(!is_teleop_activated or isClimbing or popupIsOpen)
+        tb_action_three.isEnabled = !(!is_teleop_activated or popup_open)
         tb_action_three.isChecked = (isIncap)
 
-        tb_action_four.isEnabled = !(!is_teleop_activated or isIncap or hasClimbed or popupIsOpen)
-        tb_action_four.isChecked = (isClimbing)
+        btn_action_eleven.isEnabled = !(!is_teleop_activated or popup_open or isIncap or climb_timer_done)
+        btn_action_eleven.text =
+            if (climb_timer_done) getString(R.string.btn_climbed)
+            else getString(R.string.btn_climb)
 
-        if (hasClimbed) {
-            tb_action_four.text = getString(R.string.tb_action_bool_four_disabled)
-        }
+        btn_undo.isEnabled = (timeline.size > 0) and !popup_open
+        btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
-        btn_undo.isEnabled = (timeline.size > 0) and !popupIsOpen
-        btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popupIsOpen
-
-        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popupIsOpen)
-        btn_proceed_edit.isEnabled = ((!is_teleop_activated) or (is_match_time_ended)) and !popupIsOpen
+        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
+        btn_proceed_edit.isEnabled = ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
     }
 
-    // Function to end incap or climb if still activated at end of the match.
+    // Function to end incap if still activated at end of the match.
     private fun endAction() {
         if (tb_action_three.isChecked) {
             tb_action_three.isChecked = false
             timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
-        }
-        if (tb_action_four.isChecked) {
-            tb_action_four.isChecked = false
-            timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_CLIMB)
         }
     }
 
@@ -399,13 +405,88 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         }
 
-        // Start climb if clicking the climb toggle button checks the toggle button.
-        // Otherwise, end climb.
-        tb_action_four.setOnClickListener {
-            if (tb_action_four.isChecked) {
-                timelineAdd(match_time = match_time, action_type = Constants.ActionType.START_CLIMB)
-            } else {
-                timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_CLIMB)
+        // Open the Climb popup window.
+        btn_action_eleven.setOnClickListener {
+            val popupView = View.inflate(this, R.layout.climb_popup, null)
+            val width = LinearLayout.LayoutParams.WRAP_CONTENT
+            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+            val popupWindow = PopupWindow(popupView, width, height, false)
+            popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+            popup_open = true
+            enableButtons()
+            popupView.btn_climb_done.isEnabled = false
+            popupView.btn_climb_timer.setOnClickListener {
+                if (climb_timer == null) { // timer hasn't started
+                    TimerUtility.ClimbTimerThread(this, popupView)
+                    climb_start_time = match_time
+                } else if (!climb_timer_done) { // timer is currently running
+                    climb_timer!!.onFinish()
+                    climb_end_time = match_time
+                }
+            }
+            popupView.btn_climb_cancel.setOnClickListener {
+                if (climb_timer != null) {
+                    climb_timer!!.onFinish()
+                    climb_timer = null
+                }
+                climb_time = null
+                climb_timer_done = false
+                climb_level = null
+                climb_start_time = null
+                climb_end_time = null
+                popupWindow.dismiss()
+                popup_open = false
+                enableButtons()
+            }
+            popupView.btn_climb_done.setOnClickListener {
+                popupWindow.dismiss()
+                btn_action_eleven.isEnabled = false
+                popup_open = false
+                climb_start_time?.let { it1 -> timelineAdd(it1, Constants.ActionType.START_CLIMB) }
+                climb_end_time?.let { it1 -> timelineAdd(it1, Constants.ActionType.END_CLIMB) }
+                enableButtons()
+            }
+            popupView.btn_climb_lv0.isActivated = true
+            climb_level = 0
+            popupView.btn_climb_lv0.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = true
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = false
+                climb_level = 0
+            }
+            popupView.btn_climb_lv1.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = true
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = false
+                climb_level = 1
+            }
+            popupView.btn_climb_lv2.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = true
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = false
+                climb_level = 2
+            }
+            popupView.btn_climb_lv3.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = true
+                popupView.btn_climb_lv4.isActivated = false
+                climb_level = 3
+            }
+            popupView.btn_climb_lv4.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = true
+                climb_level = 4
             }
         }
 
@@ -420,7 +501,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         btn_error.setOnClickListener {
-            popupIsOpen = true
+            popup_open = true
             enableButtons()
             val popupView = View.inflate(this, R.layout.error_pop_up,null)
             var errorReport : Int? = null
@@ -480,7 +561,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     numActionTen--
                     popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
                 }
-                popupIsOpen = false
+                popup_open = false
                 enableButtons()
                 popupWindow.dismiss()
             }
@@ -491,7 +572,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 else if (errorReport == 1){
                     timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
                 }
-                popupIsOpen = false
+                popup_open = false
                 enableButtons()
                 popupWindow.dismiss()
             }

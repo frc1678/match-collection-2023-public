@@ -7,6 +7,13 @@ import android.os.CountDownTimer
 var match_timer: CountDownTimer? = null
 var match_time: String = ""
 var is_teleop_activated: Boolean = false
+var climb_timer: CountDownTimer? = null
+var climb_timer_done = false
+var climb_time: Int? = null
+var climb_start_time: String? = null
+var climb_end_time: String? = null
+var popup_open = false
+var climb_level: Int? = null
 var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
@@ -34,6 +41,12 @@ var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
 // Function to reset References.kt variables for new match.
 fun resetReferences() {
     is_teleop_activated = false
+
+    climb_timer = null
+    climb_timer_done = false
+    climb_time = null
+    popup_open = false
+    climb_level = null
 
     timestamp = 0
 
