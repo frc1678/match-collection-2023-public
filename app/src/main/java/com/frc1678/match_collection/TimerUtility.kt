@@ -60,6 +60,7 @@ class TimerUtility {
                     )
                     btn_timer.isEnabled = false
                     btn_proceed.text = context.getString(R.string.btn_proceed)
+                    is_match_time_ended = true
                     btn_proceed.isEnabled = true
                     is_teleop_activated = true
                 }

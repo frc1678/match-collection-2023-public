@@ -241,7 +241,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
-        btn_proceed_edit.isEnabled = !popup_open
+        btn_proceed_edit.isEnabled = ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
     }
 
     // Function to end incap if still activated at end of the match.

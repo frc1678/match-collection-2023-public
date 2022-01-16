@@ -14,6 +14,7 @@ var climb_start_time: String? = null
 var climb_end_time: String? = null
 var popup_open = false
 var climb_level: Int? = null
+var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
 
