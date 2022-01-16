@@ -319,6 +319,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">10</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="btn_error_catch" parent="android:Widget">
