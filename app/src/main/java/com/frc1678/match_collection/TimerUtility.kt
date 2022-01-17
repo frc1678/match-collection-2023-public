@@ -99,11 +99,15 @@ class TimerUtility {
 
                 override fun onFinish() {
                     super.cancel()
+                    if (!climb_timer_done) { // timer is currently running
+                        climb_timer!!.onFinish()
+                        climb_end_time = match_time}
                     climb_timer_done = true
                     climb_time = time
                     view.btn_climb_timer.text = context.getString(R.string.climb_timer_done, time.toString())
                     view.btn_climb_timer.isEnabled = false
                     view.btn_climb_done.isEnabled = true
+
                 }
 
             }.start()
