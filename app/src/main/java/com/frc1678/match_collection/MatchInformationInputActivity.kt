@@ -17,7 +17,8 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import com.opencsv.CSVReader
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.id_scout_dialog.*
 import kotlinx.android.synthetic.main.match_information_input_activity.*
 import java.io.File
@@ -34,95 +35,47 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     private lateinit var leftToggleButton: Button
     private lateinit var rightToggleButton: Button
 
-    // Read match_schedule.csv and return line-by-line as a list of strings.
-    private fun csvFileRead(): MutableList<String> {
-        val csvFile =
-            File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.csv")
-        val csvFileContents: MutableList<String> = ArrayList()
-        val csvReader = CSVReader(FileReader(csvFile))
+    /** Static storage of the match schedule to avoid retrieving from storage multiple times.
+     * Keep in mind that any changes made to the file will require a restart of the app or proceeding
+     * to the next match for changes to apply. */
+    object MatchSchedule {
 
-        var currentLine: Array<String>? = csvReader.readNext()
+        /**
+         * The contents of the match schedule. An example of a match schedule can be found
+         * [here](https://github.com/frc1678/Cardinal/blob/main/cardinal/api/hardcoded_test_data/match_schedule.json).
+         * */
+        var contents: JsonObject? = null
 
-        lateinit var currentMutableLine: String
+        private val file = File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.json")
 
-        while (currentLine != null) {
-            // Reset the current line's value for every new line as the while loop proceeds.
-            currentMutableLine = ""
-
-            for (lineContents in currentLine) {
-                currentMutableLine += " $lineContents"
-            }
-
-            csvFileContents.add(currentMutableLine)
-            currentLine = csvReader.readNext()
+        /** Initializes [`contents`][contents] with the JSON data from the [file]. This should only be called once.
+         * After calling this, use `MatchSchedule.contents` to access the data.
+         * @return Whether the reading was successful. */
+        fun read(): Boolean {
+            try { contents = JsonParser.parseReader(FileReader(file)).asJsonObject }
+            catch (e: Exception) { return false }
+            return true
         }
 
-        csvReader.close()
-        return csvFileContents
+        /** Checks whether the match schedule file exists. */
+        fun fileExists(): Boolean = file.exists()
     }
 
-    // Create a hashmap of every match with the key being the match number and the value being its teams.
-    private fun splitMatchScheduleCsvIntoMap(matchSchedule: MutableList<String>): HashMap<String, String> {
-        val matchScheduleMap: HashMap<String, String> = HashMap()
 
-        for (matchInformation in matchSchedule) {
-            val matchNumber =
-                matchInformation.trim().substring(0, matchInformation.trim().indexOf(" "))
-            val matchTeamList = matchInformation.trim()
-                .substring(matchInformation.trim().indexOf(" ") + 1, matchInformation.trim().length)
-            matchScheduleMap[matchNumber] = matchTeamList
-        }
-        return matchScheduleMap
-    }
-
-    // Read and split the CSV file into a string.
-    private fun getMatchInformation(matchNumber: String?): String {
-        val getMatchInfo =
-            splitMatchScheduleCsvIntoMap(matchSchedule = csvFileRead())
-        if (matchNumber != null) {
-            return getMatchInfo[matchNumber].toString()
-        }
-        return ""
-    }
-
-    // Remove the "B/R-" prefix of the given team number from the match teams list.
-    private fun removeTeamPrefix(teamNumberWithPrefix: String): String {
-        return (teamNumberWithPrefix.substring(
-            teamNumberWithPrefix.indexOf("-") + 1,
-            teamNumberWithPrefix.length
-        ))
-    }
-
-    // Split team numbers of a single match into a list.
-    private fun getTeamOfGivenMatch(collectionOfTeamsOfGivenMatch: String?, teamId: Int): String {
-        val teamsOfGivenMatchList = collectionOfTeamsOfGivenMatch?.split(" ")
-        if (teamsOfGivenMatchList?.size != 6) {
-            return ""
-        }
-        return teamsOfGivenMatchList[teamId - 1]
-    }
-
-    // Assign team number and alliance color for Objective Scout based on scout ID.
+    /** Assign team number and alliance color for Objective Scout based on scout ID. */
     private fun assignTeamByScoutIdObjective(
         teamInput: EditText,
         scoutId: Int,
         matchNumber: String
     ) {
-        teamInput.setText(
-            removeTeamPrefix(
-                teamNumberWithPrefix = getTeamOfGivenMatch(
-                    collectionOfTeamsOfGivenMatch = getMatchInformation(matchNumber = matchNumber),
-                    teamId =
-                    scoutId
-                )
-            )
-        )
+        val team = MatchSchedule.contents!!
+            .get(matchNumber)?.asJsonObject
+            ?.get("teams")?.asJsonArray
+            ?.get(scoutId - 1)?.asJsonObject
+            ?: return
+        teamInput.setText(team.get("number")!!.asString)
         alliance_color =
-            if (getTeamOfGivenMatch(
-                    collectionOfTeamsOfGivenMatch = getMatchInformation(matchNumber = matchNumber),
-                    teamId = scoutId
-                ).contains("R")
-            ) {
+            if (team.get("color")?.asString == "red") {
                 switchBorderToRedToggle()
                 Constants.AllianceColor.RED
             } else {
@@ -131,42 +84,29 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
     }
 
-    // Assign team numbers for Subjective Scout based on alliance color.
+    /** Assign team numbers for Subjective Scout based on alliance color. */
     private fun assignTeamByScoutIdSubjective(
         teamInput: EditText, allianceColor: Constants.AllianceColor,
         matchNumber: String, iterationNumber: Int
     ) {
-        if (allianceColor == Constants.AllianceColor.RED) {
-            teamInput.setText(
-                removeTeamPrefix(
-                    teamNumberWithPrefix = getTeamOfGivenMatch(
-                        collectionOfTeamsOfGivenMatch = getMatchInformation(matchNumber = matchNumber),
-                        teamId = 4 + iterationNumber
-                    )
-                )
-            )
-        } else {
-            teamInput.setText(
-                removeTeamPrefix(
-                    teamNumberWithPrefix = getTeamOfGivenMatch(
-                        collectionOfTeamsOfGivenMatch = getMatchInformation(matchNumber = matchNumber),
-                        teamId = 1 + iterationNumber
-                    )
-                )
-            )
-        }
+        val team = MatchSchedule.contents!!
+            .get(matchNumber)?.asJsonObject
+            ?.get("teams")?.asJsonArray
+            ?.get(iterationNumber + if (allianceColor == Constants.AllianceColor.RED) 3 else 0)?.asJsonObject
+            ?: return
+        teamInput.setText(team.get("number").asString)
     }
 
-    // Automatically assign team number(s) based on collection mode.
+    /** Automatically assign team number(s) based on collection mode. */
     private fun autoAssignTeamInputsGivenMatch() {
-        if (File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.csv").exists()) {
+        if (MatchSchedule.fileExists()) {
             if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                 // Assign three scouts per robot based on scout ID in Objective Match Collection.
                 if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
                     if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
                         assignTeamByScoutIdObjective(
                             teamInput = et_team_one,
-                            scoutId = (scout_id.toInt() % 6) + 1,
+                            scoutId = scout_id.toInt() % 6,
                             matchNumber = et_match_number.text.toString()
                         )
                     }
@@ -189,7 +129,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             et_team_two.setText("")
             et_team_three.setText("")
 
-            AlertDialog.Builder(this).setMessage(R.string.error_csv).show()
+            AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
         }
     }
 
@@ -522,6 +462,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         serial_number = getSerialNum(context = this)
 
         resetReferences()
+
+        MatchSchedule.read()
 
         initToggleButtons()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
