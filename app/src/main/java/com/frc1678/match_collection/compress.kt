@@ -80,7 +80,7 @@ fun compress(
         }
         // Compress and add all Objective Match Collection data, including previously compressed
         // timeline actions.
-        compressedMatchInformation = objectiveStartCharacter + compressedMatchInformation +
+        compressedMatchInformation = objectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
                 compressTeamNumber + team_number + objectiveSeparator +
                 compressScoutId + scout_id + objectiveSeparator +
                 compressStartingPosition + starting_position.toString() + objectiveSeparator +
@@ -102,7 +102,7 @@ fun compress(
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.
-        compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation +
+        compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
                 compressQuicknessRankings + compressQuicknessRankingsValues + subjectiveSeparator +
                 compressNearAwareRankings + compressNearFieldAwarenessRankingsValues + subjectiveSeparator +
                 compressFarAwareRankings + compressFarFieldAwarenessRankingsValues
