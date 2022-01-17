@@ -50,8 +50,8 @@ class Constants {
         START_CLIMB,
         END_CLIMB,
         HIGH_LOW_TOGGLE,
-        CATCH_CARGO,
-        SCORE_OPPOSING_BALL
+        CATCH_EXIT_BALL,
+        SCORE_OPPONENT_BALL
     }
 
     enum class Stage {
