@@ -319,6 +319,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
         <item name="android:layout_weight">10</item>
+        <item name="android:scaleType">centerCrop</item>
     </style>
 
     <style name="btn_error_catch" parent="android:Widget">
@@ -368,7 +369,7 @@
         <item name="android:layout_marginBottom">@dimen/small</item>
         <item name="android:layout_marginLeft">@dimen/small</item>
         <item name="android:layout_marginTop">@dimen/very_small</item>
-        <item name="android:background">@drawable/btn_cancel</item>
+        <item name="android:background">@drawable/btn_cancel_selector</item>
         <item name="android:enabled">true</item>
     </style>
 

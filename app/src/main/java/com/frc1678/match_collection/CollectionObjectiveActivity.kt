@@ -113,10 +113,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionEight--
                 setCounterTexts()
             }
-            Constants.ActionType.CATCH_CARGO.toString() -> {
+            Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
                 numActionNine--
             }
-            Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
+            Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
                 numActionTen--
             }
             Constants.ActionType.END_CLIMB.toString() -> {
@@ -184,10 +184,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionEight++
                 setCounterTexts()
             }
-            Constants.ActionType.CATCH_CARGO.toString() -> {
+            Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
                 numActionNine++
             }
-            Constants.ActionType.SCORE_OPPOSING_BALL.toString() -> {
+            Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
                 numActionTen++
             }
             Constants.ActionType.START_CLIMB.toString() -> {
@@ -567,10 +567,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             popupView.done.setOnClickListener{
                 if (errorReport == 0){
-                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_CARGO)
+                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_EXIT_BALL)
                 }
                 else if (errorReport == 1){
-                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPOSING_BALL)
+                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPONENT_BALL)
                 }
                 popup_open = false
                 enableButtons()
