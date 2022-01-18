@@ -29,8 +29,8 @@ var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.ZERO
 
 var climb_timer: CountDownTimer? = null
-var climb_timer_done = false
-var climb_time: Int? = null
+var climb_timer_paused = false
+var climb_time: Int = 0
 var climb_start_time: String? = null
 var climb_end_time: String? = null
 
@@ -44,8 +44,8 @@ fun resetReferences() {
     is_teleop_activated = false
 
     climb_timer = null
-    climb_timer_done = false
-    climb_time = null
+    climb_timer_paused = false
+    climb_time = 0
     popup_open = false
     climb_level = Constants.ClimbLevel.ZERO
 

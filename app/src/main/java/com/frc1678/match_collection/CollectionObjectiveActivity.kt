@@ -121,7 +121,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             Constants.ActionType.END_CLIMB.toString() -> {
                 removeOneMore = true
-                climb_timer_done = false
+                climb_timer_paused = false
                 climb_timer = null
             }
         }
@@ -192,7 +192,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             Constants.ActionType.START_CLIMB.toString() -> {
                 replaceOneMore = true
-                climb_timer_done = true
+                climb_timer_paused = true
                 climb_timer = null
             }
         }
@@ -232,9 +232,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         tb_action_three.isEnabled = !(!is_teleop_activated or popup_open)
         tb_action_three.isChecked = (isIncap)
 
-        btn_action_eleven.isEnabled = !(!is_teleop_activated or popup_open or isIncap or climb_timer_done)
+        btn_action_eleven.isEnabled = !(!is_teleop_activated or popup_open or isIncap or climb_timer_paused)
         btn_action_eleven.text =
-            if (climb_timer_done) getString(R.string.btn_climbed)
+            if (climb_timer_paused) getString(R.string.btn_climbed)
             else getString(R.string.btn_climb)
 
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
@@ -419,9 +419,13 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if (climb_timer == null) { // timer hasn't started
                     TimerUtility.ClimbTimerThread(this, popupView)
                     climb_start_time = match_time
-                } else if (!climb_timer_done) { // timer is currently running
+                } else if (!climb_timer_paused) { // timer is currently running
                     climb_timer!!.onFinish()
                     climb_end_time = match_time
+                } else { // timer is paused
+                    TimerUtility.ClimbTimerThread(this, popupView)
+                    climb_timer_paused = false
+                    popupView.btn_climb_done.isEnabled = false
                 }
             }
             popupView.btn_climb_cancel.setOnClickListener {
@@ -429,8 +433,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     climb_timer!!.onFinish()
                     climb_timer = null
                 }
-                climb_time = null
-                climb_timer_done = false
+                climb_time = 0
+                climb_timer_paused = false
                 climb_level = Constants.ClimbLevel.ZERO
                 climb_start_time = null
                 climb_end_time = null
