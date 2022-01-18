@@ -426,6 +426,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Begin intent used in onKeyLongPress to restart app from StartingPositionObjectiveActivity.kt.
     private fun intentToPreviousActivity() {
+        is_teleop_activated = false
         startActivity(
             Intent(this, StartingPositionObjectiveActivity::class.java),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
