@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/iv_display_qr"
-        android:layout_width="@dimen/very_large"
-        android:layout_height="@dimen/very_large"
+        android:layout_width="@dimen/very_very_large"
+        android:layout_height="@dimen/very_very_large"
         android:layout_centerInParent="true" />
 
     <Button

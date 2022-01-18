@@ -11,6 +11,8 @@
     <string name="btn_action_four">Other - %1$s</string>
     <string name="btn_action_five">Launch Pad - %1$s</string>
     <string name="btn_action_six">Intake - %1$s</string>
+    <string name="btn_action_nine">Catch - %1$s</string>
+    <string name="btn_action_ten">Score Opp. - %1$s</string>
     <string name="tb_action_bool_one_off">Rotation</string>
     <string name="tb_action_bool_one_on">Rotation Activated</string>
     <string name="tb_action_bool_two_off">Low Goal</string>
@@ -18,8 +20,8 @@
     <string name="tb_action_bool_three_off">Start Incap</string>
     <string name="tb_action_bool_three_on">End Incap</string>
     <string name="tb_action_bool_four_disabled">Climb Attempted</string>
-    <string name="tb_climb_off">Start Climb Attempt</string>
-    <string name="tb_climb_on">End Climb Attempt</string>
+    <string name="btn_climb">New Climb Attempt…</string>
+    <string name="btn_climbed">Climb Attempted</string>
     <string name="btn_error">Error</string>
     <string name="btn_undo">Undo</string>
     <string name="btn_redo">Redo</string>
@@ -46,10 +48,20 @@
     <string name="error_same_teams">PLEASE ENSURE ALL TEAMS ARE DIFFERENT!</string>
     <string name="error_serial_num">NO SERIAL NUMBER - PLEASE ENABLE PHONE PERMISSIONS</string>
     <string name="error_qr">INVALID QR!</string>
-    <string name="error_csv">NO MATCH SCHEDULE FILE!</string>
+    <string name="error_schedule_not_found">NO MATCH SCHEDULE FILE!</string>
     <string name="btn_switch_orientation">Switch Orientation</string>
     <string name="one_starting_position">1</string>
     <string name="two_starting_position">2</string>
     <string name="three_starting_position">3</string>
     <string name="four_starting_position">4</string>
+    <string name="climb_level_4">Level 4</string>
+    <string name="climb_level_3">Level 3</string>
+    <string name="climb_level_2">Level 2</string>
+    <string name="climb_level_1">Level 1</string>
+    <string name="climb_level_0">None</string>
+    <string name="start_climb_timer">Start Timer</string>
+    <string name="climb_timer">Time: %1$s</string>
+    <string name="climb_timer_done">Recorded:\n%1$s sec.</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">Done</string>
 </resources>

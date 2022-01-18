@@ -4,8 +4,10 @@ package com.frc1678.match_collection
 import android.content.Context
 import android.graphics.Color
 import android.os.CountDownTimer
+import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.climb_popup.view.*
 import kotlin.math.roundToInt
 
 // Class for all timer functions.
@@ -51,6 +53,9 @@ class TimerUtility {
                 }
                 // Display 0 and change button states when countdown finishes.
                 override fun onFinish() {
+                    if (!climb_timer_done) { // timer is currently running
+                        climb_timer!!.onFinish()
+                        climb_end_time = match_time}
                     btn_timer.text = context.getString(
                         R.string.tv_time_display,
                         returnStage(time.roundToInt()),
@@ -58,6 +63,7 @@ class TimerUtility {
                     )
                     btn_timer.isEnabled = false
                     btn_proceed.text = context.getString(R.string.btn_proceed)
+                    is_match_time_ended = true
                     btn_proceed.isEnabled = true
                     is_teleop_activated = true
                 }
@@ -77,6 +83,34 @@ class TimerUtility {
                 btn_proceed = btn_proceed,
                 layout = layout
             )
+        }
+    }
+
+    /** A new thread for the climb timer in the climb popup. The timer starts from 0 seconds and
+     * counts up until it is canceled or reaches 2 minutes and 15 seconds. This uses the
+     * [CountDownTimer] class, possibly in an unintended way, but it works. */
+    class ClimbTimerThread(val context: Context, val view: View) : Thread() {
+        var time = 0
+        init { startTimer() }
+
+        private fun startTimer() {
+            climb_timer = object : CountDownTimer(135_000, 1000) {
+                override fun onTick(millisUntilFinished: Long) {
+                    time = (135f - (millisUntilFinished / 1000f)).toInt() + 1
+                    view.btn_climb_timer.text = context.getString(R.string.climb_timer, time.toString())
+                }
+
+                override fun onFinish() {
+                    super.cancel()
+                    climb_timer_done = true
+                    climb_time = time
+                    view.btn_climb_timer.text = context.getString(R.string.climb_timer_done, time.toString())
+                    view.btn_climb_timer.isEnabled = false
+                    view.btn_climb_done.isEnabled = true
+
+                }
+
+            }.start()
         }
     }
 }

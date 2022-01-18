@@ -27,10 +27,13 @@ class Constants {
         FOUR,
         NONE
     }
-    
-    enum class GoalType {
-        HIGH,
-        LOW
+
+    enum class ClimbLevel {
+        ZERO,
+        ONE,
+        TWO,
+        THREE,
+        FOUR,
     }
 
     enum class ActionType {
@@ -46,7 +49,9 @@ class Constants {
         END_INCAP,
         START_CLIMB,
         END_CLIMB,
-        HIGH_LOW_TOGGLE
+        HIGH_LOW_TOGGLE,
+        CATCH_EXIT_BALL,
+        SCORE_OPPONENT_BALL
     }
 
     enum class Stage {

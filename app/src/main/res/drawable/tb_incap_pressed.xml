@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/undo_purple_pressed" />
+    <solid android:color="@color/incap_gray_activated_pressed" />
 
     <corners android:radius="3dp" />
     <stroke
         android:width="10px"
-        android:color="@color/undo_purple" />
+        android:color="@color/incap_gray_pressed" />
 </shape>

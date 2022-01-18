@@ -1,6 +1,7 @@
 // Copyright (c) 2019 FRC Team 1678: Citrus Circuits
 package com.frc1678.match_collection
 
+import android.util.Log
 import java.util.*
 
 // Function to create compressed string displayed in QR.
@@ -36,7 +37,9 @@ fun compress(
     // Define compression characters for objective data.
     val compressTeamNumber = objectiveData.getValue("team_number").toString().split(",")[0]
     val compressScoutId = objectiveData.getValue("scout_id").toString().split(",")[0]
+    val compressStartingPosition = objectiveData.getValue("start_position").toString().split(",")[0]
     val compressTimeline = objectiveData.getValue("timeline").toString().split(",")[0]
+    val compressEndgame = objectiveData.getValue("climb_level").toString().split(",")[0]
 
     // Define compression characters for subjective separators.
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
@@ -44,8 +47,9 @@ fun compress(
     val subjectiveSeparatorInternal = subjectiveData.getValue("_separator_internal").toString()
     // Define compression characters for subjective data.
     val compressQuicknessRankings = subjectiveData.getValue("quickness_rankings").toString().split(",")[0]
-    val compressFieldAwarenessRankings =
-        subjectiveData.getValue("field_awareness_rankings").toString().split(",")[0]
+    val compressNearAwareRankings =
+        subjectiveData.getValue("near_field_awareness_rankings").toString().split(",")[0]
+    val compressFarAwareRankings = subjectiveData.getValue("far_field_awareness_rankings").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -54,8 +58,7 @@ fun compress(
                 compressMatchNumber + match_number + genericSeparator +
                 compressTimestamp + timestamp + genericSeparator +
                 compressVersionNum + match_collection_version_number + genericSeparator +
-                compressScoutName + scout_name.toUpperCase(Locale.US) +
-                genericSectionSeparator
+                compressScoutName + scout_name.toUpperCase(Locale.US)
 
     // Compress and add data specific to Objective Match Collection.
     if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
@@ -63,6 +66,9 @@ fun compress(
         var compressTimelineActions = ""
         if (timeline.isNotEmpty()) {
             for (actions in timeline) {
+                if (actions.getValue("action_type").toString() == "HIGH_LOW_TOGGLE"){
+                    continue
+                }
                 // Compress and add timeline action attributes present for all actions.
                 compressTimelineActions = compressTimelineActions +
                         actions.getValue("match_time") + actionTypeData.getValue(
@@ -74,10 +80,12 @@ fun compress(
         }
         // Compress and add all Objective Match Collection data, including previously compressed
         // timeline actions.
-        compressedMatchInformation = objectiveStartCharacter + compressedMatchInformation +
+        compressedMatchInformation = objectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
                 compressTeamNumber + team_number + objectiveSeparator +
                 compressScoutId + scout_id + objectiveSeparator +
-                compressTimeline + compressTimelineActions
+                compressStartingPosition + starting_position.toString() + objectiveSeparator +
+                compressTimeline + compressTimelineActions + objectiveSeparator +
+                compressEndgame + climb_level
     }
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
@@ -85,15 +93,19 @@ fun compress(
         val compressQuicknessRankingsValues = quickness_rankings[0] + subjectiveSeparatorInternal +
                 quickness_rankings[1] + subjectiveSeparatorInternal +
                 quickness_rankings[2]
-        val compressFieldAwarenessRankingsValues = field_awareness_rankings[0] + subjectiveSeparatorInternal +
-                field_awareness_rankings[1] + subjectiveSeparatorInternal +
-                field_awareness_rankings[2]
+        val compressNearFieldAwarenessRankingsValues = driver_field_awareness_near_rankings[0] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[1] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[2]
+        val compressFarFieldAwarenessRankingsValues = driver_field_awareness_near_rankings[0] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[1] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[2]
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.
-        compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation +
+        compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
                 compressQuicknessRankings + compressQuicknessRankingsValues + subjectiveSeparator +
-                compressFieldAwarenessRankings + compressFieldAwarenessRankingsValues
+                compressNearAwareRankings + compressNearFieldAwarenessRankingsValues + subjectiveSeparator +
+                compressFarAwareRankings + compressFarFieldAwarenessRankingsValues
     }
 
     // Remove unnecessary brackets left from type conversion.
