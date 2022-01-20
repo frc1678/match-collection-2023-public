@@ -53,6 +53,9 @@ class TimerUtility {
                 }
                 // Display 0 and change button states when countdown finishes.
                 override fun onFinish() {
+                    if (!climb_timer_paused) { // timer is currently running
+                        climb_timer!!.onFinish()
+                        climb_end_time = match_time}
                     btn_timer.text = context.getString(
                         R.string.tv_time_display,
                         returnStage(time.roundToInt()),
@@ -94,16 +97,16 @@ class TimerUtility {
             climb_timer = object : CountDownTimer(135_000, 1000) {
                 override fun onTick(millisUntilFinished: Long) {
                     time = (135f - (millisUntilFinished / 1000f)).toInt() + 1
-                    view.btn_climb_timer.text = context.getString(R.string.climb_timer, time.toString())
+                    view.btn_climb_timer.text = context.getString(R.string.climb_timer, (time + climb_time).toString())
                 }
 
                 override fun onFinish() {
                     super.cancel()
-                    climb_timer_done = true
-                    climb_time = time
-                    view.btn_climb_timer.text = context.getString(R.string.climb_timer_done, time.toString())
-                    view.btn_climb_timer.isEnabled = false
+                    climb_timer_paused = true
+                    climb_time += time
+                    view.btn_climb_timer.text = context.getString(R.string.climb_timer_done, climb_time.toString())
                     view.btn_climb_done.isEnabled = true
+
                 }
 
             }.start()
