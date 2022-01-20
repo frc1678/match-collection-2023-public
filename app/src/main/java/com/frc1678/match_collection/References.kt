@@ -26,7 +26,7 @@ var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
-var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.ZERO
+var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 
 var climb_timer: CountDownTimer? = null
 var climb_timer_paused = false
@@ -47,7 +47,7 @@ fun resetReferences() {
     climb_timer_paused = false
     climb_time = 0
     popup_open = false
-    climb_level = Constants.ClimbLevel.ZERO
+    climb_level = Constants.ClimbLevel.NONE
 
     timestamp = 0
 

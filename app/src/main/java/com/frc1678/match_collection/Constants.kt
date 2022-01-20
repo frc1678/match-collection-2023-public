@@ -29,7 +29,7 @@ class Constants {
     }
 
     enum class ClimbLevel {
-        ZERO,
+        NONE,
         ONE,
         TWO,
         THREE,
