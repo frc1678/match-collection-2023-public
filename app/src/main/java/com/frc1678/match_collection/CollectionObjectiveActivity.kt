@@ -435,7 +435,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 }
 
               climb_time = 0
-                climb_timer_done = false
+                climb_timer_paused = false
                 climb_level = Constants.ClimbLevel.NONE
                 climb_start_time = null
                 climb_end_time = null
