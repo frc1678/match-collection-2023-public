@@ -431,7 +431,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 }
                 climb_time = null
                 climb_timer_done = false
-                climb_level = Constants.ClimbLevel.ZERO
+                climb_level = Constants.ClimbLevel.NONE
                 climb_start_time = null
                 climb_end_time = null
                 popupWindow.dismiss()
@@ -447,14 +447,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 enableButtons()
             }
             popupView.btn_climb_lv0.isActivated = true
-            climb_level = Constants.ClimbLevel.ZERO
+            climb_level = Constants.ClimbLevel.NONE
             popupView.btn_climb_lv0.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = true
                 popupView.btn_climb_lv1.isActivated = false
                 popupView.btn_climb_lv2.isActivated = false
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.ZERO
+                climb_level = Constants.ClimbLevel.NONE
             }
             popupView.btn_climb_lv1.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
