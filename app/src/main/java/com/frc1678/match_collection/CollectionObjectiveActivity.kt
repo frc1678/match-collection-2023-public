@@ -413,6 +413,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             val popupWindow = PopupWindow(popupView, width, height, false)
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
+            climb_time = 0
             enableButtons()
             popupView.btn_climb_done.isEnabled = false
             popupView.btn_climb_timer.setOnClickListener {
