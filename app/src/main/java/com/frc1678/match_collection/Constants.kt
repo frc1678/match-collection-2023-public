@@ -6,6 +6,7 @@ class Constants {
     companion object {
         const val NONE_VALUE: String = "NONE"
         const val NUMBER_OF_ACTIVE_SCOUTS: Int = 18
+        const val TBA_KEY = "caln"
     }
 
     enum class ModeSelection {
