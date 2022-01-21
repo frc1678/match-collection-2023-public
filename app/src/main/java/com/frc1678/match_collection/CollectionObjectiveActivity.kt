@@ -224,7 +224,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         btn_action_six.isEnabled = !(!isTimerRunning or popup_open or isIncap)
 
-        btn_error.isEnabled = !(!isTimerRunning or popup_open or isIncap)
+        btn_error.isEnabled = !(!isTimerRunning or popup_open)
 
         tb_action_two.isEnabled = !(popup_open or isIncap or !isTimerRunning)
         tb_action_two.isChecked = (goalTypeIsHigh)
