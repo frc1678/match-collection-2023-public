@@ -71,7 +71,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         val team = MatchSchedule.contents!!
             .get(matchNumber)?.asJsonObject
             ?.get("teams")?.asJsonArray
-            ?.get(scoutId - 1)?.asJsonObject
+            ?.get(scoutId)?.asJsonObject
             ?: return
         teamInput.setText(team.get("number")!!.asString)
         alliance_color =
@@ -99,6 +99,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     /** Automatically assign team number(s) based on collection mode. */
     private fun autoAssignTeamInputsGivenMatch() {
+        if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
         if (MatchSchedule.fileExists()) {
             if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                 // Assign three scouts per robot based on scout ID in Objective Match Collection.
