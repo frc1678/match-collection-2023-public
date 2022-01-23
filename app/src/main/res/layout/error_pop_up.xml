@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/popup_background">
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2.5">
 
         <Button
             android:id="@+id/catch_cargo"
@@ -20,12 +14,5 @@
             android:id="@+id/score_opp"
             style="@style/btn_error_score"
             android:text="@string/btn_action_ten"/>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/cancel"
-        style="@style/btn_error_cancel"
-        android:text="@string/cancel" />
 
 </LinearLayout>

@@ -550,7 +550,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popupView, // Custom view to show in popup window
             LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
             600, // Window height
-            false
+            true
         )
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
 
@@ -568,8 +568,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popup_open = false
             enableButtons()
         }
-        popupView.cancel.setOnClickListener {
-            popupWindow.dismiss()
+        popupWindow.setOnDismissListener {
             popup_open = false
             enableButtons()
         }
