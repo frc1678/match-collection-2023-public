@@ -217,9 +217,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
+        btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap or !is_teleop_activated)
         btn_action_three.isEnabled = !(!isTimerRunning or popup_open or isIncap or !goalTypeIsHigh)
-        btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap or !goalTypeIsHigh)
+        btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap or !goalTypeIsHigh or !is_teleop_activated)
         btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap or !goalTypeIsHigh)
 
         btn_action_six.isEnabled = !(!isTimerRunning or popup_open or isIncap)
