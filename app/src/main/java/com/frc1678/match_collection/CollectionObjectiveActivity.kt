@@ -115,14 +115,22 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
                 numActionNine--
+                showErrorPopup(btn_error)
             }
             Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
                 numActionTen--
+                showErrorPopup(btn_error)
             }
             Constants.ActionType.END_CLIMB.toString() -> {
                 removeOneMore = true
                 climb_timer_paused = false
                 climb_timer = null
+            }
+            Constants.ActionType.START_INCAP.toString() -> {
+                tb_action_three.isChecked = false
+            }
+            Constants.ActionType.END_INCAP.toString() -> {
+                tb_action_three.isChecked = true
             }
         }
 
@@ -186,14 +194,22 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
                 numActionNine++
+                showErrorPopup(btn_error)
             }
             Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
                 numActionTen++
+                showErrorPopup(btn_error)
             }
             Constants.ActionType.START_CLIMB.toString() -> {
                 replaceOneMore = true
                 climb_timer_paused = true
                 climb_timer = null
+            }
+            Constants.ActionType.START_INCAP.toString() -> {
+                tb_action_three.isChecked = true
+            }
+            Constants.ActionType.END_INCAP.toString() -> {
+                tb_action_three.isChecked = false
             }
         }
 
@@ -207,14 +223,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Enable and disable buttons based on actions in timeline and timer stage.
     private fun enableButtons() {
-        var isIncap = false
-
-        // Define condition booleans based on actions in timeline, if existent.
-        if (timeline.size > 0) {
-            isIncap =
-                timeline[timeline.size - 1].containsValue(Constants.ActionType.START_INCAP.toString())
-        }
-
+        val isIncap = tb_action_three.isChecked
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap or !is_teleop_activated)
@@ -230,7 +239,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         tb_action_two.isChecked = (goalTypeIsHigh)
 
         tb_action_three.isEnabled = !(!is_teleop_activated or popup_open)
-        tb_action_three.isChecked = (isIncap)
 
         btn_action_eleven.isEnabled = !(!is_teleop_activated or popup_open or isIncap or climb_timer_paused)
         btn_action_eleven.text =
@@ -507,81 +515,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         btn_error.setOnClickListener {
-            popup_open = true
-            enableButtons()
-            val popupView = View.inflate(this, R.layout.error_pop_up,null)
-            var errorReport : Int? = null
-            popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
-            popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
-            // Inflate a custom view using layout inflater
-
-            // Initialize a new instance of popup window
-            val popupWindow = PopupWindow(
-                popupView, // Custom view to show in popup window
-                LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
-                600, // Window height
-                false
-            )
-            popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
-
-            popupView.catch_cargo.setOnClickListener{
-                if(errorReport != 0) {
-                    popupView.catch_cargo.isActivated = true
-                    if (errorReport == 1) {
-                        popupView.score_opp.isActivated = false
-                        numActionTen--
-                        popupView.score_opp.text =
-                            getString(R.string.btn_action_ten, numActionTen.toString())
-                    }
-                    numActionNine++
-                    popupView.catch_cargo.text =
-                        getString(R.string.btn_action_nine, numActionNine.toString())
-                    errorReport = 0
-                    popupView.done.isEnabled = true
-                }
-            }
-            popupView.score_opp.setOnClickListener{
-                if(errorReport != 1) {
-                    popupView.score_opp.text =
-                        getString(R.string.btn_action_ten, numActionTen.toString())
-                    popupView.score_opp.isActivated = true
-                    if (errorReport == 0) {
-                        popupView.catch_cargo.isActivated = false
-                        numActionNine--
-                        popupView.catch_cargo.text =
-                            getString(R.string.btn_action_nine, numActionNine.toString())
-                    }
-                    numActionTen++
-                    popupView.score_opp.text =
-                        getString(R.string.btn_action_ten, numActionTen.toString())
-                    errorReport = 1
-                    popupView.done.isEnabled = true
-                }
-            }
-            popupView.cancel.setOnClickListener{
-                if(errorReport==0){
-                    numActionNine--
-                    popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
-                }
-                else if(errorReport==1){
-                    numActionTen--
-                    popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
-                }
-                popup_open = false
-                enableButtons()
-                popupWindow.dismiss()
-            }
-            popupView.done.setOnClickListener{
-                if (errorReport == 0){
-                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_EXIT_BALL)
-                }
-                else if (errorReport == 1){
-                    timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPONENT_BALL)
-                }
-                popup_open = false
-                enableButtons()
-                popupWindow.dismiss()
-            }
+            showErrorPopup(it)
         }
 
         tb_action_two.setOnClickListener {
@@ -600,6 +534,45 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         }
 
+    }
+
+    private fun showErrorPopup(view: View) {
+        popup_open = true
+        enableButtons()
+
+        // Inflate a custom view using layout inflater
+        val popupView = View.inflate(this, R.layout.error_pop_up,null)
+        popupView.catch_cargo.text = getString(R.string.btn_action_nine, numActionNine.toString())
+        popupView.score_opp.text = getString(R.string.btn_action_ten, numActionTen.toString())
+
+        // Initialize a new instance of popup window
+        val popupWindow = PopupWindow(
+            popupView, // Custom view to show in popup window
+            LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
+            600, // Window height
+            false
+        )
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
+
+        popupView.catch_cargo.setOnClickListener {
+            numActionNine++
+            timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_EXIT_BALL)
+            popupWindow.dismiss()
+            popup_open = false
+            enableButtons()
+        }
+        popupView.score_opp.setOnClickListener {
+            numActionTen++
+            timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPONENT_BALL)
+            popupWindow.dismiss()
+            popup_open = false
+            enableButtons()
+        }
+        popupView.cancel.setOnClickListener {
+            popupWindow.dismiss()
+            popup_open = false
+            enableButtons()
+        }
     }
 
     // Set team number view to team number defined in References.kt and set team number to alliance color.
