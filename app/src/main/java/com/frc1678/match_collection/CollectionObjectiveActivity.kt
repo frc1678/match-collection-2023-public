@@ -476,7 +476,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv2.isActivated = false
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.ONE
+                climb_level = Constants.ClimbLevel.LOW
             }
             popupView.btn_climb_lv2.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
@@ -484,7 +484,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv2.isActivated = true
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.TWO
+                climb_level = Constants.ClimbLevel.MID
             }
             popupView.btn_climb_lv3.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
@@ -492,7 +492,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv2.isActivated = false
                 popupView.btn_climb_lv3.isActivated = true
                 popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.THREE
+                climb_level = Constants.ClimbLevel.HIGH
             }
             popupView.btn_climb_lv4.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
@@ -500,7 +500,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv2.isActivated = false
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = true
-                climb_level = Constants.ClimbLevel.FOUR
+                climb_level = Constants.ClimbLevel.TRAVERSAL
             }
         }
 
