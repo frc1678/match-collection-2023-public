@@ -5,8 +5,11 @@ import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
+import android.widget.CompoundButton
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
@@ -49,6 +52,10 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelOne.setTeamNumber(teamNumber = teamNumberOne)
         panelTwo.setTeamNumber(teamNumber = teamNumberTwo)
         panelThree.setTeamNumber(teamNumber = teamNumberThree)
+
+        panelOne.initFarToggle()
+        panelTwo.initFarToggle()
+        panelThree.initFarToggle()
 
         panelOne.setAllianceColor()
         panelTwo.setAllianceColor()

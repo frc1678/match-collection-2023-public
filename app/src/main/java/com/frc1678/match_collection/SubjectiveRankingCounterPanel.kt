@@ -2,6 +2,7 @@
 package com.frc1678.match_collection
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,19 @@ class SubjectiveRankingCounterPanel : Fragment() {
         }
     }
 
+     fun initFarToggle() {
+        Log.e("function", "called")
+        far_toggle.setOnClickListener() {
+            Log.e("setonclick", "whee")
+            if (!can_shoot_far) {
+                can_shoot_far = true
+                Log.e("toggle", "$can_shoot_far")
+            } else {
+                can_shoot_far = false
+                Log.e("toooogle", "$can_shoot_far")
+            }
+        }
+    }
     // Retrieve a HashMap of inputted data of a subjective team counter panel.
     fun getRankingData(): HashMap<String, Int> {
         val rankingData = HashMap<String, Int>()
