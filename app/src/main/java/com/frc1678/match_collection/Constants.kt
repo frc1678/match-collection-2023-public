@@ -31,10 +31,10 @@ class Constants {
 
     enum class ClimbLevel {
         NONE,
-        ONE,
-        TWO,
-        THREE,
-        FOUR,
+        LOW,
+        MID,
+        HIGH,
+        TRAVERSAL,
     }
 
     enum class ActionType {
