@@ -11,117 +11,82 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_weight="5">
 
-        <Button
-            android:id="@+id/btn_undo"
-            style="@style/btn_undo"
-            android:text="@string/btn_undo" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <ToggleButton
-            android:id="@+id/tb_action_two"
-            style="@style/tb_low_high"
-            android:textOff="@string/tb_action_bool_two_off"
-            android:textOn="@string/tb_action_bool_two_on" />
+            <Button
+                android:id="@+id/btn_undo"
+                style="@style/btn_undo"
+                android:text="@string/btn_undo" />
 
-        <Button
-            android:id="@+id/btn_redo"
-            style="@style/btn_redo"
-            android:text="@string/btn_redo" />
+            <TextView
+                android:id="@+id/tv_low"
+                style="@style/goal_position_label"
+                android:text="@string/low_label"
+                android:textColor="@color/low" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_action_one"
+                style="@style/btn_action_low"
+                android:text="@string/btn_action_one" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.25"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_action_five"
+                style="@style/btn_action_five"
+                android:layout_weight="0.765"
+                android:text="@string/btn_action_five" />
 
-        <TextView
-            android:id="@+id/tv_near"
-            style="@style/goal_position_label"
-            android:text="@string/near_label"
-            android:textColor="@color/low_near"/>
+            <ToggleButton
+                android:id="@+id/tb_action_one"
+                style="@style/tb_incap"
+                android:textOff="@string/tb_action_bool_one_off"
+                android:textOn="@string/tb_action_bool_one_on" />
 
-        <TextView
-            android:id="@+id/tv_far"
-            style="@style/goal_position_label"
-            android:text="@string/far_label"
-            android:textColor="@color/low_far"/>
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_redo"
+                style="@style/btn_redo"
+                android:text="@string/btn_redo" />
 
-        <Button
-            android:id="@+id/btn_action_one"
-            style="@style/btn_action_near"
-            android:text="@string/btn_action_one" />
+            <TextView
+                android:id="@+id/tv_high"
+                style="@style/goal_position_label"
+                android:text="@string/high_label"
+                android:textColor="@color/high" />
 
-        <Button
-            android:id="@+id/btn_action_two"
-            style="@style/btn_action_far"
-            android:text="@string/btn_action_two" />
+            <Button
+                android:id="@+id/btn_action_two"
+                style="@style/btn_action_high"
+                android:text="@string/btn_action_two" />
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_action_three"
+                style="@style/btn_action_high"
+                android:text="@string/btn_action_three" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/btn_action_four"
+                style="@style/btn_action_high"
+                android:text="@string/btn_action_four" />
 
-        <Button
-            android:id="@+id/btn_action_three"
-            style="@style/btn_action_near"
-            android:text="@string/btn_action_three" />
+            <Button
+                android:id="@+id/btn_climb"
+                style="@style/btn_climb"
+                android:text="@string/btn_climb" />
 
-        <Button
-            android:id="@+id/btn_action_four"
-            style="@style/btn_action_far"
-            android:text="@string/btn_action_four" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_action_five"
-            style="@style/btn_action_near"
-            android:text="@string/btn_action_five" />
-
-        <Button
-            android:id="@+id/btn_action_eleven"
-            style="@style/btn_climb"
-            android:text="@string/btn_climb"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_action_six"
-            style="@style/btn_action_six"
-            android:text="@string/btn_action_six" />
-
-        <ToggleButton
-            android:id="@+id/tb_action_three"
-            style="@style/tb_incap"
-            android:textOff="@string/tb_action_bool_three_off"
-            android:textOn="@string/tb_action_bool_three_on" />
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -138,14 +103,14 @@
             android:text="@string/btn_timer_start" />
 
         <LinearLayout
-            android:layout_width="150dp"
+            android:layout_width="100dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_team_number"
                 style="@style/tv_standard"
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:background="@color/white"
@@ -154,8 +119,8 @@
             <Button
                 android:id="@+id/btn_error"
                 style="@style/btn_error"
-                android:text="@string/btn_error"
-                android:enabled="false"/>
+                android:enabled="false"
+                android:text="@string/btn_error" />
 
         </LinearLayout>
 

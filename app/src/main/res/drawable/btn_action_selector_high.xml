@@ -2,7 +2,7 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_enabled="false" android:drawable="@drawable/elmt_disabled" />
 
-    <item android:state_pressed="true" android:drawable="@drawable/btn_action_pressed_low_near" />
+    <item android:state_pressed="true" android:drawable="@drawable/btn_action_pressed_high" />
 
-    <item android:drawable="@drawable/btn_action_low_near" android:state_enabled="true" />
+    <item android:drawable="@drawable/btn_action_high" android:state_enabled="true" />
 </selector>

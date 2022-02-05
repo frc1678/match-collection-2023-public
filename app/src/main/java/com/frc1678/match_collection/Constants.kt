@@ -38,19 +38,15 @@ class Constants {
     }
 
     enum class ActionType {
-        SCORE_BALL_HIGH_NEAR_HUB,
-        SCORE_BALL_HIGH_FAR_HUB,
-        SCORE_BALL_HIGH_NEAR_OTHER,
-        SCORE_BALL_HIGH_FAR_OTHER,
+        SCORE_BALL_HIGH_HUB,
         SCORE_BALL_HIGH_LAUNCHPAD,
-        SCORE_BALL_LOW_NEAR_HUB,
-        SCORE_BALL_LOW_FAR_HUB,
+        SCORE_BALL_HIGH_OTHER,
+        SCORE_BALL_LOW,
         INTAKE,
         START_INCAP,
         END_INCAP,
         START_CLIMB,
         END_CLIMB,
-        HIGH_LOW_TOGGLE,
         CATCH_EXIT_BALL,
         SCORE_OPPONENT_BALL
     }

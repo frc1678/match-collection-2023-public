@@ -8,11 +8,11 @@
         <Button
             android:id="@+id/catch_cargo"
             style="@style/btn_error_catch"
-            android:text="@string/btn_action_nine"/>
+            android:text="@string/btn_action_six"/>
 
         <Button
             android:id="@+id/score_opp"
             style="@style/btn_error_score"
-            android:text="@string/btn_action_ten"/>
+            android:text="@string/btn_action_seven"/>
 
 </LinearLayout>
