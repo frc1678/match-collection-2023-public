@@ -66,9 +66,6 @@ fun compress(
         var compressTimelineActions = ""
         if (timeline.isNotEmpty()) {
             for (actions in timeline) {
-                if (actions.getValue("action_type").toString() == "HIGH_LOW_TOGGLE"){
-                    continue
-                }
                 // Compress and add timeline action attributes present for all actions.
                 compressTimelineActions = compressTimelineActions +
                         actions.getValue("match_time") + actionTypeData.getValue(
