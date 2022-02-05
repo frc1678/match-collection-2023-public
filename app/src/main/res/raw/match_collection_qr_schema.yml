@@ -52,6 +52,7 @@ subjective_aim:
   quickness_rankings: [A, list, int] # List of team numbers (ints)
   near_field_awareness_rankings: [B, list, int] # List of team numbers (ints)
   far_field_awareness_rankings: [C, list, int] # List of team numbers (ints)
+  teams_scored_far: [D, list, int] # List of team numbers (ints)
 
 
 # Contains all the enums and their values
