@@ -40,6 +40,22 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         return tempRankingList
     }
 
+    //Create list of teams based on if they can shoot far
+    private fun recordScoredFarData(): ArrayList<Int> {
+        val tempScoredFarList: ArrayList<Int> = arrayListOf()
+
+        if (panelOne.getScoredFarData() != null) {
+            tempScoredFarList.add(teamNumberOne.toInt())
+        }
+        if (panelTwo.getScoredFarData() != null) {
+            tempScoredFarList.add(teamNumberTwo.toInt())
+        }
+        if (panelThree.getScoredFarData() != null) {
+            tempScoredFarList.add(teamNumberThree.toInt())
+        }
+        return tempScoredFarList
+    }
+
     // Initiate subjective_ranking_counter panels for the three teams.
     private fun initPanels() {
         panelOne =
@@ -53,13 +69,14 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelTwo.setTeamNumber(teamNumber = teamNumberTwo)
         panelThree.setTeamNumber(teamNumber = teamNumberThree)
 
+        panelOne.setAllianceColor()
+        panelTwo.setAllianceColor()
+        panelThree.setAllianceColor()
+
         panelOne.initFarToggle()
         panelTwo.initFarToggle()
         panelThree.initFarToggle()
 
-        panelOne.setAllianceColor()
-        panelTwo.setAllianceColor()
-        panelThree.setAllianceColor()
     }
 
     // Initialize proceed button to record ranking data and proceed to MatchInformationEditActivity.kt
@@ -69,6 +86,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             quickness_rankings = recordRankingData(dataName = "Quickness")
             driver_field_awareness_far_rankings = recordRankingData(dataName = "Near Aware")
             driver_field_awareness_near_rankings = recordRankingData(dataName = "Far Aware")
+            teams_scored_far = recordScoredFarData()
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
