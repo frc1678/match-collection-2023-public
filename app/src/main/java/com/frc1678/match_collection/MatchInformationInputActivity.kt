@@ -142,6 +142,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 if (et_match_number.text.toString() != "") {
                     match_number = parseInt(et_match_number.text.toString())
                 }
+            } else {
+                et_team_one.setText("")
+                et_team_two.setText("")
+                et_team_three.setText("")
             }
         }
     }
