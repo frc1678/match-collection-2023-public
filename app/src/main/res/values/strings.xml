@@ -44,6 +44,7 @@
     <string name="error_serial_num">NO SERIAL NUMBER - PLEASE ENABLE PHONE PERMISSIONS</string>
     <string name="error_qr">INVALID QR!</string>
     <string name="error_schedule_not_found">NO MATCH SCHEDULE FILE!</string>
+    <string name="error_scout_id_not_found">NO SCOUT ID FOUND!</string>
     <string name="btn_switch_orientation">Switch Orientation</string>
     <string name="one_starting_position">1</string>
     <string name="two_starting_position">2</string>

@@ -132,6 +132,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
             AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
         }
+
+        if (btn_scout_id.text == "Scout ID: NONE") {
+
+          AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
+      }
     }
 
     // Assign team number based on collection mode when match number is changed.
