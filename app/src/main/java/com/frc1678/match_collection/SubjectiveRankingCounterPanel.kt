@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.view.*
 
 // Create and customize a subjective ranking counter panel fragment for subjective scouting a single team.
 class SubjectiveRankingCounterPanel : Fragment() {
@@ -45,4 +46,9 @@ class SubjectiveRankingCounterPanel : Fragment() {
         }
         return rankingData
     }
+
+    fun getToggleData(): Boolean {
+        return far_toggle.isChecked
+    }
+
 }

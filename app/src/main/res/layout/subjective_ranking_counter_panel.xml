@@ -12,6 +12,15 @@
         android:layout_weight="1"
         android:textSize="@dimen/medium" />
 
+    <ToggleButton
+        android:layout_height="0dp"
+        android:layout_width="@dimen/very_large"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:id="@+id/far_toggle"
+        android:textOff="Cannot shoot far"
+        android:textOn="Can shoot far"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
