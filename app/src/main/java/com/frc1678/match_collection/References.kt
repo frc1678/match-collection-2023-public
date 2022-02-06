@@ -38,8 +38,7 @@ var climb_end_time: String? = null
 var quickness_rankings: ArrayList<String> = ArrayList()
 var driver_field_awareness_near_rankings: ArrayList<String> = ArrayList()
 var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
-var teams_scored_far: ArrayList <Int> = ArrayList()
-var can_shoot_far: Boolean = false
+var can_shoot_far_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
 fun resetReferences() {
@@ -59,7 +58,7 @@ fun resetReferences() {
     quickness_rankings = ArrayList()
     driver_field_awareness_near_rankings = ArrayList()
     driver_field_awareness_far_rankings = ArrayList()
-    teams_scored_far = ArrayList()
+    can_shoot_far_list = ArrayList()
 
     starting_position = Constants.StartingPosition.NONE
 }

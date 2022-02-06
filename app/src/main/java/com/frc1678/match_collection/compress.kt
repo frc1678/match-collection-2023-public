@@ -97,8 +97,15 @@ fun compress(
         val compressFarFieldAwarenessRankingsValues = driver_field_awareness_near_rankings[0] + subjectiveSeparatorInternal +
                 driver_field_awareness_near_rankings[1] + subjectiveSeparatorInternal +
                 driver_field_awareness_near_rankings[2]
-       // val compressTeamsScoredFarValues = teams_scored_far[0] + subjectiveSeparatorInternal + teams_scored_far[1] + subjectiveSeparatorInternal +
-                teams_scored_far[2]
+
+        var compressTeamsScoredFarValues = ""
+
+        when (can_shoot_far_list.size) {
+            1 -> compressTeamsScoredFarValues = can_shoot_far_list[0]
+            2 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveSeparatorInternal + can_shoot_far_list[1]
+            3 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveSeparatorInternal + can_shoot_far_list[1] +
+                    subjectiveSeparatorInternal + can_shoot_far_list[2]
+        }
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.
@@ -106,7 +113,7 @@ fun compress(
                 compressQuicknessRankings + compressQuicknessRankingsValues + subjectiveSeparator +
                 compressNearAwareRankings + compressNearFieldAwarenessRankingsValues + subjectiveSeparator +
                 compressFarAwareRankings + compressFarFieldAwarenessRankingsValues + subjectiveSeparator +
-                compressTeamsScoredFar // + compressTeamsScoredFarValues
+                compressTeamsScoredFar + compressTeamsScoredFarValues
     }
 
     // Remove unnecessary brackets left from type conversion.

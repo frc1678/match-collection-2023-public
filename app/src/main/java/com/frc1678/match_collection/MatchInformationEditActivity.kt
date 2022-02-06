@@ -51,6 +51,17 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                 ranking[ranking.indexOf(teamNumberTwo)] = et_team_two.text.toString()
                 ranking[ranking.indexOf(teamNumberThree)] = et_team_three.text.toString()
             }
+0
+            if (can_shoot_far_list.contains(teamNumberOne)) {
+                can_shoot_far_list[can_shoot_far_list.indexOf(teamNumberOne)] = et_team_one.text.toString()
+            }
+            if (can_shoot_far_list.contains(teamNumberTwo)) {
+                can_shoot_far_list[can_shoot_far_list.indexOf(teamNumberTwo)] = et_team_two.text.toString()
+            }
+            if (can_shoot_far_list.contains(teamNumberThree)) {
+                can_shoot_far_list[can_shoot_far_list.indexOf(teamNumberThree)] = et_team_three.text.toString()
+            }
+
         }
     }
 

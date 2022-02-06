@@ -17,11 +17,11 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private lateinit var panelTwo: SubjectiveRankingCounterPanel
     private lateinit var panelThree: SubjectiveRankingCounterPanel
 
+    private lateinit var panelList: ArrayList<SubjectiveRankingCounterPanel>
+
     private lateinit var teamNumberOne: String
     private lateinit var teamNumberTwo: String
     private lateinit var teamNumberThree: String
-
-    private var numHumanShots = 0
 
     private fun getExtras() {
         teamNumberOne = intent.extras?.getString("team_one").toString()
@@ -40,20 +40,20 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         return tempRankingList
     }
 
-    //Create list of teams based on if they can shoot far
-    private fun recordScoredFarData(): ArrayList<Int> {
-        val tempScoredFarList: ArrayList<Int> = arrayListOf()
+    // Creates an array of teams based on if they can shoot far
+    private fun recordToggleData(): ArrayList<String> {
+        val tempToggleList: ArrayList<String> = arrayListOf()
 
-        if (panelOne.getScoredFarData() != null) {
-            tempScoredFarList.add(teamNumberOne.toInt())
+        for (x in 0 until panelList.size) {
+            if(panelList[x].getToggleData()) {
+                when (x) {
+                    0 -> tempToggleList.add(teamNumberOne)
+                    1 -> tempToggleList.add(teamNumberTwo)
+                    2 -> tempToggleList.add(teamNumberThree)
+                }
+            }
         }
-        if (panelTwo.getScoredFarData() != null) {
-            tempScoredFarList.add(teamNumberTwo.toInt())
-        }
-        if (panelThree.getScoredFarData() != null) {
-            tempScoredFarList.add(teamNumberThree.toInt())
-        }
-        return tempScoredFarList
+        return tempToggleList
     }
 
     // Initiate subjective_ranking_counter panels for the three teams.
@@ -65,6 +65,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelThree =
             supportFragmentManager.findFragmentById(R.id.robotThree) as SubjectiveRankingCounterPanel
 
+        panelList =
+            arrayListOf(panelOne,  panelTwo, panelThree)
+
         panelOne.setTeamNumber(teamNumber = teamNumberOne)
         panelTwo.setTeamNumber(teamNumber = teamNumberTwo)
         panelThree.setTeamNumber(teamNumber = teamNumberThree)
@@ -72,10 +75,6 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelOne.setAllianceColor()
         panelTwo.setAllianceColor()
         panelThree.setAllianceColor()
-
-        panelOne.initFarToggle()
-        panelTwo.initFarToggle()
-        panelThree.initFarToggle()
 
     }
 
@@ -86,7 +85,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             quickness_rankings = recordRankingData(dataName = "Quickness")
             driver_field_awareness_far_rankings = recordRankingData(dataName = "Near Aware")
             driver_field_awareness_near_rankings = recordRankingData(dataName = "Far Aware")
-            teams_scored_far = recordScoredFarData()
+            can_shoot_far_list = recordToggleData()
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
