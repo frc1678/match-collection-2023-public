@@ -46,7 +46,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
          * */
         var contents: JsonObject? = null
 
-        private val file = File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/${Constants.TBA_KEY}_match_schedule.json")
+        private val file = File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.json")
 
         /** Initializes [`contents`][contents] with the JSON data from the [file]. This should only be called once.
          * After calling this, use `MatchSchedule.contents` to access the data.
