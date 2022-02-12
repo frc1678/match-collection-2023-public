@@ -105,6 +105,8 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.starting_position_activity)
 
+        resetReferences()
+
         setMapImage()
         setBackgrounds()
         initOnClicks()
