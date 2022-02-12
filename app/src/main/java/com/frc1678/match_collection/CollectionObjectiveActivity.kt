@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.KeyEvent
 import android.view.View
@@ -219,6 +220,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
         if (tb_action_one.isChecked) {
             tb_action_one.isChecked = false
             timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
+        }
+
+        if (!climb_timer_paused) {
+            climb_timer_paused = true
+            timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_CLIMB)
         }
     }
 
@@ -489,6 +495,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     // Begin intent used in onKeyLongPress to restart app from StartingPositionObjectiveActivity.kt.
     private fun intentToPreviousActivity() {
         is_teleop_activated = false
+        climb_timer_paused = false
         startActivity(
             Intent(this, StartingPositionObjectiveActivity::class.java),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
