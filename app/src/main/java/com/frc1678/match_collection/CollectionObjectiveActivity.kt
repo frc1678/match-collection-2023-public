@@ -198,7 +198,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap)
 
-        btn_error.isEnabled = !(!isTimerRunning or popup_open or isIncap)
+        btn_error.isEnabled = !(!isTimerRunning or popup_open)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
