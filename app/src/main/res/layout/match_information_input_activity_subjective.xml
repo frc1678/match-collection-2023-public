@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1.75"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <Button
@@ -39,18 +39,16 @@
             style="@style/view_separator_horizontal"
             android:layout_height="@dimen/very_small" />
 
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2.5"
+            android:layout_weight="3"
             android:orientation="vertical">
 
             <Spinner
                 android:id="@+id/spinner_assign_mode"
                 style="@style/btn_white"
-                android:layout_weight="2.25"/>
+                />
 
             <View
                 style="@style/view_separator_horizontal"
@@ -59,13 +57,11 @@
             <Spinner
                 android:id="@+id/spinner_scout_name"
                 style="@style/btn_white"
-                android:layout_weight="0.75"
-                android:gravity="center"/>
+                />
 
         </LinearLayout>
 
         <View
-            android:id="@+id/separator_name_id"
             style="@style/view_separator_horizontal"
             android:layout_height="@dimen/very_small" />
 
@@ -73,25 +69,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:layout_weight="0.9">
-
-            <Button
-                android:id="@+id/btn_scout_id"
-                style="@style/btn_white"
-                android:background="@color/white"
-                android:text="@string/btn_id_default"
-                android:layout_weight="0.1"/>
-
-            <View
-                style="@style/view_separator_horizontal"
-                android:layout_height="@dimen/very_very_small"
-                android:layout_weight="0.25"/>
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/tv_version_number"
                 style="@style/btn_white"
                 android:background="@color/white"
-                android:layout_weight="5"
+                android:layout_weight="1"
                 android:text="@string/tv_version_num" />
 
         </LinearLayout>
@@ -134,7 +118,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.99"
             android:orientation="vertical">
 
             <TextView
@@ -149,53 +133,47 @@
 
         </LinearLayout>
 
+        <View
+            android:id="@+id/separator_team_one_two"
+            style="@style/view_separator_horizontal" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.99"
             android:orientation="vertical">
-
-            <View
-                android:id="@+id/separator_team_one_two"
-                style="@style/view_separator_horizontal"
-                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_hint_team_two"
                 style="@style/tv_standard_linear_layout"
-                android:text="@string/tv_team_number_input_two"
-                android:visibility="invisible" />
+                android:text="@string/tv_team_number_input_two" />
 
             <EditText
                 android:id="@+id/et_team_two"
                 style="@style/et_standard_linear_layout_number"
-                android:maxLength="5"
-                android:visibility="invisible" />
+                android:maxLength="5" />
 
         </LinearLayout>
+
+        <View
+            android:id="@+id/separator_team_two_three"
+            style="@style/view_separator_horizontal" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.99"
             android:orientation="vertical">
-
-            <View
-                android:id="@+id/separator_team_two_three"
-                style="@style/view_separator_horizontal"
-                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/tv_hint_team_three"
                 style="@style/tv_standard_linear_layout"
-                android:text="@string/tv_team_number_input_three"
-                android:visibility="invisible" />
+                android:text="@string/tv_team_number_input_three" />
 
             <EditText
                 android:id="@+id/et_team_three"
                 style="@style/et_standard_linear_layout_number"
-                android:maxLength="5"
-                android:visibility="invisible" />
+                android:maxLength="5" />
 
         </LinearLayout>
 
