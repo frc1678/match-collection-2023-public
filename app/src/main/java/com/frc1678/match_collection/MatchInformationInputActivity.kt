@@ -477,7 +477,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         serial_number = getSerialNum(context = this)
 
-        resetReferences()
+        resetStartingReferences()
 
         MatchSchedule.read()
 
