@@ -133,10 +133,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
         }
 
-        if ((collection_mode == Constants.ModeSelection.OBJECTIVE) and (btn_scout_id.text == "Scout ID: NONE")
-            or (scout_id.toIntOrNull() == null)) {
-
-            AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
+        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+            if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
+                AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
+            }
         }
     }
 
