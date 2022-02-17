@@ -52,7 +52,6 @@ fun resetCollectionReferences() {
 
     timestamp = 0
 
-    team_number = ""
     timeline = ArrayList()
 
     quickness_rankings = ArrayList()
@@ -63,4 +62,5 @@ fun resetCollectionReferences() {
 
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
+    team_number = ""
 }
