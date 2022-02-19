@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.view.KeyEvent
 import android.view.View
@@ -189,7 +190,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     // Enable and disable buttons based on actions in timeline and timer stage.
-    private fun enableButtons() {
+    fun enableButtons()
+    {
         val isIncap = tb_action_one.isChecked
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
@@ -215,7 +217,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     // Function to end incap if still activated at end of the match.
-    private fun endAction() {
+    fun endAction() {
         if (tb_action_one.isChecked) {
             tb_action_one.isChecked = false
             timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
@@ -261,6 +263,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         context = this,
                         btn_timer = btn_timer,
                         btn_proceed = btn_proceed_edit,
+                        btn_incap = tb_action_one,
                         layout = objective_match_collection_layout
                     )
                 isTimerRunning = true
