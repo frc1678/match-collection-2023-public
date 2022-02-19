@@ -2,6 +2,7 @@
 package com.frc1678.match_collection
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,8 +36,8 @@ class SubjectiveRankingCounterPanel : Fragment() {
     }
 
     // Retrieve a HashMap of inputted data of a subjective team counter panel.
-    fun getRankingData(): HashMap<String, Int> {
-        val rankingData = HashMap<String, Int>()
+    fun getRankingData(): Map<String, Int> {
+        val rankingData = mutableMapOf<String, Int>()
         val rootLayout = panel_linear_layout
         var counter: SubjectiveRankingCounter
 
@@ -44,7 +45,8 @@ class SubjectiveRankingCounterPanel : Fragment() {
             counter = rootLayout.getChildAt(i) as SubjectiveRankingCounter
             rankingData[counter.dataName] = counter.value
         }
-        return rankingData
+        Log.d("subj_ranking_counter_panel", rankingData.toString())
+        return rankingData.toMap()
     }
 
     fun getToggleData(): Boolean {
