@@ -63,7 +63,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
 
     /** Assign team number and alliance color for Objective Scout based on scout ID. */
-    private fun assignTeamByScoutIdObjective(
+    private fun assignTeamByScoutId(
         teamInput: EditText,
         scoutId: Int,
         matchNumber: String
@@ -85,7 +85,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     }
 
     /** Assign team numbers for Subjective Scout based on alliance color. */
-    private fun assignTeamByScoutIdSubjective(
+    private fun assignTeamByAllianceColor(
         teamInput: EditText, allianceColor: Constants.AllianceColor,
         matchNumber: String, iterationNumber: Int
     ) {
@@ -105,7 +105,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 // Assign three scouts per robot based on scout ID in Objective Match Collection.
                 if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
                     if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
-                        assignTeamByScoutIdObjective(
+                        assignTeamByScoutId(
                             teamInput = et_team_one,
                             scoutId = scout_id.toInt() % 6,
                             matchNumber = et_match_number.text.toString()
@@ -115,7 +115,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     // Assign an alliance to a scout based on alliance color in Subjective Match Collection.
                     var iterationNumber = 0
                     listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
-                        assignTeamByScoutIdSubjective(
+                        assignTeamByAllianceColor(
                             teamInput = it,
                             allianceColor = alliance_color,
                             matchNumber = et_match_number.text.toString(),
@@ -133,11 +133,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
         }
 
-        if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null) and (collection_mode ==
-                Constants.ModeSelection.OBJECTIVE)) {
-
-          AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
-      }
+        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+            if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
+                AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
+            }
+        }
     }
 
     // Assign team number based on collection mode when match number is changed.
@@ -420,18 +420,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         }
     }
 
-    // Make inputs visible and invisible depending on collection mode.
-    // TODO CHANGE FUNCTION NAME
-    private fun checkCollectionMode() {
-        if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
-            makeViewVisible(
-                et_team_two, et_team_three, tv_hint_team_two, tv_hint_team_three,
-                separator_team_one_two, separator_team_two_three
-            )
-            makeViewInvisible(separator_name_id, btn_scout_id)
-        }
-    }
-
     // Initialize the onClickListener for the proceed button to go the next screen if inputs pass safety checks.
     private fun initProceedButton() {
         btn_proceed_match_start.setOnClickListener { view ->
@@ -466,6 +454,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         if (collection_mode == Constants.ModeSelection.OBJECTIVE){
             setContentView(R.layout.match_information_input_activity_objective)
+            initScoutIdLongClick()
         } else if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
             setContentView(R.layout.match_information_input_activity_subjective)
         }
@@ -477,14 +466,13 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         serial_number = getSerialNum(context = this)
 
-        resetReferences()
+        resetCollectionReferences()
+        resetStartingReferences()
 
         MatchSchedule.read()
 
         initToggleButtons()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
-        initScoutIdLongClick()
-        checkCollectionMode()
         initMatchNumberTextChangeListener()
         initProceedButton()
         initAssignModeSpinner()

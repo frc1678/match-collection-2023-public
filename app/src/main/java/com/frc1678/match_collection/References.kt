@@ -41,7 +41,7 @@ var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
 var can_shoot_far_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
-fun resetReferences() {
+fun resetCollectionReferences() {
     is_teleop_activated = false
 
     climb_timer = null
@@ -52,13 +52,15 @@ fun resetReferences() {
 
     timestamp = 0
 
-    team_number = ""
     timeline = ArrayList()
 
     quickness_rankings = ArrayList()
     driver_field_awareness_near_rankings = ArrayList()
     driver_field_awareness_far_rankings = ArrayList()
     can_shoot_far_list = ArrayList()
+}
 
+fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
+    team_number = ""
 }
