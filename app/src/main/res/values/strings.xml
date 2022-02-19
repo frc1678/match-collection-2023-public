@@ -39,7 +39,7 @@
     <string name="final_time">0</string>
     <string name="error_back_reset">Do you want to reset everything?</string>
     <string name="error_missing_information">PLEASE INPUT ALL INFORMATION!</string>
-    <string name="error_same_rankings">PLEASE INPUT DIFFERENT RANKING VALUES!</string>
+    <string name="warning_same_rankings">Are you sure you want to have duplicate rankings?</string>
     <string name="error_same_teams">PLEASE ENSURE ALL TEAMS ARE DIFFERENT!</string>
     <string name="error_serial_num">NO SERIAL NUMBER - PLEASE ENABLE PHONE PERMISSIONS</string>
     <string name="error_qr">INVALID QR!</string>

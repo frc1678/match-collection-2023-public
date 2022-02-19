@@ -3,6 +3,7 @@ package com.frc1678.match_collection
 
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -90,19 +91,14 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
             if (quickness_rankings.toString().contains("rank") or driver_field_awareness_far_rankings.toString().contains("rank") or driver_field_awareness_near_rankings.toString().contains("rank")) {
-                createErrorMessage(message = getString(R.string.error_same_rankings), view = view)
+                AlertDialog.Builder(this).setTitle(R.string.warning_same_rankings).setNegativeButton("Cancel") { dialog, _ ->
+                    dialog.cancel()
+                }.setPositiveButton("Proceed") { _: DialogInterface, _: Int ->
+                    goToNextActivity()
+                }.show()
             } else {
                 // Add alliance teams to the intent to be used in MatchInformationEditActivity.kt.
-                val intent = Intent(this, MatchInformationEditActivity::class.java)
-                intent.putExtra("team_one", teamNumberOne)
-                    .putExtra("team_two", teamNumberTwo)
-                    .putExtra("team_three", teamNumberThree)
-                startActivity(
-                    intent, ActivityOptions.makeSceneTransitionAnimation(
-                        this,
-                        btn_proceed_edit, "proceed_button"
-                    ).toBundle()
-                )
+                goToNextActivity()
             }
         }
     }
@@ -132,5 +128,18 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         getExtras()
         initProceedButton()
         initPanels()
+    }
+
+    fun goToNextActivity(){
+        val intent = Intent(this, MatchInformationEditActivity::class.java)
+        intent.putExtra("team_one", teamNumberOne)
+            .putExtra("team_two", teamNumberTwo)
+            .putExtra("team_three", teamNumberThree)
+        startActivity(
+            intent, ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                btn_proceed_edit, "proceed_button"
+            ).toBundle()
+        )
     }
 }

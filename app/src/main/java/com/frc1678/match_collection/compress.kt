@@ -44,13 +44,14 @@ fun compress(
     // Define compression characters for subjective separators.
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
     val subjectiveSeparator = subjectiveData.getValue("_separator").toString()
-    val subjectiveSeparatorInternal = subjectiveData.getValue("_separator_internal").toString()
+    val subjectiveTeamSeparator = subjectiveData.getValue("_team_separator").toString()
     // Define compression characters for subjective data.
-    val compressQuicknessRankings = subjectiveData.getValue("quickness_rankings").toString().split(",")[0]
+    val subjectiveTeamNumberSeparator = subjectiveData.getValue("team_number").toString().split(",")[0]
+    val compressQuicknessRankings = subjectiveData.getValue("quickness_score").toString().split(",")[0]
     val compressNearAwareRankings =
-        subjectiveData.getValue("near_field_awareness_rankings").toString().split(",")[0]
-    val compressFarAwareRankings = subjectiveData.getValue("far_field_awareness_rankings").toString().split(",")[0]
-    val compressTeamsScoredFar = subjectiveData.getValue("teams_scored_far").toString().split(",")[0]
+        subjectiveData.getValue("near_field_awareness_score").toString().split(",")[0]
+    val compressFarAwareRankings = subjectiveData.getValue("far_field_awareness_score").toString().split(",")[0]
+    val compressTeamsScoredFar = subjectiveData.getValue("scored_far").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -87,37 +88,52 @@ fun compress(
     }
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
-        // Compress rendezvous agility and agility rankings.
-        val compressQuicknessRankingsValues = quickness_rankings[0] + subjectiveSeparatorInternal +
-                quickness_rankings[1] + subjectiveSeparatorInternal +
-                quickness_rankings[2]
-        val compressNearFieldAwarenessRankingsValues = driver_field_awareness_near_rankings[0] + subjectiveSeparatorInternal +
-                driver_field_awareness_near_rankings[1] + subjectiveSeparatorInternal +
-                driver_field_awareness_near_rankings[2]
-        val compressFarFieldAwarenessRankingsValues = driver_field_awareness_near_rankings[0] + subjectiveSeparatorInternal +
-                driver_field_awareness_near_rankings[1] + subjectiveSeparatorInternal +
-                driver_field_awareness_near_rankings[2]
+        var subjDataString = ""
+        val teamNumbers = (quickness_rankings + driver_field_awareness_near_rankings + driver_field_awareness_far_rankings + can_shoot_far_list).toSet()
 
-        var compressTeamsScoredFarValues = ""
+        teamNumbers.forEachIndexed{ i, teamNum ->
+            subjDataString += subjectiveTeamNumberSeparator
+            subjDataString += teamNum
+            val quickness = getRankForTeam(quickness_rankings, teamNum)
+            val nearAwareness = getRankForTeam(driver_field_awareness_near_rankings, teamNum)
+            val farAwareness = getRankForTeam(driver_field_awareness_far_rankings, teamNum)
+            val canShootFar = can_shoot_far_list.contains(teamNum)
 
-        when (can_shoot_far_list.size) {
-            1 -> compressTeamsScoredFarValues = can_shoot_far_list[0]
-            2 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveSeparatorInternal + can_shoot_far_list[1]
-            3 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveSeparatorInternal + can_shoot_far_list[1] +
-                    subjectiveSeparatorInternal + can_shoot_far_list[2]
+            subjDataString += subjectiveSeparator
+            subjDataString += compressQuicknessRankings
+            subjDataString += quickness.toString()
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressNearAwareRankings
+            subjDataString += nearAwareness.toString()
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressFarAwareRankings
+            subjDataString += farAwareness.toString()
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressTeamsScoredFar
+            subjDataString += if(canShootFar) "TRUE" else "FALSE"
+
+            if(i+1 != teamNumbers.size) subjDataString += subjectiveTeamSeparator
         }
+
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.
-        compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
-                compressQuicknessRankings + compressQuicknessRankingsValues + subjectiveSeparator +
-                compressNearAwareRankings + compressNearFieldAwarenessRankingsValues + subjectiveSeparator +
-                compressFarAwareRankings + compressFarFieldAwarenessRankingsValues + subjectiveSeparator +
-                compressTeamsScoredFar + compressTeamsScoredFarValues
+        compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator + subjDataString
     }
 
     // Remove unnecessary brackets left from type conversion.
     compressedMatchInformation = compressedMatchInformation.replace("[", "")
 
+    Log.d("compression", compressedMatchInformation)
+
     return compressedMatchInformation
 }
+
+fun getRankForTeam(array: List<String>, teamNumber: String): Int {
+    return array.mapIndexed { i, s -> RankedTeam(s, i+1) }.first { it.teamNumber == teamNumber }.rank
+}
+
+data class RankedTeam(val teamNumber: String, val rank: Int)
