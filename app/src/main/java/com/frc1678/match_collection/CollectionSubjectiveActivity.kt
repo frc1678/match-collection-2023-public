@@ -91,17 +91,16 @@ class CollectionSubjectiveActivity : CollectionActivity() {
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
-            if (quickness_rankings.toString()
-                    .contains("rank") or driver_field_awareness_far_rankings.toString()
-                    .contains("rank") or driver_field_awareness_near_rankings.toString()
-                    .contains("rank")
+            if (quickness_rankings.hasDuplicate()
+                or driver_field_awareness_far_rankings.hasDuplicate()
+                or driver_field_awareness_near_rankings.hasDuplicate()
             ) {
                 AlertDialog.Builder(this).setTitle(R.string.warning_same_rankings)
                     .setNegativeButton("Cancel") { dialog, _ ->
                         dialog.cancel()
                     }.setPositiveButton("Proceed") { _: DialogInterface, _: Int ->
-                    goToNextActivity()
-                }.show()
+                        goToNextActivity()
+                    }.show()
             } else {
                 // Add alliance teams to the intent to be used in MatchInformationEditActivity.kt.
                 goToNextActivity()

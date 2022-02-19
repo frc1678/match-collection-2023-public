@@ -60,7 +60,22 @@ fun resetCollectionReferences() {
     can_shoot_far_list = ArrayList()
 }
 
-data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: TeamRank? = null, val teamThree: TeamRank? = null)
+data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: TeamRank? = null, val teamThree: TeamRank? = null){
+    val list: List<TeamRank?>
+        get() = listOf(teamOne, teamTwo, teamThree)
+
+    val notNullList: List<TeamRank>
+        get() = this.list.filterNotNull()
+
+
+    fun hasDuplicate(): Boolean{
+        val ranks = mutableListOf<Int>()
+        for(team in this.notNullList){
+                ranks.add(team.rank)
+        }
+        return ranks.toSet().toList() != ranks
+    }
+}
 data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
