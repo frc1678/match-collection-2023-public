@@ -141,15 +141,10 @@ fun compress(
 }
 
 fun getRankForTeam(teamRankings: SubjectiveTeamRankings, teamNumber: String): Int {
-    return listOf(teamRankings.teamOne, teamRankings.teamTwo, teamRankings.teamThree)
-        .first { if(it == null) return@first false; return@first it.teamNumber == teamNumber }!!.rank
+    return teamRankings.notNullList.first {it.teamNumber == teamNumber}.rank
 }
 
 fun subjectiveTeamRankingsToList(teamRankings: SubjectiveTeamRankings): List<String> {
-    val list = mutableListOf<String>()
-    for (team in listOf(teamRankings.teamOne, teamRankings.teamTwo, teamRankings.teamThree)) {
-        if (team != null) list.add(team.teamNumber)
-    }
-    return list.toList()
+    return teamRankings.notNullList.map { it.teamNumber }
 }
 
