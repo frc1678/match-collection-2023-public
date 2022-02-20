@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.starting_position_activity.*
 
 class StartingPositionObjectiveActivity:CollectionActivity() {
@@ -104,6 +105,13 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.starting_position_activity)
+
+        if (alliance_color == Constants.AllianceColor.RED) {
+            tv_pos_team_number.setTextColor(resources.getColor(R.color.alliance_red_light, null))
+        } else if (alliance_color == Constants.AllianceColor.BLUE) {
+            tv_pos_team_number.setTextColor(resources.getColor(R.color.alliance_blue_light, null))
+        }
+        tv_pos_team_number.text = team_number
 
         resetCollectionReferences()
 
