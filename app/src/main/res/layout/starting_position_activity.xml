@@ -45,11 +45,20 @@
         <Button
             android:id="@+id/btn_switch_orientation"
             style="@style/btn_switch_orientation"
+            android:layout_weight="2"
             android:text="@string/btn_switch_orientation"/>
+
+        <TextView
+            android:id="@+id/tv_pos_team_number"
+            style="@style/tv_standard"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"/>
 
         <Button
             android:id="@+id/btn_proceed_starting_position"
             style="@style/btn_starting_position_proceed"
+            android:layout_weight="2"
             android:text="@string/btn_proceed" />
 
     </LinearLayout>
