@@ -52,7 +52,7 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
             starting_position = Constants.StartingPosition.ZERO
             setBackgrounds()
         }
-            btn_one.setOnClickListener {
+        btn_one.setOnClickListener {
             starting_position = Constants.StartingPosition.ONE
             setBackgrounds()
         }
