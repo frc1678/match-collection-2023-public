@@ -3,6 +3,7 @@ package com.frc1678.match_collection
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import kotlinx.android.synthetic.main.subjective_ranking_counter.view.*
@@ -56,7 +57,7 @@ class SubjectiveRankingCounter(context: Context, attrs: AttributeSet) :
         dataName =
             counterAttributes.getString(R.styleable.SubjectiveRankingCounter_dataName).toString()
         max = counterAttributes.getInt(R.styleable.SubjectiveRankingCounter_max, 3)
-        min = counterAttributes.getInt(R.styleable.SubjectiveRankingCounter_min, 1)
+        min = counterAttributes.getInt(R.styleable.SubjectiveRankingCounter_min, 0)
         startingValue =
             counterAttributes.getInt(R.styleable.SubjectiveRankingCounter_startingValue, 2)
         increment = counterAttributes.getInt(R.styleable.SubjectiveRankingCounter_increment, 1)
