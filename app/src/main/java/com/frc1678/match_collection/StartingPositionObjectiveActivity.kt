@@ -26,17 +26,20 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
 
     private fun setBackgrounds() {
         if (alliance_color == Constants.AllianceColor.RED) {
+            btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray))
             btn_one.setBackgroundColor(resources.getColor(R.color.red_start_one))
             btn_two.setBackgroundColor(resources.getColor(R.color.red_start_two))
             btn_three.setBackgroundColor(resources.getColor(R.color.red_start_three))
             btn_four.setBackgroundColor(resources.getColor(R.color.red_start_four))
         } else {
+            btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray))
             btn_one.setBackgroundColor(resources.getColor(R.color.blue_start_one))
             btn_two.setBackgroundColor(resources.getColor(R.color.blue_start_two))
             btn_three.setBackgroundColor(resources.getColor(R.color.blue_start_three))
             btn_four.setBackgroundColor(resources.getColor(R.color.blue_start_four))
         }
         when {
+            (starting_position == Constants.StartingPosition.ZERO) -> btn_zero.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.ONE) -> btn_one.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.TWO) -> btn_two.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.THREE) -> btn_three.setBackgroundColor(Color.YELLOW)
@@ -45,6 +48,10 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
     }
 
     private fun initOnClicks() {
+        btn_zero.setOnClickListener {
+            starting_position = Constants.StartingPosition.ZERO
+            setBackgrounds()
+        }
         btn_one.setOnClickListener {
             starting_position = Constants.StartingPosition.ONE
             setBackgrounds()
