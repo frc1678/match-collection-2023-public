@@ -21,6 +21,7 @@ class Constants {
     }
 
     enum class StartingPosition {
+        ZERO,
         ONE,
         TWO,
         THREE,

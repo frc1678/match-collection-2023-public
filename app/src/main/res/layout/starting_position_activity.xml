@@ -16,6 +16,12 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/btn_zero"
+            style="@style/btn_starting_position"
+            android:text="@string/no_show_starting_position"
+            android:textSize="@dimen/smaller_text"/>
+
+        <Button
             android:id="@+id/btn_one"
             style="@style/btn_starting_position"
             android:text="@string/one_starting_position"/>
