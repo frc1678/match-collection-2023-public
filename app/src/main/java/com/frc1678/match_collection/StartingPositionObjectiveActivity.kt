@@ -39,7 +39,7 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
             btn_four.setBackgroundColor(resources.getColor(R.color.blue_start_four))
         }
         when {
-            (starting_position == Constants.StartingPosition.ZERO) -> btn_one.setBackgroundColor(Color.YELLOW)
+            (starting_position == Constants.StartingPosition.ZERO) -> btn_zero.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.ONE) -> btn_one.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.TWO) -> btn_two.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.THREE) -> btn_three.setBackgroundColor(Color.YELLOW)
