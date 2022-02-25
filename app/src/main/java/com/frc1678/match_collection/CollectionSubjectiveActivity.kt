@@ -3,6 +3,7 @@ package com.frc1678.match_collection
 
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -30,14 +31,15 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     }
 
     // Create list of teams ranked by a specific robot gameplay characteristic.
-    private fun recordRankingData(dataName: String): ArrayList<String> {
-        val tempRankingList: ArrayList<String> = arrayListOf("rankOne", "rankTwo", "rankThree")
-
-        tempRankingList[panelOne.getRankingData().getValue(dataName) - 1] = teamNumberOne
-        tempRankingList[panelTwo.getRankingData().getValue(dataName) - 1] = teamNumberTwo
-        tempRankingList[panelThree.getRankingData().getValue(dataName) - 1] = teamNumberThree
-
-        return tempRankingList
+    private fun recordRankingData(dataName: String): SubjectiveTeamRankings {
+        val panelOneData = panelOne.getRankingData().getValue(dataName)
+        val panelTwoData = panelTwo.getRankingData().getValue(dataName)
+        val panelThreeData = panelThree.getRankingData().getValue(dataName)
+        return SubjectiveTeamRankings(
+            TeamRank(teamNumberOne, panelOneData),
+            TeamRank(teamNumberTwo, panelTwoData),
+            TeamRank(teamNumberThree, panelThreeData)
+        )
     }
 
     // Creates an array of teams based on if they can shoot far
@@ -45,7 +47,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         val tempToggleList: ArrayList<String> = arrayListOf()
 
         for (x in 0 until panelList.size) {
-            if(panelList[x].getToggleData()) {
+            if (panelList[x].getToggleData()) {
                 when (x) {
                     0 -> tempToggleList.add(teamNumberOne)
                     1 -> tempToggleList.add(teamNumberTwo)
@@ -66,7 +68,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             supportFragmentManager.findFragmentById(R.id.robotThree) as SubjectiveRankingCounterPanel
 
         panelList =
-            arrayListOf(panelOne,  panelTwo, panelThree)
+            arrayListOf(panelOne, panelTwo, panelThree)
 
         panelOne.setTeamNumber(teamNumber = teamNumberOne)
         panelTwo.setTeamNumber(teamNumber = teamNumberTwo)
@@ -89,20 +91,19 @@ class CollectionSubjectiveActivity : CollectionActivity() {
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
-            if (quickness_rankings.toString().contains("rank") or driver_field_awareness_far_rankings.toString().contains("rank") or driver_field_awareness_near_rankings.toString().contains("rank")) {
-                createErrorMessage(message = getString(R.string.error_same_rankings), view = view)
+            if (quickness_rankings.hasDuplicate()
+                or driver_field_awareness_far_rankings.hasDuplicate()
+                or driver_field_awareness_near_rankings.hasDuplicate()
+            ) {
+                AlertDialog.Builder(this).setTitle(R.string.warning_same_rankings)
+                    .setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }.setPositiveButton("Proceed") { _: DialogInterface, _: Int ->
+                        goToNextActivity()
+                    }.show()
             } else {
                 // Add alliance teams to the intent to be used in MatchInformationEditActivity.kt.
-                val intent = Intent(this, MatchInformationEditActivity::class.java)
-                intent.putExtra("team_one", teamNumberOne)
-                    .putExtra("team_two", teamNumberTwo)
-                    .putExtra("team_three", teamNumberThree)
-                startActivity(
-                    intent, ActivityOptions.makeSceneTransitionAnimation(
-                        this,
-                        btn_proceed_edit, "proceed_button"
-                    ).toBundle()
-                )
+                goToNextActivity()
             }
         }
     }
@@ -132,5 +133,18 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         getExtras()
         initProceedButton()
         initPanels()
+    }
+
+    fun goToNextActivity() {
+        val intent = Intent(this, MatchInformationEditActivity::class.java)
+        intent.putExtra("team_one", teamNumberOne)
+            .putExtra("team_two", teamNumberTwo)
+            .putExtra("team_three", teamNumberThree)
+        startActivity(
+            intent, ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                btn_proceed_edit, "proceed_button"
+            ).toBundle()
+        )
     }
 }

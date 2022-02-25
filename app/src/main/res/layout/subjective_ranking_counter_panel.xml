@@ -51,7 +51,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
-            custom:dataName="Far Aware" />
+            custom:dataName="Far Aware"
+            custom:max="2"/>
     </LinearLayout>
 
 </LinearLayout>

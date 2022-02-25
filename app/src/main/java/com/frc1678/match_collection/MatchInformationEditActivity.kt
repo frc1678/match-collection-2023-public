@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
@@ -47,9 +48,13 @@ class MatchInformationEditActivity : MatchInformationActivity() {
             team_number = et_team_one.text.toString()
         } else {
             for (ranking in listOf(quickness_rankings, driver_field_awareness_far_rankings, driver_field_awareness_near_rankings)) {
-                ranking[ranking.indexOf(teamNumberOne)] = et_team_one.text.toString()
-                ranking[ranking.indexOf(teamNumberTwo)] = et_team_two.text.toString()
-                ranking[ranking.indexOf(teamNumberThree)] = et_team_three.text.toString()
+                Log.d("match-information-edit", quickness_rankings.toString())
+                Log.d("match-information-edit", driver_field_awareness_far_rankings.toString())
+                Log.d("match-information-edit", driver_field_awareness_near_rankings.toString())
+
+                ranking.teamOne?.teamNumber = et_team_one.text.toString()
+                ranking.teamTwo?.teamNumber = et_team_two.text.toString()
+                ranking.teamThree?.teamNumber = et_team_three.text.toString()
             }
 0
             if (can_shoot_far_list.contains(teamNumberOne)) {
