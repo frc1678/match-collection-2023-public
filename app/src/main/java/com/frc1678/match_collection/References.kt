@@ -36,7 +36,7 @@ var climb_end_time: String? = null
 
 // Data specific to Subjective Match Collection QR.
 var quickness_rankings: ArrayList<String> = ArrayList()
-var driver_field_awareness_rankings: ArrayList<String> = ArrayList()
+var driver_field_awareness_near_rankings: ArrayList<String> = ArrayList()
 var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
 var can_shoot_far_list: ArrayList<String> = ArrayList()
 
@@ -55,7 +55,7 @@ fun resetCollectionReferences() {
     timeline = ArrayList()
 
     quickness_rankings = ArrayList()
-    driver_field_awareness_rankings = ArrayList()
+    driver_field_awareness_near_rankings = ArrayList()
     driver_field_awareness_far_rankings = ArrayList()
     can_shoot_far_list = ArrayList()
 }

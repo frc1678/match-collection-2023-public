@@ -1,6 +1,7 @@
 // Copyright (c) 2019 FRC Team 1678: Citrus Circuits
 package com.frc1678.match_collection
 
+import android.util.Log
 import java.util.*
 
 // Function to create compressed string displayed in QR.
@@ -46,8 +47,8 @@ fun compress(
     val subjectiveSeparatorInternal = subjectiveData.getValue("_separator_internal").toString()
     // Define compression characters for subjective data.
     val compressQuicknessRankings = subjectiveData.getValue("quickness_rankings").toString().split(",")[0]
-    val compressAwareRankings =
-        subjectiveData.getValue("field_awareness_rankings").toString().split(",")[0]
+    val compressNearAwareRankings =
+        subjectiveData.getValue("near_field_awareness_rankings").toString().split(",")[0]
     val compressFarAwareRankings = subjectiveData.getValue("far_field_awareness_rankings").toString().split(",")[0]
     val compressTeamsScoredFar = subjectiveData.getValue("teams_scored_far").toString().split(",")[0]
 
@@ -90,12 +91,12 @@ fun compress(
         val compressQuicknessRankingsValues = quickness_rankings[0] + subjectiveSeparatorInternal +
                 quickness_rankings[1] + subjectiveSeparatorInternal +
                 quickness_rankings[2]
-        val compressFieldAwarenessRankingsValues = driver_field_awareness_rankings[0] + subjectiveSeparatorInternal +
-                driver_field_awareness_rankings[1] + subjectiveSeparatorInternal +
-                driver_field_awareness_rankings[2]
-        val compressFarFieldAwarenessRankingsValues = driver_field_awareness_far_rankings[0] + subjectiveSeparatorInternal +
-                driver_field_awareness_far_rankings[1] + subjectiveSeparatorInternal +
-                driver_field_awareness_far_rankings[2]
+        val compressNearFieldAwarenessRankingsValues = driver_field_awareness_near_rankings[0] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[1] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[2]
+        val compressFarFieldAwarenessRankingsValues = driver_field_awareness_near_rankings[0] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[1] + subjectiveSeparatorInternal +
+                driver_field_awareness_near_rankings[2]
 
         var compressTeamsScoredFarValues = ""
 
@@ -110,7 +111,7 @@ fun compress(
         // timeline actions.
         compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
                 compressQuicknessRankings + compressQuicknessRankingsValues + subjectiveSeparator +
-                compressAwareRankings + compressFieldAwarenessRankingsValues + subjectiveSeparator +
+                compressNearAwareRankings + compressNearFieldAwarenessRankingsValues + subjectiveSeparator +
                 compressFarAwareRankings + compressFarFieldAwarenessRankingsValues + subjectiveSeparator +
                 compressTeamsScoredFar + compressTeamsScoredFarValues
     }

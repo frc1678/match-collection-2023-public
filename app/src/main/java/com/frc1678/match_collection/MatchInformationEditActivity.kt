@@ -46,7 +46,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
             team_number = et_team_one.text.toString()
         } else {
-            for (ranking in listOf(quickness_rankings, driver_field_awareness_far_rankings, driver_field_awareness_rankings)) {
+            for (ranking in listOf(quickness_rankings, driver_field_awareness_far_rankings, driver_field_awareness_near_rankings)) {
                 ranking[ranking.indexOf(teamNumberOne)] = et_team_one.text.toString()
                 ranking[ranking.indexOf(teamNumberTwo)] = et_team_two.text.toString()
                 ranking[ranking.indexOf(teamNumberThree)] = et_team_three.text.toString()

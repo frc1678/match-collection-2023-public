@@ -38,12 +38,12 @@
             custom:dataName="Quickness" />
 
         <com.frc1678.match_collection.SubjectiveRankingCounter
-            android:id="@+id/counter_field_awareness"
+            android:id="@+id/counter_field_awareness_near"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
-            custom:dataName="Field Aware" />
+            custom:dataName="Near Aware" />
 
         <com.frc1678.match_collection.SubjectiveRankingCounter
             android:id="@+id/counter_field_awareness_far"
@@ -51,7 +51,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
-            custom:dataName="Far Field Aware" />
+            custom:dataName="Far Aware" />
     </LinearLayout>
 
 </LinearLayout>
