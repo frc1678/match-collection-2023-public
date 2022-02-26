@@ -84,16 +84,16 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     // when proceed button is pressed.
     private fun initProceedButton() {
         btn_proceed_edit.setOnClickListener { view ->
-            quickness_rankings = recordRankingData(dataName = "Quickness")
-            driver_field_awareness_far_rankings = recordRankingData(dataName = "Near Aware")
-            driver_field_awareness_near_rankings = recordRankingData(dataName = "Far Aware")
+            quickness_score = recordRankingData(dataName = "Quickness")
+            field_awareness_score = recordRankingData(dataName = "Field Aware")
+            far_field_rating = recordRankingData(dataName = "Far Aware")
             can_shoot_far_list = recordToggleData()
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
-            if (quickness_rankings.hasDuplicate()
-                or driver_field_awareness_far_rankings.hasDuplicate()
-                or driver_field_awareness_near_rankings.hasDuplicate()
+            if (quickness_score.hasDuplicate()
+                or field_awareness_score.hasDuplicate()
+                or far_field_rating.hasDuplicate()
             ) {
                 AlertDialog.Builder(this).setTitle(R.string.warning_same_rankings)
                     .setNegativeButton("Cancel") { dialog, _ ->

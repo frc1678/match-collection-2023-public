@@ -47,10 +47,10 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
             team_number = et_team_one.text.toString()
         } else {
-            for (ranking in listOf(quickness_rankings, driver_field_awareness_far_rankings, driver_field_awareness_near_rankings)) {
-                Log.d("match-information-edit", quickness_rankings.toString())
-                Log.d("match-information-edit", driver_field_awareness_far_rankings.toString())
-                Log.d("match-information-edit", driver_field_awareness_near_rankings.toString())
+            for (ranking in listOf(quickness_score, field_awareness_score, far_field_rating)) {
+                Log.d("match-information-edit", quickness_score.toString())
+                Log.d("match-information-edit", field_awareness_score.toString())
+                Log.d("match-information-edit", far_field_rating.toString())
 
                 ranking.teamOne?.teamNumber = et_team_one.text.toString()
                 ranking.teamTwo?.teamNumber = et_team_two.text.toString()

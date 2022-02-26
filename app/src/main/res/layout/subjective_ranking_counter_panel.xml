@@ -43,7 +43,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_gravity="center"
-            custom:dataName="Near Aware" />
+            custom:dataName="Field Aware" />
 
         <com.frc1678.match_collection.SubjectiveRankingCounter
             android:id="@+id/counter_field_awareness_far"

@@ -45,17 +45,15 @@ fun compress(
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
     val subjectiveSeparator = subjectiveData.getValue("_separator").toString()
     val subjectiveTeamSeparator = subjectiveData.getValue("_team_separator").toString()
-    // Define compression characters for subjective data.
     val subjectiveTeamNumberSeparator =
         subjectiveData.getValue("team_number").toString().split(",")[0]
-    val compressQuicknessRankings =
-        subjectiveData.getValue("quickness_score").toString().split(",")[0]
-    val compressNearAwareRankings =
-        subjectiveData.getValue("near_field_awareness_score").toString().split(",")[0]
-    val compressFarAwareRankings =
-        subjectiveData.getValue("far_field_awareness_score").toString().split(",")[0]
+    // Define compression characters for subjective data.
+    val compressQuicknessScore = subjectiveData.getValue("quickness_score").toString().split(",")[0]
+    val compressAwareScore = subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
+    val compressFarFieldRating = subjectiveData.getValue("far_field_rating").toString().split(",")[0]
     val compressTeamsScoredFar = subjectiveData.getValue("scored_far").toString().split(",")[0]
     val compressAllianceColor = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
+
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
         compressSchemaVersion + schemaVersion + genericSeparator +
@@ -94,28 +92,28 @@ fun compress(
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
         var subjDataString = ""
         val teamNumbers =
-            (subjectiveTeamRankingsToList(quickness_rankings) + subjectiveTeamRankingsToList(
-                driver_field_awareness_near_rankings
-            ) + subjectiveTeamRankingsToList(driver_field_awareness_far_rankings) + can_shoot_far_list).toSet()
+            (subjectiveTeamRankingsToList(quickness_score) + subjectiveTeamRankingsToList(
+                far_field_rating
+            ) + subjectiveTeamRankingsToList(far_field_rating) + can_shoot_far_list).toSet()
 
         teamNumbers.forEachIndexed { i, teamNum ->
             subjDataString += subjectiveTeamNumberSeparator
             subjDataString += teamNum
-            val quickness = getRankForTeam(quickness_rankings, teamNum)
-            val nearAwareness = getRankForTeam(driver_field_awareness_near_rankings, teamNum)
-            val farAwareness = getRankForTeam(driver_field_awareness_far_rankings, teamNum)
+            val quickness = getRankForTeam(quickness_score, teamNum)
+            val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
+            val farAwareness = getRankForTeam(far_field_rating, teamNum)
             val canShootFar = can_shoot_far_list.contains(teamNum)
 
             subjDataString += subjectiveSeparator
-            subjDataString += compressQuicknessRankings
+            subjDataString += compressQuicknessScore
             subjDataString += quickness.toString()
 
             subjDataString += subjectiveSeparator
-            subjDataString += compressNearAwareRankings
-            subjDataString += nearAwareness.toString()
+            subjDataString += compressAwareScore
+            subjDataString += fieldAwareness.toString()
 
             subjDataString += subjectiveSeparator
-            subjDataString += compressFarAwareRankings
+            subjDataString += compressFarFieldRating
             subjDataString += farAwareness.toString()
 
             subjDataString += subjectiveSeparator
