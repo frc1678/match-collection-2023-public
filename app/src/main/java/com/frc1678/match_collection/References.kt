@@ -35,9 +35,10 @@ var climb_start_time: String? = null
 var climb_end_time: String? = null
 
 // Data specific to Subjective Match Collection QR.
-var quickness_score: ArrayList<String> = ArrayList()
-var field_awareness_score: ArrayList<String> = ArrayList()
-var far_field_rating: ArrayList<String> = ArrayList()
+
+var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var far_field_rating: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var can_shoot_far_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
@@ -54,11 +55,29 @@ fun resetCollectionReferences() {
 
     timeline = ArrayList()
 
-    quickness_score = ArrayList()
-    field_awareness_score = ArrayList()
-    far_field_rating = ArrayList()
+    quickness_score = SubjectiveTeamRankings()
+    field_awareness_score = SubjectiveTeamRankings()
+    far_field_rating = SubjectiveTeamRankings()
     can_shoot_far_list = ArrayList()
 }
+
+data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: TeamRank? = null, val teamThree: TeamRank? = null){
+    val list: List<TeamRank?>
+        get() = listOf(teamOne, teamTwo, teamThree)
+
+    val notNullList: List<TeamRank>
+        get() = this.list.filterNotNull()
+
+
+    fun hasDuplicate(): Boolean{
+        val ranks = mutableListOf<Int>()
+        for(team in this.notNullList){
+                ranks.add(team.rank)
+        }
+        return ranks.toSet().toList() != ranks
+    }
+}
+data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE

@@ -1,6 +1,7 @@
 // Copyright (c) 2019 FRC Team 1678: Citrus Circuits
 package com.frc1678.match_collection
 
+import android.util.Log
 import java.util.*
 
 // Function to create compressed string displayed in QR.
@@ -44,12 +45,14 @@ fun compress(
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
     val subjectiveSeparator = subjectiveData.getValue("_separator").toString()
     val subjectiveTeamSeparator = subjectiveData.getValue("_team_separator").toString()
+    val subjectiveTeamNumberSeparator =
+        subjectiveData.getValue("team_number").toString().split(",")[0]
     // Define compression characters for subjective data.
     val compressQuicknessScore = subjectiveData.getValue("quickness_score").toString().split(",")[0]
     val compressAwareScore = subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressFarFieldRating = subjectiveData.getValue("far_field_rating").toString().split(",")[0]
     val compressTeamsScoredFar = subjectiveData.getValue("scored_far").toString().split(",")[0]
-    val compressAllianceColorIsRed = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
+    val compressAllianceColor = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -77,46 +80,73 @@ fun compress(
         }
         // Compress and add all Objective Match Collection data, including previously compressed
         // timeline actions.
-        compressedMatchInformation = objectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
-                compressTeamNumber + team_number + objectiveSeparator +
-                compressScoutId + scout_id + objectiveSeparator +
-                compressStartingPosition + starting_position.toString() + objectiveSeparator +
-                compressTimeline + compressTimelineActions + objectiveSeparator +
-                compressEndgame + climb_level
+        compressedMatchInformation =
+            objectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
+                    compressTeamNumber + team_number + objectiveSeparator +
+                    compressScoutId + scout_id + objectiveSeparator +
+                    compressStartingPosition + starting_position.toString() + objectiveSeparator +
+                    compressTimeline + compressTimelineActions + objectiveSeparator +
+                    compressEndgame + climb_level
     }
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
-        // Compress rendezvous agility and agility rankings.
-        val compressQuicknessRankingsValues = quickness_score[0] + subjectiveTeamSeparator +
-                quickness_score[1] + subjectiveTeamSeparator +
-                quickness_score[2]
-        val compressFieldAwarenessRankingsValues = field_awareness_score[0] + subjectiveTeamSeparator +
-                field_awareness_score[1] + subjectiveTeamSeparator +
-                field_awareness_score[2]
-        val compressFarFieldAwarenessRankingsValues = far_field_rating[0] + subjectiveTeamSeparator +
-                far_field_rating[1] + subjectiveTeamSeparator +
-                far_field_rating[2]
+        var subjDataString = ""
+        val teamNumbers =
+            (subjectiveTeamRankingsToList(quickness_score) + subjectiveTeamRankingsToList(
+                far_field_rating
+            ) + subjectiveTeamRankingsToList(far_field_rating) + can_shoot_far_list).toSet()
 
-        var compressTeamsScoredFarValues = ""
+        teamNumbers.forEachIndexed { i, teamNum ->
+            subjDataString += subjectiveTeamNumberSeparator
+            subjDataString += teamNum
+            val quickness = getRankForTeam(quickness_score, teamNum)
+            val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
+            val farAwareness = getRankForTeam(far_field_rating, teamNum)
+            val canShootFar = can_shoot_far_list.contains(teamNum)
 
-        when (can_shoot_far_list.size) {
-            1 -> compressTeamsScoredFarValues = can_shoot_far_list[0]
-            2 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveTeamSeparator + can_shoot_far_list[1]
-            3 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveTeamSeparator + can_shoot_far_list[1] +
-                    subjectiveTeamSeparator + can_shoot_far_list[2]
+            subjDataString += subjectiveSeparator
+            subjDataString += compressQuicknessScore
+            subjDataString += quickness.toString()
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressAwareScore
+            subjDataString += fieldAwareness.toString()
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressFarFieldRating
+            subjDataString += farAwareness.toString()
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressTeamsScoredFar
+            subjDataString += if (canShootFar) "TRUE" else "FALSE"
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressAllianceColor
+            subjDataString += if(alliance_color == Constants.AllianceColor.RED) "TRUE" else "FALSE"
+
+            if (i + 1 != teamNumbers.size) subjDataString += subjectiveTeamSeparator
         }
+
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.
-        compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
-                compressQuicknessScore + compressQuicknessRankingsValues + subjectiveSeparator +
-                compressAwareScore + compressFieldAwarenessRankingsValues + subjectiveSeparator +
-                compressFarFieldRating + compressFarFieldAwarenessRankingsValues + subjectiveSeparator +
-                compressTeamsScoredFar + compressTeamsScoredFarValues + compressAllianceColorIsRed
+        compressedMatchInformation =
+            subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator + subjDataString
     }
 
     // Remove unnecessary brackets left from type conversion.
     compressedMatchInformation = compressedMatchInformation.replace("[", "")
 
+    Log.d("compression", compressedMatchInformation)
+
     return compressedMatchInformation
 }
+
+fun getRankForTeam(teamRankings: SubjectiveTeamRankings, teamNumber: String): Int {
+    return teamRankings.notNullList.first {it.teamNumber == teamNumber}.rank
+}
+
+fun subjectiveTeamRankingsToList(teamRankings: SubjectiveTeamRankings): List<String> {
+    return teamRankings.notNullList.map { it.teamNumber }
+}
+
