@@ -95,6 +95,8 @@ class QRGenerateActivity : CollectionActivity() {
 
         initProceedButton()
 
+        timestamp = System.currentTimeMillis() / 1000
+
         // Populate QR code content and display QR if valid (only contains compression characters).
         val qrContents = compress(schema = schemaRead(context = this))
         if (regex.matcher(qrContents).matches()) {
