@@ -74,10 +74,15 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
             setMapImage()
         }
         btn_proceed_starting_position.setOnClickListener { view ->
-            val intent = Intent(this, CollectionObjectiveActivity::class.java)
             if (starting_position != Constants.StartingPosition.NONE) {
                 startActivity(
-                    intent, ActivityOptions.makeSceneTransitionAnimation(
+                    Intent(
+                        this,
+                        if (starting_position == Constants.StartingPosition.ZERO) {
+                            MatchInformationEditActivity::class.java
+                        } else CollectionObjectiveActivity::class.java
+                    ),
+                    ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         btn_proceed_starting_position, "proceed_button"
                     ).toBundle()
