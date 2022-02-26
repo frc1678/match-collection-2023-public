@@ -43,13 +43,13 @@ fun compress(
     // Define compression characters for subjective separators.
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
     val subjectiveSeparator = subjectiveData.getValue("_separator").toString()
-    val subjectiveSeparatorInternal = subjectiveData.getValue("_separator_internal").toString()
+    val subjectiveTeamSeparator = subjectiveData.getValue("_team_separator").toString()
     // Define compression characters for subjective data.
-    val compressQuicknessRankings = subjectiveData.getValue("quickness_rankings").toString().split(",")[0]
-    val compressAwareRankings =
-        subjectiveData.getValue("field_awareness_rankings").toString().split(",")[0]
-    val compressFarAwareRankings = subjectiveData.getValue("far_field_awareness_rankings").toString().split(",")[0]
-    val compressTeamsScoredFar = subjectiveData.getValue("teams_scored_far").toString().split(",")[0]
+    val compressQuicknessScore = subjectiveData.getValue("quickness_score").toString().split(",")[0]
+    val compressAwareScore = subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
+    val compressFarFieldRating = subjectiveData.getValue("far_field_rating").toString().split(",")[0]
+    val compressTeamsScoredFar = subjectiveData.getValue("scored_far").toString().split(",")[0]
+    val compressAllianceColorIsRed = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -87,32 +87,32 @@ fun compress(
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
         // Compress rendezvous agility and agility rankings.
-        val compressQuicknessRankingsValues = quickness_rankings[0] + subjectiveSeparatorInternal +
-                quickness_rankings[1] + subjectiveSeparatorInternal +
-                quickness_rankings[2]
-        val compressFieldAwarenessRankingsValues = driver_field_awareness_rankings[0] + subjectiveSeparatorInternal +
-                driver_field_awareness_rankings[1] + subjectiveSeparatorInternal +
-                driver_field_awareness_rankings[2]
-        val compressFarFieldAwarenessRankingsValues = driver_field_awareness_far_rankings[0] + subjectiveSeparatorInternal +
-                driver_field_awareness_far_rankings[1] + subjectiveSeparatorInternal +
-                driver_field_awareness_far_rankings[2]
+        val compressQuicknessRankingsValues = quickness_score[0] + subjectiveTeamSeparator +
+                quickness_score[1] + subjectiveTeamSeparator +
+                quickness_score[2]
+        val compressFieldAwarenessRankingsValues = field_awareness_score[0] + subjectiveTeamSeparator +
+                field_awareness_score[1] + subjectiveTeamSeparator +
+                field_awareness_score[2]
+        val compressFarFieldAwarenessRankingsValues = far_field_rating[0] + subjectiveTeamSeparator +
+                far_field_rating[1] + subjectiveTeamSeparator +
+                far_field_rating[2]
 
         var compressTeamsScoredFarValues = ""
 
         when (can_shoot_far_list.size) {
             1 -> compressTeamsScoredFarValues = can_shoot_far_list[0]
-            2 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveSeparatorInternal + can_shoot_far_list[1]
-            3 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveSeparatorInternal + can_shoot_far_list[1] +
-                    subjectiveSeparatorInternal + can_shoot_far_list[2]
+            2 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveTeamSeparator + can_shoot_far_list[1]
+            3 -> compressTeamsScoredFarValues = can_shoot_far_list[0] + subjectiveTeamSeparator + can_shoot_far_list[1] +
+                    subjectiveTeamSeparator + can_shoot_far_list[2]
         }
 
         // Compress and add all Subjective Match Collection data including previously compressed
         // timeline actions.
         compressedMatchInformation = subjectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
-                compressQuicknessRankings + compressQuicknessRankingsValues + subjectiveSeparator +
-                compressAwareRankings + compressFieldAwarenessRankingsValues + subjectiveSeparator +
-                compressFarAwareRankings + compressFarFieldAwarenessRankingsValues + subjectiveSeparator +
-                compressTeamsScoredFar + compressTeamsScoredFarValues
+                compressQuicknessScore + compressQuicknessRankingsValues + subjectiveSeparator +
+                compressAwareScore + compressFieldAwarenessRankingsValues + subjectiveSeparator +
+                compressFarFieldRating + compressFarFieldAwarenessRankingsValues + subjectiveSeparator +
+                compressTeamsScoredFar + compressTeamsScoredFarValues + compressAllianceColorIsRed
     }
 
     // Remove unnecessary brackets left from type conversion.

@@ -35,9 +35,9 @@ var climb_start_time: String? = null
 var climb_end_time: String? = null
 
 // Data specific to Subjective Match Collection QR.
-var quickness_rankings: ArrayList<String> = ArrayList()
-var driver_field_awareness_rankings: ArrayList<String> = ArrayList()
-var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
+var quickness_score: ArrayList<String> = ArrayList()
+var field_awareness_score: ArrayList<String> = ArrayList()
+var far_field_rating: ArrayList<String> = ArrayList()
 var can_shoot_far_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
@@ -54,9 +54,9 @@ fun resetCollectionReferences() {
 
     timeline = ArrayList()
 
-    quickness_rankings = ArrayList()
-    driver_field_awareness_rankings = ArrayList()
-    driver_field_awareness_far_rankings = ArrayList()
+    quickness_score = ArrayList()
+    field_awareness_score = ArrayList()
+    far_field_rating = ArrayList()
     can_shoot_far_list = ArrayList()
 }
 

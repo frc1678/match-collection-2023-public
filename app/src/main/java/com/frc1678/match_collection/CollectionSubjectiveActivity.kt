@@ -79,14 +79,14 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     // when proceed button is pressed.
     private fun initProceedButton() {
         btn_proceed_edit.setOnClickListener { view ->
-            quickness_rankings = recordRankingData(dataName = "Quickness")
-            driver_field_awareness_rankings = recordRankingData(dataName = "Field Aware")
-            driver_field_awareness_far_rankings = recordRankingData(dataName = "Far Aware")
+            quickness_score = recordRankingData(dataName = "Quickness")
+            field_awareness_score = recordRankingData(dataName = "Field Aware")
+            far_field_rating = recordRankingData(dataName = "Far Field Aware")
             can_shoot_far_list = recordToggleData()
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
-            if (quickness_rankings.toString().contains("rank") or driver_field_awareness_far_rankings.toString().contains("rank") or driver_field_awareness_rankings.toString().contains("rank")) {
+            if (quickness_score.toString().contains("rank") or far_field_rating.toString().contains("rank") or field_awareness_score.toString().contains("rank")) {
                 createErrorMessage(message = getString(R.string.error_same_rankings), view = view)
             } else {
                 // Add alliance teams to the intent to be used in MatchInformationEditActivity.kt.
