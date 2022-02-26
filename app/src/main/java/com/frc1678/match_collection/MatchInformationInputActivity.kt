@@ -99,43 +99,45 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     /** Automatically assign team number(s) based on collection mode. */
     private fun autoAssignTeamInputsGivenMatch() {
-        if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
-        if (MatchSchedule.fileExists()) {
-            if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
-                // Assign three scouts per robot based on scout ID in Objective Match Collection.
-                if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                    if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
-                        assignTeamByScoutId(
-                            teamInput = et_team_one,
-                            scoutId = scout_id.toInt() % 6,
-                            matchNumber = et_match_number.text.toString()
-                        )
-                    }
-                } else {
-                    // Assign an alliance to a scout based on alliance color in Subjective Match Collection.
-                    var iterationNumber = 0
-                    listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
-                        assignTeamByAllianceColor(
-                            teamInput = it,
-                            allianceColor = alliance_color,
-                            matchNumber = et_match_number.text.toString(),
-                            iterationNumber = iterationNumber
-                        )
-                        iterationNumber++
+        if (match_number < 60) {
+            if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
+            if (MatchSchedule.fileExists()) {
+                if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
+                    // Assign three scouts per robot based on scout ID in Objective Match Collection.
+                    if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                        if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
+                            assignTeamByScoutId(
+                                teamInput = et_team_one,
+                                scoutId = scout_id.toInt() % 6,
+                                matchNumber = et_match_number.text.toString()
+                            )
+                        }
+                    } else {
+                        // Assign an alliance to a scout based on alliance color in Subjective Match Collection.
+                        var iterationNumber = 0
+                        listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
+                            assignTeamByAllianceColor(
+                                teamInput = it,
+                                allianceColor = alliance_color,
+                                matchNumber = et_match_number.text.toString(),
+                                iterationNumber = iterationNumber
+                            )
+                            iterationNumber++
+                        }
                     }
                 }
+            } else {
+                et_team_one.setText("")
+                et_team_two.setText("")
+                et_team_three.setText("")
+
+                AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
             }
-        } else {
-            et_team_one.setText("")
-            et_team_two.setText("")
-            et_team_three.setText("")
 
-            AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
-        }
-
-        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-            if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
-                AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
+            if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
+                    AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
+                }
             }
         }
     }
