@@ -59,7 +59,7 @@ fun compress(
         compressSchemaVersion + schemaVersion + genericSeparator +
                 compressSerialNumber + serial_number + genericSeparator +
                 compressMatchNumber + match_number + genericSeparator +
-                compressTimestamp + timestamp + genericSeparator +
+                compressTimestamp + System.currentTimeMillis() / 1000 + genericSeparator +
                 compressVersionNum + match_collection_version_number + genericSeparator +
                 compressScoutName + scout_name.toUpperCase(Locale.US)
 

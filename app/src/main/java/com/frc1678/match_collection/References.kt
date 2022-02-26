@@ -16,7 +16,6 @@ var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
 var serial_number: String? = ""
 var match_number: Int = 0
 var alliance_color: Constants.AllianceColor = Constants.AllianceColor.NONE
-var timestamp: Long = 0
 var match_collection_version_number: String = "0.0.1"
 var scout_name: String = Constants.NONE_VALUE
 
@@ -50,8 +49,6 @@ fun resetCollectionReferences() {
     climb_time = 0
     popup_open = false
     climb_level = Constants.ClimbLevel.NONE
-
-    timestamp = 0
 
     timeline = ArrayList()
 

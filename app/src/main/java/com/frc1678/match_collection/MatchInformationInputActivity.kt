@@ -392,7 +392,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     // Transition into the next activity and set timestamp for specific match.
     private fun startMatchActivity() {
         match_number = parseInt(et_match_number.text.toString())
-        timestamp = System.currentTimeMillis() / 1000
 
         putIntoStorage(context = this, key = "match_number", value = match_number)
         putIntoStorage(context = this, key = "alliance_color", value = alliance_color)
