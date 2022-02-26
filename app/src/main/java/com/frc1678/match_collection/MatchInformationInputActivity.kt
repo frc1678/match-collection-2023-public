@@ -8,6 +8,9 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Environment
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
@@ -99,7 +102,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     /** Automatically assign team number(s) based on collection mode. */
     private fun autoAssignTeamInputsGivenMatch() {
-        if (match_number < 60) {
             if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
             if (MatchSchedule.fileExists()) {
                 if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
@@ -124,38 +126,50 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                             )
                             iterationNumber++
                         }
+
+                    }
+                } else {
+                    et_team_one.setText("")
+                    et_team_two.setText("")
+                    et_team_three.setText("")
+
+                    AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
+                }
+
+                if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                    if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
+                        AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found)
+                            .show()
                     }
                 }
-            } else {
-                et_team_one.setText("")
-                et_team_two.setText("")
-                et_team_three.setText("")
-
-                AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
             }
-
-            if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
-                    AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
-                }
-            }
-        }
     }
 
     // Assign team number based on collection mode when match number is changed.
     private fun initMatchNumberTextChangeListener() {
-        et_match_number.addTextChangedListener {
-            if (checkInputNotEmpty(et_match_number)) {
-                autoAssignTeamInputsGivenMatch()
-                if (et_match_number.text.toString() != "") {
-                    match_number = parseInt(et_match_number.text.toString())
+        et_match_number.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+                if (checkInputNotEmpty(et_match_number)) {
+                    if (et_match_number.text.toString() != "") {
+                        if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
+                            et_team_one.setText("")
+                            et_team_two.setText("")
+                            et_team_three.setText("")
+                        } else{
+                            autoAssignTeamInputsGivenMatch()
+                            match_number = parseInt(et_match_number.text.toString())
+                        }
+                    }
+                } else {
+                    et_team_one.setText("")
+                    et_team_two.setText("")
+                    et_team_three.setText("")
                 }
-            } else {
-                et_team_one.setText("")
-                et_team_two.setText("")
-                et_team_three.setText("")
             }
-        }
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 
     // Create an alliance color toggle button given its specifications.
