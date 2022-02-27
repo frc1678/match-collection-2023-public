@@ -153,13 +153,15 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
                 if (checkInputNotEmpty(et_match_number)) {
                     if (et_match_number.text.toString() != "") {
-                        if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
-                            et_team_one.setText("")
-                            et_team_two.setText("")
-                            et_team_three.setText("")
-                        } else{
-                            autoAssignTeamInputsGivenMatch()
-                            match_number = parseInt(et_match_number.text.toString())
+                        if (MatchSchedule.fileExists()) {
+                            if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
+                                et_team_one.setText("")
+                                et_team_two.setText("")
+                                et_team_three.setText("")
+                            } else {
+                                autoAssignTeamInputsGivenMatch()
+                                match_number = parseInt(et_match_number.text.toString())
+                            }
                         }
                     }
                 } else {
