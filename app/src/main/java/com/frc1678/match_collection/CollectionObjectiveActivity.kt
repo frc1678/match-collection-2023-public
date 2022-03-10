@@ -196,8 +196,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_three.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap)
 
         btn_error.isEnabled = !(!isTimerRunning or popup_open)
@@ -228,8 +226,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun setCounterTexts() {
         btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
         btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
-        btn_action_three.text = getString(R.string.btn_action_three, numActionThree.toString())
-        btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
         btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
     }
 
@@ -304,18 +300,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Increment button action three by one when clicked and add action to timeline.
-        btn_action_three.setOnClickListener {
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD)
-            numActionThree++
-            setCounterTexts()
-        }
 
-        // Increment button action four by one when clicked and add action to timeline.
-        btn_action_four.setOnClickListener {
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_OTHER)
-            numActionFour++
-            setCounterTexts()
-        }
 
         // Increment button action five by one when clicked and add action to timeline.
         btn_action_five.setOnClickListener {

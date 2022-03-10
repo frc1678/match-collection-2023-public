@@ -24,21 +24,13 @@
                 style="@style/btn_undo"
                 android:text="@string/btn_undo" />
 
-            <TextView
-                android:id="@+id/tv_low"
-                style="@style/goal_position_label"
-                android:text="@string/low_label"
-                android:textColor="@color/low" />
 
-            <Button
-                android:id="@+id/btn_action_one"
-                style="@style/btn_action_low"
-                android:text="@string/btn_action_one" />
+
 
             <Button
                 android:id="@+id/btn_action_five"
                 style="@style/btn_action_five"
-                android:layout_weight="0.765"
+                android:layout_weight="0.57"
                 android:text="@string/btn_action_five" />
 
             <ToggleButton
@@ -60,26 +52,18 @@
                 style="@style/btn_redo"
                 android:text="@string/btn_redo" />
 
-            <TextView
-                android:id="@+id/tv_high"
-                style="@style/goal_position_label"
-                android:text="@string/high_label"
-                android:textColor="@color/high" />
+
 
             <Button
                 android:id="@+id/btn_action_two"
                 style="@style/btn_action_high"
                 android:text="@string/btn_action_two" />
 
-            <Button
-                android:id="@+id/btn_action_three"
-                style="@style/btn_action_high"
-                android:text="@string/btn_action_three" />
 
             <Button
-                android:id="@+id/btn_action_four"
-                style="@style/btn_action_high"
-                android:text="@string/btn_action_four" />
+                android:id="@+id/btn_action_one"
+                style="@style/btn_action_low"
+                android:text="@string/btn_action_one" />
 
             <Button
                 android:id="@+id/btn_climb"

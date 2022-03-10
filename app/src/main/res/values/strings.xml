@@ -5,8 +5,8 @@
     <string name="low_label">Low</string>
     <string name="high_label">High</string>
     <string name="btn_timer_start">Start Match</string>
-    <string name="btn_action_one">Hub - %1$s</string>
-    <string name="btn_action_two">Hub - %1$s</string>
+    <string name="btn_action_one">Low - %1$s</string>
+    <string name="btn_action_two">High - %1$s</string>
     <string name="btn_action_three">Launch Pad - %1$s</string>
     <string name="btn_action_four">Other - %1$s</string>
     <string name="btn_action_five">Intake - %1$s</string>
