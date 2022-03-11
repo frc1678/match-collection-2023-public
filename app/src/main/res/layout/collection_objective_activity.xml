@@ -19,18 +19,22 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+
             <Button
                 android:id="@+id/btn_undo"
                 style="@style/btn_undo"
                 android:text="@string/btn_undo" />
 
 
-
+            <Button
+                android:id="@+id/btn_action_four"
+                style="@style/btn_action_high"
+                android:text="@string/btn_action_four" />
 
             <Button
                 android:id="@+id/btn_action_five"
                 style="@style/btn_action_five"
-                android:layout_weight="0.57"
+                android:layout_weight="1"
                 android:text="@string/btn_action_five" />
 
             <ToggleButton
@@ -58,6 +62,7 @@
                 android:id="@+id/btn_action_two"
                 style="@style/btn_action_high"
                 android:text="@string/btn_action_two" />
+
 
 
             <Button
