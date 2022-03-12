@@ -52,14 +52,10 @@ subjective_aim:
   team_number: [A, int] # int properties not needed but int is more intuitive
   quickness_score: [B, int] # A ranking value between 1 and 3
   field_awareness_score: [C, int] # A ranking value between 1 and 3
-<<<<<<< HEAD
   scored_far: [D, bool] # True if robot scored from far side at least once in the match, else False
-  played_defense: [E, bool] # True if robot played defense during the match, else False
-=======
-  far_field_rating: [D, int] # A ranking value between 1 and 3
-  played_defense: [E, bool] # True if robot played defense at least once in the match, else False
->>>>>>> 74074188d5dad9237dd5e069015926757cd7bcfd
-  alliance_color_is_red: [F, bool] # True if robot was on the red alliance, else False
+  far_field_rating: [E, int] # A ranking value between 1 and 3
+  played_defense: [F, bool] # True if robot played defense at least once in the match, else False
+  alliance_color_is_red: [G, bool] # True if robot was on the red alliance, else False
 
 
 # Contains all the enums and their values
