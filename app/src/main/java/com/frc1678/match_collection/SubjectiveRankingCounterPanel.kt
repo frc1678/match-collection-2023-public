@@ -2,55 +2,65 @@
 package com.frc1678.match_collection
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
-import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.view.*
 
-// Create and customize a subjective ranking counter panel fragment for subjective scouting a single team.
+/**
+ * The subjective ranking counter panel fragment for subjective scouting a single team.
+ * Every team being scouted gets a single panel.
+ *
+ * @see R.layout.subjective_ranking_counter_panel
+ */
 class SubjectiveRankingCounterPanel : Fragment() {
-    // Create a subjective ranking counter panel view through inflation.
+    /**
+     * Inflates the view for this counter panel.
+     */
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.subjective_ranking_counter_panel, container)
-    }
+    ): View? = inflater.inflate(R.layout.subjective_ranking_counter_panel, container)
 
-    // Set specified team number at top of subjective ranking counter panel.
+    /**
+     * Shows the team number at the top of the panel.
+     */
     fun setTeamNumber(teamNumber: String) {
         tv_team_number.text = teamNumber
     }
 
-    // Set text color of team numbers to alliance color.
+    /**
+     * Sets the text color of the team number to the alliance color.
+     */
     fun setAllianceColor() {
-        if (alliance_color == Constants.AllianceColor.RED) {
-            tv_team_number.setTextColor(resources.getColor(R.color.alliance_red_light, null))
-        } else if (alliance_color == Constants.AllianceColor.BLUE) {
-            tv_team_number.setTextColor(resources.getColor(R.color.alliance_blue_light, null))
-        }
+        tv_team_number.setTextColor(
+            resources.getColor(
+                if (alliance_color == Constants.AllianceColor.RED) R.color.alliance_red_light
+                else R.color.alliance_blue_light,
+                null
+            )
+        )
     }
 
-    // Retrieve a HashMap of inputted data of a subjective team counter panel.
-    fun getRankingData(): Map<String, Int> {
-        val rankingData = mutableMapOf<String, Int>()
-        val rootLayout = panel_linear_layout
-        var counter: SubjectiveRankingCounter
+    /**
+     * Gets a map containing the ranking data for the team represented by this panel. The format of
+     * this map is a string, giving the name of the data point, to its value, as an integer.
+     */
+    val rankingData: Map<String, Int>
+        get() = mapOf(
+            "quickness" to counter_quickness.value,
+            "field_awareness" to counter_field_awareness.value
+        )
 
-        for (i in 0 until (rootLayout).childCount) {
-            counter = rootLayout.getChildAt(i) as SubjectiveRankingCounter
-            rankingData[counter.dataName] = counter.value
-        }
-        Log.d("subj_ranking_counter_panel", rankingData.toString())
-        return rankingData.toMap()
-    }
-
-    fun getToggleData(): Boolean {
-        return far_toggle.isChecked
-    }
-
+    /**
+     * Gets a map containing the boolean data for the team represented by this panel. The format of
+     * this map is a string, giving the name of the data point, to its value, as a boolean.
+     */
+    val toggleData: Map<String, Boolean>
+        get() = mapOf(
+            "can_shoot_far" to far_toggle.isChecked,
+            "played_defense" to defense_toggle.isChecked
+        )
 }

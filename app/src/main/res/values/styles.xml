@@ -252,11 +252,16 @@
 
     <style name="tv_team_number_subj" parent="android:Widget">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textSize">@dimen/medium_text</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="tb_subj" parent="android:Widget">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
     <style name="tv_standard" parent="android:Widget">

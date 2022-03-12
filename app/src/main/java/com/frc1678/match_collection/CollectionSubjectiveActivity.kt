@@ -6,11 +6,8 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
-import android.widget.CompoundButton
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
-import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
@@ -32,22 +29,40 @@ class CollectionSubjectiveActivity : CollectionActivity() {
 
     // Create list of teams ranked by a specific robot gameplay characteristic.
     private fun recordRankingData(dataName: String): SubjectiveTeamRankings {
-        val panelOneData = panelOne.getRankingData().getValue(dataName)
-        val panelTwoData = panelTwo.getRankingData().getValue(dataName)
-        val panelThreeData = panelThree.getRankingData().getValue(dataName)
+        val panelOneData = panelOne.rankingData[dataName]
+        val panelTwoData = panelTwo.rankingData[dataName]
+        val panelThreeData = panelThree.rankingData[dataName]
         return SubjectiveTeamRankings(
-            TeamRank(teamNumberOne, panelOneData),
-            TeamRank(teamNumberTwo, panelTwoData),
-            TeamRank(teamNumberThree, panelThreeData)
+            TeamRank(teamNumberOne, panelOneData ?: SubjectiveRankingCounter.startingValue),
+            TeamRank(teamNumberTwo, panelTwoData ?: SubjectiveRankingCounter.startingValue),
+            TeamRank(teamNumberThree, panelThreeData ?: SubjectiveRankingCounter.startingValue)
         )
     }
 
-    // Creates an array of teams based on if they can shoot far
-    private fun recordToggleData(): ArrayList<String> {
-        val tempToggleList: ArrayList<String> = arrayListOf()
-
+    /**
+     * Creates an ArrayList containing the teams that are able to shoot from far away.
+     */
+    private val farToggleData: ArrayList<String> get() {
+        val tempToggleList = arrayListOf<String>()
         for (x in 0 until panelList.size) {
-            if (panelList[x].getToggleData()) {
+            if (panelList[x].toggleData["can_shoot_far"]!!) {
+                when (x) {
+                    0 -> tempToggleList.add(teamNumberOne)
+                    1 -> tempToggleList.add(teamNumberTwo)
+                    2 -> tempToggleList.add(teamNumberThree)
+                }
+            }
+        }
+        return tempToggleList
+    }
+
+    /**
+     * Creates an ArrayList containing the teams that played defense during the match.
+     */
+    private val defenseToggleData: ArrayList<String> get() {
+        val tempToggleList = arrayListOf<String>()
+        for (x in 0 until panelList.size) {
+            if (panelList[x].toggleData["played_defense"]!!) {
                 when (x) {
                     0 -> tempToggleList.add(teamNumberOne)
                     1 -> tempToggleList.add(teamNumberTwo)
@@ -86,14 +101,12 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         btn_proceed_edit.setOnClickListener { view ->
             quickness_score = recordRankingData(dataName = "Quickness")
             field_awareness_score = recordRankingData(dataName = "Field Aware")
-            far_field_rating = recordRankingData(dataName = "Far Aware")
-            can_shoot_far_list = recordToggleData()
+            can_shoot_far_list = farToggleData
+            played_defense_list = defenseToggleData
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
-            if (quickness_score.hasDuplicate()
-                or field_awareness_score.hasDuplicate()
-                or far_field_rating.hasDuplicate()
+            if (quickness_score.hasDuplicate() or field_awareness_score.hasDuplicate()
             ) {
                 AlertDialog.Builder(this).setTitle(R.string.warning_same_rankings)
                     .setNegativeButton("Cancel") { dialog, _ ->

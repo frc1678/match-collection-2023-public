@@ -52,8 +52,8 @@ subjective_aim:
   team_number: [A, int] # int properties not needed but int is more intuitive
   quickness_score: [B, int] # A ranking value between 1 and 3
   field_awareness_score: [C, int] # A ranking value between 1 and 3
-  far_field_rating: [D, int] # A ranking value between 1 and 3
-  scored_far: [E, bool] # True if robot scored from far side at least once in the match, else False
+  scored_far: [D, bool] # True if robot scored from far side at least once in the match, else False
+  played_defense: [E, bool] # True if robot played defense during the match, else False
   alliance_color_is_red: [F, bool] # True if robot was on the red alliance, else False
 
 
