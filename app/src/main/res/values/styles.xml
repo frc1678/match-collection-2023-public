@@ -77,7 +77,7 @@
     </style>
 
     <style name="btn_action_low" parent="android:Widget">
-        <item name="android:background">@drawable/btn_action_selector_low</item>
+        <item name="android:background">@drawable/btn_action_selector_high</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>
@@ -89,7 +89,7 @@
     </style>
 
     <style name="btn_action_high" parent="android:Widget">
-        <item name="android:background">@drawable/btn_action_selector_high</item>
+        <item name="android:background">@drawable/btn_action_selector_low</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_width">match_parent</item>

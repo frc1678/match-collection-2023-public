@@ -22,7 +22,6 @@ import java.lang.Integer.parseInt
 class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionOne = 0 //SCORE_BALL_LOW
     private var numActionTwo = 0 //SCORE_BALL_HIGH_HUB
-    private var numActionThree = 0 //SCORE_BALL_HIGH_LAUNCHPAD
     private var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
     private var numActionFive = 0 //NUMBER OF INTAKES
     private var numActionSix = 0 //CATCH_CARGO
@@ -56,15 +55,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
     // If stage and time contradict when action is recorded, add action to timeline with time value
     // dictated by stage.
     private fun timelineAddWithStage(action_type: Constants.ActionType) {
-        if (!is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time)))) {
-            timelineAdd(match_time = getString(R.string.final_auto_time), action_type = action_type)
-        } else if (is_teleop_activated and (parseInt(match_time) > parseInt(getString(R.string.initial_teleop_time)))) {
-            timelineAdd(
-                match_time = getString(R.string.initial_teleop_time),
-                action_type = action_type
-            )
-        } else {
-            timelineAdd(match_time = match_time, action_type = action_type)
+        when {
+            !is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time))) -> {
+                timelineAdd(match_time = getString(R.string.final_auto_time), action_type = action_type)
+            }
+            is_teleop_activated and (parseInt(match_time) > parseInt(getString(R.string.initial_teleop_time))) -> {
+                timelineAdd(
+                    match_time = getString(R.string.initial_teleop_time),
+                    action_type = action_type
+                )
+            }
+            else -> {
+                timelineAdd(match_time = match_time, action_type = action_type)
+            }
         }
     }
 
@@ -83,10 +86,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 setCounterTexts()
             }
 
-            Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD.toString() -> {
-                numActionThree--
-                setCounterTexts()
-            }
             Constants.ActionType.SCORE_BALL_HIGH_OTHER.toString() -> {
                 numActionFour--
                 setCounterTexts()
@@ -147,10 +146,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 setCounterTexts()
             }
 
-            Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD.toString() -> {
-                numActionThree++
-                setCounterTexts()
-            }
+
             Constants.ActionType.SCORE_BALL_HIGH_OTHER.toString() -> {
                 numActionFour++
                 setCounterTexts()
