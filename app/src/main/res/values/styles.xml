@@ -244,9 +244,11 @@
     <style name="tv_subj_data_label" parent="android:Widget">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginBottom">@dimen/very_very_small</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
-=        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -262,6 +264,7 @@
     <style name="tb_subj" parent="android:Widget">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginVertical">@dimen/smaller_than_very_small</item>
     </style>
 
     <style name="tv_standard" parent="android:Widget">

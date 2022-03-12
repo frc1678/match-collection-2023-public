@@ -13,7 +13,7 @@
     <ToggleButton
         android:id="@+id/far_toggle"
         style="@style/tb_subj"
-        android:layout_below="@id/tv_team_number"
+        android:layout_above="@id/defense_toggle"
         android:layout_toStartOf="@id/counter_quickness"
         android:textOff="@string/cannot_shoot_far"
         android:textOn="@string/can_shoot_far" />
@@ -21,23 +21,23 @@
     <ToggleButton
         android:id="@+id/defense_toggle"
         style="@style/tb_subj"
-        android:layout_below="@id/far_toggle"
         android:layout_toStartOf="@id/counter_quickness"
-        android:textOff="@string/not_playing_defense"
+        android:layout_alignParentBottom="true"
+        android:textOff="@string/not_on_defense"
         android:textOn="@string/playing_defense" />
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
         android:id="@+id/counter_quickness"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/tv_team_number"
         android:layout_centerHorizontal="true"
         custom:dataName="@string/quickness" />
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
         android:id="@+id/counter_field_awareness"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
         android:layout_below="@id/tv_team_number"
         android:layout_toEndOf="@id/counter_quickness"
         custom:dataName="@string/field_aware" />

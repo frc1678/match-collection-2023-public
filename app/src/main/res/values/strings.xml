@@ -63,7 +63,7 @@
     <string name="done">Done</string>
     <string name="cannot_shoot_far">Cannot shoot far</string>
     <string name="can_shoot_far">Can shoot far</string>
-    <string name="not_playing_defense">Not playing defense</string>
+    <string name="not_on_defense">Not on defense</string>
     <string name="playing_defense">Playing defense</string>
     <string name="quickness">Quickness</string>
     <string name="field_aware">Field Aware</string>
