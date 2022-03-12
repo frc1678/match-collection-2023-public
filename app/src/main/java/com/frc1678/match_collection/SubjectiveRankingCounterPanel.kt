@@ -55,12 +55,9 @@ class SubjectiveRankingCounterPanel : Fragment() {
         )
 
     /**
-     * Gets a map containing the boolean data for the team represented by this panel. The format of
-     * this map is a string, giving the name of the data point, to its value, as a boolean.
+     * Whether this team played defense during the match.
      */
-    val toggleData: Map<String, Boolean>
-        get() = mapOf(
-            "can_shoot_far" to far_toggle.isChecked,
-            "played_defense" to defense_toggle.isChecked
-        )
+    val playedDefense: Boolean
+        get() = defense_toggle.isChecked
+
 }

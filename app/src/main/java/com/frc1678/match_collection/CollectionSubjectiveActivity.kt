@@ -40,29 +40,12 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     }
 
     /**
-     * Creates an ArrayList containing the teams that are able to shoot from far away.
-     */
-    private val farToggleData: ArrayList<String> get() {
-        val tempToggleList = arrayListOf<String>()
-        for (x in 0 until panelList.size) {
-            if (panelList[x].toggleData["can_shoot_far"]!!) {
-                when (x) {
-                    0 -> tempToggleList.add(teamNumberOne)
-                    1 -> tempToggleList.add(teamNumberTwo)
-                    2 -> tempToggleList.add(teamNumberThree)
-                }
-            }
-        }
-        return tempToggleList
-    }
-
-    /**
      * Creates an ArrayList containing the teams that played defense during the match.
      */
     private val defenseToggleData: ArrayList<String> get() {
         val tempToggleList = arrayListOf<String>()
         for (x in 0 until panelList.size) {
-            if (panelList[x].toggleData["played_defense"]!!) {
+            if (panelList[x].playedDefense) {
                 when (x) {
                     0 -> tempToggleList.add(teamNumberOne)
                     1 -> tempToggleList.add(teamNumberTwo)
@@ -101,7 +84,6 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         btn_proceed_edit.setOnClickListener { view ->
             quickness_score = recordRankingData(dataName = "Quickness")
             field_awareness_score = recordRankingData(dataName = "Field Aware")
-            can_shoot_far_list = farToggleData
             played_defense_list = defenseToggleData
 
             // If no robots share the same rendezvous agility and agility rankings, continue.

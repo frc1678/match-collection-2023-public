@@ -38,7 +38,6 @@ var climb_end_time: String? = null
 
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
-var can_shoot_far_list: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
@@ -57,7 +56,6 @@ fun resetCollectionReferences() {
 
     quickness_score = SubjectiveTeamRankings()
     field_awareness_score = SubjectiveTeamRankings()
-    can_shoot_far_list = ArrayList()
     played_defense_list = ArrayList()
 }
 

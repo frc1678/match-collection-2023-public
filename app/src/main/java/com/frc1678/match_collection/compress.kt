@@ -50,7 +50,6 @@ fun compress(
     // Define compression characters for subjective data.
     val compressQuicknessScore = subjectiveData.getValue("quickness_score").toString().split(",")[0]
     val compressAwareScore = subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
-    val compressTeamsScoredFar = subjectiveData.getValue("scored_far").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
     val compressAllianceColor = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
 
@@ -98,7 +97,6 @@ fun compress(
             subjDataString += teamNum
             val quickness = getRankForTeam(quickness_score, teamNum)
             val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
-            val canShootFar = can_shoot_far_list.contains(teamNum)
             val playedDefense = played_defense_list.contains(teamNum)
 
             subjDataString += subjectiveSeparator
@@ -108,10 +106,6 @@ fun compress(
             subjDataString += subjectiveSeparator
             subjDataString += compressAwareScore
             subjDataString += fieldAwareness.toString()
-
-            subjDataString += subjectiveSeparator
-            subjDataString += compressTeamsScoredFar
-            subjDataString += if (canShootFar) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
             subjDataString += compressPlayedDefense
