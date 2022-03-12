@@ -51,7 +51,6 @@ fun compress(
     val compressQuicknessScore = subjectiveData.getValue("quickness_score").toString().split(",")[0]
     val compressAwareScore = subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressFarFieldRating = subjectiveData.getValue("far_field_rating").toString().split(",")[0]
-    val compressTeamsScoredFar = subjectiveData.getValue("scored_far").toString().split(",")[0]
     val compressAllianceColor = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
@@ -115,10 +114,6 @@ fun compress(
             subjDataString += subjectiveSeparator
             subjDataString += compressFarFieldRating
             subjDataString += farAwareness.toString()
-
-            subjDataString += subjectiveSeparator
-            subjDataString += compressTeamsScoredFar
-            subjDataString += if (canShootFar) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
             subjDataString += compressAllianceColor
