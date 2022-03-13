@@ -26,7 +26,7 @@ class SubjectiveRankingCounter(
         /**
          * The minimum value that a counter can hold.
          */
-        const val min = 0
+        const val min = 1
 
         /**
          * How much to increment a counter by when pressing the plus or minus buttons.
