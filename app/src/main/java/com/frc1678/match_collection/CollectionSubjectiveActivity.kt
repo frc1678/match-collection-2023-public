@@ -86,8 +86,8 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     // when proceed button is pressed.
     private fun initProceedButton() {
         btn_proceed_edit.setOnClickListener { view ->
-            quickness_score = recordRankingData(dataName = "Quickness")
-            field_awareness_score = recordRankingData(dataName = "Field Aware")
+            quickness_score = recordRankingData(dataName = "quickness")
+            field_awareness_score = recordRankingData(dataName = "field_awareness")
             played_defense_list = defenseToggleData
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
