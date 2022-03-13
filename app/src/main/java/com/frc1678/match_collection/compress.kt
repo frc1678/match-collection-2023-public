@@ -50,7 +50,7 @@ fun compress(
     // Define compression characters for subjective data.
     val compressQuicknessScore = subjectiveData.getValue("quickness_score").toString().split(",")[0]
     val compressAwareScore = subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
-    val compressFarFieldRating = subjectiveData.getValue("far_field_rating").toString().split(",")[0]
+    val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
     val compressAllianceColor = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
@@ -90,18 +90,14 @@ fun compress(
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
         var subjDataString = ""
-        val teamNumbers =
-            (subjectiveTeamRankingsToList(quickness_score) + subjectiveTeamRankingsToList(
-                far_field_rating
-            ) + subjectiveTeamRankingsToList(far_field_rating) + can_shoot_far_list).toSet()
+        val teamNumbers = subjectiveTeamRankingsToList(quickness_score)
 
         teamNumbers.forEachIndexed { i, teamNum ->
             subjDataString += subjectiveTeamNumberSeparator
             subjDataString += teamNum
             val quickness = getRankForTeam(quickness_score, teamNum)
             val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
-            val farAwareness = getRankForTeam(far_field_rating, teamNum)
-            val canShootFar = can_shoot_far_list.contains(teamNum)
+            val playedDefense = played_defense_list.contains(teamNum)
 
             subjDataString += subjectiveSeparator
             subjDataString += compressQuicknessScore
@@ -112,8 +108,8 @@ fun compress(
             subjDataString += fieldAwareness.toString()
 
             subjDataString += subjectiveSeparator
-            subjDataString += compressFarFieldRating
-            subjDataString += farAwareness.toString()
+            subjDataString += compressPlayedDefense
+            subjDataString += if (playedDefense) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
             subjDataString += compressAllianceColor

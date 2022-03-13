@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/counter"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="@dimen/very_small">
 
     <TextView
         android:id="@+id/tv_data_name"
-        style="@style/tv_subj_data_label"
-        android:layout_weight="1" />
+        style="@style/tv_subj_data_label" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="5"
         android:orientation="horizontal">
 
         <Button
@@ -29,5 +28,7 @@
         <Button
             android:id="@+id/btn_plus"
             style="@style/btn_plus" />
+
     </LinearLayout>
+
 </LinearLayout>

@@ -304,8 +304,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             setCounterTexts()
         }
 
-
-
         // Increment button action five by one when clicked and add action to timeline.
         btn_action_five.setOnClickListener {
             timelineAddWithStage(action_type = Constants.ActionType.INTAKE)

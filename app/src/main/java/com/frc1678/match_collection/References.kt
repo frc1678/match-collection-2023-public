@@ -17,7 +17,7 @@ var serial_number: String? = ""
 var match_number: Int = 0
 var alliance_color: Constants.AllianceColor = Constants.AllianceColor.NONE
 var timestamp: Long = 0
-var match_collection_version_number: String = "0.0.1"
+var match_collection_version_number: String = "0.0.2"
 var scout_name: String = Constants.NONE_VALUE
 
 // Data specific to Objective Match Collection QR.
@@ -38,8 +38,7 @@ var climb_end_time: String? = null
 
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
-var far_field_rating: SubjectiveTeamRankings = SubjectiveTeamRankings()
-var can_shoot_far_list: ArrayList<String> = ArrayList()
+var played_defense_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
@@ -57,8 +56,7 @@ fun resetCollectionReferences() {
 
     quickness_score = SubjectiveTeamRankings()
     field_awareness_score = SubjectiveTeamRankings()
-    far_field_rating = SubjectiveTeamRankings()
-    can_shoot_far_list = ArrayList()
+    played_defense_list = ArrayList()
 }
 
 data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: TeamRank? = null, val teamThree: TeamRank? = null){
