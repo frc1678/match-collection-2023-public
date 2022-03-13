@@ -6,16 +6,13 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
-import android.view.*
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import kotlinx.android.synthetic.main.climb_popup.*
 import kotlinx.android.synthetic.main.climb_popup.view.*
 import kotlinx.android.synthetic.main.collection_objective_activity.*
-import kotlinx.android.synthetic.main.error_pop_up.view.*
 import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
@@ -24,8 +21,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionTwo = 0 //SCORE_BALL_HIGH_HUB
     private var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
     private var numActionFive = 0 //NUMBER OF INTAKES
-    private var numActionSix = 0 //CATCH_CARGO
-    private var numActionSeven = 0 //SCORE_OPPOSING_BALL
 
     private var isTimerRunning = false
     //FALSE = LOW
@@ -94,15 +89,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionFive--
                 setCounterTexts()
             }
-
-            Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
-                numActionSix--
-                showErrorPopup(btn_error)
-            }
-            Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
-                numActionSeven--
-                showErrorPopup(btn_error)
-            }
             Constants.ActionType.END_CLIMB.toString() -> {
                 removeOneMore = true
                 climb_timer_paused = false
@@ -155,15 +141,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionFive++
                 setCounterTexts()
             }
-
-            Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
-                numActionSix++
-                showErrorPopup(btn_error)
-            }
-            Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
-                numActionSeven++
-                showErrorPopup(btn_error)
-            }
             Constants.ActionType.START_CLIMB.toString() -> {
                 replaceOneMore = true
                 climb_timer_paused = true
@@ -194,8 +171,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-
-        btn_error.isEnabled = !(!isTimerRunning or popup_open)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
@@ -421,48 +396,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Replace previously undone action to timeline when redo button is clicked.
         btn_redo.setOnClickListener {
             timelineReplace()
-        }
-
-        btn_error.setOnClickListener {
-            showErrorPopup(it)
-        }
-    }
-
-    private fun showErrorPopup(view: View) {
-        popup_open = true
-        enableButtons()
-
-        // Inflate a custom view using layout inflater
-        val popupView = View.inflate(this, R.layout.error_pop_up,null)
-        popupView.catch_cargo.text = getString(R.string.btn_action_six, numActionSix.toString())
-        popupView.score_opp.text = getString(R.string.btn_action_seven, numActionSeven.toString())
-
-        // Initialize a new instance of popup window
-        val popupWindow = PopupWindow(
-            popupView, // Custom view to show in popup window
-            LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
-            600, // Window height
-            true
-        )
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
-
-        popupView.catch_cargo.setOnClickListener {
-            numActionSix++
-            timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_EXIT_BALL)
-            popupWindow.dismiss()
-            popup_open = false
-            enableButtons()
-        }
-        popupView.score_opp.setOnClickListener {
-            numActionSeven++
-            timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPONENT_BALL)
-            popupWindow.dismiss()
-            popup_open = false
-            enableButtons()
-        }
-        popupWindow.setOnDismissListener {
-            popup_open = false
-            enableButtons()
         }
     }
 

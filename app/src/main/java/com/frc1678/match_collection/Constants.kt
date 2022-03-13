@@ -45,9 +45,7 @@ class Constants {
         START_INCAP,
         END_INCAP,
         START_CLIMB,
-        END_CLIMB,
-        CATCH_EXIT_BALL,
-        SCORE_OPPONENT_BALL
+        END_CLIMB
     }
 
     enum class Stage {

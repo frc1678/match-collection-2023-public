@@ -9,14 +9,11 @@
     <string name="btn_action_two">High Hub- %1$s</string>
     <string name="btn_action_four">High Other - %1$s</string>
     <string name="btn_action_five">Intake - %1$s</string>
-    <string name="btn_action_six">Catch - %1$s</string>
-    <string name="btn_action_seven">Score Opp. - %1$s</string>
     <string name="tb_action_bool_one_off">Start Incap</string>
     <string name="tb_action_bool_one_on">End Incap</string>
     <string name="tb_action_bool_two_disabled">Climb Attempted</string>
     <string name="btn_climb">New Climb Attempt…</string>
     <string name="btn_climbed">Climb Attempted</string>
-    <string name="btn_error">Error</string>
     <string name="btn_undo">Undo</string>
     <string name="btn_redo">Redo</string>
     <string name="btn_plus">+</string>
