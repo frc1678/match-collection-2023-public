@@ -103,7 +103,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         fun getNewAssignment(matchNumber: String, scoutID: Int): Int? {
             if (contents == null) return null
             return (
-                    contents!!.getAsJsonArray(matchNumber)[scoutID - 1].asInt - 1
+                    (contents!!.getAsJsonArray(matchNumber) ?: return null)[scoutID - 1].asInt - 1
                     ) % 6
         }
     }
