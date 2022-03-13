@@ -12,10 +12,10 @@
 
     <ToggleButton
         android:id="@+id/defense_toggle"
-        style="@style/tb_subj"
+        style="@style/tb_subj_defense"
         android:layout_toStartOf="@id/counter_quickness"
-        android:layout_alignParentBottom="true"
-        android:textOff="@string/not_on_defense"
+        android:layout_below="@id/tv_team_number"
+        android:textOff="@string/playing_defense"
         android:textOn="@string/playing_defense" />
 
     <com.frc1678.match_collection.SubjectiveRankingCounter

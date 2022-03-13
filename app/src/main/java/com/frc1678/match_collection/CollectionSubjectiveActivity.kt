@@ -76,6 +76,10 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelTwo.setAllianceColor()
         panelThree.setAllianceColor()
 
+        panelOne.setListener()
+        panelTwo.setListener()
+        panelThree.setListener()
+
     }
 
     // Initialize proceed button to record ranking data and proceed to MatchInformationEditActivity.kt

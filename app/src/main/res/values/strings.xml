@@ -60,8 +60,7 @@
     <string name="climb_timer_done">Recorded:\n%1$s sec.</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
-    <string name="not_on_defense">Not on defense</string>
-    <string name="playing_defense">Playing defense</string>
+    <string name="playing_defense">Playing defense?</string>
     <string name="quickness">Quickness</string>
     <string name="field_aware">Field Aware</string>
 </resources>

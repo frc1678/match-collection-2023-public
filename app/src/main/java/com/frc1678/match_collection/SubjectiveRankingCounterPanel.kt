@@ -44,6 +44,15 @@ class SubjectiveRankingCounterPanel : Fragment() {
         )
     }
 
+    fun setListener() {
+        defense_toggle.setOnCheckedChangeListener { _, checked ->
+            defense_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                null, null, null,
+                if (checked) resources.getDrawable(R.drawable.tb_defense_check, null) else null
+            )
+        }
+    }
+
     /**
      * Gets a map containing the ranking data for the team represented by this panel. The format of
      * this map is a string, giving the name of the data point, to its value, as an integer.

@@ -261,10 +261,15 @@
         <item name="android:gravity">center</item>
     </style>
 
-    <style name="tb_subj" parent="android:Widget">
+    <style name="tb_subj_defense" parent="android:Widget">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginVertical">@dimen/smaller_than_very_small</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginVertical">@dimen/very_small</item>
+        <item name="android:gravity">top|center</item>
+        <item name="android:paddingVertical">@dimen/very_small</item>
+        <item name="android:textSize">@dimen/smaller_text</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
     </style>
 
     <style name="tv_standard" parent="android:Widget">
