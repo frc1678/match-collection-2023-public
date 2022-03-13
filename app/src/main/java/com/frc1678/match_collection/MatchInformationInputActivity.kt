@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
@@ -19,7 +18,6 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.id_scout_dialog.*
@@ -60,21 +58,70 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             return true
         }
 
-        /** Checks whether the match schedule file exists. */
-        fun fileExists(): Boolean = file.exists()
+        /** Whether the match schedule file exists. */
+        val fileExists: Boolean
+            get() = file.exists()
+    }
+
+    /**
+     * Static storage of the scout orders list to avoid retrieving rom storage multiple times. Keep
+     * in mind that any changes made to the file will require a restart of the app or proceeding to
+     * the next match for changes to apply.
+     */
+    object ScoutOrders {
+        /**
+         * The contents of the scout orders list. The format of the JSON object should be match
+         * number, as a string, to arrays of integers denoting the orders.
+         */
+        private var contents: JsonObject? = null
+
+        private val file = File(
+            "/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/scout_orders.json"
+        )
+
+        /**
+         * Initializes [`contents`][contents] with the JSON data from the [file]. This should only
+         * be called once.
+         * @return Whether the reading was successful.
+         */
+        fun read(): Boolean {
+            try { contents = JsonParser.parseReader(FileReader(file)).asJsonObject }
+            catch (e: Exception) { return false }
+            return true
+        }
+
+        /**
+         * Whether the [scout orders file][file] exists.
+         */
+        val fileExists: Boolean
+            get() = file.exists()
+
+        /**
+         * Gets the new assignment for the scout given the match number and the scout ID. Requires
+         * [`read()`][read] to have already been called.
+         */
+        fun getNewAssignment(matchNumber: String, scoutID: Int): Int? {
+            if (contents == null) return null
+            return (
+                    (contents!!.getAsJsonArray(matchNumber) ?: return null)[scoutID - 1].asInt - 1
+                    ) % 6
+        }
     }
 
 
-    /** Assign team number and alliance color for Objective Scout based on scout ID. */
-    private fun assignTeamByScoutId(
+    /**
+     * Assign team number and alliance color for Objective Scout based on the team index given by
+     * [`getNewAssignment()`][ScoutOrders.getNewAssignment].
+     */
+    private fun assignTeamObjective(
         teamInput: EditText,
-        scoutId: Int,
+        teamIndex: Int?,
         matchNumber: String
     ) {
         val team = MatchSchedule.contents!!
-            .get(matchNumber)?.asJsonObject
-            ?.get("teams")?.asJsonArray
-            ?.get(scoutId)?.asJsonObject
+            .getAsJsonObject(matchNumber)
+            ?.getAsJsonArray("teams")
+            ?.get(teamIndex ?: return)?.asJsonObject
             ?: return
         teamInput.setText(team.get("number")!!.asString)
         alliance_color =
@@ -87,8 +134,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
     }
 
-    /** Assign team numbers for Subjective Scout based on alliance color. */
-    private fun assignTeamByAllianceColor(
+    /**
+     * Assign team numbers for Subjective Scout based on alliance color.
+     */
+    private fun assignTeamsSubjective(
         teamInput: EditText, allianceColor: Constants.AllianceColor,
         matchNumber: String, iterationNumber: Int
     ) {
@@ -100,25 +149,32 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         teamInput.setText(team.get("number").asString)
     }
 
-    /** Automatically assign team number(s) based on collection mode. */
+    /**
+     * Automatically assign team number(s) based on collection mode.
+     */
     private fun autoAssignTeamInputsGivenMatch() {
             if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
-            if (MatchSchedule.fileExists()) {
+            if (MatchSchedule.fileExists and ScoutOrders.fileExists) {
                 if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
-                    // Assign three scouts per robot based on scout ID in Objective Match Collection.
+                    // Assign three scouts per robot based on the scout order list in Objective
+                    // Match Collection.
                     if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
                         if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
-                            assignTeamByScoutId(
+                            assignTeamObjective(
                                 teamInput = et_team_one,
-                                scoutId = scout_id.toInt() % 6,
+                                teamIndex = ScoutOrders.getNewAssignment(
+                                    matchNumber = et_match_number.text.toString(),
+                                    scoutID = scout_id.toInt()
+                                ),
                                 matchNumber = et_match_number.text.toString()
                             )
                         }
                     } else {
-                        // Assign an alliance to a scout based on alliance color in Subjective Match Collection.
+                        // Assign an alliance to a scout based on alliance color in Subjective Match
+                        // Collection.
                         var iterationNumber = 0
                         listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
-                            assignTeamByAllianceColor(
+                            assignTeamsSubjective(
                                 teamInput = it,
                                 allianceColor = alliance_color,
                                 matchNumber = et_match_number.text.toString(),
@@ -133,7 +189,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     et_team_two.setText("")
                     et_team_three.setText("")
 
-                    AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
+                    AlertDialog.Builder(this).setMessage(R.string.error_files_missing).show()
                 }
 
                 if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
@@ -153,7 +209,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
                 if (checkInputNotEmpty(et_match_number)) {
                     if (et_match_number.text.toString() != "") {
-                        if (MatchSchedule.fileExists()) {
+                        if (MatchSchedule.fileExists) {
                             if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
                                 et_team_one.setText("")
                                 et_team_two.setText("")
@@ -487,6 +543,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         resetStartingReferences()
 
         MatchSchedule.read()
+        ScoutOrders.read()
 
         initToggleButtons()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
