@@ -27,14 +27,9 @@
 
 
             <Button
-                android:id="@+id/btn_action_four"
-                style="@style/btn_action_high"
-                android:text="@string/btn_action_four" />
-
-            <Button
                 android:id="@+id/btn_action_five"
                 style="@style/btn_action_five"
-                android:layout_weight="1"
+                android:layout_weight=".46701"
                 android:text="@string/btn_action_five" />
 
             <ToggleButton
