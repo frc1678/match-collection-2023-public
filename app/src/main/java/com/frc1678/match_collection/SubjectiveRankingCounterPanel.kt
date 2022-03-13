@@ -44,10 +44,20 @@ class SubjectiveRankingCounterPanel : Fragment() {
         )
     }
 
+    /**
+     * Sets the OnCheckedChangeListener for the defense toggle button. This is only used to show or
+     * hide the checkmark icon.
+     *
+     * @see R.drawable.tb_defense_check
+     */
     fun setListener() {
         defense_toggle.setOnCheckedChangeListener { _, checked ->
+            // Sets or removes the drawable at the bottom of the toggle button, depending on if the
+            // button is checked or not.
             defense_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                // start, top, end,
                 null, null, null,
+                // bottom
                 if (checked) resources.getDrawable(R.drawable.tb_defense_check, null) else null
             )
         }
