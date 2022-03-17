@@ -174,9 +174,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
-        btn_climb.isEnabled = !(!is_teleop_activated or popup_open or isIncap or climb_timer_paused)
+        btn_climb.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_climb)
         btn_climb.text =
-            if (climb_timer_paused) getString(R.string.btn_climbed)
+            if (did_climb) getString(R.string.btn_climbed)
             else getString(R.string.btn_climb)
 
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
@@ -307,20 +307,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popup_open = true
             climb_time = 0
             enableButtons()
-            popupView.btn_climb_done.isEnabled = false
-            popupView.btn_climb_timer.setOnClickListener {
-                if (climb_timer == null) { // timer hasn't started
-                    TimerUtility.ClimbTimerThread(this, popupView)
-                    climb_start_time = match_time
-                } else if (!climb_timer_paused) { // timer is currently running
-                    climb_timer!!.onFinish()
-                    climb_end_time = match_time
-                } else { // timer is paused
-                    TimerUtility.ClimbTimerThread(this, popupView)
-                    climb_timer_paused = false
-                    popupView.btn_climb_done.isEnabled = false
-                }
-            }
+            popupView.btn_climb_done.isEnabled = true
+
             popupView.btn_climb_cancel.setOnClickListener {
                 if (climb_timer != null) {
                     climb_timer!!.onFinish()
@@ -353,6 +341,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = false
                 climb_level = Constants.ClimbLevel.NONE
+                did_climb = true
             }
             popupView.btn_climb_lv1.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
@@ -361,6 +350,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = false
                 climb_level = Constants.ClimbLevel.LOW
+                did_climb = true
+
             }
             popupView.btn_climb_lv2.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
@@ -369,6 +360,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = false
                 climb_level = Constants.ClimbLevel.MID
+                did_climb = true
+
             }
             popupView.btn_climb_lv3.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
@@ -377,6 +370,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv3.isActivated = true
                 popupView.btn_climb_lv4.isActivated = false
                 climb_level = Constants.ClimbLevel.HIGH
+                did_climb = true
+
             }
             popupView.btn_climb_lv4.setOnClickListener {
                 popupView.btn_climb_lv0.isActivated = false
@@ -385,6 +380,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_climb_lv3.isActivated = false
                 popupView.btn_climb_lv4.isActivated = true
                 climb_level = Constants.ClimbLevel.TRAVERSAL
+                did_climb = true
+
             }
         }
 

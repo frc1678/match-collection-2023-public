@@ -11,7 +11,7 @@ var popup_open = false
 var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
-
+var did_climb: Boolean = false
 // Data that is shared between the objective and subjective QRs.
 var serial_number: String? = ""
 var match_number: Int = 0
@@ -43,6 +43,7 @@ var played_defense_list: ArrayList<String> = ArrayList()
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
     is_teleop_activated = false
+    did_climb = false
 
     climb_timer = null
     climb_timer_paused = false

@@ -45,10 +45,7 @@
 
         </LinearLayout>
 
-        <!--Climb Timer-->
-        <Button style="@style/btn_climb_timer"
-            android:id="@+id/btn_climb_timer"
-            android:text="@string/start_climb_timer"/>
+
 
     </LinearLayout>
 
