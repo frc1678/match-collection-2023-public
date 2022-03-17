@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.id_scout_dialog.*
 import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
 import java.io.File
 import java.io.FileReader
+import java.io.InputStreamReader
 import java.lang.Integer.parseInt
 
 // Activity to input the match information before the start of the match.
@@ -64,54 +65,37 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     }
 
     /**
-     * Static storage of the scout orders list to avoid retrieving rom storage multiple times. Keep
-     * in mind that any changes made to the file will require a restart of the app or proceeding to
-     * the next match for changes to apply.
+     * The [JsonObject] containing the random orderings of the scouts. The keys of this JsonObject
+     * are match numbers in the form of strings, and the values are arrays of integers from 1
+     * through 18 denoting the orders. If this object is being accessed for the first time, the file
+     * will be read from the raw resources.
+     *
+     * @see R.raw.scout_orders
      */
-    object ScoutOrders {
-        /**
-         * The contents of the scout orders list. The format of the JSON object should be match
-         * number, as a string, to arrays of integers denoting the orders.
-         */
-        private var contents: JsonObject? = null
-
-        private val file = File(
-            "/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/scout_orders.json"
-        )
-
-        /**
-         * Initializes [`contents`][contents] with the JSON data from the [file]. This should only
-         * be called once.
-         * @return Whether the reading was successful.
-         */
-        fun read(): Boolean {
-            try { contents = JsonParser.parseReader(FileReader(file)).asJsonObject }
-            catch (e: Exception) { return false }
-            return true
+    private var scoutOrders: JsonObject? = null
+        // A custom getter method to read the file if it hasn't been already.
+        get() {
+            if (field == null) { // The file has not been read from yet, and needs to be.
+                field = JsonParser.parseReader(
+                    InputStreamReader(resources.openRawResource(R.raw.scout_orders))
+                ) as JsonObject
+            }
+            return field
         }
 
-        /**
-         * Whether the [scout orders file][file] exists.
-         */
-        val fileExists: Boolean
-            get() = file.exists()
-
-        /**
-         * Gets the new assignment for the scout given the match number and the scout ID. Requires
-         * [`read()`][read] to have already been called.
-         */
-        fun getNewAssignment(matchNumber: String, scoutID: Int): Int? {
-            if (contents == null) return null
-            return (
-                    (contents!!.getAsJsonArray(matchNumber) ?: return null)[scoutID - 1].asInt - 1
-                    ) % 6
-        }
+    /**
+     * Fetches the new robot assignment given the match number and scout ID.
+     *
+     * @return The assigned robot index in the match, from 0 to 5.
+     */
+    private fun getNewScoutAssignment(matchNumber: String, scoutID: Int): Int? {
+        return ((scoutOrders!!.getAsJsonArray(matchNumber) ?: return null
+                )[scoutID - 1].asInt - 1) % 6
     }
-
 
     /**
      * Assign team number and alliance color for Objective Scout based on the team index given by
-     * [`getNewAssignment()`][ScoutOrders.getNewAssignment].
+     * [`getNewScoutAssignment()`][getNewScoutAssignment].
      */
     private fun assignTeamObjective(
         teamInput: EditText,
@@ -154,7 +138,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
      */
     private fun autoAssignTeamInputsGivenMatch() {
             if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
-            if (MatchSchedule.fileExists and ScoutOrders.fileExists) {
+            if (MatchSchedule.fileExists) {
                 if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                     // Assign three scouts per robot based on the scout order list in Objective
                     // Match Collection.
@@ -162,7 +146,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                         if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
                             assignTeamObjective(
                                 teamInput = et_team_one,
-                                teamIndex = ScoutOrders.getNewAssignment(
+                                teamIndex = getNewScoutAssignment(
                                     matchNumber = et_match_number.text.toString(),
                                     scoutID = scout_id.toInt()
                                 ),
@@ -189,7 +173,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     et_team_two.setText("")
                     et_team_three.setText("")
 
-                    AlertDialog.Builder(this).setMessage(R.string.error_files_missing).show()
+                    AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
                 }
 
                 if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
@@ -543,7 +527,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         resetStartingReferences()
 
         MatchSchedule.read()
-        ScoutOrders.read()
 
         initToggleButtons()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
