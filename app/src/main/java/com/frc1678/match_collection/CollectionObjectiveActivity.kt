@@ -89,11 +89,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionFive--
                 setCounterTexts()
             }
-            Constants.ActionType.END_CLIMB.toString() -> {
-                removeOneMore = true
-                climb_timer_paused = false
-                climb_timer = null
-            }
+//            Constants.ActionType.END_CLIMB.toString() -> {
+//                removeOneMore = true
+//            }
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = false
             }
@@ -141,10 +139,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionFive++
                 setCounterTexts()
             }
-            Constants.ActionType.START_CLIMB.toString() -> {
+            Constants.ActionType.CLIMB_ATTEMPT.toString() -> {
                 replaceOneMore = true
-                climb_timer_paused = true
-                climb_timer = null
+
             }
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = true
@@ -305,21 +302,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
             val popupWindow = PopupWindow(popupView, width, height, false)
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
-            climb_time = 0
             enableButtons()
             popupView.btn_climb_done.isEnabled = true
 
             popupView.btn_climb_cancel.setOnClickListener {
-                if (climb_timer != null) {
-                    climb_timer!!.onFinish()
-                    climb_timer = null
-                }
-
-              climb_time = 0
-                climb_timer_paused = false
                 climb_level = Constants.ClimbLevel.NONE
-                climb_start_time = null
-                climb_end_time = null
                 popupWindow.dismiss()
                 popup_open = false
                 enableButtons()
@@ -328,8 +315,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_climb.isEnabled = false
                 popup_open = false
-                climb_start_time?.let { it1 -> timelineAdd(it1, Constants.ActionType.START_CLIMB) }
-                climb_end_time?.let { it1 -> timelineAdd(it1, Constants.ActionType.END_CLIMB) }
+                timelineAdd(match_time,Constants.ActionType.CLIMB_ATTEMPT)
                 enableButtons()
             }
             popupView.btn_climb_lv0.isActivated = true

@@ -56,10 +56,6 @@ class TimerUtility {
 
                 // Display 0 and change button states when countdown finishes.
                 override fun onFinish() {
-                    if (!climb_timer_paused && climb_timer != null) { // timer is currently running
-                        climb_timer!!.onFinish()
-                        climb_end_time = match_time
-                    }
                     btn_timer.text = context.getString(
                         R.string.tv_time_display,
                         returnStage(time.roundToInt()),
