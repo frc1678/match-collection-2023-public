@@ -1,57 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layoutBackground"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tv_team_number"
         style="@style/tv_team_number_subj"
-        android:layout_weight="1"
-        android:textSize="@dimen/medium" />
+        android:text="1678" />
 
     <ToggleButton
-        android:layout_height="0dp"
-        android:layout_width="@dimen/very_large"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        android:id="@+id/far_toggle"
-        android:textOff="Cannot shoot far"
-        android:textOn="Can shoot far"/>
+        android:id="@+id/defense_toggle"
+        style="@style/tb_subj_defense"
+        android:layout_toStartOf="@id/counter_quickness"
+        android:layout_below="@id/tv_team_number"
+        android:textOff="@string/playing_defense"
+        android:textOn="@string/playing_defense" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/medium"
-        android:id="@+id/panel_linear_layout">
+    <com.frc1678.match_collection.SubjectiveRankingCounter
+        android:id="@+id/counter_quickness"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_team_number"
+        android:layout_centerHorizontal="true"
+        custom:dataName="@string/quickness" />
 
-        <com.frc1678.match_collection.SubjectiveRankingCounter
-            android:id="@+id/counter_quickness"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            custom:dataName="Quickness" />
+    <com.frc1678.match_collection.SubjectiveRankingCounter
+        android:id="@+id/counter_field_awareness"
+        android:layout_width="180dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_team_number"
+        android:layout_toEndOf="@id/counter_quickness"
+        custom:dataName="@string/field_aware" />
 
-        <com.frc1678.match_collection.SubjectiveRankingCounter
-            android:id="@+id/counter_field_awareness_near"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            custom:dataName="Near Aware" />
-
-        <com.frc1678.match_collection.SubjectiveRankingCounter
-            android:id="@+id/counter_field_awareness_far"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            custom:dataName="Far Aware" />
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>

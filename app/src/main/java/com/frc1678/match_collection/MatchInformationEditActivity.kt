@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
@@ -46,20 +47,22 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
             team_number = et_team_one.text.toString()
         } else {
-            for (ranking in listOf(quickness_rankings, driver_field_awareness_far_rankings, driver_field_awareness_near_rankings)) {
-                ranking[ranking.indexOf(teamNumberOne)] = et_team_one.text.toString()
-                ranking[ranking.indexOf(teamNumberTwo)] = et_team_two.text.toString()
-                ranking[ranking.indexOf(teamNumberThree)] = et_team_three.text.toString()
+            for (ranking in listOf(quickness_score, field_awareness_score)) {
+                Log.d("match-information-edit", quickness_score.toString())
+                Log.d("match-information-edit", field_awareness_score.toString())
+
+                ranking.teamOne?.teamNumber = et_team_one.text.toString()
+                ranking.teamTwo?.teamNumber = et_team_two.text.toString()
+                ranking.teamThree?.teamNumber = et_team_three.text.toString()
             }
-0
-            if (can_shoot_far_list.contains(teamNumberOne)) {
-                can_shoot_far_list[can_shoot_far_list.indexOf(teamNumberOne)] = et_team_one.text.toString()
+            if (played_defense_list.contains(teamNumberOne)) {
+                played_defense_list[played_defense_list.indexOf(teamNumberOne)] = et_team_one.text.toString()
             }
-            if (can_shoot_far_list.contains(teamNumberTwo)) {
-                can_shoot_far_list[can_shoot_far_list.indexOf(teamNumberTwo)] = et_team_two.text.toString()
+            if (played_defense_list.contains(teamNumberTwo)) {
+                played_defense_list[played_defense_list.indexOf(teamNumberTwo)] = et_team_two.text.toString()
             }
-            if (can_shoot_far_list.contains(teamNumberThree)) {
-                can_shoot_far_list[can_shoot_far_list.indexOf(teamNumberThree)] = et_team_three.text.toString()
+            if (played_defense_list.contains(teamNumberThree)) {
+                played_defense_list[played_defense_list.indexOf(teamNumberThree)] = et_team_three.text.toString()
             }
 
         }

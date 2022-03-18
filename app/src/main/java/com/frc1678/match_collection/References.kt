@@ -17,7 +17,7 @@ var serial_number: String? = ""
 var match_number: Int = 0
 var alliance_color: Constants.AllianceColor = Constants.AllianceColor.NONE
 var timestamp: Long = 0
-var match_collection_version_number: String = "0.0.1"
+var match_collection_version_number: String = "0.0.2"
 var scout_name: String = Constants.NONE_VALUE
 
 // Data specific to Objective Match Collection QR.
@@ -35,10 +35,10 @@ var climb_start_time: String? = null
 var climb_end_time: String? = null
 
 // Data specific to Subjective Match Collection QR.
-var quickness_rankings: ArrayList<String> = ArrayList()
-var driver_field_awareness_near_rankings: ArrayList<String> = ArrayList()
-var driver_field_awareness_far_rankings: ArrayList<String> = ArrayList()
-var can_shoot_far_list: ArrayList<String> = ArrayList()
+
+var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var played_defense_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
@@ -52,15 +52,32 @@ fun resetCollectionReferences() {
 
     timestamp = 0
 
-    team_number = ""
     timeline = ArrayList()
 
-    quickness_rankings = ArrayList()
-    driver_field_awareness_near_rankings = ArrayList()
-    driver_field_awareness_far_rankings = ArrayList()
-    can_shoot_far_list = ArrayList()
+    quickness_score = SubjectiveTeamRankings()
+    field_awareness_score = SubjectiveTeamRankings()
+    played_defense_list = ArrayList()
 }
+
+data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: TeamRank? = null, val teamThree: TeamRank? = null){
+    val list: List<TeamRank?>
+        get() = listOf(teamOne, teamTwo, teamThree)
+
+    val notNullList: List<TeamRank>
+        get() = this.list.filterNotNull()
+
+
+    fun hasDuplicate(): Boolean{
+        val ranks = mutableListOf<Int>()
+        for(team in this.notNullList){
+                ranks.add(team.rank)
+        }
+        return ranks.toSet().toList() != ranks
+    }
+}
+data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
+    team_number = ""
 }

@@ -10,12 +10,13 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.Gravity
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.collection_objective_activity.*
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.old_qrs_popup.*
 import kotlinx.android.synthetic.main.old_qrs_popup.view.*
 import java.io.File
 import java.io.FileReader
+import java.io.InputStreamReader
 import java.lang.Integer.parseInt
 
 // Activity to input the match information before the start of the match.
@@ -59,21 +61,53 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             return true
         }
 
-        /** Checks whether the match schedule file exists. */
-        fun fileExists(): Boolean = file.exists()
+        /** Whether the match schedule file exists. */
+        val fileExists: Boolean
+            get() = file.exists()
     }
 
+    /**
+     * The [JsonObject] containing the random orderings of the scouts. The keys of this JsonObject
+     * are match numbers in the form of strings, and the values are arrays of integers from 1
+     * through 18 denoting the orders. If this object is being accessed for the first time, the file
+     * will be read from the raw resources.
+     *
+     * @see R.raw.scout_orders
+     */
+    private var scoutOrders: JsonObject? = null
+        // A custom getter method to read the file if it hasn't been already.
+        get() {
+            if (field == null) { // The file has not been read from yet, and needs to be.
+                field = JsonParser.parseReader(
+                    InputStreamReader(resources.openRawResource(R.raw.scout_orders))
+                ) as JsonObject
+            }
+            return field
+        }
 
-    /** Assign team number and alliance color for Objective Scout based on scout ID. */
-    private fun assignTeamByScoutId(
+    /**
+     * Fetches the new robot assignment given the match number and scout ID.
+     *
+     * @return The assigned robot index in the match, from 0 to 5.
+     */
+    private fun getNewScoutAssignment(matchNumber: String, scoutID: Int): Int? {
+        return ((scoutOrders!!.getAsJsonArray(matchNumber) ?: return null
+                )[scoutID - 1].asInt - 1) % 6
+    }
+
+    /**
+     * Assign team number and alliance color for Objective Scout based on the team index given by
+     * [`getNewScoutAssignment()`][getNewScoutAssignment].
+     */
+    private fun assignTeamObjective(
         teamInput: EditText,
-        scoutId: Int,
+        teamIndex: Int?,
         matchNumber: String
     ) {
         val team = MatchSchedule.contents!!
-            .get(matchNumber)?.asJsonObject
-            ?.get("teams")?.asJsonArray
-            ?.get(scoutId)?.asJsonObject
+            .getAsJsonObject(matchNumber)
+            ?.getAsJsonArray("teams")
+            ?.get(teamIndex ?: return)?.asJsonObject
             ?: return
         teamInput.setText(team.get("number")!!.asString)
         alliance_color =
@@ -86,8 +120,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
     }
 
-    /** Assign team numbers for Subjective Scout based on alliance color. */
-    private fun assignTeamByAllianceColor(
+    /**
+     * Assign team numbers for Subjective Scout based on alliance color.
+     */
+    private fun assignTeamsSubjective(
         teamInput: EditText, allianceColor: Constants.AllianceColor,
         matchNumber: String, iterationNumber: Int
     ) {
@@ -99,63 +135,85 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         teamInput.setText(team.get("number").asString)
     }
 
-    /** Automatically assign team number(s) based on collection mode. */
+    /**
+     * Automatically assign team number(s) based on collection mode.
+     */
     private fun autoAssignTeamInputsGivenMatch() {
-        if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
-        if (MatchSchedule.fileExists()) {
-            if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
-                // Assign three scouts per robot based on scout ID in Objective Match Collection.
-                if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                    if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
-                        assignTeamByScoutId(
-                            teamInput = et_team_one,
-                            scoutId = scout_id.toInt() % 6,
-                            matchNumber = et_match_number.text.toString()
-                        )
+            if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
+            if (MatchSchedule.fileExists) {
+                if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
+                    // Assign three scouts per robot based on the scout order list in Objective
+                    // Match Collection.
+                    if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                        if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
+                            assignTeamObjective(
+                                teamInput = et_team_one,
+                                teamIndex = getNewScoutAssignment(
+                                    matchNumber = et_match_number.text.toString(),
+                                    scoutID = scout_id.toInt()
+                                ),
+                                matchNumber = et_match_number.text.toString()
+                            )
+                        }
+                    } else {
+                        // Assign an alliance to a scout based on alliance color in Subjective Match
+                        // Collection.
+                        var iterationNumber = 0
+                        listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
+                            assignTeamsSubjective(
+                                teamInput = it,
+                                allianceColor = alliance_color,
+                                matchNumber = et_match_number.text.toString(),
+                                iterationNumber = iterationNumber
+                            )
+                            iterationNumber++
+                        }
+
                     }
                 } else {
-                    // Assign an alliance to a scout based on alliance color in Subjective Match Collection.
-                    var iterationNumber = 0
-                    listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
-                        assignTeamByAllianceColor(
-                            teamInput = it,
-                            allianceColor = alliance_color,
-                            matchNumber = et_match_number.text.toString(),
-                            iterationNumber = iterationNumber
-                        )
-                        iterationNumber++
+                    et_team_one.setText("")
+                    et_team_two.setText("")
+                    et_team_three.setText("")
+
+                    AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
+                }
+
+                if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                    if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
+                        AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found)
+                            .show()
                     }
                 }
             }
-        } else {
-            et_team_one.setText("")
-            et_team_two.setText("")
-            et_team_three.setText("")
-
-            AlertDialog.Builder(this).setMessage(R.string.error_schedule_not_found).show()
-        }
-
-        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-            if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
-                AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found).show()
-            }
-        }
     }
 
     // Assign team number based on collection mode when match number is changed.
     private fun initMatchNumberTextChangeListener() {
-        et_match_number.addTextChangedListener {
-            if (checkInputNotEmpty(et_match_number)) {
-                autoAssignTeamInputsGivenMatch()
-                if (et_match_number.text.toString() != "") {
-                    match_number = parseInt(et_match_number.text.toString())
+        et_match_number.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+
+                if (checkInputNotEmpty(et_match_number)) {
+                    if (et_match_number.text.toString() != "") {
+                        if (MatchSchedule.fileExists) {
+                            if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
+                                et_team_one.setText("")
+                                et_team_two.setText("")
+                                et_team_three.setText("")
+                            } else {
+                                autoAssignTeamInputsGivenMatch()
+                                match_number = parseInt(et_match_number.text.toString())
+                            }
+                        }
+                    }
+                } else {
+                    et_team_one.setText("")
+                    et_team_two.setText("")
+                    et_team_three.setText("")
                 }
-            } else {
-                et_team_one.setText("")
-                et_team_two.setText("")
-                et_team_three.setText("")
             }
-        }
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 
     // Create an alliance color toggle button given its specifications.
@@ -448,7 +506,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     // Transition into the next activity and set timestamp for specific match.
     private fun startMatchActivity() {
         match_number = parseInt(et_match_number.text.toString())
-        timestamp = System.currentTimeMillis() / 1000
 
         putIntoStorage(context = this, key = "match_number", value = match_number)
         putIntoStorage(context = this, key = "alliance_color", value = alliance_color)
@@ -523,6 +580,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         serial_number = getSerialNum(context = this)
 
+        resetCollectionReferences()
         resetStartingReferences()
 
         MatchSchedule.read()

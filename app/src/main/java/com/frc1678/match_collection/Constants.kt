@@ -21,6 +21,7 @@ class Constants {
     }
 
     enum class StartingPosition {
+        ZERO,
         ONE,
         TWO,
         THREE,
@@ -38,16 +39,13 @@ class Constants {
 
     enum class ActionType {
         SCORE_BALL_HIGH_HUB,
-        SCORE_BALL_HIGH_LAUNCHPAD,
         SCORE_BALL_HIGH_OTHER,
         SCORE_BALL_LOW,
         INTAKE,
         START_INCAP,
         END_INCAP,
         START_CLIMB,
-        END_CLIMB,
-        CATCH_EXIT_BALL,
-        SCORE_OPPONENT_BALL
+        END_CLIMB
     }
 
     enum class Stage {

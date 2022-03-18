@@ -6,7 +6,6 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linear_layout_panels"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="8"
@@ -19,24 +18,24 @@
             android:name="com.frc1678.match_collection.SubjectiveRankingCounterPanel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
-            android:paddingTop="@dimen/small" />
+            android:layout_weight="1"
+            android:layout_marginVertical="@dimen/small" />
 
         <fragment
             android:id="@+id/robotTwo"
             android:name="com.frc1678.match_collection.SubjectiveRankingCounterPanel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
-            android:paddingTop="@dimen/small" />
+            android:layout_weight="1"
+            android:layout_marginVertical="@dimen/small" />
 
         <fragment
             android:id="@+id/robotThree"
             android:name="com.frc1678.match_collection.SubjectiveRankingCounterPanel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
-            android:paddingTop="30dp" />
+            android:layout_weight="1"
+            android:layout_marginVertical="@dimen/small" />
     </LinearLayout>
 
     <Button

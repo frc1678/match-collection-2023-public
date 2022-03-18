@@ -5,19 +5,15 @@
     <string name="low_label">Low</string>
     <string name="high_label">High</string>
     <string name="btn_timer_start">Start Match</string>
-    <string name="btn_action_one">Hub - %1$s</string>
-    <string name="btn_action_two">Hub - %1$s</string>
-    <string name="btn_action_three">Launch Pad - %1$s</string>
-    <string name="btn_action_four">Other - %1$s</string>
+    <string name="btn_action_one">Low - %1$s</string>
+    <string name="btn_action_two">High Hub- %1$s</string>
+    <string name="btn_action_four">High Other - %1$s</string>
     <string name="btn_action_five">Intake - %1$s</string>
-    <string name="btn_action_six">Catch - %1$s</string>
-    <string name="btn_action_seven">Score Opp. - %1$s</string>
     <string name="tb_action_bool_one_off">Start Incap</string>
     <string name="tb_action_bool_one_on">End Incap</string>
     <string name="tb_action_bool_two_disabled">Climb Attempted</string>
     <string name="btn_climb">New Climb Attempt…</string>
     <string name="btn_climbed">Climb Attempted</string>
-    <string name="btn_error">Error</string>
     <string name="btn_undo">Undo</string>
     <string name="btn_redo">Redo</string>
     <string name="btn_plus">+</string>
@@ -39,13 +35,14 @@
     <string name="final_time">0</string>
     <string name="error_back_reset">Do you want to reset everything?</string>
     <string name="error_missing_information">PLEASE INPUT ALL INFORMATION!</string>
-    <string name="error_same_rankings">PLEASE INPUT DIFFERENT RANKING VALUES!</string>
+    <string name="warning_same_rankings">Are you sure you want to have duplicate rankings?</string>
     <string name="error_same_teams">PLEASE ENSURE ALL TEAMS ARE DIFFERENT!</string>
     <string name="error_serial_num">NO SERIAL NUMBER - PLEASE ENABLE PHONE PERMISSIONS</string>
     <string name="error_qr">INVALID QR!</string>
-    <string name="error_schedule_not_found">NO MATCH SCHEDULE FILE!</string>
+    <string name="error_file_missing">MATCH SCHEDULE FILE MISSING!</string>
     <string name="error_scout_id_not_found">NO SCOUT ID FOUND!</string>
     <string name="btn_switch_orientation">Switch Orientation</string>
+    <string name="no_show_starting_position">NO SHOW</string>
     <string name="one_starting_position">1</string>
     <string name="two_starting_position">2</string>
     <string name="three_starting_position">3</string>
@@ -60,4 +57,7 @@
     <string name="climb_timer_done">Recorded:\n%1$s sec.</string>
     <string name="cancel">Cancel</string>
     <string name="done">Done</string>
+    <string name="playing_defense">Playing defense?</string>
+    <string name="quickness">Quickness</string>
+    <string name="field_aware">Field Aware</string>
 </resources>

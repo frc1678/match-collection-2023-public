@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.starting_position_activity.*
 
 class StartingPositionObjectiveActivity:CollectionActivity() {
@@ -25,17 +26,20 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
 
     private fun setBackgrounds() {
         if (alliance_color == Constants.AllianceColor.RED) {
+            btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray))
             btn_one.setBackgroundColor(resources.getColor(R.color.red_start_one))
             btn_two.setBackgroundColor(resources.getColor(R.color.red_start_two))
             btn_three.setBackgroundColor(resources.getColor(R.color.red_start_three))
             btn_four.setBackgroundColor(resources.getColor(R.color.red_start_four))
         } else {
+            btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray))
             btn_one.setBackgroundColor(resources.getColor(R.color.blue_start_one))
             btn_two.setBackgroundColor(resources.getColor(R.color.blue_start_two))
             btn_three.setBackgroundColor(resources.getColor(R.color.blue_start_three))
             btn_four.setBackgroundColor(resources.getColor(R.color.blue_start_four))
         }
         when {
+            (starting_position == Constants.StartingPosition.ZERO) -> btn_zero.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.ONE) -> btn_one.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.TWO) -> btn_two.setBackgroundColor(Color.YELLOW)
             (starting_position == Constants.StartingPosition.THREE) -> btn_three.setBackgroundColor(Color.YELLOW)
@@ -44,6 +48,10 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
     }
 
     private fun initOnClicks() {
+        btn_zero.setOnClickListener {
+            starting_position = Constants.StartingPosition.ZERO
+            setBackgrounds()
+        }
         btn_one.setOnClickListener {
             starting_position = Constants.StartingPosition.ONE
             setBackgrounds()
@@ -66,10 +74,15 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
             setMapImage()
         }
         btn_proceed_starting_position.setOnClickListener { view ->
-            val intent = Intent(this, CollectionObjectiveActivity::class.java)
             if (starting_position != Constants.StartingPosition.NONE) {
                 startActivity(
-                    intent, ActivityOptions.makeSceneTransitionAnimation(
+                    Intent(
+                        this,
+                        if (starting_position == Constants.StartingPosition.ZERO) {
+                            MatchInformationEditActivity::class.java
+                        } else CollectionObjectiveActivity::class.java
+                    ),
+                    ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         btn_proceed_starting_position, "proceed_button"
                     ).toBundle()
@@ -104,6 +117,13 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.starting_position_activity)
+
+        if (alliance_color == Constants.AllianceColor.RED) {
+            tv_pos_team_number.setTextColor(resources.getColor(R.color.alliance_red_light, null))
+        } else if (alliance_color == Constants.AllianceColor.BLUE) {
+            tv_pos_team_number.setTextColor(resources.getColor(R.color.alliance_blue_light, null))
+        }
+        tv_pos_team_number.text = team_number
 
         resetCollectionReferences()
 

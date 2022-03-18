@@ -6,26 +6,21 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import kotlinx.android.synthetic.main.climb_popup.*
 import kotlinx.android.synthetic.main.climb_popup.view.*
 import kotlinx.android.synthetic.main.collection_objective_activity.*
-import kotlinx.android.synthetic.main.error_pop_up.view.*
 import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionOne = 0 //SCORE_BALL_LOW
     private var numActionTwo = 0 //SCORE_BALL_HIGH_HUB
-    private var numActionThree = 0 //SCORE_BALL_HIGH_LAUNCHPAD
     private var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
     private var numActionFive = 0 //NUMBER OF INTAKES
-    private var numActionSix = 0 //CATCH_CARGO
-    private var numActionSeven = 0 //SCORE_OPPOSING_BALL
 
     private var isTimerRunning = false
     //FALSE = LOW
@@ -55,15 +50,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
     // If stage and time contradict when action is recorded, add action to timeline with time value
     // dictated by stage.
     private fun timelineAddWithStage(action_type: Constants.ActionType) {
-        if (!is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time)))) {
-            timelineAdd(match_time = getString(R.string.final_auto_time), action_type = action_type)
-        } else if (is_teleop_activated and (parseInt(match_time) > parseInt(getString(R.string.initial_teleop_time)))) {
-            timelineAdd(
-                match_time = getString(R.string.initial_teleop_time),
-                action_type = action_type
-            )
-        } else {
-            timelineAdd(match_time = match_time, action_type = action_type)
+        when {
+            !is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time))) -> {
+                timelineAdd(match_time = getString(R.string.final_auto_time), action_type = action_type)
+            }
+            is_teleop_activated and (parseInt(match_time) > parseInt(getString(R.string.initial_teleop_time))) -> {
+                timelineAdd(
+                    match_time = getString(R.string.initial_teleop_time),
+                    action_type = action_type
+                )
+            }
+            else -> {
+                timelineAdd(match_time = match_time, action_type = action_type)
+            }
         }
     }
 
@@ -82,10 +81,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 setCounterTexts()
             }
 
-            Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD.toString() -> {
-                numActionThree--
-                setCounterTexts()
-            }
             Constants.ActionType.SCORE_BALL_HIGH_OTHER.toString() -> {
                 numActionFour--
                 setCounterTexts()
@@ -93,15 +88,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.INTAKE.toString() -> {
                 numActionFive--
                 setCounterTexts()
-            }
-
-            Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
-                numActionSix--
-                showErrorPopup(btn_error)
-            }
-            Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
-                numActionSeven--
-                showErrorPopup(btn_error)
             }
             Constants.ActionType.END_CLIMB.toString() -> {
                 removeOneMore = true
@@ -146,10 +132,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 setCounterTexts()
             }
 
-            Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD.toString() -> {
-                numActionThree++
-                setCounterTexts()
-            }
+
             Constants.ActionType.SCORE_BALL_HIGH_OTHER.toString() -> {
                 numActionFour++
                 setCounterTexts()
@@ -157,15 +140,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.INTAKE.toString() -> {
                 numActionFive++
                 setCounterTexts()
-            }
-
-            Constants.ActionType.CATCH_EXIT_BALL.toString() -> {
-                numActionSix++
-                showErrorPopup(btn_error)
-            }
-            Constants.ActionType.SCORE_OPPONENT_BALL.toString() -> {
-                numActionSeven++
-                showErrorPopup(btn_error)
             }
             Constants.ActionType.START_CLIMB.toString() -> {
                 replaceOneMore = true
@@ -189,16 +163,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     // Enable and disable buttons based on actions in timeline and timer stage.
-    private fun enableButtons() {
+    fun enableButtons()
+    {
         val isIncap = tb_action_one.isChecked
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_three.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-
-        btn_error.isEnabled = !(!isTimerRunning or popup_open)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
@@ -215,7 +187,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     // Function to end incap if still activated at end of the match.
-    private fun endAction() {
+    fun endAction() {
         if (tb_action_one.isChecked) {
             tb_action_one.isChecked = false
             timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
@@ -226,7 +198,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun setCounterTexts() {
         btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
         btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
-        btn_action_three.text = getString(R.string.btn_action_three, numActionThree.toString())
         btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
         btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
     }
@@ -261,6 +232,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         context = this,
                         btn_timer = btn_timer,
                         btn_proceed = btn_proceed_edit,
+                        btn_incap = tb_action_one,
                         layout = objective_match_collection_layout
                     )
                 isTimerRunning = true
@@ -301,13 +273,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Increment button action three by one when clicked and add action to timeline.
-        btn_action_three.setOnClickListener {
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_LAUNCHPAD)
-            numActionThree++
-            setCounterTexts()
-        }
-
-        // Increment button action four by one when clicked and add action to timeline.
         btn_action_four.setOnClickListener {
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_OTHER)
             numActionFour++
@@ -431,48 +396,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Replace previously undone action to timeline when redo button is clicked.
         btn_redo.setOnClickListener {
             timelineReplace()
-        }
-
-        btn_error.setOnClickListener {
-            showErrorPopup(it)
-        }
-    }
-
-    private fun showErrorPopup(view: View) {
-        popup_open = true
-        enableButtons()
-
-        // Inflate a custom view using layout inflater
-        val popupView = View.inflate(this, R.layout.error_pop_up,null)
-        popupView.catch_cargo.text = getString(R.string.btn_action_six, numActionSix.toString())
-        popupView.score_opp.text = getString(R.string.btn_action_seven, numActionSeven.toString())
-
-        // Initialize a new instance of popup window
-        val popupWindow = PopupWindow(
-            popupView, // Custom view to show in popup window
-            LinearLayout.LayoutParams.MATCH_PARENT, // Width of popup window
-            600, // Window height
-            true
-        )
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0)
-
-        popupView.catch_cargo.setOnClickListener {
-            numActionSix++
-            timelineAdd(match_time = match_time, action_type = Constants.ActionType.CATCH_EXIT_BALL)
-            popupWindow.dismiss()
-            popup_open = false
-            enableButtons()
-        }
-        popupView.score_opp.setOnClickListener {
-            numActionSeven++
-            timelineAdd(match_time = match_time, action_type = Constants.ActionType.SCORE_OPPONENT_BALL)
-            popupWindow.dismiss()
-            popup_open = false
-            enableButtons()
-        }
-        popupWindow.setOnDismissListener {
-            popup_open = false
-            enableButtons()
         }
     }
 
