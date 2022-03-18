@@ -89,7 +89,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionFive--
                 setCounterTexts()
             }
+            Constants.ActionType.CLIMB_ATTEMPT.toString() -> {
+                did_climb = false
 
+            }
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = false
             }
@@ -138,8 +141,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 setCounterTexts()
             }
             Constants.ActionType.CLIMB_ATTEMPT.toString() -> {
-                replaceOneMore = true
-
+                did_climb = true
             }
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = true
