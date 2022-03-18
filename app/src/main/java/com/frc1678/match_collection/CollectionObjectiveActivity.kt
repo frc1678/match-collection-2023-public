@@ -89,9 +89,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionFive--
                 setCounterTexts()
             }
-//            Constants.ActionType.END_CLIMB.toString() -> {
-//                removeOneMore = true
-//            }
+
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = false
             }
