@@ -8,19 +8,21 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.id_scout_dialog.*
 import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
+import kotlinx.android.synthetic.main.old_qrs_popup.*
+import kotlinx.android.synthetic.main.old_qrs_popup.view.*
 import java.io.File
 import java.io.FileReader
 import java.lang.Integer.parseInt
@@ -318,6 +320,60 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         }
     }
 
+    private fun initOldQRsLongClick(){
+        val matchesPlayed = ArrayList<String>()
+
+        btn_old_QRs.setOnLongClickListener{ view ->
+            matchesPlayed.clear()
+
+            //This will break if the same device has files from pit collection on it as well.
+            //This shouldn't be a problem at competition, but watch out during testing
+            File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
+                val name = it.nameWithoutExtension
+                when (name[0].toString()) {
+                    "1","2","3","4","5","6","7","8","9" ->
+                        matchesPlayed.add(it.nameWithoutExtension.substringBefore("_"))
+                }
+            }
+
+            val popupView = View.inflate(this, R.layout.old_qrs_popup, null)
+            val width = LinearLayout.LayoutParams.WRAP_CONTENT
+            val height = LinearLayout.LayoutParams.WRAP_CONTENT
+            val popupWindow = PopupWindow(popupView, width, height, false)
+            popupWindow.showAtLocation(view, Gravity.CENTER, 0, -175)
+            popup_open = true
+
+            val adapter = ArrayAdapter(
+                this, R.layout.old_qrs_popup_cell,
+                matchesPlayed.map {return@map "Match #$it" })
+            popupView.lv_old_qrs.adapter = adapter
+
+            popupView.iv_old_qr_exit.setOnClickListener{
+                popupWindow.dismiss()
+                popup_open = false
+            }
+
+            popupView.lv_old_qrs.setOnItemClickListener { parent, _, position, _ ->
+                val selectedItem = parent.getItemAtPosition(position).toString().substringAfter("#")
+                File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
+                    val fileName = it.name
+                    val qrContents = it.readText()
+
+                    if ((fileName.substringBefore("_") == selectedItem) and fileName.endsWith(".txt")){
+                        val QRActivity = QRGenerateActivity()
+                        val intent = Intent(this, QRGenerateActivity::class.java)
+                        startActivity(intent)
+
+                        Log.d("QRs", "past startActivity")
+                        QRActivity.displayQR(contents = qrContents)
+                        Log.d("QRs", "past QR display")
+                    }
+                }
+            }
+            return@setOnLongClickListener true
+        }
+    }
+
     // Initialize the adapter and onItemSelectedListener for assignment mode input.
     private fun initAssignModeSpinner() {
         when (retrieveFromStorage(context = this, key = "assignment_mode")) {
@@ -455,6 +511,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         if (collection_mode == Constants.ModeSelection.OBJECTIVE){
             setContentView(R.layout.match_information_input_activity_objective)
             initScoutIdLongClick()
+            initOldQRsLongClick()
         } else if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
             setContentView(R.layout.match_information_input_activity_subjective)
         }

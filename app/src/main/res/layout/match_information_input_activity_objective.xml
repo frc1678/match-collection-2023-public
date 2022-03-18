@@ -59,6 +59,17 @@
                 style="@style/btn_white"
                 />
 
+            <View
+                style="@style/view_separator_horizontal"
+                android:layout_height="@dimen/smaller_than_very_small" />
+
+            <Button
+                android:id="@+id/btn_scout_id"
+                style="@style/btn_white"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="@string/btn_id_default" />
+
         </LinearLayout>
 
         <View
@@ -73,11 +84,11 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/btn_scout_id"
+                android:id="@+id/btn_old_QRs"
                 style="@style/btn_white"
                 android:background="@color/white"
                 android:layout_weight="1"
-                android:text="@string/btn_id_default" />
+                android:text="Old QRs"/>
 
             <View
                 style="@style/view_separator_horizontal"

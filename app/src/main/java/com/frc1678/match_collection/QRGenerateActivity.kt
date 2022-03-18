@@ -40,7 +40,7 @@ class QRGenerateActivity : CollectionActivity() {
     }
 
     // Generate and display QR.
-    private fun displayQR(contents: String) {
+    fun displayQR(contents: String) {
         AwesomeQRCode.Renderer().contents(contents)
             .size(800).margin(20).dotScale(dataDotScale = 1f)
             .renderAsync(object : AwesomeQRCode.Callback {
