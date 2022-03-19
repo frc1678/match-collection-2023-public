@@ -39,7 +39,6 @@ class Constants {
 
     enum class ActionType {
         SCORE_BALL_HIGH_HUB,
-        SCORE_BALL_HIGH_OTHER,
         SCORE_BALL_LOW,
         INTAKE,
         START_INCAP,

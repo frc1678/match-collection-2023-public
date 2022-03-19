@@ -18,7 +18,7 @@ import java.lang.Integer.parseInt
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionOne = 0 //SCORE_BALL_LOW
-    private var numActionTwo = 0 //SCORE_BALL_HIGH_HUB
+    private var numActionTwo = 0 //SCORE_BALL_HIGH
     private var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
     private var numActionFive = 0 //NUMBER OF INTAKES
 
@@ -81,10 +81,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 setCounterTexts()
             }
 
-            Constants.ActionType.SCORE_BALL_HIGH_OTHER.toString() -> {
-                numActionFour--
-                setCounterTexts()
-            }
+
             Constants.ActionType.INTAKE.toString() -> {
                 numActionFive--
                 setCounterTexts()
@@ -132,10 +129,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
 
-            Constants.ActionType.SCORE_BALL_HIGH_OTHER.toString() -> {
-                numActionFour++
-                setCounterTexts()
-            }
+
             Constants.ActionType.INTAKE.toString() -> {
                 numActionFive++
                 setCounterTexts()
@@ -166,7 +160,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_four.isEnabled = !(!isTimerRunning or popup_open or isIncap)
         btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
@@ -194,7 +187,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun setCounterTexts() {
         btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
         btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
-        btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
         btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
     }
 
@@ -268,12 +260,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             setCounterTexts()
         }
 
-        // Increment button action three by one when clicked and add action to timeline.
-        btn_action_four.setOnClickListener {
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_OTHER)
-            numActionFour++
-            setCounterTexts()
-        }
+
 
         // Increment button action five by one when clicked and add action to timeline.
         btn_action_five.setOnClickListener {

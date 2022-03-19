@@ -6,8 +6,7 @@
     <string name="high_label">High</string>
     <string name="btn_timer_start">Start Match</string>
     <string name="btn_action_one">Low - %1$s</string>
-    <string name="btn_action_two">High Hub- %1$s</string>
-    <string name="btn_action_four">High Other - %1$s</string>
+    <string name="btn_action_two">High - %1$s</string>
     <string name="btn_action_five">Intake - %1$s</string>
     <string name="tb_action_bool_one_off">Start Incap</string>
     <string name="tb_action_bool_one_on">End Incap</string>
