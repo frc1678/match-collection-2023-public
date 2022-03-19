@@ -28,6 +28,7 @@ import java.io.File
 import java.io.FileReader
 import java.io.InputStreamReader
 import java.lang.Integer.parseInt
+import java.text.BreakIterator
 
 // Activity to input the match information before the start of the match.
 class MatchInformationInputActivity : MatchInformationActivity() {
@@ -415,16 +416,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 val selectedItem = parent.getItemAtPosition(position).toString().substringAfter("#")
                 File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
                     val fileName = it.name
-                    val qrContents = it.readText()
-
                     if ((fileName.substringBefore("_") == selectedItem) and fileName.endsWith(".txt")){
-                        val QRActivity = QRGenerateActivity()
+                        val qrContents = it.readText()
                         val intent = Intent(this, QRGenerateActivity::class.java)
+                        intent.putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
                         startActivity(intent)
-
-                        Log.d("QRs", "past startActivity")
-                        QRActivity.displayQR(contents = qrContents)
-                        Log.d("QRs", "past QR display")
                     }
                 }
             }

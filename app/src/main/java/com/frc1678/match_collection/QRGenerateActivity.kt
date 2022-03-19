@@ -58,9 +58,9 @@ class QRGenerateActivity : CollectionActivity() {
 
     // Initialize proceed button to increment and store match number and return to
     // MatchInformationInputActivity.kt when clicked.
-    private fun initProceedButton() {
+    private fun initProceedButton(isAlreadyCompressed: Boolean) {
         btn_proceed_new_match.setOnClickListener {
-            putIntoStorage(context = this, key = "match_number", value = match_number + 1)
+                putIntoStorage(context = this, key = "match_number", value = if(isAlreadyCompressed) match_number else match_number + 1)
             val intent = Intent(this, MatchInformationInputActivity::class.java)
             startActivity(
                 intent, ActivityOptions.makeSceneTransitionAnimation(
@@ -93,25 +93,32 @@ class QRGenerateActivity : CollectionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_generate_activity)
 
-        initProceedButton()
-
         timestamp = System.currentTimeMillis() / 1000
+        val compressedQR = intent.extras?.getString(Constants.COMPRESSED_QR_TAG)
 
-        // Populate QR code content and display QR if valid (only contains compression characters).
-        val qrContents = compress(schema = schemaRead(context = this))
-        if (regex.matcher(qrContents).matches()) {
-            displayQR(contents = qrContents)
-        } else {
-            AlertDialog.Builder(this).setMessage(R.string.error_qr).show()
-        }
+        if (compressedQR == null) {
+            initProceedButton(false)
 
-        // Write compressed QR string to file.
-        // File name is dependent on mode (objective or subjective).
-        val fileName = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-            "${match_number}_${team_number}_${getSerialNum(context = this)}_$timestamp"
+            // Populate QR code content and display QR if valid (only contains compression characters).
+            val qrContents = compress(schema = schemaRead(context = this))
+            if (regex.matcher(qrContents).matches()) {
+                displayQR(contents = qrContents)
+            } else {
+                AlertDialog.Builder(this).setMessage(R.string.error_qr).show()
+            }
+
+            // Write compressed QR string to file.
+            // File name is dependent on mode (objective or subjective).
+            val fileName = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                "${match_number}_${team_number}_${getSerialNum(context = this)}_$timestamp"
+            } else {
+                "${match_number}_${getSerialNum(context = this)}_$timestamp"
+            }
+            writeToFile(fileName = fileName, message = qrContents)
         } else {
-            "${match_number}_${getSerialNum(context = this)}_$timestamp"
+            initProceedButton(true)
+
+            displayQR(compressedQR)
         }
-        writeToFile(fileName = fileName, message = qrContents)
     }
 }
