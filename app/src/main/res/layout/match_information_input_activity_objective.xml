@@ -88,7 +88,7 @@
                 style="@style/btn_white"
                 android:background="@color/white"
                 android:layout_weight="1"
-                android:text="Old QRs"/>
+                android:text="@string/btn_old_QRs_default"/>
 
             <View
                 style="@style/view_separator_horizontal"

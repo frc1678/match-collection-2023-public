@@ -379,22 +379,40 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         }
     }
 
+    //When given a string it will return Constants.ModeSelection.Subjective if it is the name of a Subjective QR file,
+    // Constants.ModeSelection.OBJECTIVE if it is the name of an objective QR file
+    private fun differentiateSubjectiveAndObjectiveQRFileNames(file_name: String): Constants.ModeSelection{
+
+/*        When we make the QR files in QRGenerateActivity SubjectiveQR files have 3 variables and 2 underscores between them.
+         ObjectiveQR files have 4 variables and 3 underscores, we're searching for underscores because it was the
+         easiest way to differentiate between them.*/
+        return when(file_name.filter { it == '_' }.count()){
+            2 -> Constants.ModeSelection.SUBJECTIVE
+            3 -> Constants.ModeSelection.OBJECTIVE
+            /*It doesn't really matter what is returned here, this just means that it is not a
+             match collection QR file and shouldn't be equal to SUBJECTIVE or OBJECTIVE*/
+            else -> Constants.ModeSelection.NONE
+        }
+    }
+
     private fun initOldQRsLongClick(){
         val matchesPlayed = ArrayList<String>()
 
         btn_old_QRs.setOnLongClickListener{ view ->
             matchesPlayed.clear()
 
-            //This will break if the same device has files from pit collection on it as well.
-            //This shouldn't be a problem at competition, but watch out during testing
+            //This will go through the name of every file in downloads and figure out whether the name is of an objective or subjective file.
+            //If it is an objective or subjective file and you are in that collection mode it will add the match number of the QR file into matchesPlayed
             File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
                 val name = it.nameWithoutExtension
-                when (name[0].toString()) {
-                    "1","2","3","4","5","6","7","8","9" ->
-                        matchesPlayed.add(it.nameWithoutExtension.substringBefore("_"))
+                if( collection_mode == differentiateSubjectiveAndObjectiveQRFileNames(name)){
+                    //both subjective and objective QR files start with the match number and immediately after the match number have an underscore
+                    matchesPlayed.add(name.substringBefore("_"))
                 }
             }
+            matchesPlayed.sort()
 
+            //This opens up the Old QR popup
             val popupView = View.inflate(this, R.layout.old_qrs_popup, null)
             val width = LinearLayout.LayoutParams.WRAP_CONTENT
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -402,17 +420,26 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, -175)
             popup_open = true
 
+            //sets the list view equal to a list matchesPlayed
             val adapter = ArrayAdapter(
                 this, R.layout.old_qrs_popup_cell,
                 matchesPlayed.map {return@map "Match #$it" })
             popupView.lv_old_qrs.adapter = adapter
 
+            //the Exit thing closes the popup
             popupView.iv_old_qr_exit.setOnClickListener{
                 popupWindow.dismiss()
                 popup_open = false
             }
 
             popupView.lv_old_qrs.setOnItemClickListener { parent, _, position, _ ->
+                /*This checks every item in dowloads and checks if it is the file for the selected match.
+                Once found it will read that file and run QRGenerateActivity to display the QR for the file.*/
+
+                /*WARNING!!! THIS WILL BREAK IF THERE ARE FILES FOR PIT COLLECTION ON THE DEVICE
+                PitCollection files are stored with the team number first,
+                for example it will assume that a pit collection file on team 4 is a match collection file for match 4.
+                This SHOULD never happen during competition, but might be a problem during testing if you test multiple apps with the same device.*/
                 val selectedItem = parent.getItemAtPosition(position).toString().substringAfter("#")
                 File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
                     val fileName = it.name
@@ -564,7 +591,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         if (collection_mode == Constants.ModeSelection.OBJECTIVE){
             setContentView(R.layout.match_information_input_activity_objective)
             initScoutIdLongClick()
-            initOldQRsLongClick()
         } else if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
             setContentView(R.layout.match_information_input_activity_subjective)
         }
@@ -581,6 +607,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         MatchSchedule.read()
 
+        initOldQRsLongClick()
         initToggleButtons()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
         initMatchNumberTextChangeListener()
