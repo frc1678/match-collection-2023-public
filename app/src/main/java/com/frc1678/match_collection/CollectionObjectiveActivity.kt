@@ -6,13 +6,11 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import kotlinx.android.synthetic.main.climb_popup.*
 import kotlinx.android.synthetic.main.climb_popup.view.*
 import kotlinx.android.synthetic.main.collection_objective_activity.*
 import java.lang.Integer.parseInt
