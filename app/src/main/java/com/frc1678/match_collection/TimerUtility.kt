@@ -53,11 +53,9 @@ class TimerUtility {
                         layout.setBackgroundColor(Color.RED)
                     }
                 }
+
                 // Display 0 and change button states when countdown finishes.
                 override fun onFinish() {
-                    if (!climb_timer_paused && climb_timer != null) { // timer is currently running
-                        climb_timer!!.onFinish()
-                        climb_end_time = match_time}
                     btn_timer.text = context.getString(
                         R.string.tv_time_display,
                         returnStage(time.roundToInt()),
@@ -91,31 +89,5 @@ class TimerUtility {
             )
         }
     }
-
-    /** A new thread for the climb timer in the climb popup. The timer starts from 0 seconds and
-     * counts up until it is canceled or reaches 2 minutes and 15 seconds. This uses the
-     * [CountDownTimer] class, possibly in an unintended way, but it works. */
-    class ClimbTimerThread(val context: Context, val view: View) : Thread() {
-        var time = 0
-        init { startTimer() }
-
-        private fun startTimer() {
-            climb_timer = object : CountDownTimer(135_000, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    time = (135f - (millisUntilFinished / 1000f)).toInt() + 1
-                    view.btn_climb_timer.text = context.getString(R.string.climb_timer, (time + climb_time).toString())
-                }
-
-                override fun onFinish() {
-                    super.cancel()
-                    climb_timer_paused = true
-                    climb_time += time
-                    view.btn_climb_timer.text = context.getString(R.string.climb_timer_done, climb_time.toString())
-                    view.btn_climb_done.isEnabled = true
-
-                }
-
-            }.start()
-        }
-    }
 }
+

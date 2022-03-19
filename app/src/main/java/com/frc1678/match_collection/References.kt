@@ -11,7 +11,7 @@ var popup_open = false
 var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
-
+var did_climb: Boolean = false
 // Data that is shared between the objective and subjective QRs.
 var serial_number: String? = ""
 var match_number: Int = 0
@@ -28,11 +28,6 @@ var starting_position: Constants.StartingPosition = Constants.StartingPosition.N
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 
-var climb_timer: CountDownTimer? = null
-var climb_timer_paused = false
-var climb_time: Int = 0
-var climb_start_time: String? = null
-var climb_end_time: String? = null
 
 // Data specific to Subjective Match Collection QR.
 
@@ -43,10 +38,9 @@ var played_defense_list: ArrayList<String> = ArrayList()
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
     is_teleop_activated = false
+    did_climb = false
 
-    climb_timer = null
-    climb_timer_paused = false
-    climb_time = 0
+
     popup_open = false
     climb_level = Constants.ClimbLevel.NONE
 
