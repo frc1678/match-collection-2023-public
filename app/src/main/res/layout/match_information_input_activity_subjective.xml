@@ -58,18 +58,7 @@
                 android:id="@+id/spinner_scout_name"
                 style="@style/btn_white"
                 />
-
-            <View
-                style="@style/view_separator_horizontal"
-                android:layout_height="@dimen/smaller_than_very_small" />
-
-            <Button
-                android:id="@+id/btn_scout_id"
-                style="@style/btn_white"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:text="@string/btn_id_default" />
-
+            
         </LinearLayout>
 
         <View
