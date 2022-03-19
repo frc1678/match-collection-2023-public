@@ -287,7 +287,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         resetBackground()
 
         when (retrieveFromStorage(context = this, key = "alliance_color")) {
-            Constants.AllianceColor.BLUE.toString() -> {
+            Constants.AllianceColor.BLUE.toString(), "" -> {
                 switchBorderToBlueToggle()
                 alliance_color = Constants.AllianceColor.BLUE
             }
