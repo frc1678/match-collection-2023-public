@@ -6,11 +6,13 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import kotlinx.android.synthetic.main.climb_popup.*
 import kotlinx.android.synthetic.main.climb_popup.view.*
 import kotlinx.android.synthetic.main.collection_objective_activity.*
 import java.lang.Integer.parseInt
@@ -175,7 +177,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_climb.text =
             if (did_climb) getString(R.string.btn_climbed)
             else getString(R.string.btn_climb)
-
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
@@ -303,72 +304,79 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
             enableButtons()
-            popupView.btn_climb_done.isEnabled = true
 
             popupView.btn_climb_cancel.setOnClickListener {
+                did_climb = false
                 climb_level = Constants.ClimbLevel.NONE
                 popupWindow.dismiss()
                 popup_open = false
                 enableButtons()
-            }
+                }
             popupView.btn_climb_done.setOnClickListener {
                 popupWindow.dismiss()
                 btn_climb.isEnabled = false
                 popup_open = false
                 timelineAdd(match_time,Constants.ActionType.CLIMB_ATTEMPT)
                 enableButtons()
-            }
-            popupView.btn_climb_lv0.isActivated = true
-            climb_level = Constants.ClimbLevel.NONE
-            popupView.btn_climb_lv0.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = true
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = false
+                }
+
+            popupView.btn_climb_lv0.isActivated = false
                 climb_level = Constants.ClimbLevel.NONE
-                did_climb = true
-            }
-            popupView.btn_climb_lv1.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = true
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.LOW
-                did_climb = true
+                popupView.btn_climb_lv0.setOnClickListener {
+                    popupView.btn_climb_lv0.isActivated = true
+                    popupView.btn_climb_lv1.isActivated = false
+                    popupView.btn_climb_lv2.isActivated = false
+                    popupView.btn_climb_lv3.isActivated = false
+                    popupView.btn_climb_lv4.isActivated = false
+                    climb_level = Constants.ClimbLevel.NONE
+                    did_climb = true
+                    popupView.btn_climb_done.isEnabled = did_climb
 
-            }
-            popupView.btn_climb_lv2.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = true
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.MID
-                did_climb = true
+                }
+                popupView.btn_climb_lv1.setOnClickListener {
+                    popupView.btn_climb_lv0.isActivated = false
+                    popupView.btn_climb_lv1.isActivated = true
+                    popupView.btn_climb_lv2.isActivated = false
+                    popupView.btn_climb_lv3.isActivated = false
+                    popupView.btn_climb_lv4.isActivated = false
+                    climb_level = Constants.ClimbLevel.LOW
+                    did_climb = true
+                    popupView.btn_climb_done.isEnabled = did_climb
 
-            }
-            popupView.btn_climb_lv3.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = true
-                popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.HIGH
-                did_climb = true
+                }
+                popupView.btn_climb_lv2.setOnClickListener {
+                    popupView.btn_climb_lv0.isActivated = false
+                    popupView.btn_climb_lv1.isActivated = false
+                    popupView.btn_climb_lv2.isActivated = true
+                    popupView.btn_climb_lv3.isActivated = false
+                    popupView.btn_climb_lv4.isActivated = false
+                    climb_level = Constants.ClimbLevel.MID
+                    did_climb = true
+                    popupView.btn_climb_done.isEnabled = did_climb
 
-            }
-            popupView.btn_climb_lv4.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = true
-                climb_level = Constants.ClimbLevel.TRAVERSAL
-                did_climb = true
+                }
+                popupView.btn_climb_lv3.setOnClickListener {
+                    popupView.btn_climb_lv0.isActivated = false
+                    popupView.btn_climb_lv1.isActivated = false
+                    popupView.btn_climb_lv2.isActivated = false
+                    popupView.btn_climb_lv3.isActivated = true
+                    popupView.btn_climb_lv4.isActivated = false
+                    climb_level = Constants.ClimbLevel.HIGH
+                    did_climb = true
+                    popupView.btn_climb_done.isEnabled = did_climb
 
-            }
+                }
+                popupView.btn_climb_lv4.setOnClickListener {
+                    popupView.btn_climb_lv0.isActivated = false
+                    popupView.btn_climb_lv1.isActivated = false
+                    popupView.btn_climb_lv2.isActivated = false
+                    popupView.btn_climb_lv3.isActivated = false
+                    popupView.btn_climb_lv4.isActivated = true
+                    climb_level = Constants.ClimbLevel.TRAVERSAL
+                    did_climb = true
+                    popupView.btn_climb_done.isEnabled = did_climb
+
+                }
         }
 
         // Remove previous action from timeline when undo button is clicked.
