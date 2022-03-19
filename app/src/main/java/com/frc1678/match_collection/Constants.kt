@@ -43,8 +43,7 @@ class Constants {
         INTAKE,
         START_INCAP,
         END_INCAP,
-        START_CLIMB,
-        END_CLIMB
+        CLIMB_ATTEMPT,
     }
 
     enum class Stage {
