@@ -30,6 +30,7 @@ fun compress(
     val compressVersionNum =
         genericData.getValue("match_collection_version_number").toString().split(",")[0]
     val compressScoutName = genericData.getValue("scout_name").toString().split(",")[0]
+    val compressAllianceColor = genericData.getValue("alliance_color_is_red").toString().split(",")[0]
 
     // Define compression characters for objective separators.
     val objectiveStartCharacter = objectiveData.getValue("_start_character").toString()
@@ -51,7 +52,6 @@ fun compress(
     val compressQuicknessScore = subjectiveData.getValue("quickness_score").toString().split(",")[0]
     val compressAwareScore = subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
-    val compressAllianceColor = subjectiveData.getValue("alliance_color_is_red").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -60,7 +60,8 @@ fun compress(
                 compressMatchNumber + match_number + genericSeparator +
                 compressTimestamp + timestamp + genericSeparator +
                 compressVersionNum + match_collection_version_number + genericSeparator +
-                compressScoutName + scout_name.toUpperCase(Locale.US)
+                compressScoutName + scout_name.toUpperCase(Locale.US) + genericSeparator +
+                compressAllianceColor + if(alliance_color == Constants.AllianceColor.RED) "TRUE" else "FALSE"
 
     // Compress and add data specific to Objective Match Collection.
     if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
@@ -112,8 +113,6 @@ fun compress(
             subjDataString += if (playedDefense) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
-            subjDataString += compressAllianceColor
-            subjDataString += if(alliance_color == Constants.AllianceColor.RED) "TRUE" else "FALSE"
 
             if (i + 1 != teamNumbers.size) subjDataString += subjectiveTeamSeparator
         }
