@@ -410,7 +410,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     matchesPlayed.add(name.substringBefore("_"))
                 }
             }
-            matchesPlayed.sort()
 
             //This opens up the Old QR popup
             val popupView = View.inflate(this, R.layout.old_qrs_popup, null)
