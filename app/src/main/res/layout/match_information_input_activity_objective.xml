@@ -141,7 +141,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:orientation="vertical">
 
             <TextView
@@ -156,38 +156,9 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/separator_team_one_two"
-                style="@style/view_separator_horizontal"
-                android:visibility="invisible" />
 
 
 
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/separator_team_two_three"
-                style="@style/view_separator_horizontal"
-                android:visibility="invisible" />
-
-
-
-
-
-        </LinearLayout>
 
         <View
             style="@style/view_separator_horizontal"
