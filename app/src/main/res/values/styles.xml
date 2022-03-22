@@ -25,7 +25,7 @@
         <item name="android:layout_weight">5</item>
         <item name="android:background">@android:color/transparent</item>
         <item name="android:inputType">number</item>
-        <item name="android:gravity">center</item>
+        <item name="android:gravity">center|top</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">@dimen/large_text</item>
     </style>
