@@ -8,7 +8,6 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Environment
-import android.util.Log
 import android.view.Gravity
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,16 +18,17 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import kotlinx.android.synthetic.main.collection_objective_activity.*
+import kotlinx.android.synthetic.main.edit_match_information_activity.*
 import kotlinx.android.synthetic.main.id_scout_dialog.*
 import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
-import kotlinx.android.synthetic.main.old_qrs_popup.*
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.et_match_number
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.et_team_one
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.spinner_scout_name
 import kotlinx.android.synthetic.main.old_qrs_popup.view.*
 import java.io.File
 import java.io.FileReader
 import java.io.InputStreamReader
 import java.lang.Integer.parseInt
-import java.text.BreakIterator
 
 // Activity to input the match information before the start of the match.
 class MatchInformationInputActivity : MatchInformationActivity() {
@@ -172,9 +172,13 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
                     }
                 } else {
-                    et_team_one.setText("")
-                    et_team_two.setText("")
-                    et_team_three.setText("")
+                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                        et_team_one.setText("")
+                        et_team_two.setText("")
+                        et_team_three.setText("")}
+                    else {
+                        et_team_one.setText("")
+                    }
 
                     AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
                 }
@@ -198,9 +202,14 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     if (et_match_number.text.toString() != "") {
                         if (MatchSchedule.fileExists) {
                             if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
-                                et_team_one.setText("")
-                                et_team_two.setText("")
-                                et_team_three.setText("")
+                                if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                                    et_team_one.setText("")
+                                    et_team_two.setText("")
+                                    et_team_three.setText("")}
+                                else {
+                                    et_team_one.setText("")
+                                }
+
                             } else {
                                 autoAssignTeamInputsGivenMatch()
                                 match_number = parseInt(et_match_number.text.toString())
@@ -208,9 +217,13 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                         }
                     }
                 } else {
-                    et_team_one.setText("")
-                    et_team_two.setText("")
-                    et_team_three.setText("")
+                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                        et_team_one.setText("")
+                        et_team_two.setText("")
+                        et_team_three.setText("")}
+                    else {
+                        et_team_one.setText("")
+                    }
                 }
             }
             override fun afterTextChanged(s: Editable) {}
@@ -432,7 +445,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
 
             popupView.lv_old_qrs.setOnItemClickListener { parent, _, position, _ ->
-                /*This checks every item in dowloads and checks if it is the file for the selected match.
+                /*This checks every item in downloads and checks if it is the file for the selected match.
                 Once found it will read that file and run QRGenerateActivity to display the QR for the file.*/
 
                 /*WARNING!!! THIS WILL BREAK IF THERE ARE FILES FOR PIT COLLECTION ON THE DEVICE
@@ -499,19 +512,26 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 // Otherwise, enable team number edit texts and alliance color toggles.
                 if (position == 0) {
                     assign_mode = Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT
-                    et_team_one.isEnabled = false
-                    et_team_two.isEnabled = false
-                    et_team_three.isEnabled = false
-                    if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                        et_team_one.isEnabled = false
+                        et_team_two.isEnabled = false
+                        et_team_three.isEnabled = false}
+
+                    else  {
+                        et_team_one.isEnabled = false
                         left_toggle_button.isEnabled = false
                         right_toggle_button.isEnabled = false
                     }
                     autoAssignTeamInputsGivenMatch()
                 } else {
                     assign_mode = Constants.AssignmentMode.OVERRIDE
-                    et_team_one.isEnabled = true
-                    et_team_two.isEnabled = true
-                    et_team_three.isEnabled = true
+                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                        et_team_one.isEnabled = true
+                        et_team_two.isEnabled = true
+                        et_team_three.isEnabled = true}
+                    else {
+                        et_team_one.isEnabled = true
+                    }
                     if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
                         left_toggle_button.isEnabled = true
                         right_toggle_button.isEnabled = true
@@ -543,8 +563,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             )
         } else {
             val intent = Intent(this, CollectionSubjectiveActivity::class.java)
-            intent.putExtra("team_one", et_team_one.text.toString())
-                .putExtra("team_two", et_team_two.text.toString())
+            intent.putExtra("team_one", et_team_one.text.toString()).putExtra("team_two", et_team_two.text.toString())
                 .putExtra("team_three", et_team_three.text.toString())
             startActivity(
                 intent, ActivityOptions.makeSceneTransitionAnimation(

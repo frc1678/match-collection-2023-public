@@ -141,7 +141,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="3"
             android:orientation="vertical">
 
             <TextView
@@ -156,55 +156,9 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
 
-            <View
-                android:id="@+id/separator_team_one_two"
-                style="@style/view_separator_horizontal"
-                android:visibility="invisible" />
 
-            <TextView
-                android:id="@+id/tv_hint_team_two"
-                style="@style/tv_standard_linear_layout"
-                android:text="@string/tv_team_number_input_two"
-                android:visibility="invisible" />
 
-            <EditText
-                android:id="@+id/et_team_two"
-                style="@style/et_standard_linear_layout_number"
-                android:maxLength="5"
-                android:visibility="invisible" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <View
-                android:id="@+id/separator_team_two_three"
-                style="@style/view_separator_horizontal"
-                android:visibility="invisible" />
-
-            <TextView
-                android:id="@+id/tv_hint_team_three"
-                style="@style/tv_standard_linear_layout"
-                android:text="@string/tv_team_number_input_three"
-                android:visibility="invisible" />
-
-            <EditText
-                android:id="@+id/et_team_three"
-                style="@style/et_standard_linear_layout_number"
-                android:maxLength="5"
-                android:visibility="invisible" />
-
-        </LinearLayout>
 
         <View
             style="@style/view_separator_horizontal"
