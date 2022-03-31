@@ -112,8 +112,6 @@ fun compress(
             subjDataString += compressPlayedDefense
             subjDataString += if (playedDefense) "TRUE" else "FALSE"
 
-            subjDataString += subjectiveSeparator
-
             if (i + 1 != teamNumbers.size) subjDataString += subjectiveTeamSeparator
         }
 
