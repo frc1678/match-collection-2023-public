@@ -60,7 +60,10 @@ class QRGenerateActivity : CollectionActivity() {
     // MatchInformationInputActivity.kt when clicked.
     private fun initProceedButton(isAlreadyCompressed: Boolean) {
         btn_proceed_new_match.setOnClickListener {
-                putIntoStorage(context = this, key = "match_number", value = if(isAlreadyCompressed) match_number else match_number + 1)
+            if(!isAlreadyCompressed){
+                match_number += 1
+            }
+            putIntoStorage(context = this, key = "match_number", value = match_number)
             val intent = Intent(this, MatchInformationInputActivity::class.java)
             startActivity(
                 intent, ActivityOptions.makeSceneTransitionAnimation(
