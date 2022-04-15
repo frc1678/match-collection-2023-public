@@ -19,7 +19,6 @@ import java.lang.Integer.parseInt
 class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionOne = 0 //SCORE_BALL_LOW
     private var numActionTwo = 0 //SCORE_BALL_HIGH
-    private var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
     private var numActionFive = 0 //NUMBER OF INTAKES
 
     private var isTimerRunning = false
