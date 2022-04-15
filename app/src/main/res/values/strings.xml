@@ -51,7 +51,7 @@
     <string name="climb_level_3">Level 3</string>
     <string name="climb_level_2">Level 2</string>
     <string name="climb_level_1">Level 1</string>
-    <string name="climb_level_0">Failed</string>
+    <string name="climb_level_0">UNSUCCESSFUL</string>
     <string name="start_climb_timer">Start Timer</string>
     <string name="climb_timer">Time: %1$s</string>
     <string name="climb_timer_done">Recorded:\n%1$s sec.</string>
