@@ -20,7 +20,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private var numActionOne = 0 //SCORE_BALL_LOW
     private var numActionTwo = 0 //SCORE_BALL_HIGH
     private var numActionFive = 0 //NUMBER OF INTAKES
-
     private var isTimerRunning = false
     //FALSE = LOW
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
