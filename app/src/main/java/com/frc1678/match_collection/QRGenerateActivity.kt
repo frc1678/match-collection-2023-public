@@ -58,10 +58,19 @@ class QRGenerateActivity : CollectionActivity() {
 
     // Initialize proceed button to increment and store match number and return to
     // MatchInformationInputActivity.kt when clicked.
-    private fun initProceedButton(isAlreadyCompressed: Boolean) {
+    private fun initProceedButton(isAlreadyCompressed: Boolean, qrContents: String) {
         btn_proceed_new_match.setOnClickListener {
             if(!isAlreadyCompressed){
                 match_number += 1
+
+                // Write compressed QR string to file.
+                // File name is dependent on mode (objective or subjective).
+                val fileName = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                    "${match_number}_${team_number}_${getSerialNum(context = this)}_$timestamp"
+                } else {
+                    "${match_number}_${getSerialNum(context = this)}_$timestamp"
+                }
+                writeToFile(fileName = fileName, message = qrContents)
             }
             putIntoStorage(context = this, key = "match_number", value = match_number)
             val intent = Intent(this, MatchInformationInputActivity::class.java)
@@ -74,10 +83,11 @@ class QRGenerateActivity : CollectionActivity() {
         }
     }
 
-    // Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.kt.
-    private fun intentToMatchInput() {
+    // Begin intent used in onKeyLongPress to restart app from StartingPositionObjectiveActivity.kt.
+    private fun intentToPreviousActivity() {
+        is_teleop_activated = false
         startActivity(
-            Intent(this, MatchInformationInputActivity::class.java),
+            Intent(this, StartingPositionObjectiveActivity::class.java),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
@@ -86,7 +96,7 @@ class QRGenerateActivity : CollectionActivity() {
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
-                .setPositiveButton("Yes") { _, _ -> intentToMatchInput() }
+                .setPositiveButton("Yes") { _, _ -> intentToPreviousActivity() }
                 .show()
         }
         return super.onKeyLongPress(keyCode, event)
@@ -100,26 +110,16 @@ class QRGenerateActivity : CollectionActivity() {
         val compressedQR = intent.extras?.getString(Constants.COMPRESSED_QR_TAG)
 
         if (compressedQR == null) {
-            initProceedButton(false)
-
             // Populate QR code content and display QR if valid (only contains compression characters).
             val qrContents = compress(schema = schemaRead(context = this))
+            initProceedButton(false, qrContents)
             if (regex.matcher(qrContents).matches()) {
                 displayQR(contents = qrContents)
             } else {
                 AlertDialog.Builder(this).setMessage(R.string.error_qr).show()
             }
-
-            // Write compressed QR string to file.
-            // File name is dependent on mode (objective or subjective).
-            val fileName = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                "${match_number}_${team_number}_${getSerialNum(context = this)}_$timestamp"
-            } else {
-                "${match_number}_${getSerialNum(context = this)}_$timestamp"
-            }
-            writeToFile(fileName = fileName, message = qrContents)
         } else {
-            initProceedButton(true)
+            initProceedButton(true, "")
 
             displayQR(compressedQR)
         }
