@@ -47,7 +47,7 @@
                 android:id="@+id/btn_climb_lv0"
                 style="@style/btn_climb_level"
                 android:text="@string/climb_level_0"
-                android:textSize="@dimen/small_text"/>
+                />
 
         </LinearLayout>
 
