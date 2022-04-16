@@ -13,36 +13,41 @@
 
         <!--Climb Level Buttons-->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="@dimen/small">
+            android:layout_width="270dp"
+            android:layout_height="500dp"
+            android:layout_margin="@dimen/small"
+            android:orientation="vertical">
 
             <!--Climb Level 4: Traversal-->
-            <Button style="@style/btn_climb_level"
+            <Button
                 android:id="@+id/btn_climb_lv4"
-                android:text="@string/climb_level_4"/>
+                style="@style/btn_climb_level"
+                android:text="@string/climb_level_4" />
 
             <!--Climb Level 3: High-->
-            <Button style="@style/btn_climb_level"
+            <Button
                 android:id="@+id/btn_climb_lv3"
-                android:text="@string/climb_level_3"/>
+                style="@style/btn_climb_level"
+                android:text="@string/climb_level_3" />
 
             <!--Climb Level 2: Mid-->
-            <Button style="@style/btn_climb_level"
+            <Button
                 android:id="@+id/btn_climb_lv2"
-                android:text="@string/climb_level_2"/>
+                style="@style/btn_climb_level"
+                android:text="@string/climb_level_2" />
 
             <!--Climb Level 1: Low-->
-            <Button style="@style/btn_climb_level"
+            <Button
                 android:id="@+id/btn_climb_lv1"
-                android:text="@string/climb_level_1"/>
+                style="@style/btn_climb_level"
+                android:text="@string/climb_level_1" />
 
             <!--Climb Level 0: Unsuccessful-->
-            <Button style="@style/btn_climb_level"
+            <Button
                 android:id="@+id/btn_climb_lv0"
+                style="@style/btn_climb_level"
                 android:text="@string/climb_level_0"
-                android:textSize="13sp"/>
+                />
 
         </LinearLayout>
 
