@@ -4,6 +4,11 @@ package com.frc1678.match_collection
 import android.os.CountDownTimer
 
 // File to store information to be used to create the final match information map.
+var numActionOne = 0 //SCORE_BALL_LOW
+var numActionTwo = 0 //SCORE_BALL_HIGH
+var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
+var numActionFive = 0 //NUMBER OF INTAKES
+
 var match_timer: CountDownTimer? = null
 var match_time: String = ""
 var is_teleop_activated: Boolean = false
@@ -37,6 +42,11 @@ var played_defense_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
+    numActionOne = 0
+    numActionTwo = 0
+    numActionFour = 0
+    numActionFive = 0
+
     is_teleop_activated = false
     did_climb = false
 

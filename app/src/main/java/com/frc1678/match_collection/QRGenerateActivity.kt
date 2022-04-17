@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.KeyEvent
 import com.github.sumimakito.awesomeqr.AwesomeQRCode
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.qr_generate_activity.*
 import org.yaml.snakeyaml.Yaml
 import java.io.BufferedWriter
@@ -85,9 +86,12 @@ class QRGenerateActivity : CollectionActivity() {
 
     // Begin intent used in onKeyLongPress to restart app from StartingPositionObjectiveActivity.kt.
     private fun intentToPreviousActivity() {
-        is_teleop_activated = false
+        is_teleop_activated = true
+        is_match_time_ended = true
+        val intent = Intent(this, CollectionObjectiveActivity::class.java)
+        intent.putExtra("back", true)
         startActivity(
-            Intent(this, StartingPositionObjectiveActivity::class.java),
+            intent,
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }

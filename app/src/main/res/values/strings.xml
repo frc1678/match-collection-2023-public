@@ -60,4 +60,5 @@
     <string name="playing_defense">Playing defense?</string>
     <string name="quickness">Quickness</string>
     <string name="field_aware">Field Aware</string>
+    <string name="timer_run_down">Teleop - 0</string>
 </resources>
