@@ -395,7 +395,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         comingBack = intent.extras?.getBoolean("back") as Boolean
         if (comingBack){
             isTimerRunning = false
-            Log.e("coming-back", "$is_teleop_activated")
             Log.d("coming-back", "came back")
             btn_proceed_edit.text = getString(R.string.btn_proceed)
             btn_proceed_edit.isEnabled = true
