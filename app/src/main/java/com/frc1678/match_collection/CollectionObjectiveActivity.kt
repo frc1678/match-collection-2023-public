@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -17,12 +18,10 @@ import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
-    private var numActionOne = 0 //SCORE_BALL_LOW
-    private var numActionTwo = 0 //SCORE_BALL_HIGH
-    private var numActionFive = 0 //NUMBER OF INTAKES
     private var isTimerRunning = false
     //FALSE = LOW
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
+    private var comingBack = false
 
     // Set timer to start match when timer is started or reset.
     private fun timerReset() {
@@ -156,9 +155,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
     {
         val isIncap = tb_action_one.isChecked
         // Enable and disable buttons based on values of condition booleans defined previously.
-        btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap)
+        btn_action_one.isEnabled = comingBack or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_two.isEnabled = comingBack or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_five.isEnabled = comingBack or !(!isTimerRunning or popup_open or isIncap)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
@@ -392,6 +391,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
         )
     }
 
+    private fun comingBack(){
+        comingBack = intent.extras?.getBoolean("back") as Boolean
+        if (comingBack){
+            isTimerRunning = false
+            Log.d("coming-back", "came back")
+            btn_proceed_edit.text = getString(R.string.btn_proceed)
+            btn_proceed_edit.isEnabled = true
+            btn_timer.isEnabled = false
+            btn_timer.text = getString(R.string.timer_run_down)
+            enableButtons()
+        }
+    }
+
     // Restart app from StartingPositionObjectiveActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -406,7 +418,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_objective_activity)
 
-        timerReset()
+        comingBack()
+        if (!comingBack){
+            timerReset()
+        }
         setCounterTexts()
         initOnClicks()
         initTeamNum()

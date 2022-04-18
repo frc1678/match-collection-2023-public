@@ -75,13 +75,14 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
         }
         btn_proceed_starting_position.setOnClickListener { view ->
             if (starting_position != Constants.StartingPosition.NONE) {
+                if (starting_position == Constants.StartingPosition.ZERO) {
+                    intent = Intent(this, MatchInformationEditActivity::class.java)
+                } else {
+                    intent = Intent(this, CollectionObjectiveActivity::class.java)
+                    intent.putExtra("back", false)
+                }
                 startActivity(
-                    Intent(
-                        this,
-                        if (starting_position == Constants.StartingPosition.ZERO) {
-                            MatchInformationEditActivity::class.java
-                        } else CollectionObjectiveActivity::class.java
-                    ),
+                    intent,
                     ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         btn_proceed_starting_position, "proceed_button"
