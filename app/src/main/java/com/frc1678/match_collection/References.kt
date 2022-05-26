@@ -17,6 +17,7 @@ var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
 var did_climb: Boolean = false
+
 // Data that is shared between the objective and subjective QRs.
 var serial_number: String? = ""
 var match_number: Int = 0
@@ -35,7 +36,6 @@ var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 
 
 // Data specific to Subjective Match Collection QR.
-
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var played_defense_list: ArrayList<String> = ArrayList()
@@ -50,7 +50,6 @@ fun resetCollectionReferences() {
     is_teleop_activated = false
     did_climb = false
 
-
     popup_open = false
     climb_level = Constants.ClimbLevel.NONE
 
@@ -63,7 +62,11 @@ fun resetCollectionReferences() {
     played_defense_list = ArrayList()
 }
 
-data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: TeamRank? = null, val teamThree: TeamRank? = null){
+data class SubjectiveTeamRankings(
+    val teamOne: TeamRank? = null,
+    val teamTwo: TeamRank? = null,
+    val teamThree: TeamRank? = null
+) {
     val list: List<TeamRank?>
         get() = listOf(teamOne, teamTwo, teamThree)
 
@@ -71,14 +74,15 @@ data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: T
         get() = this.list.filterNotNull()
 
 
-    fun hasDuplicate(): Boolean{
+    fun hasDuplicate(): Boolean {
         val ranks = mutableListOf<Int>()
-        for(team in this.notNullList){
-                ranks.add(team.rank)
+        for (team in this.notNullList) {
+            ranks.add(team.rank)
         }
         return ranks.toSet().toList() != ranks
     }
 }
+
 data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {

@@ -1,13 +1,10 @@
 // Copyright (c) 2019 FRC Team 1678: Citrus Circuits
 package com.frc1678.match_collection
 
-import android.content.Context
 import android.graphics.Color
 import android.os.CountDownTimer
-import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
-import kotlinx.android.synthetic.main.climb_popup.view.*
 import kotlin.math.roundToInt
 
 // Class for all timer functions.

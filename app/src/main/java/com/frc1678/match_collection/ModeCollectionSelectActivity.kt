@@ -55,7 +55,7 @@ class ModeCollectionSelectActivity : CollectionActivity() {
 
     // Continually check write and read external storage and read phone state permissions
     // to request permissions if not granted.
-    // Continue to prompt user to accept usage of permissions until acceptance.
+    // Continue to prompt user to accept usage of permissions until they are accepted.
     override fun onResume() {
         super.onResume()
         if ((ActivityCompat.checkSelfPermission(
