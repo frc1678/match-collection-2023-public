@@ -76,7 +76,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionOne--
                 setCounterTexts()
             }
-            Constants.ActionType.SCORE_BALL_HIGH_HUB.toString() -> {
+            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
                 numActionTwo--
                 setCounterTexts()
             }
@@ -117,7 +117,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionOne++
                 setCounterTexts()
             }
-            Constants.ActionType.SCORE_BALL_HIGH_HUB.toString() -> {
+            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
                 numActionTwo++
                 setCounterTexts()
             }
@@ -244,7 +244,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Increment button action two by one when clicked and add action to timeline.
         btn_action_two.setOnClickListener {
             // FALSE = LOW
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_HUB)
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH)
             numActionTwo++
             setCounterTexts()
         }
