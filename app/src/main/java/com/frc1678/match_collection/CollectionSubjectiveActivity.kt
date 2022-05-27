@@ -21,13 +21,14 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private lateinit var teamNumberTwo: String
     private lateinit var teamNumberThree: String
 
+    // Finds the teams that are playing in that match
     private fun getExtras() {
         teamNumberOne = intent.extras?.getString("team_one").toString()
         teamNumberTwo = intent.extras?.getString("team_two").toString()
         teamNumberThree = intent.extras?.getString("team_three").toString()
     }
 
-    // Create list of teams ranked by a specific robot gameplay characteristic.
+    // Creates a list of teams ranked by a specific robot gameplay characteristic.
     private fun recordRankingData(dataName: String): SubjectiveTeamRankings {
         val panelOneData = panelOne.rankingData[dataName]
         val panelTwoData = panelTwo.rankingData[dataName]
@@ -39,22 +40,21 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         )
     }
 
-    /**
-     * Creates an ArrayList containing the teams that played defense during the match.
-     */
-    private val defenseToggleData: ArrayList<String> get() {
-        val tempToggleList = arrayListOf<String>()
-        for (x in 0 until panelList.size) {
-            if (panelList[x].playedDefense) {
-                when (x) {
-                    0 -> tempToggleList.add(teamNumberOne)
-                    1 -> tempToggleList.add(teamNumberTwo)
-                    2 -> tempToggleList.add(teamNumberThree)
+    // Creates an ArrayList containing the teams that played defense during the match.
+    private val defenseToggleData: ArrayList<String>
+        get() {
+            val tempToggleList = arrayListOf<String>()
+            for (x in 0 until panelList.size) {
+                if (panelList[x].playedDefense) {
+                    when (x) {
+                        0 -> tempToggleList.add(teamNumberOne)
+                        1 -> tempToggleList.add(teamNumberTwo)
+                        2 -> tempToggleList.add(teamNumberThree)
+                    }
                 }
             }
+            return tempToggleList
         }
-        return tempToggleList
-    }
 
     // Initiate subjective_ranking_counter panels for the three teams.
     private fun initPanels() {
@@ -79,7 +79,6 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelOne.setListener()
         panelTwo.setListener()
         panelThree.setListener()
-
     }
 
     // Initialize proceed button to record ranking data and proceed to MatchInformationEditActivity.kt

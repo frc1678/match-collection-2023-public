@@ -8,9 +8,9 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Environment
-import android.view.Gravity
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
@@ -45,20 +45,22 @@ class MatchInformationInputActivity : MatchInformationActivity() {
      * to the next match for changes to apply. */
     object MatchSchedule {
 
-        /**
-         * The contents of the match schedule. An example of a match schedule can be found
-         * [here](https://github.com/frc1678/Cardinal/blob/main/cardinal/api/hardcoded_test_data/match_schedule.json).
-         * */
+        /** The contents of the match schedule. An example of a match schedule can be found
+         * [here](https://github.com/frc1678/Cardinal/blob/main/cardinal/api/hardcoded_test_data/match_schedule.json). */
         var contents: JsonObject? = null
 
-        private val file = File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.json")
+        private val file =
+            File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/match_schedule.json")
 
         /** Initializes [`contents`][contents] with the JSON data from the [file]. This should only be called once.
          * After calling this, use `MatchSchedule.contents` to access the data.
          * @return Whether the reading was successful. */
         fun read(): Boolean {
-            try { contents = JsonParser.parseReader(FileReader(file)).asJsonObject }
-            catch (e: Exception) { return false }
+            try {
+                contents = JsonParser.parseReader(FileReader(file)).asJsonObject
+            } catch (e: Exception) {
+                return false
+            }
             return true
         }
 
@@ -67,18 +69,16 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             get() = file.exists()
     }
 
-    /**
-     * The [JsonObject] containing the random orderings of the scouts. The keys of this JsonObject
+    /** The [JsonObject] containing the random orderings of the scouts. The keys of this JsonObject
      * are match numbers in the form of strings, and the values are arrays of integers from 1
      * through 18 denoting the orders. If this object is being accessed for the first time, the file
      * will be read from the raw resources.
-     *
-     * @see R.raw.scout_orders
-     */
+     * @see R.raw.scout_orders */
     private var scoutOrders: JsonObject? = null
         // A custom getter method to read the file if it hasn't been already.
         get() {
-            if (field == null) { // The file has not been read from yet, and needs to be.
+            // The file has not been read from yet, and needs to be.
+            if (field == null) {
                 field = JsonParser.parseReader(
                     InputStreamReader(resources.openRawResource(R.raw.scout_orders))
                 ) as JsonObject
@@ -86,20 +86,15 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             return field
         }
 
-    /**
-     * Fetches the new robot assignment given the match number and scout ID.
-     *
-     * @return The assigned robot index in the match, from 0 to 5.
-     */
+    /** Fetches the new robot assignment given the match number and scout ID.
+     * @return The assigned robot index in the match, from 0 to 5. */
     private fun getNewScoutAssignment(matchNumber: String, scoutID: Int): Int? {
         return ((scoutOrders!!.getAsJsonArray(matchNumber) ?: return null
                 )[scoutID - 1].asInt - 1) % 6
     }
 
-    /**
-     * Assign team number and alliance color for Objective Scout based on the team index given by
-     * [`getNewScoutAssignment()`][getNewScoutAssignment].
-     */
+    /** Assign team number and alliance color for Objective Scout based on the team index given by
+     * [`getNewScoutAssignment()`][getNewScoutAssignment]. */
     private fun assignTeamObjective(
         teamInput: EditText,
         teamIndex: Int?,
@@ -121,9 +116,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
     }
 
-    /**
-     * Assign team numbers for Subjective Scout based on alliance color.
-     */
+
+    // Assign team numbers for Subjective Scout based on alliance color.
     private fun assignTeamsSubjective(
         teamInput: EditText, allianceColor: Constants.AllianceColor,
         matchNumber: String, iterationNumber: Int
@@ -136,60 +130,61 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         teamInput.setText(team.get("number").asString)
     }
 
-    /**
-     * Automatically assign team number(s) based on collection mode.
-     */
-    private fun autoAssignTeamInputsGivenMatch() {
-            if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
-            if (MatchSchedule.fileExists) {
-                if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
-                    // Assign three scouts per robot based on the scout order list in Objective
-                    // Match Collection.
-                    if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                        if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
-                            assignTeamObjective(
-                                teamInput = et_team_one,
-                                teamIndex = getNewScoutAssignment(
-                                    matchNumber = et_match_number.text.toString(),
-                                    scoutID = scout_id.toInt()
-                                ),
-                                matchNumber = et_match_number.text.toString()
-                            )
-                        }
-                    } else {
-                        // Assign an alliance to a scout based on alliance color in Subjective Match
-                        // Collection.
-                        var iterationNumber = 0
-                        listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
-                            assignTeamsSubjective(
-                                teamInput = it,
-                                allianceColor = alliance_color,
-                                matchNumber = et_match_number.text.toString(),
-                                iterationNumber = iterationNumber
-                            )
-                            iterationNumber++
-                        }
 
+    // Automatically assign team number(s) based on collection mode.
+    private fun autoAssignTeamInputsGivenMatch() {
+        if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
+        if (MatchSchedule.fileExists) {
+            if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
+                // Assign three scouts per robot based on the scout order list in Objective
+                // Match Collection.
+                if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                    if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
+                        assignTeamObjective(
+                            teamInput = et_team_one,
+                            teamIndex = getNewScoutAssignment(
+                                matchNumber = et_match_number.text.toString(),
+                                scoutID = scout_id.toInt()
+                            ),
+                            matchNumber = et_match_number.text.toString()
+                        )
                     }
                 } else {
-                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
-                        et_team_one.setText("")
-                        et_team_two.setText("")
-                        et_team_three.setText("")}
-                    else {
-                        et_team_one.setText("")
+                    // Assign an alliance to a scout based on alliance color in Subjective Match
+                    // Collection.
+                    var iterationNumber = 0
+                    listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
+                        assignTeamsSubjective(
+                            teamInput = it,
+                            allianceColor = alliance_color,
+                            matchNumber = et_match_number.text.toString(),
+                            iterationNumber = iterationNumber
+                        )
+                        iterationNumber++
                     }
 
-                    AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
+                }
+            } else {
+                // Set team numbers to be empty if the user is not in automatic assignment mode
+                if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+                    et_team_one.setText("")
+                    et_team_two.setText("")
+                    et_team_three.setText("")
+                } else {
+                    et_team_one.setText("")
                 }
 
-                if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                    if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
-                        AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found)
-                            .show()
-                    }
+                AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
+            }
+
+            // Warn the user if they are in objective mode and do not have a scout ID
+            if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
+                    AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found)
+                        .show()
                 }
             }
+        }
     }
 
     // Assign team number based on collection mode when match number is changed.
@@ -202,11 +197,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     if (et_match_number.text.toString() != "") {
                         if (MatchSchedule.fileExists) {
                             if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
-                                if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                                if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
                                     et_team_one.setText("")
                                     et_team_two.setText("")
-                                    et_team_three.setText("")}
-                                else {
+                                    et_team_three.setText("")
+                                } else {
                                     et_team_one.setText("")
                                 }
 
@@ -217,15 +212,16 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                         }
                     }
                 } else {
-                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
                         et_team_one.setText("")
                         et_team_two.setText("")
-                        et_team_three.setText("")}
-                    else {
+                        et_team_three.setText("")
+                    } else {
                         et_team_one.setText("")
                     }
                 }
             }
+
             override fun afterTextChanged(s: Editable) {}
         })
     }
@@ -370,6 +366,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             scout_id = retrieveFromStorage(context = this, key = "scout_id")
         }
 
+        // Opens up a spinner with scout id numbers when the scout id button is clicked
         btn_scout_id.setOnLongClickListener {
             dialog.show()
             val adapter = ArrayAdapter(
@@ -392,34 +389,37 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         }
     }
 
-    //When given a string it will return Constants.ModeSelection.Subjective if it is the name of a Subjective QR file,
+    // When given a string it will return Constants.ModeSelection.Subjective if it is the name of a Subjective QR file,
     // Constants.ModeSelection.OBJECTIVE if it is the name of an objective QR file
-    private fun differentiateSubjectiveAndObjectiveQRFileNames(file_name: String): Constants.ModeSelection{
+    private fun differentiateSubjectiveAndObjectiveQRFileNames(file_name: String): Constants.ModeSelection {
 
-/*        When we make the QR files in QRGenerateActivity SubjectiveQR files have 3 variables and 2 underscores between them.
+        /* When we make the QR files in QRGenerateActivity SubjectiveQR files have 3 variables and 2 underscores between them.
          ObjectiveQR files have 4 variables and 3 underscores, we're searching for underscores because it was the
-         easiest way to differentiate between them.*/
-        return when(file_name.filter { it == '_' }.count()){
+         easiest way to differentiate between them. */
+        return when (file_name.filter { it == '_' }.count()) {
             2 -> Constants.ModeSelection.SUBJECTIVE
             3 -> Constants.ModeSelection.OBJECTIVE
-            /*It doesn't really matter what is returned here, this just means that it is not a
-             match collection QR file and shouldn't be equal to SUBJECTIVE or OBJECTIVE*/
+            /* It doesn't really matter what is returned here, this just means that it is not a
+             match collection QR file and shouldn't be equal to SUBJECTIVE or OBJECTIVE */
             else -> Constants.ModeSelection.NONE
         }
     }
 
-    private fun initOldQRsLongClick(){
+    private fun initOldQRsLongClick() {
         val matchesPlayed = ArrayList<String>()
 
-        btn_old_QRs.setOnLongClickListener{ view ->
+        btn_old_QRs.setOnLongClickListener { view ->
             matchesPlayed.clear()
 
-            //This will go through the name of every file in downloads and figure out whether the name is of an objective or subjective file.
-            //If it is an objective or subjective file and you are in that collection mode it will add the match number of the QR file into matchesPlayed
+            /** This will go through the name of every file in downloads and figure out whether
+             * the name is of an objective or subjective file. If it is an objective or subjective
+             * file and you are in that collection mode it will add the match number of the QR
+             * file into matchesPlayed. */
             File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
                 val name = it.nameWithoutExtension
-                if( collection_mode == differentiateSubjectiveAndObjectiveQRFileNames(name)){
-                    //both subjective and objective QR files start with the match number and immediately after the match number have an underscore
+                if (collection_mode == differentiateSubjectiveAndObjectiveQRFileNames(name)) {
+                    // Both subjective and objective QR files start with the match number and
+                    // immediately after the match number have an underscore
                     matchesPlayed.add(name.substringBefore("_"))
                 }
             }
@@ -432,36 +432,33 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, -175)
             popup_open = true
 
-            //sets the list view equal to a list matchesPlayed
+            // Sets the list view equal to a list matchesPlayed
             val adapter = ArrayAdapter(
                 this, R.layout.old_qrs_popup_cell,
-                matchesPlayed.map {return@map "Match #$it" })
+                matchesPlayed.map { return@map "Match #$it" })
             popupView.lv_old_qrs.adapter = adapter
 
-            //the Exit thing closes the popup
-            popupView.iv_old_qr_exit.setOnClickListener{
+            // The Exit button closes the popup
+            popupView.iv_old_qr_exit.setOnClickListener {
                 popupWindow.dismiss()
                 popup_open = false
             }
 
             popupView.lv_old_qrs.setOnItemClickListener { parent, _, position, _ ->
-                /*This checks every item in downloads and checks if it is the file for the selected match.
-                Once found it will read that file and run QRGenerateActivity to display the QR for the file.*/
+                /* This checks every item in downloads and checks if it is the file for the selected match.
+                Once found it will read that file and run QRGenerateActivity to display the QR for the file. */
 
-                /*WARNING!!! THIS WILL BREAK IF THERE ARE FILES FOR PIT COLLECTION ON THE DEVICE
-                PitCollection files are stored with the team number first,
-                for example it will assume that a pit collection file on team 4 is a match collection file for match 4.
-                This SHOULD never happen during competition, but might be a problem during testing if you test multiple apps with the same device.*/
                 val selectedItem = parent.getItemAtPosition(position).toString().substringAfter("#")
-                File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
-                    val fileName = it.name
-                    if ((fileName.substringBefore("_") == selectedItem) and fileName.endsWith(".txt")){
-                        val qrContents = it.readText()
-                        val intent = Intent(this, QRGenerateActivity::class.java)
-                        intent.putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
-                        startActivity(intent)
+                File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown()
+                    .forEach {
+                        val fileName = it.name
+                        if ((fileName.substringBefore("_") == selectedItem) and fileName.endsWith(".txt")) {
+                            val qrContents = it.readText()
+                            val intent = Intent(this, QRGenerateActivity::class.java)
+                            intent.putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
+                            startActivity(intent)
+                        }
                     }
-                }
             }
             return@setOnLongClickListener true
         }
@@ -512,12 +509,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 // Otherwise, enable team number edit texts and alliance color toggles.
                 if (position == 0) {
                     assign_mode = Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT
-                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
                         et_team_one.isEnabled = false
                         et_team_two.isEnabled = false
-                        et_team_three.isEnabled = false}
-
-                    else  {
+                        et_team_three.isEnabled = false
+                    } else {
                         et_team_one.isEnabled = false
                         left_toggle_button.isEnabled = false
                         right_toggle_button.isEnabled = false
@@ -525,11 +521,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     autoAssignTeamInputsGivenMatch()
                 } else {
                     assign_mode = Constants.AssignmentMode.OVERRIDE
-                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
                         et_team_one.isEnabled = true
                         et_team_two.isEnabled = true
-                        et_team_three.isEnabled = true}
-                    else {
+                        et_team_three.isEnabled = true
+                    } else {
                         et_team_one.isEnabled = true
                     }
                     if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
@@ -563,7 +559,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             )
         } else {
             val intent = Intent(this, CollectionSubjectiveActivity::class.java)
-            intent.putExtra("team_one", et_team_one.text.toString()).putExtra("team_two", et_team_two.text.toString())
+            intent.putExtra("team_one", et_team_one.text.toString())
+                .putExtra("team_two", et_team_two.text.toString())
                 .putExtra("team_three", et_team_three.text.toString())
             startActivity(
                 intent, ActivityOptions.makeSceneTransitionAnimation(
@@ -606,10 +603,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (collection_mode == Constants.ModeSelection.OBJECTIVE){
+        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
             setContentView(R.layout.match_information_input_activity_objective)
             initScoutIdLongClick()
-        } else if (collection_mode == Constants.ModeSelection.SUBJECTIVE){
+        } else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
             setContentView(R.layout.match_information_input_activity_subjective)
         }
 

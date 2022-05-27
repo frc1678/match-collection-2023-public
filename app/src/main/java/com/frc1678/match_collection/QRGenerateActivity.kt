@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.KeyEvent
 import com.github.sumimakito.awesomeqr.AwesomeQRCode
-import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.qr_generate_activity.*
 import org.yaml.snakeyaml.Yaml
 import java.io.BufferedWriter
@@ -61,7 +60,7 @@ class QRGenerateActivity : CollectionActivity() {
     // MatchInformationInputActivity.kt when clicked.
     private fun initProceedButton(isAlreadyCompressed: Boolean, qrContents: String) {
         btn_proceed_new_match.setOnClickListener {
-            if(!isAlreadyCompressed){
+            if (!isAlreadyCompressed) {
                 match_number += 1
 
                 // Write compressed QR string to file.
