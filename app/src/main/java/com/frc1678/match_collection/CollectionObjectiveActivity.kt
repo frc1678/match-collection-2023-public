@@ -6,6 +6,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -17,12 +18,11 @@ import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
-    private var numActionOne = 0 //SCORE_BALL_LOW
-    private var numActionTwo = 0 //SCORE_BALL_HIGH
-    private var numActionFive = 0 //NUMBER OF INTAKES
     private var isTimerRunning = false
+
     //FALSE = LOW
     private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
+    private var comingBack = false
 
     // Set timer to start match when timer is started or reset.
     private fun timerReset() {
@@ -50,7 +50,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun timelineAddWithStage(action_type: Constants.ActionType) {
         when {
             !is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time))) -> {
-                timelineAdd(match_time = getString(R.string.final_auto_time), action_type = action_type)
+                timelineAdd(
+                    match_time = getString(R.string.final_auto_time),
+                    action_type = action_type
+                )
             }
             is_teleop_activated and (parseInt(match_time) > parseInt(getString(R.string.initial_teleop_time))) -> {
                 timelineAdd(
@@ -73,20 +76,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionOne--
                 setCounterTexts()
             }
-
-            Constants.ActionType.SCORE_BALL_HIGH_HUB.toString() -> {
+            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
                 numActionTwo--
                 setCounterTexts()
             }
-
-
             Constants.ActionType.INTAKE.toString() -> {
                 numActionFive--
                 setCounterTexts()
             }
             Constants.ActionType.CLIMB_ATTEMPT.toString() -> {
                 did_climb = false
-
             }
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = false
@@ -101,9 +100,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Remove most recent timeline entry.
         timeline.removeAt(timeline.size - 1)
-
         enableButtons()
-
         if (removeOneMore) timelineRemove()
     }
 
@@ -120,14 +117,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 numActionOne++
                 setCounterTexts()
             }
-
-            Constants.ActionType.SCORE_BALL_HIGH_HUB.toString() -> {
+            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
                 numActionTwo++
                 setCounterTexts()
             }
-
-
-
             Constants.ActionType.INTAKE.toString() -> {
                 numActionFive++
                 setCounterTexts()
@@ -145,20 +138,17 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Remove the redone action from removedTimelineActions.
         removedTimelineActions.removeAt(removedTimelineActions.size - 1)
-
         enableButtons()
-
         if (replaceOneMore) timelineReplace()
     }
 
     // Enable and disable buttons based on actions in timeline and timer stage.
-    fun enableButtons()
-    {
+    fun enableButtons() {
         val isIncap = tb_action_one.isChecked
         // Enable and disable buttons based on values of condition booleans defined previously.
-        btn_action_one.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_two.isEnabled = !(!isTimerRunning or popup_open or isIncap)
-        btn_action_five.isEnabled = !(!isTimerRunning or popup_open or isIncap)
+        btn_action_one.isEnabled = comingBack or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_two.isEnabled = comingBack or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_five.isEnabled = comingBack or !(!isTimerRunning or popup_open or isIncap)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
@@ -170,7 +160,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
-        btn_proceed_edit.isEnabled = ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
+        btn_proceed_edit.isEnabled =
+            ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
     }
 
     // Function to end incap if still activated at end of the match.
@@ -181,7 +172,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
     }
 
-    // Set high and low goal counter values.
+    // Set high and low goal counter values
     private fun setCounterTexts() {
         btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
         btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
@@ -244,7 +235,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment button action one by one when clicked and add action to timeline.
         btn_action_one.setOnClickListener {
-            //FALSE = LOW
+            // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_LOW)
             numActionOne++
             setCounterTexts()
@@ -252,13 +243,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment button action two by one when clicked and add action to timeline.
         btn_action_two.setOnClickListener {
-            //FALSE = LOW
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH_HUB)
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH)
             numActionTwo++
             setCounterTexts()
         }
-
-
 
         // Increment button action five by one when clicked and add action to timeline.
         btn_action_five.setOnClickListener {
@@ -266,7 +255,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             numActionFive++
             setCounterTexts()
         }
-
 
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
@@ -288,78 +276,75 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popup_open = true
             enableButtons()
 
+            // OnClickListeners for the buttons in the climb popup
             popupView.btn_climb_cancel.setOnClickListener {
                 did_climb = false
                 climb_level = Constants.ClimbLevel.NONE
                 popupWindow.dismiss()
                 popup_open = false
                 enableButtons()
-                }
+            }
             popupView.btn_climb_done.setOnClickListener {
                 popupWindow.dismiss()
                 btn_climb.isEnabled = false
                 popup_open = false
-                timelineAdd(match_time,Constants.ActionType.CLIMB_ATTEMPT)
+                timelineAdd(match_time, Constants.ActionType.CLIMB_ATTEMPT)
                 enableButtons()
-                }
+            }
 
             popupView.btn_climb_lv0.isActivated = false
+            climb_level = Constants.ClimbLevel.NONE
+
+            popupView.btn_climb_lv0.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = true
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = false
                 climb_level = Constants.ClimbLevel.NONE
-                popupView.btn_climb_lv0.setOnClickListener {
-                    popupView.btn_climb_lv0.isActivated = true
-                    popupView.btn_climb_lv1.isActivated = false
-                    popupView.btn_climb_lv2.isActivated = false
-                    popupView.btn_climb_lv3.isActivated = false
-                    popupView.btn_climb_lv4.isActivated = false
-                    climb_level = Constants.ClimbLevel.NONE
-                    did_climb = true
-                    popupView.btn_climb_done.isEnabled = did_climb
-
-                }
-                popupView.btn_climb_lv1.setOnClickListener {
-                    popupView.btn_climb_lv0.isActivated = false
-                    popupView.btn_climb_lv1.isActivated = true
-                    popupView.btn_climb_lv2.isActivated = false
-                    popupView.btn_climb_lv3.isActivated = false
-                    popupView.btn_climb_lv4.isActivated = false
-                    climb_level = Constants.ClimbLevel.LOW
-                    did_climb = true
-                    popupView.btn_climb_done.isEnabled = did_climb
-
-                }
-                popupView.btn_climb_lv2.setOnClickListener {
-                    popupView.btn_climb_lv0.isActivated = false
-                    popupView.btn_climb_lv1.isActivated = false
-                    popupView.btn_climb_lv2.isActivated = true
-                    popupView.btn_climb_lv3.isActivated = false
-                    popupView.btn_climb_lv4.isActivated = false
-                    climb_level = Constants.ClimbLevel.MID
-                    did_climb = true
-                    popupView.btn_climb_done.isEnabled = did_climb
-
-                }
-                popupView.btn_climb_lv3.setOnClickListener {
-                    popupView.btn_climb_lv0.isActivated = false
-                    popupView.btn_climb_lv1.isActivated = false
-                    popupView.btn_climb_lv2.isActivated = false
-                    popupView.btn_climb_lv3.isActivated = true
-                    popupView.btn_climb_lv4.isActivated = false
-                    climb_level = Constants.ClimbLevel.HIGH
-                    did_climb = true
-                    popupView.btn_climb_done.isEnabled = did_climb
-
-                }
-                popupView.btn_climb_lv4.setOnClickListener {
-                    popupView.btn_climb_lv0.isActivated = false
-                    popupView.btn_climb_lv1.isActivated = false
-                    popupView.btn_climb_lv2.isActivated = false
-                    popupView.btn_climb_lv3.isActivated = false
-                    popupView.btn_climb_lv4.isActivated = true
-                    climb_level = Constants.ClimbLevel.TRAVERSAL
-                    did_climb = true
-                    popupView.btn_climb_done.isEnabled = did_climb
-
-                }
+                did_climb = true
+                popupView.btn_climb_done.isEnabled = did_climb
+            }
+            popupView.btn_climb_lv1.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = true
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = false
+                climb_level = Constants.ClimbLevel.LOW
+                did_climb = true
+                popupView.btn_climb_done.isEnabled = did_climb
+            }
+            popupView.btn_climb_lv2.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = true
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = false
+                climb_level = Constants.ClimbLevel.MID
+                did_climb = true
+                popupView.btn_climb_done.isEnabled = did_climb
+            }
+            popupView.btn_climb_lv3.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = true
+                popupView.btn_climb_lv4.isActivated = false
+                climb_level = Constants.ClimbLevel.HIGH
+                did_climb = true
+                popupView.btn_climb_done.isEnabled = did_climb
+            }
+            popupView.btn_climb_lv4.setOnClickListener {
+                popupView.btn_climb_lv0.isActivated = false
+                popupView.btn_climb_lv1.isActivated = false
+                popupView.btn_climb_lv2.isActivated = false
+                popupView.btn_climb_lv3.isActivated = false
+                popupView.btn_climb_lv4.isActivated = true
+                climb_level = Constants.ClimbLevel.TRAVERSAL
+                did_climb = true
+                popupView.btn_climb_done.isEnabled = did_climb
+            }
         }
 
         // Remove previous action from timeline when undo button is clicked.
@@ -392,6 +377,20 @@ class CollectionObjectiveActivity : CollectionActivity() {
         )
     }
 
+    // resets and enables everything if you entered this screen by pressing the down button
+    private fun comingBack() {
+        comingBack = intent.extras?.getBoolean("back") as Boolean
+        if (comingBack) {
+            isTimerRunning = false
+            Log.d("coming-back", "came back")
+            btn_proceed_edit.text = getString(R.string.btn_proceed)
+            btn_proceed_edit.isEnabled = true
+            btn_timer.isEnabled = false
+            btn_timer.text = getString(R.string.timer_run_down)
+            enableButtons()
+        }
+    }
+
     // Restart app from StartingPositionObjectiveActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -406,7 +405,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_objective_activity)
 
-        timerReset()
+        comingBack()
+        if (!comingBack) {
+            timerReset()
+        }
         setCounterTexts()
         initOnClicks()
         initTeamNum()

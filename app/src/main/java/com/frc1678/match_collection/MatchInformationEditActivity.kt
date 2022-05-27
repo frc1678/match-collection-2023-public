@@ -51,18 +51,23 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                 Log.d("match-information-edit", quickness_score.toString())
                 Log.d("match-information-edit", field_awareness_score.toString())
 
+                // Sets the teams for quickness, field awareness, and defense based on the team
+                // numbers being displayed
                 ranking.teamOne?.teamNumber = et_team_one.text.toString()
                 ranking.teamTwo?.teamNumber = et_team_two.text.toString()
                 ranking.teamThree?.teamNumber = et_team_three.text.toString()
             }
             if (played_defense_list.contains(teamNumberOne)) {
-                played_defense_list[played_defense_list.indexOf(teamNumberOne)] = et_team_one.text.toString()
+                played_defense_list[played_defense_list.indexOf(teamNumberOne)] =
+                    et_team_one.text.toString()
             }
             if (played_defense_list.contains(teamNumberTwo)) {
-                played_defense_list[played_defense_list.indexOf(teamNumberTwo)] = et_team_two.text.toString()
+                played_defense_list[played_defense_list.indexOf(teamNumberTwo)] =
+                    et_team_two.text.toString()
             }
             if (played_defense_list.contains(teamNumberThree)) {
-                played_defense_list[played_defense_list.indexOf(teamNumberThree)] = et_team_three.text.toString()
+                played_defense_list[played_defense_list.indexOf(teamNumberThree)] =
+                    et_team_three.text.toString()
             }
 
         }

@@ -44,7 +44,6 @@ open class MatchInformationActivity : CollectionActivity() {
             scoutNameList.add(currentLine)
             currentLine = bufferedReader.readLine()
         }
-
         bufferedReader.close()
         return scoutNameList
     }

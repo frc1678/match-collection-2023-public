@@ -6,11 +6,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
-import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.starting_position_activity.*
 
-class StartingPositionObjectiveActivity:CollectionActivity() {
+class StartingPositionObjectiveActivity : CollectionActivity() {
 
+    // Chooses which map you will see depending on your alliance color and orientation
+    // For the orientation, true = UP, false = DOWN
     private fun setMapImage() {
         when {
             (orientation && alliance_color == Constants.AllianceColor.BLUE) ->
@@ -24,6 +25,7 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
         }
     }
 
+    // Sets the colors of the buttons depending on the alliance color
     private fun setBackgrounds() {
         if (alliance_color == Constants.AllianceColor.RED) {
             btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray))
@@ -38,12 +40,24 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
             btn_three.setBackgroundColor(resources.getColor(R.color.blue_start_three))
             btn_four.setBackgroundColor(resources.getColor(R.color.blue_start_four))
         }
+
+        // Changes the color of the button if that starting position is selected
         when {
-            (starting_position == Constants.StartingPosition.ZERO) -> btn_zero.setBackgroundColor(Color.YELLOW)
-            (starting_position == Constants.StartingPosition.ONE) -> btn_one.setBackgroundColor(Color.YELLOW)
-            (starting_position == Constants.StartingPosition.TWO) -> btn_two.setBackgroundColor(Color.YELLOW)
-            (starting_position == Constants.StartingPosition.THREE) -> btn_three.setBackgroundColor(Color.YELLOW)
-            (starting_position == Constants.StartingPosition.FOUR) -> btn_four.setBackgroundColor(Color.YELLOW)
+            (starting_position == Constants.StartingPosition.ZERO) -> btn_zero.setBackgroundColor(
+                Color.YELLOW
+            )
+            (starting_position == Constants.StartingPosition.ONE) -> btn_one.setBackgroundColor(
+                Color.YELLOW
+            )
+            (starting_position == Constants.StartingPosition.TWO) -> btn_two.setBackgroundColor(
+                Color.YELLOW
+            )
+            (starting_position == Constants.StartingPosition.THREE) -> btn_three.setBackgroundColor(
+                Color.YELLOW
+            )
+            (starting_position == Constants.StartingPosition.FOUR) -> btn_four.setBackgroundColor(
+                Color.YELLOW
+            )
         }
     }
 
@@ -73,15 +87,19 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
             orientation = !orientation
             setMapImage()
         }
+        // Moves onto the next screen if you have inputted all the information
         btn_proceed_starting_position.setOnClickListener { view ->
             if (starting_position != Constants.StartingPosition.NONE) {
+                // If you did not select a starting position the team is assumed to be a no show.
+                // This will allow you to skip the information collection screen
+                if (starting_position == Constants.StartingPosition.ZERO) {
+                    intent = Intent(this, MatchInformationEditActivity::class.java)
+                } else {
+                    intent = Intent(this, CollectionObjectiveActivity::class.java)
+                    intent.putExtra("back", false)
+                }
                 startActivity(
-                    Intent(
-                        this,
-                        if (starting_position == Constants.StartingPosition.ZERO) {
-                            MatchInformationEditActivity::class.java
-                        } else CollectionObjectiveActivity::class.java
-                    ),
+                    intent,
                     ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         btn_proceed_starting_position, "proceed_button"
@@ -131,5 +149,4 @@ class StartingPositionObjectiveActivity:CollectionActivity() {
         setBackgrounds()
         initOnClicks()
     }
-
 }

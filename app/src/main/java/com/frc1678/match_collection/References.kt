@@ -4,6 +4,11 @@ package com.frc1678.match_collection
 import android.os.CountDownTimer
 
 // File to store information to be used to create the final match information map.
+var numActionOne = 0 //SCORE_BALL_LOW
+var numActionTwo = 0 //SCORE_BALL_HIGH
+var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
+var numActionFive = 0 //NUMBER OF INTAKES
+
 var match_timer: CountDownTimer? = null
 var match_time: String = ""
 var is_teleop_activated: Boolean = false
@@ -12,6 +17,7 @@ var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
 var did_climb: Boolean = false
+
 // Data that is shared between the objective and subjective QRs.
 var serial_number: String? = ""
 var match_number: Int = 0
@@ -30,16 +36,19 @@ var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 
 
 // Data specific to Subjective Match Collection QR.
-
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var played_defense_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
+    numActionOne = 0
+    numActionTwo = 0
+    numActionFour = 0
+    numActionFive = 0
+
     is_teleop_activated = false
     did_climb = false
-
 
     popup_open = false
     climb_level = Constants.ClimbLevel.NONE
@@ -53,7 +62,11 @@ fun resetCollectionReferences() {
     played_defense_list = ArrayList()
 }
 
-data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: TeamRank? = null, val teamThree: TeamRank? = null){
+data class SubjectiveTeamRankings(
+    val teamOne: TeamRank? = null,
+    val teamTwo: TeamRank? = null,
+    val teamThree: TeamRank? = null
+) {
     val list: List<TeamRank?>
         get() = listOf(teamOne, teamTwo, teamThree)
 
@@ -61,14 +74,15 @@ data class SubjectiveTeamRankings(val teamOne: TeamRank? = null,  val teamTwo: T
         get() = this.list.filterNotNull()
 
 
-    fun hasDuplicate(): Boolean{
+    fun hasDuplicate(): Boolean {
         val ranks = mutableListOf<Int>()
-        for(team in this.notNullList){
-                ranks.add(team.rank)
+        for (team in this.notNullList) {
+            ranks.add(team.rank)
         }
         return ranks.toSet().toList() != ranks
     }
 }
+
 data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
