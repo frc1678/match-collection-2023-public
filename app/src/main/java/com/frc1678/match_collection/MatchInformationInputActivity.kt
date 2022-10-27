@@ -69,28 +69,64 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             get() = file.exists()
     }
 
-    /** The [JsonObject] containing the random orderings of the scouts. The keys of this JsonObject
-     * are match numbers in the form of strings, and the values are arrays of integers from 1
-     * through 18 denoting the orders. If this object is being accessed for the first time, the file
+    companion object {
+        /*
+        * Adjustments for scout assignment methods
+        * Currently it prioritizes 1 scout per robot then 3 scouts per robot
+        * e.g. if there is 7 scouts it will assign like (2, 1, 1, 1, 1, 1)
+        * */
+        val SCOUT_ASSIGNMENTS = listOf(
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "A",
+            "A",
+            "B",
+            "B",
+            "C",
+            "C",
+            "D",
+            "D",
+            "E",
+            "E",
+            "F",
+            "F"
+        )
+    }
+
+    /** The [List] containing the random orderings of the scouts.
+     * This is a list of lists of different combinations of A-F denoting the orders.
+     * If this object is being accessed for the first time, the file
      * will be read from the raw resources.
      * @see R.raw.scout_orders */
-    private var scoutOrders: JsonObject? = null
-        // A custom getter method to read the file if it hasn't been already.
-        get() {
-            // The file has not been read from yet, and needs to be.
-            if (field == null) {
-                field = JsonParser.parseReader(
-                    InputStreamReader(resources.openRawResource(R.raw.scout_orders))
-                ) as JsonObject
+    private val scoutOrders: List<List<String>> by lazy {
+        JsonParser.parseReader(
+            InputStreamReader(resources.openRawResource(R.raw.scout_orders))
+        ).asJsonArray.map { scoutOrdersList ->
+            scoutOrdersList.asJsonArray.map { scoutOrderList ->
+                scoutOrderList.asJsonPrimitive.asString
             }
-            return field
         }
+    }
 
     /** Fetches the new robot assignment given the match number and scout ID.
      * @return The assigned robot index in the match, from 0 to 5. */
     private fun getNewScoutAssignment(matchNumber: String, scoutID: Int): Int? {
-        return ((scoutOrders!!.getAsJsonArray(matchNumber) ?: return null
-                )[scoutID - 1].asInt - 1) % 6
+        // Used for randomization
+        val letter = SCOUT_ASSIGNMENTS[scoutID - 1]
+        if (matchNumber.isEmpty()) return null
+        if (matchNumber.toInt() > scoutOrders.size) return null
+        // The if statement makes uses a different random scout order for the scout ids past 6
+        val matchOrder = if (scoutID > 6) {
+            scoutOrders[matchNumber.toInt() - 1]
+        } else {
+            scoutOrders.asReversed()[matchNumber.toInt() - 1]
+        }
+        // Find non-random scout letter in random scout order list
+        return matchOrder.indexOf(letter)
     }
 
     /** Assign team number and alliance color for Objective Scout based on the team index given by
