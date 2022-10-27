@@ -96,7 +96,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     intent = Intent(this, MatchInformationEditActivity::class.java)
                 } else {
                     intent = Intent(this, CollectionObjectiveActivity::class.java)
-                    intent.putExtra("back", false)
+                    intent.putExtra("back from", "starting position")
                 }
                 startActivity(
                     intent,
