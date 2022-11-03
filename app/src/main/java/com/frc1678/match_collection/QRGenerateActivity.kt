@@ -89,7 +89,7 @@ class QRGenerateActivity : CollectionActivity() {
         is_teleop_activated = true
         is_match_time_ended = true
         lateinit var intent: Intent
-        if (starting_position != Constants.StartingPosition.NONE) {
+        if (starting_position.toString() != "ZERO") {
             comingBack = "QRGenerate"
             intent = Intent(this, CollectionObjectiveActivity::class.java)
         }
