@@ -32,7 +32,7 @@ class TimerUtility {
         ) {
             is_match_time_ended = false
             // Create a CountDownTimer that will count down in by seconds starting from 150 seconds.
-            match_timer = object : CountDownTimer(15000, 1000) {
+            match_timer = object : CountDownTimer(150000, 1000) {
                 // Executes tasks every second.
                 override fun onTick(millisUntilFinished: Long) {
                     time = millisUntilFinished / 1000f
