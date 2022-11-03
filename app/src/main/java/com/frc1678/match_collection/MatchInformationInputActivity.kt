@@ -16,6 +16,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
+import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
@@ -664,5 +665,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         initMatchNumberTextChangeListener()
         initProceedButton()
         initAssignModeSpinner()
+        comingBack = ""
     }
 }
