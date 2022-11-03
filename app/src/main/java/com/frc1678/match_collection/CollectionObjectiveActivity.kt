@@ -148,9 +148,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
     fun enableButtons() {
         val isIncap = tb_action_one.isChecked
         // Enable and disable buttons based on values of condition booleans defined previously.
-        btn_action_one.isEnabled = (comingBack == "match information edit") or !(!isTimerRunning or popup_open or isIncap)
-        btn_action_two.isEnabled = (comingBack == "match information edit") or !(!isTimerRunning or popup_open or isIncap)
-        btn_action_five.isEnabled = (comingBack == "match information edit") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_one.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_two.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_five.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
@@ -381,7 +381,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // resets and enables everything if you entered this screen by pressing the down button
     private fun comingBack() {
-        if (comingBack == "match information edit") {
+        if ((comingBack == "match information edit") or (comingBack == "QRGenerate")) {
             isTimerRunning = false
             Log.d("coming-back", "came back")
             btn_proceed_edit.text = getString(R.string.btn_proceed)
@@ -407,7 +407,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         setContentView(R.layout.collection_objective_activity)
 
         comingBack()
-        if (!(comingBack == "match information edit")) {
+        if (!(comingBack == "match information edit") and !(comingBack == "QRGenerate")) {
             timerReset()
         }
         setCounterTexts()

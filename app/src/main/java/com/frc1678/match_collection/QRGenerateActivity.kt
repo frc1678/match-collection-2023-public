@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.view.KeyEvent
+import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import com.github.sumimakito.awesomeqr.AwesomeQRCode
 import kotlinx.android.synthetic.main.qr_generate_activity.*
 import org.yaml.snakeyaml.Yaml
@@ -87,7 +88,15 @@ class QRGenerateActivity : CollectionActivity() {
     private fun intentToPreviousActivity() {
         is_teleop_activated = true
         is_match_time_ended = true
-        val intent = Intent(this, CollectionObjectiveActivity::class.java)
+        lateinit var intent: Intent
+        if (starting_position != Constants.StartingPosition.NONE) {
+            comingBack = "QRGenerate"
+            intent = Intent(this, CollectionObjectiveActivity::class.java)
+        }
+        else{
+            intent = Intent(this, MatchInformationEditActivity::class.java)
+        }
+
         intent.putExtra("back", true)
         startActivity(
             intent,
@@ -97,11 +106,7 @@ class QRGenerateActivity : CollectionActivity() {
 
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
-                .setPositiveButton("Yes") { _, _ -> intentToPreviousActivity() }
-                .show()
-        }
+        intentToPreviousActivity()
         return super.onKeyLongPress(keyCode, event)
     }
 
