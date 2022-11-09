@@ -104,10 +104,17 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean{
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            comingBack = "match information edit"
-            startActivity(
-                Intent(this, CollectionObjectiveActivity::class.java)
-            )
+            if(starting_position.toString() != "ZERO"){
+                comingBack = "match information edit"
+                startActivity(
+                    Intent(this, CollectionObjectiveActivity::class.java)
+                )
+            }
+            else{
+                startActivity(
+                    Intent(this, StartingPositionObjectiveActivity::class.java)
+                )
+            }
         }
         return super.onKeyLongPress(keyCode, event)
     }

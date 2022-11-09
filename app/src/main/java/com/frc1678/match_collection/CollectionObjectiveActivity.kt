@@ -398,6 +398,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
                 .setPositiveButton("Yes") { _, _ -> intentToPreviousActivity() }
                 .show()
+            comingBack = "collection objective activity"
         }
         return super.onKeyLongPress(keyCode, event)
     }
@@ -407,7 +408,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         setContentView(R.layout.collection_objective_activity)
 
         comingBack()
-        if (!(comingBack == "match information edit") and !(comingBack == "QRGenerate")) {
+        if ((comingBack != "match information edit") and (comingBack != "QRGenerate")) {
             timerReset()
         }
         setCounterTexts()
