@@ -84,17 +84,22 @@ class QRGenerateActivity : CollectionActivity() {
         }
     }
 
-    // Begin intent used in onKeyLongPress to restart app from StartingPositionObjectiveActivity.kt.
+/*     Begin intent used in onKeyLongPress to go back to a pprevious activity depending
+     on your mode and starting position.*/
     private fun intentToPreviousActivity() {
         is_teleop_activated = true
         is_match_time_ended = true
         lateinit var intent: Intent
-        if (starting_position.toString() != "ZERO") {
-            comingBack = "QRGenerate"
-            intent = Intent(this, CollectionObjectiveActivity::class.java)
+        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+            if (starting_position.toString() != "ZERO") {
+                comingBack = "QRGenerate"
+                intent = Intent(this, CollectionObjectiveActivity::class.java)
+            } else {
+                intent = Intent(this, MatchInformationEditActivity::class.java)
+            }
         }
-        else{
-            intent = Intent(this, MatchInformationEditActivity::class.java)
+        else {
+            intent = Intent(this, MatchInformationInputActivity::class.java)
         }
 
         intent.putExtra("back", true)
