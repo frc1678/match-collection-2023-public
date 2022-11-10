@@ -101,18 +101,26 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     }
 
 
-    // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
+    // Restart app from MatchInformationInputActivity.kt when back button is long pressed if in Subjective
+    //goes back to collectionObjectiveActivity if in objective mode
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean{
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(starting_position.toString() != "ZERO"){
-                comingBack = "match information edit"
-                startActivity(
-                    Intent(this, CollectionObjectiveActivity::class.java)
-                )
+            if(collection_mode == Constants.ModeSelection.OBJECTIVE){
+                if(starting_position.toString() != "ZERO"){
+                    comingBack = "match information edit"
+                    startActivity(
+                        Intent(this, CollectionObjectiveActivity::class.java)
+                    )
+                }
+                else{
+                    startActivity(
+                        Intent(this, StartingPositionObjectiveActivity::class.java)
+                    )
+                }
             }
             else{
                 startActivity(
-                    Intent(this, StartingPositionObjectiveActivity::class.java)
+                    Intent(this, MatchInformationInputActivity::class.java)
                 )
             }
         }
