@@ -84,7 +84,8 @@ class QRGenerateActivity : CollectionActivity() {
         }
     }
 
-    // Begin intent used in onKeyLongPress to restart app from .
+/*     Begin intent used in onKeyLongPress to go back to a pprevious activity depending
+     on your mode and starting position.*/
     private fun intentToPreviousActivity() {
         is_teleop_activated = true
         is_match_time_ended = true
