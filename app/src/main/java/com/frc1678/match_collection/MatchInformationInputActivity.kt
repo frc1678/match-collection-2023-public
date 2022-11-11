@@ -211,7 +211,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     et_team_one.setText("")
                 }
 
-                AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
             }
 
             // Warn the user if they are in objective mode and do not have a scout ID
@@ -220,6 +219,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found)
                         .show()
                 }
+            }
+        } else {
+            if(assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
+                AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
             }
         }
     }

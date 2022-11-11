@@ -62,7 +62,6 @@ class QRGenerateActivity : CollectionActivity() {
     private fun initProceedButton(isAlreadyCompressed: Boolean, qrContents: String) {
         btn_proceed_new_match.setOnClickListener {
             if (!isAlreadyCompressed) {
-                match_number += 1
 
                 // Write compressed QR string to file.
                 // File name is dependent on mode (objective or subjective).
@@ -72,6 +71,7 @@ class QRGenerateActivity : CollectionActivity() {
                     "${match_number}_${getSerialNum(context = this)}_$timestamp"
                 }
                 writeToFile(fileName = fileName, message = qrContents)
+                match_number += 1
             }
             putIntoStorage(context = this, key = "match_number", value = match_number)
             val intent = Intent(this, MatchInformationInputActivity::class.java)
