@@ -1,15 +1,29 @@
-Adrian Van Dyke
-Cal Ringgold
-Cyan Ding
-Dalynah Rivas
-Jeffrey Wang
-Olivet Yettou
-Olivia Niemela
-Pearline Qin
-Rishi Asolkar
-Sebastian Waters
-Taye Byun
-Vienna Zhang
+Scout Name # 1
+Scout Name # 2
+Scout Name # 3
+Scout Name # 4
+Scout Name # 5
+Scout Name # 6
+Scout Name # 7
+Scout Name # 8
+Scout Name # 9
+Scout Name # 10
+Scout Name # 11
+Scout Name # 12
+Scout Name # 13
+Scout Name # 14
+Scout Name # 15
+Scout Name # 16
+Scout Name # 17
+Scout Name # 18
+Scout Name # 19
+Scout Name # 20
+Scout Name # 21
+Scout Name # 22
+Scout Name # 23
+Scout Name # 24
+Scout Name # 25
+Scout Name # 26
 Backup 1
 Backup 2
 Backup 3
