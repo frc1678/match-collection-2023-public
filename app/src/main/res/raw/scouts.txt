@@ -1,20 +1,21 @@
-Adelia Biello
-Anirudh Kashyap
-Annika Larsen
-Charlie Sternbergh
-Cleah Sronce
-Dalynah Rivas
-Daniel Qeli
-Enzo Saraniti
-Eshel Dror
-Jaden Kang
-Jett Nelson
-Kayla Lee
-Olivet Yettou
-Olivia Niemela
-Owen Watkins
-Sophia Ramirez
-Zoe Wang
+Scout Name # 1
+Scout Name # 2
+Scout Name # 3
+Scout Name # 4
+Scout Name # 5
+Scout Name # 6
+Scout Name # 7
+Scout Name # 8
+Scout Name # 9
+Scout Name # 10
+Scout Name # 11
+Scout Name # 12
+Scout Name # 13
+Scout Name # 14
+Scout Name # 15
+Scout Name # 16
+Scout Name # 17
+Scout Name # 18
 Backup 1
 Backup 2
 Backup 3
