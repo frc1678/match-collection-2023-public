@@ -16,14 +16,6 @@ Scout Name # 15
 Scout Name # 16
 Scout Name # 17
 Scout Name # 18
-Scout Name # 19
-Scout Name # 20
-Scout Name # 21
-Scout Name # 22
-Scout Name # 23
-Scout Name # 24
-Scout Name # 25
-Scout Name # 26
 Backup 1
 Backup 2
 Backup 3

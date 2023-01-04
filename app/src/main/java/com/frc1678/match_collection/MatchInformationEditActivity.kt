@@ -101,7 +101,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     }
 
 
-    //Goes back to collectionObjectiveActivity if in objective mode
+    // Goes back to collectionObjectiveActivity if in objective mode
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed if in Subjective
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean{
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -127,6 +127,8 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
+    // Sets the edit match information activity screen the populates it with previously inputted data
+    // Initiates the scout name dropdown so that users can change their scout name if they need
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_match_information_activity)
