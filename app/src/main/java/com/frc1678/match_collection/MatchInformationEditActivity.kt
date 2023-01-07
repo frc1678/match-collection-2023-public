@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
+import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
 import java.lang.Integer.parseInt
 
@@ -97,22 +98,37 @@ class MatchInformationEditActivity : MatchInformationActivity() {
 
     // Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.kt.
     private fun intentToMatchInput() {
-        startActivity(
-            Intent(this, MatchInformationInputActivity::class.java),
-            ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-        )
     }
 
-    // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
-    override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
+
+    // Goes back to collectionObjectiveActivity if in objective mode
+    // Restart app from MatchInformationInputActivity.kt when back button is long pressed if in Subjective
+    override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean{
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
-                .setPositiveButton("Yes") { _, _ -> intentToMatchInput() }
-                .show()
+            if(collection_mode == Constants.ModeSelection.OBJECTIVE){
+                if(starting_position.toString() != "ZERO"){
+                    comingBack = "match information edit"
+                    startActivity(
+                        Intent(this, CollectionObjectiveActivity::class.java)
+                    )
+                }
+                else{
+                    startActivity(
+                        Intent(this, StartingPositionObjectiveActivity::class.java)
+                    )
+                }
+            }
+            else{
+                startActivity(
+                    Intent(this, MatchInformationInputActivity::class.java)
+                )
+            }
         }
         return super.onKeyLongPress(keyCode, event)
     }
 
+    // Sets the edit match information activity screen the populates it with previously inputted data
+    // Initiates the scout name dropdown so that users can change their scout name if they need
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_match_information_activity)

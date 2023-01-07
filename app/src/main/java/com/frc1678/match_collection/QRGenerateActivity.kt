@@ -9,6 +9,7 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.view.KeyEvent
+import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import com.github.sumimakito.awesomeqr.AwesomeQRCode
 import kotlinx.android.synthetic.main.qr_generate_activity.*
 import org.yaml.snakeyaml.Yaml
@@ -61,7 +62,6 @@ class QRGenerateActivity : CollectionActivity() {
     private fun initProceedButton(isAlreadyCompressed: Boolean, qrContents: String) {
         btn_proceed_new_match.setOnClickListener {
             if (!isAlreadyCompressed) {
-                match_number += 1
 
                 // Write compressed QR string to file.
                 // File name is dependent on mode (objective or subjective).
@@ -71,6 +71,7 @@ class QRGenerateActivity : CollectionActivity() {
                     "${match_number}_${getSerialNum(context = this)}_$timestamp"
                 }
                 writeToFile(fileName = fileName, message = qrContents)
+                match_number += 1
             }
             putIntoStorage(context = this, key = "match_number", value = match_number)
             val intent = Intent(this, MatchInformationInputActivity::class.java)
@@ -83,11 +84,24 @@ class QRGenerateActivity : CollectionActivity() {
         }
     }
 
-    // Begin intent used in onKeyLongPress to restart app from StartingPositionObjectiveActivity.kt.
+/*     Begin intent used in onKeyLongPress to go back to a pprevious activity depending
+     on your mode and starting position.*/
     private fun intentToPreviousActivity() {
         is_teleop_activated = true
         is_match_time_ended = true
-        val intent = Intent(this, CollectionObjectiveActivity::class.java)
+        lateinit var intent: Intent
+        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+            if (starting_position.toString() != "ZERO") {
+                comingBack = "QRGenerate"
+                intent = Intent(this, CollectionObjectiveActivity::class.java)
+            } else {
+                intent = Intent(this, MatchInformationEditActivity::class.java)
+            }
+        }
+        else {
+            intent = Intent(this, MatchInformationInputActivity::class.java)
+        }
+
         intent.putExtra("back", true)
         startActivity(
             intent,
@@ -97,11 +111,7 @@ class QRGenerateActivity : CollectionActivity() {
 
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
-                .setPositiveButton("Yes") { _, _ -> intentToPreviousActivity() }
-                .show()
-        }
+        intentToPreviousActivity()
         return super.onKeyLongPress(keyCode, event)
     }
 

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import kotlinx.android.synthetic.main.starting_position_activity.*
 
 class StartingPositionObjectiveActivity : CollectionActivity() {
@@ -96,7 +97,9 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     intent = Intent(this, MatchInformationEditActivity::class.java)
                 } else {
                     intent = Intent(this, CollectionObjectiveActivity::class.java)
-                    intent.putExtra("back", false)
+                    if(comingBack == "collection objective activity"){
+                        comingBack = "Starting position activity"
+                    }
                 }
                 startActivity(
                     intent,
