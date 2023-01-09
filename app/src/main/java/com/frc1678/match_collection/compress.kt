@@ -54,6 +54,7 @@ fun compress(
     val compressAwareScore =
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
+    val compressIntakeConeOrientation = subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -102,6 +103,7 @@ fun compress(
             val quickness = getRankForTeam(quickness_score, teamNum)
             val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
             val playedDefense = played_defense_list.contains(teamNum)
+            val intakeConeOrientation = intake_cone_orientation_list.contains(teamNum)
 
             subjDataString += subjectiveSeparator
             subjDataString += compressQuicknessScore
@@ -114,6 +116,11 @@ fun compress(
             subjDataString += subjectiveSeparator
             subjDataString += compressPlayedDefense
             subjDataString += if (playedDefense) "TRUE" else "FALSE"
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressIntakeConeOrientation
+            subjDataString += if (intakeConeOrientation) "TRUE" else "FALSE"
+
 
             if (i + 1 != teamNumbers.size) subjDataString += subjectiveTeamSeparator
         }

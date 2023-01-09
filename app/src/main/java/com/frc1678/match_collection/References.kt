@@ -38,6 +38,7 @@ var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var intake_cone_orientation_list: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
@@ -59,6 +60,7 @@ fun resetCollectionReferences() {
 
     quickness_score = SubjectiveTeamRankings()
     field_awareness_score = SubjectiveTeamRankings()
+    intake_cone_orientation_list = ArrayList()
     played_defense_list = ArrayList()
 }
 

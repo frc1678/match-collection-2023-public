@@ -2,7 +2,6 @@
 package com.frc1678.match_collection
 
 import android.app.ActivityOptions
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -58,6 +57,19 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                 ranking.teamTwo?.teamNumber = et_team_two.text.toString()
                 ranking.teamThree?.teamNumber = et_team_three.text.toString()
             }
+            if (intake_cone_orientation_list.contains(teamNumberOne)){
+                intake_cone_orientation_list[intake_cone_orientation_list.indexOf(teamNumberOne)] =
+                    et_team_one.text.toString()
+            }
+            if (intake_cone_orientation_list.contains(teamNumberTwo)){
+                intake_cone_orientation_list[intake_cone_orientation_list.indexOf(teamNumberTwo)] =
+                    et_team_two.text.toString()
+            }
+            if (intake_cone_orientation_list.contains(teamNumberThree)){
+                intake_cone_orientation_list[intake_cone_orientation_list.indexOf(teamNumberThree)] =
+                    et_team_three.text.toString()
+            }
+
             if (played_defense_list.contains(teamNumberOne)) {
                 played_defense_list[played_defense_list.indexOf(teamNumberOne)] =
                     et_team_one.text.toString()
@@ -70,7 +82,6 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                 played_defense_list[played_defense_list.indexOf(teamNumberThree)] =
                     et_team_three.text.toString()
             }
-
         }
     }
 
