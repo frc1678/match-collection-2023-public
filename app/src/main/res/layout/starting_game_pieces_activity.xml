@@ -21,17 +21,29 @@
             android:layout_height="50dp"
             android:background="@color/light_gray" />
 
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
         <Button
             android:id="@+id/game_piece_two"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/light_gray"/>
 
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+
         <Button
             android:id="@+id/game_piece_three"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@color/light_gray"/>
+
+        <Space
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
 
         <Button
             android:id="@+id/game_piece_four"
