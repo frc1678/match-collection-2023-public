@@ -30,6 +30,30 @@ class Constants {
         NONE
     }
 
+    enum class GamePieceOne {
+        CONE,
+        CUBE,
+        NONE
+    }
+
+    enum class GamePieceTwo {
+        CONE,
+        CUBE,
+        NONE
+    }
+
+    enum class GamePieceThree {
+        CONE,
+        CUBE,
+        NONE
+    }
+
+    enum class GamePieceFour {
+        CONE,
+        CUBE,
+        NONE
+    }
+
     enum class ClimbLevel {
         NONE,
         LOW,

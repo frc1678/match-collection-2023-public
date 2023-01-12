@@ -39,6 +39,11 @@ var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var played_defense_list: ArrayList<String> = ArrayList()
+var game_piece_one: Constants.GamePieceOne = Constants.GamePieceOne.NONE
+var game_piece_two: Constants.GamePieceTwo = Constants.GamePieceTwo.NONE
+var game_piece_three: Constants.GamePieceThree = Constants.GamePieceThree.NONE
+var game_piece_four: Constants.GamePieceFour = Constants.GamePieceFour.NONE
+
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
