@@ -24,6 +24,7 @@
                 style="@style/btn_action"
                 android:text="@string/btn_undo"
                 android:layout_weight="0.5"
+                android:background="@drawable/btn_undo_selector"
                 />
 
             <Button
@@ -32,6 +33,7 @@
                 android:text="@string/btn_action_four"
                 android:layout_weight="1"
                 />
+
             <Button
                 android:id="@+id/btn_action_five"
                 style="@style/btn_action"
@@ -59,8 +61,8 @@
                 style="@style/btn_action"
                 android:text="@string/btn_redo"
                 android:layout_weight="0.5"
+                android:background="@drawable/btn_redo_selector"
                 />
-
 
             <Button
                 android:id="@+id/btn_action_seven"
@@ -86,31 +88,35 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <Button
         android:id="@+id/btn_ten"
         style="@style/btn_action"
         android:text="@string/btn_action_ten"
         android:layout_weight="0.5"
         />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
+        <ToggleButton
+            android:id="@+id/tb_action_one"
+            style="@style/btn_action_hor"
+            android:textOff="@string/tb_action_bool_one_off"
+            android:textOn="@string/tb_action_bool_one_on"
+            android:layout_weight="1"
+            android:background="@drawable/tb_incap_selector"/>
+
         <Button
             android:id="@+id/btn_charge"
-            style="@style/btn_proceed"
+            style="@style/btn_action_hor"
             android:layout_weight="1"
-            android:text="@string/btn_charge" />
+            android:text="@string/btn_charge"
+            android:background="@drawable/tb_charge_selector"/>
 
-        <ToggleButton
-        android:id="@+id/tb_action_one"
-        style="@style/btn_proceed"
-        android:textOff="@string/tb_action_bool_one_off"
-        android:textOn="@string/tb_action_bool_one_on"
-        android:layout_weight="1"
-        />
     </LinearLayout>
 
     <LinearLayout
@@ -138,7 +144,8 @@
             android:id="@+id/btn_proceed_edit"
             style="@style/btn_proceed"
             android:enabled="false"
-            android:text="@string/btn_to_teleop" />
+            android:text="@string/btn_to_teleop"
+            android:background="@drawable/btn_proceed_selector"/>
 
     </LinearLayout>
 

@@ -18,6 +18,10 @@
 
     <color name="blue_error_popup_borders">#0F5EAE</color>
 
+    <color name="action_brown">#C5844D</color>
+    <color name="action_brown_pressed">#FBC68E</color>
+    <color name="action_blue">#52AEFF</color>
+    <color name="action_blue_pressed">#A5DCFF</color>
     <color name="action_yellow">#FFF4B8</color>
     <color name="action_yellow_pressed">#FFED87</color>
     <color name="proceed_blue">#2AF5FF</color>

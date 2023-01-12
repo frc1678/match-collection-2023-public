@@ -23,16 +23,15 @@
                 android:id="@+id/btn_undo"
                 style="@style/btn_action"
                 android:text="@string/btn_undo"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:background="@drawable/btn_undo_selector"
                 />
 
             <Button
                 android:id="@+id/btn_action_one"
                 style="@style/btn_action"
-                android:text="@string/btn_action_one"
                 android:layout_weight="1"
-                />
+                android:text="@string/btn_action_one" />
 
             <Button
                 android:id="@+id/btn_action_two"
@@ -62,7 +61,7 @@
                 android:id="@+id/btn_redo"
                 style="@style/btn_action"
                 android:text="@string/btn_redo"
-                android:layout_weight="0.5"
+                android:layout_weight="0.4"
                 android:background="@drawable/btn_redo_selector"
                 />
 
