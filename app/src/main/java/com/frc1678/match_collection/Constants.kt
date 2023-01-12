@@ -26,7 +26,6 @@ class Constants {
         ONE,
         TWO,
         THREE,
-        FOUR,
         NONE
     }
 
