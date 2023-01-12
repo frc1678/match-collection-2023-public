@@ -150,14 +150,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Enable and disable buttons based on values of condition booleans defined previously.
         btn_action_one.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
         btn_action_two.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
-        btn_action_five.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_three.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
-        btn_climb.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_climb)
-        btn_climb.text =
+        btn_charge.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_climb)
+        btn_charge.text =
             if (did_climb) getString(R.string.btn_climbed)
-            else getString(R.string.btn_climb)
+            else getString(R.string.btn_charge)
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
@@ -178,7 +178,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun setCounterTexts() {
         btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
         btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
-        btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
+        btn_action_three.text = getString(R.string.btn_action_five, numActionFive.toString())
     }
 
     // Initialize button and toggle button onClickListeners.
@@ -252,7 +252,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Increment button action five by one when clicked and add action to timeline.
-        btn_action_five.setOnClickListener {
+        btn_action_three.setOnClickListener {
             timelineAddWithStage(action_type = Constants.ActionType.INTAKE)
             numActionFive++
             setCounterTexts()
@@ -269,7 +269,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Open the Climb popup window.
-        btn_climb.setOnClickListener {
+        btn_charge.setOnClickListener {
             val popupView = View.inflate(this, R.layout.climb_popup, null)
             val width = LinearLayout.LayoutParams.WRAP_CONTENT
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -288,7 +288,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
             popupView.btn_climb_done.setOnClickListener {
                 popupWindow.dismiss()
-                btn_climb.isEnabled = false
+                btn_charge.isEnabled = false
                 popup_open = false
                 timelineAdd(match_time, Constants.ActionType.CLIMB_ATTEMPT)
                 enableButtons()
