@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
+import kotlinx.android.synthetic.main.starting_position_activity.btn_four
 import kotlinx.android.synthetic.main.starting_position_activity.btn_one
 import kotlinx.android.synthetic.main.starting_position_activity.btn_proceed_starting_position
 import kotlinx.android.synthetic.main.starting_position_activity.btn_switch_orientation
@@ -46,11 +47,13 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             btn_one.setBackgroundColor(resources.getColor(R.color.red_start_one, null))
             btn_two.setBackgroundColor(resources.getColor(R.color.red_start_two, null))
             btn_three.setBackgroundColor(resources.getColor(R.color.red_start_three, null))
+            btn_four.setBackgroundColor(resources.getColor(R.color.red_start_four, null))
         } else {
             btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray, null))
             btn_one.setBackgroundColor(resources.getColor(R.color.blue_start_one, null))
             btn_two.setBackgroundColor(resources.getColor(R.color.blue_start_two, null))
             btn_three.setBackgroundColor(resources.getColor(R.color.blue_start_three, null))
+            btn_four.setBackgroundColor(resources.getColor(R.color.blue_start_four, null))
         }
 
         // Changes the color of the button if that starting position is selected
@@ -59,6 +62,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             Constants.StartingPosition.ONE -> btn_one.setBackgroundColor(Color.YELLOW)
             Constants.StartingPosition.TWO -> btn_two.setBackgroundColor(Color.YELLOW)
             Constants.StartingPosition.THREE -> btn_three.setBackgroundColor(Color.YELLOW)
+            Constants.StartingPosition.FOUR -> btn_four.setBackgroundColor(Color.YELLOW)
             else -> {}
         }
     }
@@ -78,6 +82,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         }
         btn_three.setOnClickListener {
             starting_position = Constants.StartingPosition.THREE
+            setBackgrounds()
+        }
+        btn_four.setOnClickListener {
+            starting_position = Constants.StartingPosition.FOUR
             setBackgrounds()
         }
         btn_switch_orientation.setOnClickListener {

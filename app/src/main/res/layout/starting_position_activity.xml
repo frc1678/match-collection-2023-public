@@ -35,6 +35,11 @@
             style="@style/btn_starting_position"
             android:text="@string/three_starting_position" />
 
+        <Button
+            android:id="@+id/btn_four"
+            style="@style/btn_starting_position"
+            android:text="@string/four_starting_position" />
+
     </LinearLayout>
 
     <LinearLayout
