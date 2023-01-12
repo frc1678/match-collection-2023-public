@@ -2,6 +2,7 @@
 package com.frc1678.match_collection
 
 import android.os.CountDownTimer
+import android.util.Log
 
 // File to store information to be used to create the final match information map.
 var numActionOne = 0 //SCORE_BALL_LOW
@@ -31,6 +32,7 @@ var team_number: String = ""
 var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
+var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 
@@ -89,5 +91,6 @@ data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
+    preloaded = Constants.Preloaded.NONE
     team_number = ""
 }

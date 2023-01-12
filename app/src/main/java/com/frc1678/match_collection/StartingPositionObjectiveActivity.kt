@@ -6,6 +6,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import kotlinx.android.synthetic.main.starting_position_activity.btn_four
 import kotlinx.android.synthetic.main.starting_position_activity.btn_one
@@ -15,6 +18,7 @@ import kotlinx.android.synthetic.main.starting_position_activity.btn_three
 import kotlinx.android.synthetic.main.starting_position_activity.btn_two
 import kotlinx.android.synthetic.main.starting_position_activity.btn_zero
 import kotlinx.android.synthetic.main.starting_position_activity.iv_starting_position_map
+import kotlinx.android.synthetic.main.starting_position_activity.spinner_preloaded
 import kotlinx.android.synthetic.main.starting_position_activity.tv_pos_team_number
 
 class StartingPositionObjectiveActivity : CollectionActivity() {
@@ -122,6 +126,24 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
     }
 
     /**
+     * Initializes the spinner for selecting the preloaded game object.
+     */
+    private fun initSpinner() {
+        spinner_preloaded.adapter = ArrayAdapter(
+            this, R.layout.spinner_text_view, Constants.Preloaded.values().map { it.name }
+        )
+        spinner_preloaded.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                preloaded = Constants.Preloaded.values()[position]
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
+    }
+
+    /**
      * Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.
      */
     private fun intentToPreviousActivity() = startActivity(
@@ -160,5 +182,6 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         setMapImage()
         setBackgrounds()
         initOnClicks()
+        initSpinner()
     }
 }
