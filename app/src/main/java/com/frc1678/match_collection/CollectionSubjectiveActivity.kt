@@ -106,15 +106,15 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         }
     }
 
-    // Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.kt.
+    // Begin intent used in onKeyLongPress to restart app from StartingGamePieceActivity.kt.
     private fun intentToMatchInput() {
         startActivity(
-            Intent(this, MatchInformationInputActivity::class.java),
+            Intent(this, StartingGamePieceActivity::class.java),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
 
-    // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
+    // Restart app from StartingGamePieceActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog.Builder(this).setMessage(R.string.error_back_reset)

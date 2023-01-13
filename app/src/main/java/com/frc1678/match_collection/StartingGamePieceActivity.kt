@@ -5,6 +5,9 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import kotlinx.android.synthetic.main.edit_match_information_activity.*
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.et_team_one
 import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
 import kotlinx.android.synthetic.main.starting_position_activity.*
 
@@ -14,9 +17,9 @@ class StartingGamePieceActivity : CollectionActivity() {
     private fun setMapPicture() {
         when {
             (alliance_color == Constants.AllianceColor.BLUE) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.)
+                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_start)
             (alliance_color == Constants.AllianceColor.RED) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.)
+                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_start)
         }
     }
 
@@ -89,16 +92,15 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
         }
         // Moves onto the next screen if you have inputted all the information
-        btn_proceed_starting_position.setOnClickListener { view ->
-            intent = Intent(this, CollectionSubjectiveActivity::class.java)
+        btn_proceed_game_piece.setOnClickListener { view ->
             if (CollectionObjectiveActivity.comingBack == "collection subjective activity") {
                 CollectionObjectiveActivity.comingBack = "Starting position game piece activity"
             }
             startActivity(
-                intent,
+                Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent),
                 ActivityOptions.makeSceneTransitionAnimation(
                     this,
-                    btn_proceed_starting_position, "proceed_button"
+                    btn_proceed_game_piece, "proceed_button"
                 ).toBundle()
             )
         }
