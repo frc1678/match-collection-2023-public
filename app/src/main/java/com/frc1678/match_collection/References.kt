@@ -4,10 +4,17 @@ package com.frc1678.match_collection
 import android.os.CountDownTimer
 
 // File to store information to be used to create the final match information map.
-var numActionOne = 0 //SCORE_BALL_LOW
-var numActionTwo = 0 //SCORE_BALL_HIGH
-var numActionFour = 0 //SCORE_BALL_HIGH_OTHER
-var numActionFive = 0 //NUMBER OF INTAKES
+var numActionOne = 0 //SHELF_INTAKE
+var numActionTwo = 0 //NODE_INTAKE
+var numActionThree = 0 //GROUND_INTAKE
+var numActionFour = 0 //SCORE_CUBE_HIGH
+var numActionFive = 0 //SCORE_CUBE_MID
+var numActionSix = 0 //SCORE_CUBE_LOW
+var numActionSeven = 0 //SCORE_CONE_HIGH
+var numActionEight = 0 //SCORE_CONE_MID
+var numActionNine = 0 //SCORE_CONE_LOW
+var numActionTen = 0 //FAIL
+
 
 var match_timer: CountDownTimer? = null
 var match_time: String = ""
@@ -16,14 +23,14 @@ var popup_open = false
 var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
-var did_climb: Boolean = false
+var did_charge: Boolean = false
 
 // Data that is shared between the objective and subjective QRs.
 var serial_number: String? = ""
 var match_number: Int = 0
 var alliance_color: Constants.AllianceColor = Constants.AllianceColor.NONE
 var timestamp: Long = 0
-var match_collection_version_number: String = "5.0.0"
+var match_collection_version_number: String = "1.0.0"
 var scout_name: String = Constants.NONE_VALUE
 
 // Data specific to Objective Match Collection QR.
@@ -32,7 +39,7 @@ var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
-var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
+var charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
 
 
 // Data specific to Subjective Match Collection QR.
@@ -44,14 +51,18 @@ var played_defense_list: ArrayList<String> = ArrayList()
 fun resetCollectionReferences() {
     numActionOne = 0
     numActionTwo = 0
+    numActionThree = 0
     numActionFour = 0
     numActionFive = 0
+    numActionSix = 0
+    numActionSeven = 0
+
 
     is_teleop_activated = false
-    did_climb = false
+    did_charge = false
 
     popup_open = false
-    climb_level = Constants.ClimbLevel.NONE
+    charge_level = Constants.ChargeLevel.NONE
 
     timestamp = 0
 

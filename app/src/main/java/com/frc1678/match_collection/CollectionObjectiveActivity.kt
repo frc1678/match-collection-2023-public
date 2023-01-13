@@ -10,14 +10,27 @@ import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
-import kotlinx.android.synthetic.main.climb_popup.view.*
+import kotlinx.android.synthetic.main.charge_popup.view.*
 import kotlinx.android.synthetic.main.collection_objective_activity.*
+import kotlinx.android.synthetic.main.collection_objective_activity.btn_charge
+import kotlinx.android.synthetic.main.collection_objective_activity.btn_proceed_edit
+import kotlinx.android.synthetic.main.collection_objective_activity.btn_redo
+import kotlinx.android.synthetic.main.collection_objective_activity.btn_timer
+import kotlinx.android.synthetic.main.collection_objective_activity.btn_undo
+import kotlinx.android.synthetic.main.collection_objective_activity.objective_match_collection_layout
+import kotlinx.android.synthetic.main.collection_objective_activity.tb_action_one
+import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_number
+import kotlinx.android.synthetic.main.collection_objective_scoring_activity.*
 import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
+    private var btnActionList = listOf<Button>(btn_action_one, btn_action_two, btn_action_three,
+        btn_action_four, btn_action_five, btn_action_six, btn_action_seven, btn_action_eight,
+        btn_action_nine,btn_action_ten)
     private var isTimerRunning = false
 
     //FALSE = LOW
@@ -74,20 +87,48 @@ class CollectionObjectiveActivity : CollectionActivity() {
         var removeOneMore = false
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
-            Constants.ActionType.SCORE_BALL_LOW.toString() -> {
+            Constants.ActionType.SHELF_INTAKE.toString() -> {
                 numActionOne--
                 setCounterTexts()
             }
-            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
+            Constants.ActionType.NODE_INTAKE.toString() -> {
                 numActionTwo--
                 setCounterTexts()
             }
-            Constants.ActionType.INTAKE.toString() -> {
+            Constants.ActionType.GROUND_INTAKE.toString() -> {
+                numActionThree--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
+                numActionFour--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CUBE_MID.toString() -> {
                 numActionFive--
                 setCounterTexts()
             }
-            Constants.ActionType.CLIMB_ATTEMPT.toString() -> {
-                did_climb = false
+            Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
+                numActionSix--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
+                numActionSeven--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CONE_MID.toString() -> {
+                numActionEight--
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CONE_LOW.toString() -> {
+                numActionNine--
+                setCounterTexts()
+            }
+            Constants.ActionType.FAIL.toString() -> {
+                numActionTen--
+                setCounterTexts()
+            }
+            Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
+                did_charge = false
             }
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = false
@@ -115,20 +156,48 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
-            Constants.ActionType.SCORE_BALL_LOW.toString() -> {
+            Constants.ActionType.SHELF_INTAKE.toString() -> {
                 numActionOne++
                 setCounterTexts()
             }
-            Constants.ActionType.SCORE_BALL_HIGH.toString() -> {
+            Constants.ActionType.NODE_INTAKE.toString() -> {
                 numActionTwo++
                 setCounterTexts()
             }
-            Constants.ActionType.INTAKE.toString() -> {
+            Constants.ActionType.GROUND_INTAKE.toString() -> {
+                numActionThree++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
+                numActionFour++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CUBE_MID.toString() -> {
                 numActionFive++
                 setCounterTexts()
             }
-            Constants.ActionType.CLIMB_ATTEMPT.toString() -> {
-                did_climb = true
+            Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
+                numActionSix++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
+                numActionSeven++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CONE_MID.toString() -> {
+                numActionEight++
+                setCounterTexts()
+            }
+            Constants.ActionType.SCORE_CONE_LOW.toString() -> {
+                numActionNine++
+                setCounterTexts()
+            }
+            Constants.ActionType.FAIL.toString() -> {
+                numActionTen++
+                setCounterTexts()
+            }
+            Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
+                did_charge = true
             }
             Constants.ActionType.START_INCAP.toString() -> {
                 tb_action_one.isChecked = true
@@ -151,12 +220,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_action_one.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
         btn_action_two.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
         btn_action_three.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_four.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_five.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_six.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_seven.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_eight.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_nine.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        btn_action_ten.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
 
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
-        btn_charge.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_climb)
+        btn_charge.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_charge)
         btn_charge.text =
-            if (did_climb) getString(R.string.btn_climbed)
+            if (did_charge) getString(R.string.btn_charged)
             else getString(R.string.btn_charge)
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
@@ -178,7 +254,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun setCounterTexts() {
         btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
         btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
-        btn_action_three.text = getString(R.string.btn_action_five, numActionFive.toString())
+        btn_action_three.text = getString(R.string.btn_action_three, numActionThree.toString())
+        btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
+        btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
+        btn_action_six.text = getString(R.string.btn_action_six, numActionSix.toString())
+        btn_action_seven.text = getString(R.string.btn_action_seven, numActionSeven.toString())
+        btn_action_eight.text = getString(R.string.btn_action_eight, numActionEight.toString())
+        btn_action_nine.text = getString(R.string.btn_action_nine, numActionNine.toString())
+        btn_action_ten.text = getString(R.string.btn_action_ten, numActionTen.toString())
     }
 
     // Initialize button and toggle button onClickListeners.
@@ -238,7 +321,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Increment button action one by one when clicked and add action to timeline.
         btn_action_one.setOnClickListener {
             // FALSE = LOW
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_LOW)
+            timelineAddWithStage(action_type = Constants.ActionType.SHELF_INTAKE)
             numActionOne++
             setCounterTexts()
         }
@@ -246,18 +329,66 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Increment button action two by one when clicked and add action to timeline.
         btn_action_two.setOnClickListener {
             // FALSE = LOW
-            timelineAddWithStage(action_type = Constants.ActionType.SCORE_BALL_HIGH)
+            timelineAddWithStage(action_type = Constants.ActionType.NODE_INTAKE)
             numActionTwo++
             setCounterTexts()
         }
 
         // Increment button action five by one when clicked and add action to timeline.
         btn_action_three.setOnClickListener {
-            timelineAddWithStage(action_type = Constants.ActionType.INTAKE)
+            timelineAddWithStage(action_type = Constants.ActionType.GROUND_INTAKE)
+            numActionThree++
+            setCounterTexts()
+        }
+
+        btn_action_one.setOnClickListener {
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_HIGH)
+            numActionFour++
+            setCounterTexts()
+        }
+
+        btn_action_one.setOnClickListener {
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
             numActionFive++
             setCounterTexts()
         }
 
+        btn_action_one.setOnClickListener {
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
+            numActionSix++
+            setCounterTexts()
+        }
+
+        btn_action_one.setOnClickListener {
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
+            numActionSeven++
+            setCounterTexts()
+        }
+
+        btn_action_one.setOnClickListener {
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
+            numActionEight++
+            setCounterTexts()
+        }
+
+        btn_action_one.setOnClickListener {
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
+            numActionNine++
+            setCounterTexts()
+        }
+
+        btn_action_one.setOnClickListener {
+            // FALSE = LOW
+            timelineAddWithStage(action_type = Constants.ActionType.FAIL)
+            numActionTen++
+            setCounterTexts()
+        }
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
         tb_action_one.setOnClickListener {
@@ -268,9 +399,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         }
 
-        // Open the Climb popup window.
+        // Open the Charge popup window.
         btn_charge.setOnClickListener {
-            val popupView = View.inflate(this, R.layout.climb_popup, null)
+            val popupView = View.inflate(this, R.layout.charge_popup, null)
             val width = LinearLayout.LayoutParams.WRAP_CONTENT
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
             val popupWindow = PopupWindow(popupView, width, height, false)
@@ -279,9 +410,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
             enableButtons()
 
             // OnClickListeners for the buttons in the climb popup
-            popupView.btn_climb_cancel.setOnClickListener {
-                did_climb = false
-                climb_level = Constants.ClimbLevel.NONE
+            popupView.btn_charge_cancel.setOnClickListener {
+                did_charge = false
+                charge_level = Constants.ChargeLevel.NONE
                 popupWindow.dismiss()
                 popup_open = false
                 enableButtons()
@@ -290,62 +421,48 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popup_open = false
-                timelineAdd(match_time, Constants.ActionType.CLIMB_ATTEMPT)
+                timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
                 enableButtons()
             }
 
-            popupView.btn_climb_lv0.isActivated = false
-            climb_level = Constants.ClimbLevel.NONE
+            popupView.btn_failed.isActivated = false
+            charge_level = Constants.ChargeLevel.NONE
 
-            popupView.btn_climb_lv0.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = true
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.NONE
-                did_climb = true
-                popupView.btn_climb_done.isEnabled = did_climb
+            popupView.btn_failed.setOnClickListener {
+                popupView.btn_failed.isActivated = true
+                popupView.btn_parked.isActivated = false
+                popupView.btn_docked.isActivated = false
+                popupView.btn_engaged.isActivated = false
+                charge_level = Constants.ChargeLevel.FAILED
+                did_charge = true
+                popupView.btn_climb_done.isEnabled = did_charge
             }
-            popupView.btn_climb_lv1.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = true
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.LOW
-                did_climb = true
-                popupView.btn_climb_done.isEnabled = did_climb
+            popupView.btn_parked.setOnClickListener {
+                popupView.btn_failed.isActivated = false
+                popupView.btn_parked.isActivated = true
+                popupView.btn_docked.isActivated = false
+                popupView.btn_engaged.isActivated = false
+                charge_level = Constants.ChargeLevel.PARKED
+                did_charge = true
+                popupView.btn_climb_done.isEnabled = did_charge
             }
-            popupView.btn_climb_lv2.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = true
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.MID
-                did_climb = true
-                popupView.btn_climb_done.isEnabled = did_climb
+            popupView.btn_docked.setOnClickListener {
+                popupView.btn_failed.isActivated = false
+                popupView.btn_parked.isActivated = false
+                popupView.btn_docked.isActivated = true
+                popupView.btn_engaged.isActivated = false
+                charge_level = Constants.ChargeLevel.DOCKED
+                did_charge = true
+                popupView.btn_climb_done.isEnabled = did_charge
             }
-            popupView.btn_climb_lv3.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = true
-                popupView.btn_climb_lv4.isActivated = false
-                climb_level = Constants.ClimbLevel.HIGH
-                did_climb = true
-                popupView.btn_climb_done.isEnabled = did_climb
-            }
-            popupView.btn_climb_lv4.setOnClickListener {
-                popupView.btn_climb_lv0.isActivated = false
-                popupView.btn_climb_lv1.isActivated = false
-                popupView.btn_climb_lv2.isActivated = false
-                popupView.btn_climb_lv3.isActivated = false
-                popupView.btn_climb_lv4.isActivated = true
-                climb_level = Constants.ClimbLevel.TRAVERSAL
-                did_climb = true
-                popupView.btn_climb_done.isEnabled = did_climb
+            popupView.btn_engaged.setOnClickListener {
+                popupView.btn_failed.isActivated = false
+                popupView.btn_parked.isActivated = false
+                popupView.btn_docked.isActivated = false
+                popupView.btn_engaged.isActivated = true
+                charge_level = Constants.ChargeLevel.ENGAGED
+                did_charge = true
+                popupView.btn_climb_done.isEnabled = did_charge
             }
         }
 
@@ -379,7 +496,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         )
     }
 
-    // resets and enables everything if you entered this screen by pressing the down button
+    // resets and enables everything if you entered this screen by pressing the back button
     private fun comingBack() {
         if ((comingBack == "match information edit") or (comingBack == "QRGenerate")) {
             isTimerRunning = false

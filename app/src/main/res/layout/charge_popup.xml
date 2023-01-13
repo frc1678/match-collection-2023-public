@@ -11,42 +11,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <!--Climb Level Buttons-->
+        <!--Charging Dock Buttons-->
         <LinearLayout
             android:layout_width="270dp"
             android:layout_height="500dp"
             android:layout_margin="@dimen/small"
             android:orientation="vertical">
 
-            <!--Climb Level 4: Traversal-->
             <Button
-                android:id="@+id/btn_climb_lv4"
-                style="@style/btn_climb_level"
-                android:text="@string/climb_level_4" />
+                android:id="@+id/btn_engaged"
+                style="@style/btn_charge_level"
+                android:text="@string/btn_engaged" />
 
-            <!--Climb Level 3: High-->
             <Button
-                android:id="@+id/btn_climb_lv3"
-                style="@style/btn_climb_level"
-                android:text="@string/climb_level_3" />
+                android:id="@+id/btn_docked"
+                style="@style/btn_charge_level"
+                android:text="@string/btn_docked" />
 
-            <!--Climb Level 2: Mid-->
             <Button
-                android:id="@+id/btn_climb_lv2"
-                style="@style/btn_climb_level"
-                android:text="@string/climb_level_2" />
+                android:id="@+id/btn_parked"
+                style="@style/btn_charge_level"
+                android:text="@string/btn_parked" />
 
-            <!--Climb Level 1: Low-->
             <Button
-                android:id="@+id/btn_climb_lv1"
-                style="@style/btn_climb_level"
-                android:text="@string/climb_level_1" />
-
-            <!--Climb Level 0: Unsuccessful-->
-            <Button
-                android:id="@+id/btn_climb_lv0"
-                style="@style/btn_climb_level"
-                android:text="@string/climb_level_0"
+                android:id="@+id/btn_failed"
+                style="@style/btn_charge_level"
+                android:text="@string/btn_failed"
                 />
 
         </LinearLayout>
@@ -62,7 +52,7 @@
 
         <!--Cancel-->
         <Button
-            android:id="@+id/btn_climb_cancel"
+            android:id="@+id/btn_charge_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"

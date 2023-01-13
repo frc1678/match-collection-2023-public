@@ -30,21 +30,28 @@ class Constants {
         NONE
     }
 
-    enum class ClimbLevel {
-        NONE,
-        LOW,
-        MID,
-        HIGH,
-        TRAVERSAL,
+    enum class ChargeLevel {
+       NONE,
+       FAILED,
+       PARKED,
+       DOCKED,
+       ENGAGED
     }
 
     enum class ActionType {
-        SCORE_BALL_HIGH,
-        SCORE_BALL_LOW,
-        INTAKE,
+        SCORE_CUBE_HIGH,
+        SCORE_CUBE_MID,
+        SCORE_CUBE_LOW,
+        SCORE_CONE_HIGH,
+        SCORE_CONE_MID,
+        SCORE_CONE_LOW,
+        FAIL,
+        SHELF_INTAKE,
+        NODE_INTAKE,
+        GROUND_INTAKE,
         START_INCAP,
         END_INCAP,
-        CLIMB_ATTEMPT,
+        CHARGE_ATTEMPT
     }
 
     enum class Stage {

@@ -40,11 +40,13 @@
                 android:text="@string/btn_action_five"
                 android:layout_weight="1"
                 />
+
             <Button
                 android:id="@+id/btn_action_six"
                 style="@style/btn_action"
                 android:text="@string/btn_action_six"
                 android:layout_weight="1"
+                android:background="drawable/"
                 />
 
 
@@ -90,7 +92,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_ten"
+        android:id="@+id/btn_action_ten"
         style="@style/btn_action"
         android:text="@string/btn_action_ten"
         android:layout_weight="0.5"

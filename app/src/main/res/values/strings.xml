@@ -17,9 +17,9 @@
     <string name="btn_action_ten">Fail - %1$s</string>
     <string name="tb_action_bool_one_off">Start Incap</string>
     <string name="tb_action_bool_one_on">End Incap</string>
-    <string name="tb_action_bool_two_disabled">Climb Attempted</string>
+    <string name="tb_action_bool_two_disabled">Charge Attempted</string>
     <string name="btn_charge">New Charge Attempt…</string>
-    <string name="btn_climbed">Climb Attempted</string>
+    <string name="btn_charged">Charge Attempted</string>
     <string name="btn_undo">Undo</string>
     <string name="btn_redo">Redo</string>
     <string name="btn_plus">+</string>
@@ -54,11 +54,10 @@
     <string name="two_starting_position">2</string>
     <string name="three_starting_position">3</string>
     <string name="four_starting_position">4</string>
-    <string name="climb_level_4">Level 4</string>
-    <string name="climb_level_3">Level 3</string>
-    <string name="climb_level_2">Level 2</string>
-    <string name="climb_level_1">Level 1</string>
-    <string name="climb_level_0">Failed</string>
+    <string name="btn_engaged">Engaged</string>
+    <string name="btn_docked">Docked</string>
+    <string name="btn_parked">Parked</string>
+    <string name="btn_failed">Failed</string>
     <string name="start_climb_timer">Start Timer</string>
     <string name="climb_timer">Time: %1$s</string>
     <string name="climb_timer_done">Recorded:\n%1$s sec.</string>
