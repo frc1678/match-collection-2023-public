@@ -60,6 +60,7 @@
         <Spinner
             android:id="@+id/spinner_preloaded"
             style="@style/tv_standard_spinner"
+            android:background="@drawable/popup_background"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
