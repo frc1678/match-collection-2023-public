@@ -1,7 +1,12 @@
 package com.frc1678.match_collection
 
-import com.frc1678.match_collection.R.color.redo_green
+import android.app.ActivityOptions
+import android.app.AlertDialog
+import android.content.Intent
+import android.os.Bundle
+import android.view.KeyEvent
 import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
+import kotlinx.android.synthetic.main.starting_position_activity.*
 
 class StartingGamePieceActivity : CollectionActivity() {
 
@@ -16,7 +21,7 @@ class StartingGamePieceActivity : CollectionActivity() {
     }
 
     private fun initOnClicks() {
-        btn_game_piece_one.setOnClickListener{
+        btn_game_piece_one.setOnClickListener {
             game_piece_one = when (game_piece_one) {
                 Constants.GamePieceOne.CONE -> {
                     btn_game_piece_one.setBackgroundColor(0x8F00FF)
@@ -83,6 +88,47 @@ class StartingGamePieceActivity : CollectionActivity() {
                 }
             }
         }
+        // Moves onto the next screen if you have inputted all the information
+        btn_proceed_starting_position.setOnClickListener { view ->
+            intent = Intent(this, CollectionSubjectiveActivity::class.java)
+            if (CollectionObjectiveActivity.comingBack == "collection subjective activity") {
+                CollectionObjectiveActivity.comingBack = "Starting position game piece activity"
+            }
+            startActivity(
+                intent,
+                ActivityOptions.makeSceneTransitionAnimation(
+                    this,
+                    btn_proceed_starting_position, "proceed_button"
+                ).toBundle()
+            )
+        }
+    }
+
+
+    // Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.kt.
+    private fun intentToPreviousActivity() {
+        startActivity(
+            Intent(this, MatchInformationInputActivity::class.java),
+            ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+        )
+    }
+
+    // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
+    override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
+                .setPositiveButton("Yes") { _, _ -> intentToPreviousActivity() }
+                .show()
+        }
+        return super.onKeyLongPress(keyCode, event)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.starting_game_pieces_activity)
+
+        setMapPicture()
+        initOnClicks()
     }
 
 }
