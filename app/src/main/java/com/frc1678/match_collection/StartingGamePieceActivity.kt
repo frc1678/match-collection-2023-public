@@ -8,16 +8,21 @@ import android.os.Bundle
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat.getColor
 import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
+import kotlinx.android.synthetic.main.starting_position_activity.*
 
 class StartingGamePieceActivity : CollectionActivity() {
 
     // Chooses which map you will see depending on your alliance color
     private fun setMapPicture() {
         when {
-            (alliance_color == Constants.AllianceColor.BLUE) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_start)
-            (alliance_color == Constants.AllianceColor.RED) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_start)
+            (orientation && alliance_color == Constants.AllianceColor.BLUE) ->
+                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_up_game_pieces)
+            (!orientation && alliance_color == Constants.AllianceColor.BLUE) ->
+                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_game_pieces)
+            (orientation && alliance_color == Constants.AllianceColor.RED) ->
+                iv_starting_game_pieces_map.setImageResource(R.drawable.red_up_game_pieces)
+            (!orientation && alliance_color == Constants.AllianceColor.RED) ->
+                iv_starting_game_pieces_map.setImageResource(R.drawable.red_down_game_pieces)
         }
     }
 
