@@ -1,15 +1,13 @@
 package com.frc1678.match_collection
 
+import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import kotlinx.android.synthetic.main.edit_match_information_activity.*
-import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
-import kotlinx.android.synthetic.main.match_information_input_activity_objective.et_team_one
+import androidx.core.content.ContextCompat.getColor
 import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
-import kotlinx.android.synthetic.main.starting_position_activity.*
 
 class StartingGamePieceActivity : CollectionActivity() {
 
@@ -27,69 +25,61 @@ class StartingGamePieceActivity : CollectionActivity() {
         btn_game_piece_one.setOnClickListener {
             game_piece_one = when (game_piece_one) {
                 Constants.GamePieceOne.CONE -> {
-                    btn_game_piece_one.setBackgroundColor(0x8F00FF)
                     Constants.GamePieceOne.CUBE
                 }
                 Constants.GamePieceOne.CUBE -> {
-                    btn_game_piece_one.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceOne.CONE
                 }
                 Constants.GamePieceOne.NONE -> {
-                    btn_game_piece_one.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceOne.CONE
                 }
             }
+            setBackgrounds()
         }
 
         btn_game_piece_two.setOnClickListener {
             game_piece_two = when (game_piece_two) {
                 Constants.GamePieceTwo.CONE -> {
-                    btn_game_piece_two.setBackgroundColor(0x8F00FF)
                     Constants.GamePieceTwo.CUBE
                 }
                 Constants.GamePieceTwo.CUBE -> {
-                    btn_game_piece_two.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceTwo.CONE
                 }
                 Constants.GamePieceTwo.NONE -> {
-                    btn_game_piece_two.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceTwo.CONE
                 }
             }
+            setBackgrounds()
         }
 
         btn_game_piece_three.setOnClickListener {
             game_piece_three = when (game_piece_three) {
                 Constants.GamePieceThree.CONE -> {
-                    btn_game_piece_three.setBackgroundColor(0x8F00FF)
                     Constants.GamePieceThree.CUBE
                 }
                 Constants.GamePieceThree.CUBE -> {
-                    btn_game_piece_three.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceThree.CONE
                 }
                 Constants.GamePieceThree.NONE -> {
-                    btn_game_piece_three.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceThree.CONE
                 }
             }
+            setBackgrounds()
         }
 
         btn_game_piece_four.setOnClickListener {
             game_piece_four = when (game_piece_four) {
                 Constants.GamePieceFour.CONE -> {
-                    btn_game_piece_four.setBackgroundColor(0x8F00FF)
                     Constants.GamePieceFour.CUBE
                 }
                 Constants.GamePieceFour.CUBE -> {
-                    btn_game_piece_four.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceFour.CONE
                 }
                 Constants.GamePieceFour.NONE -> {
-                    btn_game_piece_four.setBackgroundColor(0xFFFF00)
                     Constants.GamePieceFour.CONE
                 }
             }
+            setBackgrounds()
         }
         // Moves onto the next screen if you have inputted all the information
         btn_proceed_game_piece.setOnClickListener { view ->
@@ -106,6 +96,54 @@ class StartingGamePieceActivity : CollectionActivity() {
         }
     }
 
+    @SuppressLint("ResourceAsColor")
+    private fun setBackgrounds() {
+        when (game_piece_one) {
+            Constants.GamePieceOne.NONE -> {
+                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.light_gray))
+            }
+            Constants.GamePieceOne.CONE -> {
+                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.action_yellow))
+            }
+            Constants.GamePieceOne.CUBE -> {
+                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+            }
+        }
+        when (game_piece_two) {
+            Constants.GamePieceTwo.NONE -> {
+                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.light_gray))
+            }
+            Constants.GamePieceTwo.CONE -> {
+                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.action_yellow))
+            }
+            Constants.GamePieceTwo.CUBE -> {
+                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+            }
+        }
+        when (game_piece_three) {
+            Constants.GamePieceThree.NONE -> {
+                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.light_gray))
+            }
+            Constants.GamePieceThree.CONE -> {
+                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.action_yellow))
+            }
+            Constants.GamePieceThree.CUBE -> {
+                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+            }
+
+        }
+        when (game_piece_four) {
+            Constants.GamePieceFour.NONE -> {
+                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.light_gray))
+            }
+            Constants.GamePieceFour.CONE -> {
+                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.action_yellow))
+            }
+            Constants.GamePieceFour.CUBE -> {
+                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+            }
+        }
+    }
 
     // Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.kt.
     private fun intentToPreviousActivity() {
@@ -131,6 +169,7 @@ class StartingGamePieceActivity : CollectionActivity() {
 
         setMapPicture()
         initOnClicks()
+        setBackgrounds()
     }
 
 }
