@@ -27,21 +27,15 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
     /**
      * Chooses which map you will see depending on your alliance color and orientation.
      */
-    private fun setMapImage() {
+    private fun setMapImage() = iv_starting_position_map.setImageResource(
         when {
-            (orientation && alliance_color == Constants.AllianceColor.BLUE) ->
-                iv_starting_position_map.setImageResource(R.drawable.blue_map_1)
-
-            (!orientation && alliance_color == Constants.AllianceColor.BLUE) ->
-                iv_starting_position_map.setImageResource(R.drawable.blue_map_2)
-
-            (orientation && alliance_color == Constants.AllianceColor.RED) ->
-                iv_starting_position_map.setImageResource(R.drawable.red_map_1)
-
-            (!orientation && alliance_color == Constants.AllianceColor.RED) ->
-                iv_starting_position_map.setImageResource(R.drawable.red_map_2)
+            (orientation && alliance_color == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_1
+            (!orientation && alliance_color == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_2
+            (orientation && alliance_color == Constants.AllianceColor.RED) -> R.drawable.red_map_1
+            (!orientation && alliance_color == Constants.AllianceColor.RED) -> R.drawable.red_map_2
+            else -> error("Error setting map image")
         }
-    }
+    )
 
     /**
      * Sets the colors of the buttons depending on the alliance color.
@@ -101,8 +95,8 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         // Moves onto the next screen if you have inputted all the information
         btn_proceed_starting_position.setOnClickListener { view ->
             if (starting_position != Constants.StartingPosition.NONE) {
-                // If you did not select a starting position the team is assumed to be a no show.
-                // This will allow you to skip the information collection screen
+                // If you did not select a starting position, the team is assumed to be a no-show.
+                // This will allow you to skip the collection activity.
                 if (starting_position == Constants.StartingPosition.ZERO) {
                     intent = Intent(this, MatchInformationEditActivity::class.java)
                 } else {
@@ -112,18 +106,11 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     }
                 }
                 startActivity(
-                    intent,
-                    ActivityOptions.makeSceneTransitionAnimation(
-                        this,
-                        btn_proceed_starting_position, "proceed_button"
+                    intent, ActivityOptions.makeSceneTransitionAnimation(
+                        this, btn_proceed_starting_position, "proceed_button"
                     ).toBundle()
                 )
-            } else {
-                createErrorMessage(
-                    message = getString(R.string.error_missing_information),
-                    view = view
-                )
-            }
+            } else createErrorMessage(getString(R.string.error_missing_information), view)
         }
     }
 
@@ -131,11 +118,13 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      * Initializes the spinner for selecting the preloaded game object.
      */
     private fun initSpinner() {
+        // Set the adapter for the spinner
         spinner_preloaded.adapter = object : ArrayAdapter<String>(
             this, R.layout.spinner_preloaded, Constants.Preloaded.values().map { it.name }
         ) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup) =
                 super.getDropDownView(position, convertView, parent).apply {
+                    // Set the background color of the spinner item depending on its value
                     setBackgroundColor(
                         resources.getColor(
                             when ((this as TextView).text) {
@@ -151,7 +140,9 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             override fun onItemSelected(
                 parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
+                // Update the preloaded item when a spinner item is selected
                 preloaded = Constants.Preloaded.values()[position]
+                // Set the background color of the spinner based on its value
                 spinner_preloaded.setBackgroundColor(
                     when (preloaded) {
                         Constants.Preloaded.NONE -> resources.getColor(R.color.light_gray, null)
@@ -166,22 +157,18 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
     }
 
     /**
-     * Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.
-     */
-    private fun intentToPreviousActivity() = startActivity(
-        Intent(this, MatchInformationInputActivity::class.java),
-        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-    )
-
-    /**
-     * Restart app from MatchInformationInputActivity.kt when back button is long pressed.
+     * Show dialog to restart from [MatchInformationInputActivity] when back button is long pressed.
      */
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK) {
-            AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
-                .setPositiveButton("Yes") { _, _ -> intentToPreviousActivity() }
-                .show()
-        }
+        if (keyCode == KeyEvent.KEYCODE_BACK) AlertDialog.Builder(this)
+            .setMessage(R.string.error_back_reset)
+            .setPositiveButton("Yes") { _, _ ->
+                startActivity(
+                    Intent(this, MatchInformationInputActivity::class.java),
+                    ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+                )
+            }
+            .show()
         return super.onKeyLongPress(keyCode, event)
     }
 
@@ -189,6 +176,8 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.starting_position_activity)
 
+        // Initialize the team number text
+        tv_pos_team_number.text = team_number
         tv_pos_team_number.setTextColor(
             resources.getColor(
                 if (alliance_color == Constants.AllianceColor.RED) R.color.alliance_red_light
@@ -196,8 +185,6 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                 null
             )
         )
-
-        tv_pos_team_number.text = team_number
 
         resetCollectionReferences()
 
