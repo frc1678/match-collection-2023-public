@@ -3,6 +3,7 @@ package com.frc1678.match_collection
 import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -16,13 +17,13 @@ class StartingGamePieceActivity : CollectionActivity() {
     private fun setMapPicture() {
         when {
             (orientation && alliance_color == Constants.AllianceColor.BLUE) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_up_game_pieces)
+                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_up_start)
             (!orientation && alliance_color == Constants.AllianceColor.BLUE) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_game_pieces)
+                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_start)
             (orientation && alliance_color == Constants.AllianceColor.RED) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.red_up_game_pieces)
+                iv_starting_game_pieces_map.setImageResource(R.drawable.red_up_start)
             (!orientation && alliance_color == Constants.AllianceColor.RED) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.red_down_game_pieces)
+                iv_starting_game_pieces_map.setImageResource(R.drawable.red_down_start)
         }
     }
 
@@ -97,17 +98,31 @@ class StartingGamePieceActivity : CollectionActivity() {
             if (CollectionObjectiveActivity.comingBack == "collection subjective activity") {
                 CollectionObjectiveActivity.comingBack = "Starting position game piece activity"
             }
-            startActivity(
-                Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent),
-                ActivityOptions.makeSceneTransitionAnimation(
-                    this,
-                    btn_proceed_game_piece, "proceed_button"
-                ).toBundle()
-            )
+            if((game_piece_one == Constants.GamePieceOne.NONE) or (game_piece_two == Constants.GamePieceTwo.NONE) or
+                (game_piece_three == Constants.GamePieceThree.NONE) or (game_piece_four == Constants.GamePieceFour.NONE)){
+                AlertDialog.Builder(this).setTitle("Warning! You have not selected for all game pieces!")
+                    .setNegativeButton("Cancel") { dialog, _ ->
+                        dialog.cancel()
+                    }.setPositiveButton("Proceed") { _: DialogInterface, _: Int ->
+                        goToNextActivity()
+                    }.show()
+            } else {
+                // Add alliance teams to the intent to be used in MatchInformationEditActivity.kt.
+                goToNextActivity()
+            }
         }
     }
 
-    @SuppressLint("ResourceAsColor")
+    private fun goToNextActivity() {
+        startActivity(
+            Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent),
+            ActivityOptions.makeSceneTransitionAnimation(
+                this,
+                btn_proceed_game_piece, "proceed_button"
+            ).toBundle()
+        )
+    }
+
     private fun setBackgrounds() {
         when (game_piece_one) {
             Constants.GamePieceOne.NONE -> {
