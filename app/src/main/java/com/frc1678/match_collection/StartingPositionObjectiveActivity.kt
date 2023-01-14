@@ -7,8 +7,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import kotlinx.android.synthetic.main.starting_position_activity.btn_four
 import kotlinx.android.synthetic.main.starting_position_activity.btn_one
@@ -129,9 +131,22 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      * Initializes the spinner for selecting the preloaded game object.
      */
     private fun initSpinner() {
-        spinner_preloaded.adapter = ArrayAdapter(
+        spinner_preloaded.adapter = object : ArrayAdapter<String>(
             this, R.layout.spinner_preloaded, Constants.Preloaded.values().map { it.name }
-        )
+        ) {
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup) =
+                super.getDropDownView(position, convertView, parent).apply {
+                    setBackgroundColor(
+                        resources.getColor(
+                            when ((this as TextView).text) {
+                                Constants.Preloaded.CONE.toString() -> R.color.cone_yellow
+                                Constants.Preloaded.CUBE.toString() -> R.color.cube_purple
+                                else -> R.color.light_gray
+                            }, null
+                        )
+                    )
+                }
+        }
         spinner_preloaded.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?, view: View?, position: Int, id: Long
