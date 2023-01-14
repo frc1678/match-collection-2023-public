@@ -3,7 +3,6 @@ package com.frc1678.match_collection
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
@@ -63,12 +62,13 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         }
 
         // Changes the color of the button if that starting position is selected
+        val selectedColor = resources.getColor(R.color.selected_start, null)
         when (starting_position) {
-            Constants.StartingPosition.ZERO -> btn_zero.setBackgroundColor(Color.YELLOW)
-            Constants.StartingPosition.ONE -> btn_one.setBackgroundColor(Color.YELLOW)
-            Constants.StartingPosition.TWO -> btn_two.setBackgroundColor(Color.YELLOW)
-            Constants.StartingPosition.THREE -> btn_three.setBackgroundColor(Color.YELLOW)
-            Constants.StartingPosition.FOUR -> btn_four.setBackgroundColor(Color.YELLOW)
+            Constants.StartingPosition.ZERO -> btn_zero.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.ONE -> btn_one.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.TWO -> btn_two.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.THREE -> btn_three.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.FOUR -> btn_four.setBackgroundColor(selectedColor)
             else -> {}
         }
     }

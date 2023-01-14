@@ -50,6 +50,7 @@
     <color name="redo_green">#7CCC77</color>
     <color name="redo_green_pressed">#4CB944</color>
 
+    <color name="selected_start">#FFEB3B</color>
     <color name="red_start_one">#FFCCCB</color>
     <color name="red_start_two">#FFA4A2</color>
     <color name="red_start_three">#FF867C</color>
