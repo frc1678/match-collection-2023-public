@@ -86,6 +86,12 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
             setBackgrounds()
         }
+
+        btn_switch_orientation_game_pieces.setOnClickListener{
+            orientation = !orientation
+            setMapPicture()
+        }
+
         // Moves onto the next screen if you have inputted all the information
         btn_proceed_game_piece.setOnClickListener { view ->
             if (CollectionObjectiveActivity.comingBack == "collection subjective activity") {

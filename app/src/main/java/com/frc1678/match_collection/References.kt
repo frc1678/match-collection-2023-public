@@ -92,5 +92,9 @@ data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
+    game_piece_one = Constants.GamePieceOne.NONE
+    game_piece_two = Constants.GamePieceTwo.NONE
+    game_piece_three = Constants.GamePieceThree.NONE
+    game_piece_four = Constants.GamePieceFour.NONE
     team_number = ""
 }
