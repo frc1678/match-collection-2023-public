@@ -130,13 +130,20 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      */
     private fun initSpinner() {
         spinner_preloaded.adapter = ArrayAdapter(
-            this, R.layout.spinner_text_view, Constants.Preloaded.values().map { it.name }
+            this, R.layout.spinner_preloaded, Constants.Preloaded.values().map { it.name }
         )
         spinner_preloaded.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?, view: View?, position: Int, id: Long
             ) {
                 preloaded = Constants.Preloaded.values()[position]
+                spinner_preloaded.setBackgroundColor(
+                    when (preloaded) {
+                        Constants.Preloaded.NONE -> resources.getColor(R.color.light_gray, null)
+                        Constants.Preloaded.CONE -> resources.getColor(R.color.cone_yellow, null)
+                        Constants.Preloaded.CUBE -> resources.getColor(R.color.cube_purple, null)
+                    }
+                )
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}

@@ -16,6 +16,11 @@
     <color name="alliance_red_dark">#8b0000</color>
     <color name="alliance_blue_dark">#00008b</color>
 
+    <color name="cone_yellow">#FFFF00</color>
+    <color name="cone_yellow_pressed">#FFF09D</color>
+    <color name="cube_purple">#8F00FF</color>
+    <color name="cube_purple_pressed">#D88EFF</color>
+
     <color name="blue_error_popup_borders">#0F5EAE</color>
 
     <color name="action_yellow">#FFF4B8</color>

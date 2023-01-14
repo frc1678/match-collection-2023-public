@@ -52,15 +52,14 @@
             style="@style/tv_standard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center|end"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="@string/preloaded"
-            android:textAlignment="viewEnd" />
+            android:text="@string/preloaded" />
 
         <Spinner
             android:id="@+id/spinner_preloaded"
             style="@style/tv_standard_spinner"
-            android:background="@drawable/popup_background"
+            android:background="@color/light_gray"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
