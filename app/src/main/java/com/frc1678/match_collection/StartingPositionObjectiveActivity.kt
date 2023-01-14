@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
 import kotlinx.android.synthetic.main.starting_position_activity.*
@@ -96,7 +97,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                 if (starting_position == Constants.StartingPosition.ZERO) {
                     intent = Intent(this, MatchInformationEditActivity::class.java)
                 } else {
+                    Log.e("bobbo", "gets into else statement")
                     intent = Intent(this, CollectionObjectiveActivity::class.java)
+                    Log.e("bobbo", "gets past intent")
+
                     if(comingBack == "collection objective activity"){
                         comingBack = "Starting position activity"
                     }

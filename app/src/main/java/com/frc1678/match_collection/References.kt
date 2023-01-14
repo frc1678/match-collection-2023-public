@@ -4,8 +4,8 @@ package com.frc1678.match_collection
 import android.os.CountDownTimer
 
 // File to store information to be used to create the final match information map.
-var numActionOne = 0 //SHELF_INTAKE
-var numActionTwo = 0 //NODE_INTAKE
+var numActionOne = 0 //STATION_INTAKE
+var numActionTwo = 0 //LOW_ROW_INTAKE
 var numActionThree = 0 //GROUND_INTAKE
 var numActionFour = 0 //SCORE_CUBE_HIGH
 var numActionFive = 0 //SCORE_CUBE_MID
@@ -56,7 +56,9 @@ fun resetCollectionReferences() {
     numActionFive = 0
     numActionSix = 0
     numActionSeven = 0
-
+    numActionEight = 0
+    numActionNine = 0
+    numActionTen = 0
 
     is_teleop_activated = false
     did_charge = false

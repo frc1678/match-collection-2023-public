@@ -14,23 +14,17 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import kotlinx.android.synthetic.main.charge_popup.view.*
-import kotlinx.android.synthetic.main.collection_objective_activity.*
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_charge
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_proceed_edit
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_redo
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_timer
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_undo
-import kotlinx.android.synthetic.main.collection_objective_activity.objective_match_collection_layout
-import kotlinx.android.synthetic.main.collection_objective_activity.tb_action_one
-import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_number
+import kotlinx.android.synthetic.main.collection_objective_intake_activity.*
 import kotlinx.android.synthetic.main.collection_objective_scoring_activity.*
+import kotlinx.android.synthetic.main.collection_subjective_activity.*
 import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
 class CollectionObjectiveActivity : CollectionActivity() {
-    private var btnActionList = listOf<Button>(btn_action_one, btn_action_two, btn_action_three,
+    /*private var btnActionList = listOf<Button?>(btn_action_one, btn_action_two, btn_action_three,
         btn_action_four, btn_action_five, btn_action_six, btn_action_seven, btn_action_eight,
-        btn_action_nine,btn_action_ten)
+        btn_action_nine, btn_action_ten)*/
+
     private var isTimerRunning = false
 
     //FALSE = LOW
@@ -45,7 +39,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
         match_timer = null
         timeline.clear()
         removedTimelineActions.clear()
-        btn_timer.text = getString(R.string.btn_timer_start)
+        btn_timer_intake.text = getString(R.string.btn_timer_start)
+        btn_timer_scoring.text = getString(R.string.btn_timer_start)
     }
 
     // Add performed action to timeline, including action type and time of action.
@@ -87,11 +82,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
         var removeOneMore = false
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
-            Constants.ActionType.SHELF_INTAKE.toString() -> {
+            Constants.ActionType.STATION_INTAKE.toString() -> {
                 numActionOne--
                 setCounterTexts()
             }
-            Constants.ActionType.NODE_INTAKE.toString() -> {
+            Constants.ActionType.LOW_ROW_INTAKE.toString() -> {
                 numActionTwo--
                 setCounterTexts()
             }
@@ -131,10 +126,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 did_charge = false
             }
             Constants.ActionType.START_INCAP.toString() -> {
-                tb_action_one.isChecked = false
+                tb_action_one_intake.isChecked = false
+                tb_action_one_scoring.isChecked = false
             }
             Constants.ActionType.END_INCAP.toString() -> {
-                tb_action_one.isChecked = true
+                tb_action_one_intake.isChecked = true
+                tb_action_one_scoring.isChecked = true
             }
         }
 
@@ -156,11 +153,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
-            Constants.ActionType.SHELF_INTAKE.toString() -> {
+            Constants.ActionType.STATION_INTAKE.toString() -> {
                 numActionOne++
                 setCounterTexts()
             }
-            Constants.ActionType.NODE_INTAKE.toString() -> {
+            Constants.ActionType.LOW_ROW_INTAKE.toString() -> {
                 numActionTwo++
                 setCounterTexts()
             }
@@ -200,10 +197,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 did_charge = true
             }
             Constants.ActionType.START_INCAP.toString() -> {
-                tb_action_one.isChecked = true
+                tb_action_one_scoring.isChecked = true
+                tb_action_one_intake.isChecked = true
             }
             Constants.ActionType.END_INCAP.toString() -> {
-                tb_action_one.isChecked = false
+                tb_action_one_scoring.isChecked = false
+                tb_action_one_intake.isChecked = false
             }
         }
 
@@ -215,8 +214,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // Enable and disable buttons based on actions in timeline and timer stage.
     fun enableButtons() {
-        val isIncap = tb_action_one.isChecked
+        val isIncap = tb_action_one_intake.isChecked || tb_action_one_scoring.isChecked
         // Enable and disable buttons based on values of condition booleans defined previously.
+        /*for (btn in btnActionList) {
+            btn?.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
+        }*/
         btn_action_one.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
         btn_action_two.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
         btn_action_three.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
@@ -228,24 +230,41 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_action_nine.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
         btn_action_ten.isEnabled = (comingBack == "match information edit") or (comingBack == "QRGenerate") or !(!isTimerRunning or popup_open or isIncap)
 
-        tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
+        tb_action_one_scoring.isEnabled = !(!is_teleop_activated or popup_open)
+        tb_action_one_intake.isEnabled = !(!is_teleop_activated or popup_open)
 
-        btn_charge.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_charge)
-        btn_charge.text =
+        btn_charge_intake.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_charge)
+        btn_charge_scoring.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_charge)
+
+        btn_charge_intake.text =
             if (did_charge) getString(R.string.btn_charged)
             else getString(R.string.btn_charge)
-        btn_undo.isEnabled = (timeline.size > 0) and !popup_open
-        btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
+        btn_undo_intake.isEnabled = (timeline.size > 0) and !popup_open
+        btn_redo_intake.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
-        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
+        btn_charge_scoring.text =
+            if (did_charge) getString(R.string.btn_charged)
+            else getString(R.string.btn_charge)
+        btn_undo_scoring.isEnabled = (timeline.size > 0) and !popup_open
+        btn_redo_scoring.isEnabled = (removedTimelineActions.size > 0) and !popup_open
+
+        btn_timer_intake.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
+        btn_proceed_edit.isEnabled =
+            ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
+
+        btn_timer_scoring.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
         btn_proceed_edit.isEnabled =
             ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
     }
 
     // Function to end incap if still activated at end of the match.
     fun endAction() {
-        if (tb_action_one.isChecked) {
-            tb_action_one.isChecked = false
+        if (tb_action_one_intake.isChecked) {
+            tb_action_one_intake.isChecked = false
+            timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
+        }
+        if (tb_action_one_scoring.isChecked) {
+            tb_action_one_scoring.isChecked = false
             timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
         }
     }
@@ -272,8 +291,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 enableButtons()
                 btn_proceed_edit.text = getString(R.string.btn_proceed)
                 btn_proceed_edit.isEnabled = false
-                btn_timer.isEnabled = false
-                objective_match_collection_layout.setBackgroundColor(Color.WHITE)
+                btn_timer_intake.isEnabled = false
+                btn_timer_scoring.isEnabled = false
+                objective_match_collection_layout_intake.setBackgroundColor(Color.WHITE)
+                objective_match_collection_layout_scoring.setBackgroundColor(Color.WHITE)
+
             } else {
                 endAction()
                 val intent = Intent(this, MatchInformationEditActivity::class.java)
@@ -286,16 +308,32 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         }
 
+
         // Start timer on normal click if timer is not running.
-        btn_timer.setOnClickListener {
+        btn_timer_intake.setOnClickListener {
             if (!isTimerRunning) {
                 TimerUtility.MatchTimerThread()
                     .initTimer(
                         context = this,
-                        btn_timer = btn_timer,
+                        btn_timer = btn_timer_intake,
                         btn_proceed = btn_proceed_edit,
-                        btn_incap = tb_action_one,
-                        layout = objective_match_collection_layout
+                        btn_incap = tb_action_one_intake,
+                        layout = objective_match_collection_layout_intake
+                    )
+                isTimerRunning = true
+                enableButtons()
+                btn_proceed_edit.isEnabled = true
+            }
+        }
+        btn_timer_scoring.setOnClickListener {
+            if (!isTimerRunning) {
+                TimerUtility.MatchTimerThread()
+                    .initTimer(
+                        context = this,
+                        btn_timer = btn_timer_scoring,
+                        btn_proceed = btn_proceed_edit,
+                        btn_incap = tb_action_one_scoring,
+                        layout = objective_match_collection_layout_scoring
                     )
                 isTimerRunning = true
                 enableButtons()
@@ -304,7 +342,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Reset timer on long click if timer is running.
-        btn_timer.setOnLongClickListener(View.OnLongClickListener {
+        btn_timer_intake.setOnLongClickListener(View.OnLongClickListener {
             if (isTimerRunning and !is_teleop_activated) {
                 timerReset()
                 timeline = ArrayList()
@@ -313,7 +351,21 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 enableButtons()
                 btn_proceed_edit.isEnabled = false
                 btn_proceed_edit.text = getString(R.string.btn_to_teleop)
-                objective_match_collection_layout.setBackgroundColor(Color.WHITE)
+                objective_match_collection_layout_intake.setBackgroundColor(Color.WHITE)
+            }
+            return@OnLongClickListener true
+        })
+
+        btn_timer_scoring.setOnLongClickListener(View.OnLongClickListener {
+            if (isTimerRunning and !is_teleop_activated) {
+                timerReset()
+                timeline = ArrayList()
+                isTimerRunning = false
+                is_teleop_activated = false
+                enableButtons()
+                btn_proceed_edit.isEnabled = false
+                btn_proceed_edit.text = getString(R.string.btn_to_teleop)
+                objective_match_collection_layout_scoring.setBackgroundColor(Color.WHITE)
             }
             return@OnLongClickListener true
         })
@@ -321,7 +373,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Increment button action one by one when clicked and add action to timeline.
         btn_action_one.setOnClickListener {
             // FALSE = LOW
-            timelineAddWithStage(action_type = Constants.ActionType.SHELF_INTAKE)
+            timelineAddWithStage(action_type = Constants.ActionType.STATION_INTAKE)
             numActionOne++
             setCounterTexts()
         }
@@ -329,7 +381,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Increment button action two by one when clicked and add action to timeline.
         btn_action_two.setOnClickListener {
             // FALSE = LOW
-            timelineAddWithStage(action_type = Constants.ActionType.NODE_INTAKE)
+            timelineAddWithStage(action_type = Constants.ActionType.LOW_ROW_INTAKE)
             numActionTwo++
             setCounterTexts()
         }
@@ -341,49 +393,49 @@ class CollectionObjectiveActivity : CollectionActivity() {
             setCounterTexts()
         }
 
-        btn_action_one.setOnClickListener {
+        btn_action_four.setOnClickListener {
             // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_HIGH)
             numActionFour++
             setCounterTexts()
         }
 
-        btn_action_one.setOnClickListener {
+        btn_action_five.setOnClickListener {
             // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
             numActionFive++
             setCounterTexts()
         }
 
-        btn_action_one.setOnClickListener {
+        btn_action_six.setOnClickListener {
             // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
             numActionSix++
             setCounterTexts()
         }
 
-        btn_action_one.setOnClickListener {
+        btn_action_seven.setOnClickListener {
             // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
             numActionSeven++
             setCounterTexts()
         }
 
-        btn_action_one.setOnClickListener {
+        btn_action_eight.setOnClickListener {
             // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
             numActionEight++
             setCounterTexts()
         }
 
-        btn_action_one.setOnClickListener {
+        btn_action_nine.setOnClickListener {
             // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
             numActionNine++
             setCounterTexts()
         }
 
-        btn_action_one.setOnClickListener {
+        btn_action_ten.setOnClickListener {
             // FALSE = LOW
             timelineAddWithStage(action_type = Constants.ActionType.FAIL)
             numActionTen++
@@ -391,8 +443,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
-        tb_action_one.setOnClickListener {
-            if (tb_action_one.isChecked) {
+        tb_action_one_intake.setOnClickListener {
+            if (tb_action_one_intake.isChecked) {
+                timelineAdd(match_time = match_time, action_type = Constants.ActionType.START_INCAP)
+            } else {
+                timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
+            }
+        }
+
+        tb_action_one_scoring.setOnClickListener {
+            if (tb_action_one_scoring.isChecked) {
                 timelineAdd(match_time = match_time, action_type = Constants.ActionType.START_INCAP)
             } else {
                 timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
@@ -400,7 +460,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Open the Charge popup window.
-        btn_charge.setOnClickListener {
+        btn_charge_intake.setOnClickListener {
             val popupView = View.inflate(this, R.layout.charge_popup, null)
             val width = LinearLayout.LayoutParams.WRAP_CONTENT
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -408,82 +468,108 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
             enableButtons()
+        }
 
-            // OnClickListeners for the buttons in the climb popup
-            popupView.btn_charge_cancel.setOnClickListener {
-                did_charge = false
+            btn_charge_scoring.setOnClickListener {
+                val popupView = View.inflate(this, R.layout.charge_popup, null)
+                val width = LinearLayout.LayoutParams.WRAP_CONTENT
+                val height = LinearLayout.LayoutParams.WRAP_CONTENT
+                val popupWindow = PopupWindow(popupView, width, height, false)
+                popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+                popup_open = true
+                enableButtons()
+
+                // OnClickListeners for the buttons in the climb popup
+                popupView.btn_charge_cancel.setOnClickListener {
+                    did_charge = false
+                    charge_level = Constants.ChargeLevel.NONE
+                    popupWindow.dismiss()
+                    popup_open = false
+                    enableButtons()
+                }
+
+                popupView.btn_climb_done.setOnClickListener {
+                    popupWindow.dismiss()
+                    btn_charge_intake.isEnabled = false
+                    btn_charge_scoring.isEnabled = false
+                    popup_open = false
+                    timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
+                    enableButtons()
+                }
+
+                popupView.btn_failed.isActivated = false
                 charge_level = Constants.ChargeLevel.NONE
-                popupWindow.dismiss()
-                popup_open = false
-                enableButtons()
-            }
-            popupView.btn_climb_done.setOnClickListener {
-                popupWindow.dismiss()
-                btn_charge.isEnabled = false
-                popup_open = false
-                timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
-                enableButtons()
+
+                popupView.btn_failed.setOnClickListener {
+                    popupView.btn_failed.isActivated = true
+                    popupView.btn_parked.isActivated = false
+                    popupView.btn_docked.isActivated = false
+                    popupView.btn_engaged.isActivated = false
+                    charge_level = Constants.ChargeLevel.FAILED
+                    did_charge = true
+                    popupView.btn_climb_done.isEnabled = did_charge
+                }
+                popupView.btn_parked.setOnClickListener {
+                    popupView.btn_failed.isActivated = false
+                    popupView.btn_parked.isActivated = true
+                    popupView.btn_docked.isActivated = false
+                    popupView.btn_engaged.isActivated = false
+                    charge_level = Constants.ChargeLevel.PARKED
+                    did_charge = true
+                    popupView.btn_climb_done.isEnabled = did_charge
+                }
+                popupView.btn_docked.setOnClickListener {
+                    popupView.btn_failed.isActivated = false
+                    popupView.btn_parked.isActivated = false
+                    popupView.btn_docked.isActivated = true
+                    popupView.btn_engaged.isActivated = false
+                    charge_level = Constants.ChargeLevel.DOCKED
+                    did_charge = true
+                    popupView.btn_climb_done.isEnabled = did_charge
+                }
+                popupView.btn_engaged.setOnClickListener {
+                    popupView.btn_failed.isActivated = false
+                    popupView.btn_parked.isActivated = false
+                    popupView.btn_docked.isActivated = false
+                    popupView.btn_engaged.isActivated = true
+                    charge_level = Constants.ChargeLevel.ENGAGED
+                    did_charge = true
+                    popupView.btn_climb_done.isEnabled = did_charge
+                }
             }
 
-            popupView.btn_failed.isActivated = false
-            charge_level = Constants.ChargeLevel.NONE
+            // Remove previous action from timeline when undo button is clicked.
+            btn_undo_intake.setOnClickListener {
+                timelineRemove()
+            }
 
-            popupView.btn_failed.setOnClickListener {
-                popupView.btn_failed.isActivated = true
-                popupView.btn_parked.isActivated = false
-                popupView.btn_docked.isActivated = false
-                popupView.btn_engaged.isActivated = false
-                charge_level = Constants.ChargeLevel.FAILED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
+            btn_undo_scoring.setOnClickListener {
+                timelineRemove()
             }
-            popupView.btn_parked.setOnClickListener {
-                popupView.btn_failed.isActivated = false
-                popupView.btn_parked.isActivated = true
-                popupView.btn_docked.isActivated = false
-                popupView.btn_engaged.isActivated = false
-                charge_level = Constants.ChargeLevel.PARKED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
-            }
-            popupView.btn_docked.setOnClickListener {
-                popupView.btn_failed.isActivated = false
-                popupView.btn_parked.isActivated = false
-                popupView.btn_docked.isActivated = true
-                popupView.btn_engaged.isActivated = false
-                charge_level = Constants.ChargeLevel.DOCKED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
-            }
-            popupView.btn_engaged.setOnClickListener {
-                popupView.btn_failed.isActivated = false
-                popupView.btn_parked.isActivated = false
-                popupView.btn_docked.isActivated = false
-                popupView.btn_engaged.isActivated = true
-                charge_level = Constants.ChargeLevel.ENGAGED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
-            }
-        }
-
-        // Remove previous action from timeline when undo button is clicked.
-        btn_undo.setOnClickListener {
-            timelineRemove()
-        }
 
         // Replace previously undone action to timeline when redo button is clicked.
-        btn_redo.setOnClickListener {
+        btn_redo_intake.setOnClickListener {
             timelineReplace()
+        }
+
+        btn_redo_scoring.setOnClickListener {
+                    timelineReplace()
         }
     }
 
     // Set team number view to team number defined in References.kt and set team number to alliance color.
     private fun initTeamNum() {
-        tv_team_number.text = team_number
+        tv_team_number_intake.text = team_number
+        tv_team_number_scoring.text = team_number
+
         if (alliance_color == Constants.AllianceColor.RED) {
-            tv_team_number.setTextColor(resources.getColor(R.color.alliance_red_light, null))
+            tv_team_number_intake.setTextColor(resources.getColor(R.color.alliance_red_light, null))
+            tv_team_number_scoring.setTextColor(resources.getColor(R.color.alliance_red_light, null))
+
         } else if (alliance_color == Constants.AllianceColor.BLUE) {
-            tv_team_number.setTextColor(resources.getColor(R.color.alliance_blue_light, null))
+            tv_team_number_intake.setTextColor(resources.getColor(R.color.alliance_blue_light, null))
+            tv_team_number_scoring.setTextColor(resources.getColor(R.color.alliance_blue_light, null))
+
         }
     }
 
@@ -503,8 +589,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Log.d("coming-back", "came back")
             btn_proceed_edit.text = getString(R.string.btn_proceed)
             btn_proceed_edit.isEnabled = true
-            btn_timer.isEnabled = false
-            btn_timer.text = getString(R.string.timer_run_down)
+            btn_timer_intake.isEnabled = false
+            btn_timer_scoring.isEnabled = false
+            btn_timer_intake.text = getString(R.string.timer_run_down)
+            btn_timer_scoring.text = getString(R.string.timer_run_down)
             enableButtons()
         }
     }
@@ -522,7 +610,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.collection_objective_activity)
+        Log.e("bobbo", "gets into onCreate")
+        setContentView(R.layout.collection_objective_intake_activity)
 
         comingBack()
         if ((comingBack != "match information edit") and (comingBack != "QRGenerate")) {

@@ -20,14 +20,6 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_undo_scoring"
-                style="@style/btn_action"
-                android:text="@string/btn_undo"
-                android:layout_weight="0.5"
-                android:background="@drawable/btn_undo_selector"
-                />
-
-            <Button
                 android:id="@+id/btn_action_four"
                 style="@style/btn_action"
                 android:text="@string/btn_action_four"
@@ -58,15 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btn_redo_scoring"
-                style="@style/btn_action"
-                android:text="@string/btn_redo"
-                android:layout_weight="0.5"
-                android:background="@drawable/btn_redo_selector"
-                />
+            android:orientation="vertical">[
 
             <Button
                 android:id="@+id/btn_action_seven"
@@ -100,58 +84,5 @@
         android:layout_weight="0.5"
         android:background="@drawable/btn_action_selector_failed"
         />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <ToggleButton
-            android:id="@+id/tb_action_one_scoring"
-            style="@style/btn_action_hor"
-            android:textOff="@string/tb_action_bool_one_off"
-            android:textOn="@string/tb_action_bool_one_on"
-            android:layout_weight="1"
-            android:background="@drawable/tb_incap_selector"/>
-
-        <Button
-            android:id="@+id/btn_charge_scoring"
-            style="@style/btn_action_hor"
-            android:layout_weight="1"
-            android:text="@string/btn_charge"
-            android:background="@drawable/tb_charge_selector"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_timer_scoring"
-            android:background="@drawable/btn_proceed"
-            style="@style/btn_proceed"
-            android:enabled="true"
-            android:text="@string/btn_timer_start" />
-
-        <TextView
-            android:id="@+id/tv_team_number_scoring"
-            style="@style/tv_standard"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="@dimen/small_text" />
-
-        <Button
-            android:id="@+id/btn_proceed_edit_scoring"
-            style="@style/btn_proceed"
-            android:enabled="false"
-            android:text="@string/btn_to_teleop"
-            android:background="@drawable/btn_proceed_selector"/>
-
-    </LinearLayout>
 
 </LinearLayout>

@@ -89,7 +89,7 @@ fun compress(
                     compressScoutId + scout_id + objectiveSeparator +
                     compressStartingPosition + starting_position.toString() + objectiveSeparator +
                     compressTimeline + compressTimelineActions + objectiveSeparator +
-                    compressEndgame + climb_level
+                    compressEndgame + charge_level
     }
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {

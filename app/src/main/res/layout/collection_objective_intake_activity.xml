@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/objective_match_collection_layout_intake"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:keepScreenOn="true"
+    android:orientation="vertical"
+    android:padding="@dimen/very_small">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_undo_intake"
+                style="@style/btn_action"
+                android:text="@string/btn_undo"
+                android:layout_weight="0.4"
+                android:background="@drawable/btn_undo_selector"
+                />
+
+            <Button
+                android:id="@+id/btn_action_one"
+                style="@style/btn_action"
+                android:layout_weight="1.3"
+                android:text="@string/btn_action_one"
+                android:background="@drawable/btn_action_selector_station"/>
+
+            <Button
+                android:id="@+id/btn_action_two"
+                style="@style/btn_action"
+                android:text="@string/btn_action_two"
+                android:layout_weight="0.7"
+                android:background="@drawable/btn_action_selector_low_row"
+                />
+
+            <ToggleButton
+                android:id="@+id/tb_action_one_intake"
+                style="@style/btn_action"
+                android:textOff="@string/tb_action_bool_one_off"
+                android:textOn="@string/tb_action_bool_one_on"
+                android:layout_weight="0.7"
+                android:background="@drawable/tb_incap_selector"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_redo_intake"
+                style="@style/btn_action"
+                android:text="@string/btn_redo"
+                android:layout_weight="0.4"
+                android:background="@drawable/btn_redo_selector"
+                />
+
+
+            <Button
+                android:id="@+id/btn_action_three"
+                style="@style/btn_action"
+                android:layout_weight="2"
+                android:text="@string/btn_action_three"
+                android:background="@drawable/btn_action_selector_ground"/>
+
+            <Button
+                android:id="@+id/btn_charge_intake"
+                style="@style/btn_action"
+                android:layout_weight="0.7"
+                android:text="@string/btn_charge"
+                android:background="@drawable/tb_charge_selector"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_timer_intake"
+            style="@style/btn_proceed"
+            android:enabled="true"
+            android:text="@string/btn_timer_start"
+            android:background="@drawable/btn_proceed_selector"/>
+
+        <TextView
+            android:id="@+id/tv_team_number_intake"
+            style="@style/tv_standard"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textSize="@dimen/small_text" />
+
+        <Button
+            android:id="@+id/btn_proceed_edit_intake"
+            style="@style/btn_proceed"
+            android:enabled="false"
+            android:text="@string/btn_to_teleop"
+            android:background="@drawable/btn_proceed_selector"/>
+
+    </LinearLayout>
+
+</LinearLayout>
