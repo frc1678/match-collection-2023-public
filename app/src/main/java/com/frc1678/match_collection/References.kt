@@ -2,7 +2,6 @@
 package com.frc1678.match_collection
 
 import android.os.CountDownTimer
-import android.util.Log
 
 // File to store information to be used to create the final match information map.
 var numActionOne = 0 //SCORE_BALL_LOW
