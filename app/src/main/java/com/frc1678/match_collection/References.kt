@@ -4,9 +4,9 @@ package com.frc1678.match_collection
 import android.os.CountDownTimer
 
 // File to store information to be used to create the final match information map.
-var numActionOne = 0 //STATION_INTAKE
-var numActionTwo = 0 //LOW_ROW_INTAKE
-var numActionThree = 0 //GROUND_INTAKE
+var numActionOne = 0 //INTAKE_STATION
+var numActionTwo = 0 //INTAKE_LOW_ROW
+var numActionThree = 0 //INTAKE_GROUND
 var numActionFour = 0 //SCORE_CUBE_HIGH
 var numActionFive = 0 //SCORE_CUBE_MID
 var numActionSix = 0 //SCORE_CUBE_LOW

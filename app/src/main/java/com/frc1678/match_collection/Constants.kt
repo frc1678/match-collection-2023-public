@@ -52,9 +52,9 @@ class Constants {
         SCORE_CONE_MID,
         SCORE_CONE_LOW,
         FAIL,
-        STATION_INTAKE,
-        LOW_ROW_INTAKE,
-        GROUND_INTAKE,
+        INTAKE_STATION,
+        INTAKE_LOW_ROW,
+        INTAKE_GROUND,
         START_INCAP,
         END_INCAP,
         CHARGE_ATTEMPT

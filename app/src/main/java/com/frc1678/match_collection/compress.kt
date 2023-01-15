@@ -2,7 +2,7 @@
 package com.frc1678.match_collection
 
 import android.util.Log
-import java.util.*
+import java.util.Locale
 
 // Function to create compressed string displayed in QR.
 // String takes collected data stored in References.kt compressed by Match Collection schema.
@@ -55,7 +55,8 @@ fun compress(
     val compressAwareScore =
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
-    val compressIntakeConeOrientation = subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
+    val compressIntakeConeOrientation =
+        subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -72,7 +73,7 @@ fun compress(
         // Compress timeline actions if timeline exists.
         var compressTimelineActions = ""
         if (timeline.isNotEmpty()) {
-            for (actions in timeline) {
+            for (actions in timeline.filterNot { it["action_type"] == Constants.ActionType.FAIL.toString() }) {
                 // Compress and add timeline action attributes present for all actions.
                 compressTimelineActions = compressTimelineActions +
                         actions.getValue("match_time") + actionTypeData.getValue(

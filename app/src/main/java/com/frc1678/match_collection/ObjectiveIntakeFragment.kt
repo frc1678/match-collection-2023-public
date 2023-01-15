@@ -39,7 +39,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.setOnClickListener {
                 // FALSE = LOW
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.STATION_INTAKE)
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_STATION)
                 numActionOne++
                 collectionObjectiveActivity.scoringScreen = true
                 setCounterTexts()
@@ -48,7 +48,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
             // Increment button action two by one when clicked and add action to timeline.
             btn_action_two.setOnClickListener {
                 // FALSE = LOW
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.LOW_ROW_INTAKE)
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_LOW_ROW)
                 numActionTwo++
                 collectionObjectiveActivity.scoringScreen = true
                 setCounterTexts()
@@ -56,7 +56,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
 
             // Increment button action three by one when clicked and add action to timeline.
             btn_action_three.setOnClickListener {
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.GROUND_INTAKE)
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_GROUND)
                 numActionThree++
                 collectionObjectiveActivity.scoringScreen = true
                 setCounterTexts()

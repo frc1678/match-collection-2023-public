@@ -60,9 +60,16 @@ subjective_aim:
 # Contains all the enums and their values
 # Action type is a alphabet base 26 string representation
 action_type:
-  score_ball_high: AA
-  score_ball_low: AB
-  intake: AC
-  start_incap: AD
-  end_incap: AE
-  climb_attempt: AF
+  score_cone_high: AA
+  score_cone_mid: AB
+  score_cone_low: AC
+  score_cube_high: AD
+  score_cube_mid: AE
+  score_cube_low: AF
+  intake_ground: AG
+  intake_station: AH
+  intake_low_row: AI
+  start_incap: AJ
+  end_incap: AK
+  charge_attempt: AL
+  to_teleop: AM

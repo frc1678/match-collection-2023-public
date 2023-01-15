@@ -105,17 +105,17 @@ class CollectionObjectiveActivity : CollectionActivity() {
         var removeOneMore = false
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
-            Constants.ActionType.STATION_INTAKE.toString() -> {
+            Constants.ActionType.INTAKE_STATION.toString() -> {
                 numActionOne--
                 scoringScreen = false
             }
 
-            Constants.ActionType.LOW_ROW_INTAKE.toString() -> {
+            Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
                 numActionTwo--
                 scoringScreen = false
             }
 
-            Constants.ActionType.GROUND_INTAKE.toString() -> {
+            Constants.ActionType.INTAKE_GROUND.toString() -> {
                 numActionThree--
                 scoringScreen = false
             }
@@ -186,17 +186,17 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
-            Constants.ActionType.STATION_INTAKE.toString() -> {
+            Constants.ActionType.INTAKE_STATION.toString() -> {
                 numActionOne++
                 scoringScreen = true
             }
 
-            Constants.ActionType.LOW_ROW_INTAKE.toString() -> {
+            Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
                 numActionTwo++
                 scoringScreen = true
             }
 
-            Constants.ActionType.GROUND_INTAKE.toString() -> {
+            Constants.ActionType.INTAKE_GROUND.toString() -> {
                 numActionThree++
                 scoringScreen = true
             }
