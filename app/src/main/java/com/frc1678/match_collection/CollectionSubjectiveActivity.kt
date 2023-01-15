@@ -56,6 +56,18 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             return tempToggleList
         }
 
+    // Creates an Arraylist containing the teams that intook a turned over cone during the match.
+    private val intakeConeOrientationToggleData: ArrayList<String>
+        get() {
+            val tempToggleList = arrayListOf<String>()
+            for (x in 0 until panelList.size) {
+                if (panelList[x].intakeConeOrientation){
+                    when (x) {}
+                }
+            }
+            return tempToggleList
+        }
+
     // Initiate subjective_ranking_counter panels for the three teams.
     private fun initPanels() {
         panelOne =
@@ -76,9 +88,13 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelTwo.setAllianceColor()
         panelThree.setAllianceColor()
 
-        panelOne.setListener()
-        panelTwo.setListener()
-        panelThree.setListener()
+        panelOne.setListenerDefense()
+        panelTwo.setListenerDefense()
+        panelThree.setListenerDefense()
+
+        panelOne.setListenerConeOrientation()
+        panelTwo.setListenerConeOrientation()
+        panelThree.setListenerConeOrientation()
     }
 
     // Initialize proceed button to record ranking data and proceed to MatchInformationEditActivity.kt
@@ -88,6 +104,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             quickness_score = recordRankingData(dataName = "quickness")
             field_awareness_score = recordRankingData(dataName = "field_awareness")
             played_defense_list = defenseToggleData
+            intake_cone_orientation_list = intakeConeOrientationToggleData
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.

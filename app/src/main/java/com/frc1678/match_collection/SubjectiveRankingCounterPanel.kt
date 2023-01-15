@@ -38,7 +38,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
     /* Sets the OnCheckedChangeListener for the defense toggle button. This is only used to show or
      * hide the checkmark icon.
      * @see R.drawable.tb_defense_check */
-    fun setListener() {
+    fun setListenerDefense() {
         defense_toggle.setOnCheckedChangeListener { _, checked ->
             // Sets or removes the drawable at the bottom of the toggle button, depending on if the
             // button is checked or not.
@@ -46,9 +46,19 @@ class SubjectiveRankingCounterPanel : Fragment() {
                 // start, top, end,
                 null, null, null,
                 // bottom
-                if (checked) resources.getDrawable(R.drawable.tb_defense_check, null) else null
+                if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
         }
+    }
+
+    fun setListenerConeOrientation() {
+        intake_cone_orientation_toggle.setOnCheckedChangeListener(){ _, checked ->
+            defense_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                null, null, null,
+                if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
+            )
+        }
+
     }
 
     /** Gets a map containing the ranking data for the team represented by this panel. The format of
@@ -62,5 +72,9 @@ class SubjectiveRankingCounterPanel : Fragment() {
     // Whether this team played defense during the match.
     val playedDefense: Boolean
         get() = defense_toggle.isChecked
+
+    // Whether this team picked up a cone that was tilted during the match.
+    val intakeConeOrientation: Boolean
+        get() = intake_cone_orientation_toggle.isChecked
 
 }

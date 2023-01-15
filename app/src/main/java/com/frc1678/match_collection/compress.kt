@@ -42,6 +42,7 @@ fun compress(
     val compressStartingPosition = objectiveData.getValue("start_position").toString().split(",")[0]
     val compressTimeline = objectiveData.getValue("timeline").toString().split(",")[0]
     val compressEndgame = objectiveData.getValue("climb_level").toString().split(",")[0]
+    val compressPreloaded = objectiveData.getValue("preloaded_piece").toString().split(",")[0]
 
     // Define compression characters for subjective separators.
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
@@ -55,6 +56,7 @@ fun compress(
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
     val compressGamePiece = subjectiveData.getValue("game_piece").toString().split(",")[0]
+    val compressIntakeConeOrientation = subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -90,7 +92,8 @@ fun compress(
                     compressScoutId + scout_id + objectiveSeparator +
                     compressStartingPosition + starting_position.toString() + objectiveSeparator +
                     compressTimeline + compressTimelineActions + objectiveSeparator +
-                    compressEndgame + climb_level
+                    compressEndgame + climb_level + objectiveSeparator +
+                    compressPreloaded + preloaded
     }
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
@@ -103,6 +106,7 @@ fun compress(
             val quickness = getRankForTeam(quickness_score, teamNum)
             val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
             val playedDefense = played_defense_list.contains(teamNum)
+            val intakeConeOrientation = intake_cone_orientation_list.contains(teamNum)
             var gamePiece = " "
 
             // Goes through all the game pieces and checks if they are either a cone or cube
@@ -134,6 +138,10 @@ fun compress(
             subjDataString += subjectiveSeparator
             subjDataString += compressGamePiece
             subjDataString += gamePiece
+            
+            subjDataString += subjectiveSeparator
+            subjDataString += compressIntakeConeOrientation
+            subjDataString += if (intakeConeOrientation) "TRUE" else "FALSE"
 
 
             if (i + 1 != teamNumbers.size) subjDataString += subjectiveTeamSeparator

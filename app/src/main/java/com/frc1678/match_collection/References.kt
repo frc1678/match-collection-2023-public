@@ -31,6 +31,7 @@ var team_number: String = ""
 var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
+var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 
@@ -38,6 +39,7 @@ var climb_level: Constants.ClimbLevel = Constants.ClimbLevel.NONE
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var intake_cone_orientation_list: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
 var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.NONE,
     Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE)
@@ -61,6 +63,7 @@ fun resetCollectionReferences() {
 
     quickness_score = SubjectiveTeamRankings()
     field_awareness_score = SubjectiveTeamRankings()
+    intake_cone_orientation_list = ArrayList()
     played_defense_list = ArrayList()
 }
 
@@ -92,5 +95,6 @@ fun resetStartingReferences() {
     for (x in 0..3) {
         gamePiecePositionList[x] = Constants.GamePiecePositions.NONE
     }
+    preloaded = Constants.Preloaded.NONE
     team_number = ""
 }

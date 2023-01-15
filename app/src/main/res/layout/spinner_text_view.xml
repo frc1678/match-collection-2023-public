@@ -4,5 +4,5 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
-    android:padding="@dimen/small"
-    android:gravity="center" />
+    android:gravity="center"
+    android:padding="@dimen/small" />
