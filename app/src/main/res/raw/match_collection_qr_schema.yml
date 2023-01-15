@@ -35,7 +35,7 @@ objective_tim:
   start_position: [ X, str ] # str representing where a robot starts in auto ('one', 'two', 'three', or 'four')
   timeline: [ W, list, dict ] # List of dictionaries
   climb_level: [ V, str ] # str representing where a robot climbs to ('none', 'low', 'mid', 'high' or 'traversal')
-
+  preloaded_piece: [T, str] # str representing the preloaded game piece of a robot ('NONE', 'CONE', 'CUBE')
 
 # Timeline is part of objective match collection QR
 # Data for an action in the timeline
