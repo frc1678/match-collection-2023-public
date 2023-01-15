@@ -29,7 +29,7 @@ class StartingGamePieceActivity : CollectionActivity() {
 
     // Initiates the onClicks for all the buttons
     private fun initOnClicks() {
-        //When clicked, changes game_piece_one to either cone or cube depending on whatever one it was
+        // When clicked, changes game_piece_one to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_one.setOnClickListener {
             game_piece_one = when (game_piece_one) {
@@ -45,7 +45,8 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
             setBackgrounds()
         }
-        //When clicked, changes game_piece_two to either cone or cube depending on whatever one it was
+
+        // When clicked, changes game_piece_two to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_two.setOnClickListener {
             game_piece_two = when (game_piece_two) {
@@ -61,7 +62,8 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
             setBackgrounds()
         }
-        //When clicked, changes game_piece_three to either cone or cube depending on whatever one it was
+
+        // When clicked, changes game_piece_three to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_three.setOnClickListener {
             game_piece_three = when (game_piece_three) {
@@ -77,7 +79,8 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
             setBackgrounds()
         }
-        //When clicked, changes game_piece_four to either cone or cube depending on whatever one it was
+
+        // When clicked, changes game_piece_four to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_four.setOnClickListener {
             game_piece_four = when (game_piece_four) {
@@ -93,6 +96,7 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
             setBackgrounds()
         }
+
         // Changes the orientation of the map and calls setMapPicture
         btn_switch_orientation_game_pieces.setOnClickListener{
             orientation = !orientation
@@ -132,10 +136,10 @@ class StartingGamePieceActivity : CollectionActivity() {
         )
     }
 
-    // Initiates setBackgrounds
+    // Sets the backgrounds of gamePieceOne, gamePieceTwo, gamePieceThree, gamePieceFour
     private fun setBackgrounds() {
-        // Sets backgroundColor to the color corresponding with the gamePiece
-        // or if not selected
+        // Sets backgroundColor of gamePieceOne to the corresponding game piece color
+        // or if not selected, then sets background to grey
         when (game_piece_one) {
             Constants.GamePieceOne.NONE -> {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.light_gray))
@@ -147,6 +151,8 @@ class StartingGamePieceActivity : CollectionActivity() {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
             }
         }
+        // Sets backGroundColor of gamePieceTwo to the corresponding game piece color
+        // or if not selected, then sets background to grey
         when (game_piece_two) {
             Constants.GamePieceTwo.NONE -> {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.light_gray))
@@ -158,6 +164,8 @@ class StartingGamePieceActivity : CollectionActivity() {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
             }
         }
+        // Sets backGroundColor of gamePieceThree to the corresponding game piece color
+        // or if not selected, then sets background to grey
         when (game_piece_three) {
             Constants.GamePieceThree.NONE -> {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.light_gray))
@@ -170,6 +178,8 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
 
         }
+        // Sets backGroundColor of gamePieceFour to the corresponding game piece color
+        // or if not, then sets background to grey
         when (game_piece_four) {
             Constants.GamePieceFour.NONE -> {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.light_gray))
@@ -201,7 +211,7 @@ class StartingGamePieceActivity : CollectionActivity() {
         return super.onKeyLongPress(keyCode, event)
     }
 
-    //f
+    // Creates the screen and sets everything up.
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.starting_game_pieces_activity)
