@@ -598,7 +598,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 ).toBundle()
             )
         } else {
-            val intent = Intent(this, CollectionSubjectiveActivity::class.java)
+            val intent = Intent(this, StartingGamePieceActivity::class.java)
             intent.putExtra("team_one", et_team_one.text.toString())
                 .putExtra("team_two", et_team_two.text.toString())
                 .putExtra("team_three", et_team_three.text.toString())

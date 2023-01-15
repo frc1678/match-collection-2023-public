@@ -55,6 +55,7 @@ fun compress(
     val compressAwareScore =
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
+    val compressGamePiece = subjectiveData.getValue("game_piece").toString().split(",")[0]
     val compressIntakeConeOrientation = subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
@@ -106,6 +107,21 @@ fun compress(
             val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
             val playedDefense = played_defense_list.contains(teamNum)
             val intakeConeOrientation = intake_cone_orientation_list.contains(teamNum)
+            var gamePiece = " "
+
+            // Goes through all the game pieces and checks if they are either a cone or cube
+            // if it is a cone, then adds 0 to gamePiece, 1 if it is a cube
+            for (x in 0..3) {
+                if(gamePiecePositionList[x] == Constants.GamePiecePositions.CONE) {
+                    gamePiece += "0"
+                } else if (gamePiecePositionList[x] == Constants.GamePiecePositions.CUBE) {
+                    gamePiece +="1"
+                }
+                // Shouldn't ever happen
+                else {
+                    gamePiece += "2"
+                }
+            }
 
             subjDataString += subjectiveSeparator
             subjDataString += compressQuicknessScore
@@ -118,6 +134,10 @@ fun compress(
             subjDataString += subjectiveSeparator
             subjDataString += compressPlayedDefense
             subjDataString += if (playedDefense) "TRUE" else "FALSE"
+
+            subjDataString += subjectiveSeparator
+            subjDataString += compressGamePiece
+            subjDataString += gamePiece
 
             subjDataString += subjectiveSeparator
             subjDataString += compressIntakeConeOrientation

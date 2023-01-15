@@ -30,6 +30,12 @@ class Constants {
         NONE
     }
 
+    enum class GamePiecePositions {
+        CONE,
+        CUBE,
+        NONE
+    }
+
     enum class Preloaded {
         NONE,
         CONE,

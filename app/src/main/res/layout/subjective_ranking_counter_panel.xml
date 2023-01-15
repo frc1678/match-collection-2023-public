@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/tv_team_number"
         style="@style/tv_team_number_subj"
-        android:text="1678" />
+        android:text="" />
 
     <ToggleButton
         android:id="@+id/defense_toggle"
@@ -17,7 +17,7 @@
         android:layout_below="@id/tv_team_number"
         android:layout_width="120dp"
         android:textOff="@string/playing_defense"
-        android:textOn="@string/playing_defense" />
+        android:textOn="Defense" />
 
     <ToggleButton
         style="@style/tb_subj_defense"
@@ -25,13 +25,13 @@
         android:layout_below="@id/tv_team_number"
         android:layout_width="120dp"
         android:layout_toEndOf="@id/defense_toggle"
-        android:textOff="Intake Cone Orientation"
-        android:textOn="Intake Cone Orientation" />
+        android:textOff="@string/intake_cone_orientation"
+        android:textOn="Tilted Cones" />
 
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
         android:id="@+id/counter_quickness"
-        android:layout_width="120dp"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
         android:layout_toEndOf="@id/intake_cone_orientation_toggle"
         android:layout_below="@id/tv_team_number"
@@ -39,10 +39,11 @@
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
         android:id="@+id/counter_field_awareness"
-        android:layout_width="120dp"
+        android:layout_width="150dp"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/counter_quickness"
         android:layout_below="@id/tv_team_number"
+        android:layout_toEndOf="@id/counter_quickness"
+        android:rotationX="360"
         custom:dataName="@string/field_aware" />
 
 </RelativeLayout>
