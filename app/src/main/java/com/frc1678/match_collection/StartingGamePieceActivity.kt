@@ -142,10 +142,10 @@ class StartingGamePieceActivity : CollectionActivity() {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
             Constants.GamePiecePositions.CONE -> {
-                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.action_yellow))
+                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.cone_yellow))
             }
             Constants.GamePiecePositions.CUBE -> {
-                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.cube_purple))
             }
         }
         // Sets backGroundColor of gamePieceTwo to the corresponding game piece color
@@ -155,10 +155,10 @@ class StartingGamePieceActivity : CollectionActivity() {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
             Constants.GamePiecePositions.CONE -> {
-                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.action_yellow))
+                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.cone_yellow))
             }
             Constants.GamePiecePositions.CUBE -> {
-                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.cube_purple))
             }
         }
         // Sets backGroundColor of gamePieceThree to the corresponding game piece color
@@ -168,10 +168,10 @@ class StartingGamePieceActivity : CollectionActivity() {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
             Constants.GamePiecePositions.CONE -> {
-                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.action_yellow))
+                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.cone_yellow))
             }
             Constants.GamePiecePositions.CUBE -> {
-                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.cube_purple))
             }
 
         }
@@ -182,10 +182,10 @@ class StartingGamePieceActivity : CollectionActivity() {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
             Constants.GamePiecePositions.CONE -> {
-                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.action_yellow))
+                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.cone_yellow))
             }
             Constants.GamePiecePositions.CUBE -> {
-                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
+                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.cube_purple))
             }
         }
     }

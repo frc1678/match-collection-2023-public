@@ -16,22 +16,22 @@
         <Button
             android:id="@+id/btn_game_piece_one"
             style="@style/btn_starting_position"
-            android:text="1"/>
+            android:text="@string/one_starting_position"/>
 
         <Button
             android:id="@+id/btn_game_piece_two"
             style="@style/btn_starting_position"
-            android:text="2"/>
+            android:text="@string/two_starting_position"/>
 
         <Button
             android:id="@+id/btn_game_piece_three"
             style="@style/btn_starting_position"
-            android:text="3"/>
+            android:text="@string/three_starting_position"/>
 
         <Button
             android:id="@+id/btn_game_piece_four"
             style="@style/btn_starting_position"
-            android:text="4"/>
+            android:text="@string/four_starting_position"/>
     </LinearLayout>
 
     <LinearLayout
@@ -44,14 +44,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Orientation"/>
+            android:text="@string/btn_switch_orientation"/>
 
         <Button
             android:id="@+id/btn_proceed_game_piece"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Proceed"/>
+            android:text="@string/btn_proceed"/>
 
     </LinearLayout>
 
