@@ -56,10 +56,15 @@ subjective_aim:
   field_awareness_score: [ C, int ] # A ranking value between 1 and 3
   played_defense: [ D, bool ] # True if robot played defense at least once in the match, else False
 <<<<<<< HEAD
+<<<<<<< HEAD
   game_piece: [E, int] # 0 for a cone, 1 for a cube
 =======
   intake_cone_orientation: [ E, bool ] # True if robot picked up a non-upright cone during the match, else False
 >>>>>>> b7c84c81640b85f72c33f7fc4d9baf78f77a7078
+=======
+  intake_cone_orientation: [ E, bool ] # True if robot picked up a non-upright cone during the match, else False
+  game_piece: [F, int] # 0 for a cone, 1 for a cube
+>>>>>>> 7b81316ef84f47541a2938cc09bd55d9ed4b7643
 
 # Contains all the enums and their values
 # Action type is a alphabet base 26 string representation
