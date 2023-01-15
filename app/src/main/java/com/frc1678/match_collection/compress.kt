@@ -42,6 +42,7 @@ fun compress(
     val compressStartingPosition = objectiveData.getValue("start_position").toString().split(",")[0]
     val compressTimeline = objectiveData.getValue("timeline").toString().split(",")[0]
     val compressEndgame = objectiveData.getValue("climb_level").toString().split(",")[0]
+    val compressPreloaded = objectiveData.getValue("preloaded_piece").toString().split(",")[0]
 
     // Define compression characters for subjective separators.
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
@@ -90,7 +91,8 @@ fun compress(
                     compressScoutId + scout_id + objectiveSeparator +
                     compressStartingPosition + starting_position.toString() + objectiveSeparator +
                     compressTimeline + compressTimelineActions + objectiveSeparator +
-                    compressEndgame + climb_level
+                    compressEndgame + climb_level + objectiveSeparator +
+                    compressPreloaded + preloaded
     }
     // Compress and add data specific to Subjective Match Collection.
     else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {

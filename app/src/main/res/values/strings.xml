@@ -61,4 +61,5 @@
     <string name="quickness">Quickness</string>
     <string name="field_aware">Field Aware</string>
     <string name="timer_run_down">Teleop - 0</string>
+    <string name="preloaded">Preloaded:</string>
 </resources>
