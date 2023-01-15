@@ -1,15 +1,12 @@
 package com.frc1678.match_collection
 
-import android.annotation.SuppressLint
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.core.content.ContextCompat.getColor
 import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
-import kotlinx.android.synthetic.main.starting_position_activity.*
 
 class StartingGamePieceActivity : CollectionActivity() {
 
@@ -32,15 +29,15 @@ class StartingGamePieceActivity : CollectionActivity() {
         // When clicked, changes game_piece_one to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_one.setOnClickListener {
-            game_piece_one = when (game_piece_one) {
-                Constants.GamePieceOne.CONE -> {
-                    Constants.GamePieceOne.CUBE
+            gamePiecePositionList[0] = when (gamePiecePositionList[0]) {
+                Constants.GamePiecePositions.CONE -> {
+                    Constants.GamePiecePositions.CUBE
                 }
-                Constants.GamePieceOne.CUBE -> {
-                    Constants.GamePieceOne.CONE
+                Constants.GamePiecePositions.CUBE -> {
+                    Constants.GamePiecePositions.CONE
                 }
-                Constants.GamePieceOne.NONE -> {
-                    Constants.GamePieceOne.CONE
+                Constants.GamePiecePositions.NONE -> {
+                    Constants.GamePiecePositions.CONE
                 }
             }
             setBackgrounds()
@@ -49,15 +46,15 @@ class StartingGamePieceActivity : CollectionActivity() {
         // When clicked, changes game_piece_two to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_two.setOnClickListener {
-            game_piece_two = when (game_piece_two) {
-                Constants.GamePieceTwo.CONE -> {
-                    Constants.GamePieceTwo.CUBE
+            gamePiecePositionList[1] = when (gamePiecePositionList[1]) {
+                Constants.GamePiecePositions.CONE -> {
+                    Constants.GamePiecePositions.CUBE
                 }
-                Constants.GamePieceTwo.CUBE -> {
-                    Constants.GamePieceTwo.CONE
+                Constants.GamePiecePositions.CUBE -> {
+                    Constants.GamePiecePositions.CONE
                 }
-                Constants.GamePieceTwo.NONE -> {
-                    Constants.GamePieceTwo.CONE
+                Constants.GamePiecePositions.NONE -> {
+                    Constants.GamePiecePositions.CONE
                 }
             }
             setBackgrounds()
@@ -66,15 +63,15 @@ class StartingGamePieceActivity : CollectionActivity() {
         // When clicked, changes game_piece_three to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_three.setOnClickListener {
-            game_piece_three = when (game_piece_three) {
-                Constants.GamePieceThree.CONE -> {
-                    Constants.GamePieceThree.CUBE
+            gamePiecePositionList[2] = when (gamePiecePositionList[2]) {
+                Constants.GamePiecePositions.CONE -> {
+                    Constants.GamePiecePositions.CUBE
                 }
-                Constants.GamePieceThree.CUBE -> {
-                    Constants.GamePieceThree.CONE
+                Constants.GamePiecePositions.CUBE -> {
+                    Constants.GamePiecePositions.CONE
                 }
-                Constants.GamePieceThree.NONE -> {
-                    Constants.GamePieceThree.CONE
+                Constants.GamePiecePositions.NONE -> {
+                    Constants.GamePiecePositions.CONE
                 }
             }
             setBackgrounds()
@@ -83,15 +80,15 @@ class StartingGamePieceActivity : CollectionActivity() {
         // When clicked, changes game_piece_four to either cone or cube depending on whatever one it was
         // then, calls setBackgrounds
         btn_game_piece_four.setOnClickListener {
-            game_piece_four = when (game_piece_four) {
-                Constants.GamePieceFour.CONE -> {
-                    Constants.GamePieceFour.CUBE
+            gamePiecePositionList[3] = when (gamePiecePositionList[3]) {
+                Constants.GamePiecePositions.CONE -> {
+                    Constants.GamePiecePositions.CUBE
                 }
-                Constants.GamePieceFour.CUBE -> {
-                    Constants.GamePieceFour.CONE
+                Constants.GamePiecePositions.CUBE -> {
+                    Constants.GamePiecePositions.CONE
                 }
-                Constants.GamePieceFour.NONE -> {
-                    Constants.GamePieceFour.CONE
+                Constants.GamePiecePositions.NONE -> {
+                    Constants.GamePiecePositions.CONE
                 }
             }
             setBackgrounds()
@@ -110,8 +107,8 @@ class StartingGamePieceActivity : CollectionActivity() {
             }
             // If all game pieces have been selected then proceed to CollectionSubjectiveActivity.kt
             // Otherwise create warning message
-            if((game_piece_one == Constants.GamePieceOne.NONE) or (game_piece_two == Constants.GamePieceTwo.NONE) or
-                (game_piece_three == Constants.GamePieceThree.NONE) or (game_piece_four == Constants.GamePieceFour.NONE)){
+            if((gamePiecePositionList[0] == Constants.GamePiecePositions.NONE) or (gamePiecePositionList[1] == Constants.GamePiecePositions.NONE) or
+                (gamePiecePositionList[2] == Constants.GamePiecePositions.NONE) or (gamePiecePositionList[3] == Constants.GamePiecePositions.NONE)){
                 AlertDialog.Builder(this).setTitle("Warning! You have not selected for all game pieces!")
                     .setNegativeButton("Cancel") { dialog, _ ->
                         dialog.cancel()
@@ -140,54 +137,54 @@ class StartingGamePieceActivity : CollectionActivity() {
     private fun setBackgrounds() {
         // Sets backgroundColor of gamePieceOne to the corresponding game piece color
         // or if not selected, then sets background to grey
-        when (game_piece_one) {
-            Constants.GamePieceOne.NONE -> {
+        when (gamePiecePositionList[0]) {
+            Constants.GamePiecePositions.NONE -> {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
-            Constants.GamePieceOne.CONE -> {
+            Constants.GamePiecePositions.CONE -> {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.action_yellow))
             }
-            Constants.GamePieceOne.CUBE -> {
+            Constants.GamePiecePositions.CUBE -> {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
             }
         }
         // Sets backGroundColor of gamePieceTwo to the corresponding game piece color
         // or if not selected, then sets background to grey
-        when (game_piece_two) {
-            Constants.GamePieceTwo.NONE -> {
+        when (gamePiecePositionList[1]) {
+            Constants.GamePiecePositions.NONE -> {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
-            Constants.GamePieceTwo.CONE -> {
+            Constants.GamePiecePositions.CONE -> {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.action_yellow))
             }
-            Constants.GamePieceTwo.CUBE -> {
+            Constants.GamePiecePositions.CUBE -> {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
             }
         }
         // Sets backGroundColor of gamePieceThree to the corresponding game piece color
         // or if not selected, then sets background to grey
-        when (game_piece_three) {
-            Constants.GamePieceThree.NONE -> {
+        when (gamePiecePositionList[2]) {
+            Constants.GamePiecePositions.NONE -> {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
-            Constants.GamePieceThree.CONE -> {
+            Constants.GamePiecePositions.CONE -> {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.action_yellow))
             }
-            Constants.GamePieceThree.CUBE -> {
+            Constants.GamePiecePositions.CUBE -> {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
             }
 
         }
         // Sets backGroundColor of gamePieceFour to the corresponding game piece color
         // or if not, then sets background to grey
-        when (game_piece_four) {
-            Constants.GamePieceFour.NONE -> {
+        when (gamePiecePositionList[3]) {
+            Constants.GamePiecePositions.NONE -> {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.light_gray))
             }
-            Constants.GamePieceFour.CONE -> {
+            Constants.GamePiecePositions.CONE -> {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.action_yellow))
             }
-            Constants.GamePieceFour.CUBE -> {
+            Constants.GamePiecePositions.CUBE -> {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.undo_purple_pressed))
             }
         }
@@ -220,5 +217,9 @@ class StartingGamePieceActivity : CollectionActivity() {
         initOnClicks()
         setBackgrounds()
     }
+
+}
+
+private operator fun <R1> (() -> R1).set(i: Int, value: () -> R1) {
 
 }
