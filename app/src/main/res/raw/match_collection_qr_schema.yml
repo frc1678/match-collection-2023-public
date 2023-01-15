@@ -35,7 +35,7 @@ objective_tim:
   start_position: [ X, str ] # str representing where a robot starts in auto ('one', 'two', 'three', or 'four')
   timeline: [ W, list, dict ] # List of dictionaries
   climb_level: [ V, str ] # str representing where a robot climbs to ('none', 'low', 'mid', 'high' or 'traversal')
-
+  preloaded_piece: [T, str] # str representing the preloaded game piece of a robot ('NONE', 'CONE', 'CUBE')
 
 # Timeline is part of objective match collection QR
 # Data for an action in the timeline
@@ -55,7 +55,11 @@ subjective_aim:
   quickness_score: [ B, int ] # A ranking value between 1 and 3
   field_awareness_score: [ C, int ] # A ranking value between 1 and 3
   played_defense: [ D, bool ] # True if robot played defense at least once in the match, else False
+<<<<<<< HEAD
   game_piece: [E, int] # 0 for a cone, 1 for a cube
+=======
+  intake_cone_orientation: [ E, bool ] # True if robot picked up a non-upright cone during the match, else False
+>>>>>>> b7c84c81640b85f72c33f7fc4d9baf78f77a7078
 
 # Contains all the enums and their values
 # Action type is a alphabet base 26 string representation

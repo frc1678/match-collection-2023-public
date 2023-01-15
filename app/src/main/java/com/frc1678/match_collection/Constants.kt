@@ -36,6 +36,12 @@ class Constants {
         NONE
     }
 
+    enum class Preloaded {
+        NONE,
+        CONE,
+        CUBE
+    }
+
     enum class ClimbLevel {
         NONE,
         LOW,
