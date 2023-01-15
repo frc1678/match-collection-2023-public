@@ -32,23 +32,13 @@
 
         </LinearLayout>
 
-    <ViewStub
-        android:id="@+id/scoring_stub"
-        android:inflatedId="@+id/objective_match_collection_layout_scoring"
-        android:layout="@layout/collection_objective_scoring_activity"
+    <FrameLayout
+        android:id="@+id/action_btn_frame"
+        android:name="com.frc1678.match_collection.ObjectiveScoringPanel"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="5"
-        ></ViewStub>
-
-    <ViewStub
-        android:id="@+id/intake_stub"
-        android:inflatedId="@+id/objective_match_collection_layout_intake"
-        android:layout="@layout/collection_objective_intake_activity"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        ></ViewStub>
+        android:layout_weight="4"
+        android:layout_marginVertical="@dimen/small" />
 
     <LinearLayout
         android:layout_width="match_parent"

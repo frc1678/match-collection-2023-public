@@ -28,6 +28,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     var scoringScreen: Boolean = true
 
+    private val scoringPanel = ObjectiveScoringPanel()
+    private val intakePanel = ObjectiveIntakePanel()
+
     private var isTimerRunning = false
 
     //FALSE = LOW
@@ -59,7 +62,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     // If stage and time contradict when action is recorded, add action to timeline with time value
     // dictated by stage.
-    private fun timelineAddWithStage(action_type: Constants.ActionType) {
+    fun timelineAddWithStage(action_type: Constants.ActionType) {
         when {
             !is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time))) -> {
                 timelineAdd(
@@ -87,62 +90,52 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.STATION_INTAKE.toString() -> {
                 numActionOne--
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                intakePanel.setCounterTexts()
             }
             Constants.ActionType.LOW_ROW_INTAKE.toString() -> {
                 numActionTwo--
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                intakePanel.setCounterTexts()
             }
             Constants.ActionType.GROUND_INTAKE.toString() -> {
                 numActionThree--
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                intakePanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
                 numActionFour--
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CUBE_MID.toString() -> {
                 numActionFive--
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
                 numActionSix--
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
                 numActionSeven--
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CONE_MID.toString() -> {
                 numActionEight--
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CONE_LOW.toString() -> {
                 numActionNine--
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.FAIL.toString() -> {
                 numActionTen--
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
                 did_charge = false
@@ -176,62 +169,52 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.STATION_INTAKE.toString() -> {
                 numActionOne++
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                intakePanel.setCounterTexts()
             }
             Constants.ActionType.LOW_ROW_INTAKE.toString() -> {
                 numActionTwo++
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                intakePanel.setCounterTexts()
             }
             Constants.ActionType.GROUND_INTAKE.toString() -> {
                 numActionThree++
                 scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
+                intakePanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
                 numActionFour++
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CUBE_MID.toString() -> {
                 numActionFive++
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
                 numActionSix++
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
                 numActionSeven++
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CONE_MID.toString() -> {
                 numActionEight++
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.SCORE_CONE_LOW.toString() -> {
                 numActionNine++
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.FAIL.toString() -> {
                 numActionTen++
                 scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
+                scoringPanel.setCounterTexts()
             }
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
                 did_charge = true
@@ -316,24 +299,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
 
-    // Set high and low goal counter values
-    private fun setCounterTexts() {
-        if(!scoringScreen) {
-            btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
-            btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
-            btn_action_three.text = getString(R.string.btn_action_three, numActionThree.toString())
-        } else {
-            btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
-            btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
-            btn_action_six.text = getString(R.string.btn_action_six, numActionSix.toString())
-            btn_action_seven.text = getString(R.string.btn_action_seven, numActionSeven.toString())
-            btn_action_eight.text = getString(R.string.btn_action_eight, numActionEight.toString())
-            btn_action_nine.text = getString(R.string.btn_action_nine, numActionNine.toString())
-            btn_action_ten.text = getString(R.string.btn_action_ten, numActionTen.toString())
-        }
-
-    }
-
     // Initialize button and toggle button onClickListeners.
     private fun initOnClicks() {
         btn_proceed_edit.setOnClickListener {
@@ -390,99 +355,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             return@OnLongClickListener true
         })
 
-        // Increment button action one by one when clicked and add action to timeline.
-        if (!scoringScreen) {
-            btn_action_one.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.STATION_INTAKE)
-                numActionOne++
-                scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            // Increment button action two by one when clicked and add action to timeline.
-            btn_action_two.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.LOW_ROW_INTAKE)
-                numActionTwo++
-                scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            // Increment button action five by one when clicked and add action to timeline.
-            btn_action_three.setOnClickListener {
-                timelineAddWithStage(action_type = Constants.ActionType.GROUND_INTAKE)
-                numActionThree++
-                scoringScreen = true
-                changeActionButtons()
-                setCounterTexts()
-            }
-        } else {
-            btn_action_four.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_HIGH)
-                numActionFour++
-                scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            btn_action_five.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
-                numActionFive++
-                scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            btn_action_six.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
-                numActionSix++
-                scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            btn_action_seven.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
-                numActionSeven++
-                scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            btn_action_eight.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
-                numActionEight++
-                scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            btn_action_nine.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
-                numActionNine++
-                scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
-            }
-
-            btn_action_ten.setOnClickListener {
-                // FALSE = LOW
-                timelineAddWithStage(action_type = Constants.ActionType.FAIL)
-                numActionTen++
-                scoringScreen = false
-                changeActionButtons()
-                setCounterTexts()
-            }
-        }
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
         tb_action_one.setOnClickListener {
@@ -608,17 +480,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
     }
 
-    // Changes the screen from scoring to intake and vice versa
-    private fun changeActionButtons(){
-        if(scoringScreen) {
-            scoring_stub.visibility = View.VISIBLE
-            intake_stub.visibility = View.INVISIBLE
-        } else {
-            intake_stub.visibility = View.VISIBLE
-            scoring_stub.visibility = View.INVISIBLE
-        }
-    }
-
     // Restart app from StartingPositionObjectiveActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -632,23 +493,21 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.e("bobbo", "gets into onCreate")
         setContentView(R.layout.collection_objective_activity)
 
-        // Inflates both the scoring and intake stub so that the action buttons are visible
-        /*scoring_stub.inflate()
-        intake_stub.inflate()*/
+        supportFragmentManager
+            .beginTransaction()
+            .add(R.id.action_btn_frame, scoringPanel)
+            .commit()
 
-        // Sets the visibilty of the view stub depending on if it's in scoring or intaking mode
-        changeActionButtons()
+        Log.e("bobbo", "creates fragment")
 
         comingBack()
         if ((comingBack != "match information edit") and (comingBack != "QRGenerate")) {
             timerReset()
         }
-        setCounterTexts()
+
         initOnClicks()
         initTeamNum()
-
     }
 }
