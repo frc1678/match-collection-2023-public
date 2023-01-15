@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/objective_match_collection_layout_scoring"
+    android:id="@+id/objective_match_collection_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
@@ -11,11 +11,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btn_undo_scoring"
+                android:id="@+id/btn_undo"
                 style="@style/btn_action_hor"
                 android:text="@string/btn_undo"
                 android:layout_weight="1"
@@ -23,7 +23,7 @@
                 />
 
             <Button
-                android:id="@+id/btn_redo_scoring"
+                android:id="@+id/btn_redo"
                 style="@style/btn_action_hor"
                 android:text="@string/btn_redo"
                 android:layout_weight="1"
@@ -33,12 +33,21 @@
         </LinearLayout>
 
     <ViewStub
-        android:id="@+id/btn_action_stub"
-        android:inflatedId="@+id/objective_match_collection_layout_scoring2"
-        android:layout="@layout/collection_objective_scoring_activity2"
+        android:id="@+id/scoring_stub"
+        android:inflatedId="@+id/objective_match_collection_layout_scoring"
+        android:layout="@layout/collection_objective_scoring_activity"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="5"
+        ></ViewStub>
+
+    <ViewStub
+        android:id="@+id/intake_stub"
+        android:inflatedId="@+id/objective_match_collection_layout_intake"
+        android:layout="@layout/collection_objective_intake_activity"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
         ></ViewStub>
 
     <LinearLayout
@@ -48,7 +57,7 @@
         android:orientation="horizontal">
 
         <ToggleButton
-            android:id="@+id/tb_action_one_scoring"
+            android:id="@+id/tb_action_one"
             style="@style/btn_action_hor"
             android:textOff="@string/tb_action_bool_one_off"
             android:textOn="@string/tb_action_bool_one_on"
@@ -56,7 +65,7 @@
             android:background="@drawable/tb_incap_selector"/>
 
         <Button
-            android:id="@+id/btn_charge_scoring"
+            android:id="@+id/btn_charge"
             style="@style/btn_action_hor"
             android:layout_weight="1"
             android:text="@string/btn_charge"
@@ -71,14 +80,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_timer_scoring"
+            android:id="@+id/btn_timer"
             android:background="@drawable/btn_proceed"
             style="@style/btn_proceed"
             android:enabled="true"
             android:text="@string/btn_timer_start" />
 
         <TextView
-            android:id="@+id/tv_team_number_scoring"
+            android:id="@+id/tv_team_number"
             style="@style/tv_standard"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -86,7 +95,7 @@
             android:textSize="@dimen/small_text" />
 
         <Button
-            android:id="@+id/btn_proceed_edit_scoring"
+            android:id="@+id/btn_proceed_edit"
             style="@style/btn_proceed"
             android:enabled="false"
             android:text="@string/btn_to_teleop"
