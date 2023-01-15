@@ -31,11 +31,17 @@ class Constants {
     }
 
     enum class ChargeLevel {
-       NONE,
-       FAILED,
-       PARKED,
-       DOCKED,
-       ENGAGED
+        NONE,
+        FAILED,
+        PARKED,
+        DOCKED,
+        ENGAGED
+    }
+
+    enum class Preloaded {
+        NONE,
+        CONE,
+        CUBE
     }
 
     enum class ActionType {

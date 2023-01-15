@@ -38,6 +38,7 @@ var team_number: String = ""
 var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
+var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
 var charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
 
@@ -45,6 +46,7 @@ var charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var intake_cone_orientation_list: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
 
 // Function to reset References.kt variables for new match.
@@ -72,6 +74,7 @@ fun resetCollectionReferences() {
 
     quickness_score = SubjectiveTeamRankings()
     field_awareness_score = SubjectiveTeamRankings()
+    intake_cone_orientation_list = ArrayList()
     played_defense_list = ArrayList()
 }
 
@@ -100,5 +103,6 @@ data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
+    preloaded = Constants.Preloaded.NONE
     team_number = ""
 }
