@@ -12,6 +12,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
+import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.charge_popup.view.btn_charge_cancel
 import kotlinx.android.synthetic.main.charge_popup.view.btn_climb_done
 import kotlinx.android.synthetic.main.charge_popup.view.btn_docked
@@ -26,7 +27,6 @@ import kotlinx.android.synthetic.main.collection_objective_activity.btn_undo
 import kotlinx.android.synthetic.main.collection_objective_activity.objective_match_collection_layout
 import kotlinx.android.synthetic.main.collection_objective_activity.tb_action_one
 import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_number
-import kotlinx.android.synthetic.main.collection_objective_intake_fragment.objective_match_collection_layout_intake
 import java.lang.Integer.parseInt
 
 // Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
@@ -155,7 +155,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                did_charge = false
+                if (is_teleop_activated) did_tele_charge = false
+                else did_auto_charge = false
             }
 
             Constants.ActionType.START_INCAP.toString() -> {
@@ -240,7 +241,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                did_charge = true
+                if (is_teleop_activated) did_tele_charge = true
+                else did_auto_charge = true
             }
 
             Constants.ActionType.START_INCAP.toString() -> {
@@ -271,10 +273,13 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
-        btn_charge.isEnabled = !(!is_teleop_activated or popup_open or isIncap or did_charge)
+        btn_charge.isEnabled = isTimerRunning && !(popup_open || isIncap ||
+                ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge)))
 
         btn_charge.text =
-            if (did_charge) getString(R.string.btn_charged)
+            if (isTimerRunning && ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))) getString(
+                R.string.btn_charged
+            )
             else getString(R.string.btn_charge)
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
@@ -283,6 +288,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
         btn_proceed_edit.isEnabled =
             ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
+        btn_proceed_edit.text =
+            if (!is_teleop_activated) getString(R.string.btn_to_teleop)
+            else getString(R.string.btn_proceed)
     }
 
     // Function to end incap if still activated at end of the match.
@@ -345,7 +353,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 enableButtons()
                 btn_proceed_edit.isEnabled = false
                 btn_proceed_edit.text = getString(R.string.btn_to_teleop)
-                objective_match_collection_layout_intake.setBackgroundColor(Color.WHITE)
+                objective_match_collection_layout.setBackgroundColor(Color.WHITE)
             }
             return@OnLongClickListener true
         })
@@ -368,14 +376,22 @@ class CollectionObjectiveActivity : CollectionActivity() {
             val popupWindow = PopupWindow(popupView, width, height, false)
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
+            if (!is_teleop_activated) popupView.btn_parked.isVisible = false
+            timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
             enableButtons()
 
             // OnClickListeners for the buttons in the climb popup
             popupView.btn_charge_cancel.setOnClickListener {
-                did_charge = false
-                charge_level = Constants.ChargeLevel.NONE
+                if (is_teleop_activated) {
+                    tele_charge_level = Constants.ChargeLevel.NONE
+                    did_tele_charge = false
+                } else {
+                    auto_charge_level = Constants.ChargeLevel.NONE
+                    did_auto_charge = false
+                }
                 popupWindow.dismiss()
                 popup_open = false
+                timeline.removeAt(timeline.lastIndex)
                 enableButtons()
             }
 
@@ -383,48 +399,72 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popup_open = false
-                timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
                 enableButtons()
             }
 
             popupView.btn_failed.isActivated = false
-            charge_level = Constants.ChargeLevel.NONE
+            if (is_teleop_activated) tele_charge_level = Constants.ChargeLevel.NONE
+            else auto_charge_level = Constants.ChargeLevel.NONE
 
             popupView.btn_failed.setOnClickListener {
                 popupView.btn_failed.isActivated = true
                 popupView.btn_parked.isActivated = false
                 popupView.btn_docked.isActivated = false
                 popupView.btn_engaged.isActivated = false
-                charge_level = Constants.ChargeLevel.FAILED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
+                if (is_teleop_activated) {
+                    tele_charge_level = Constants.ChargeLevel.FAILED
+                    did_tele_charge = true
+                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                } else {
+                    auto_charge_level = Constants.ChargeLevel.FAILED
+                    did_auto_charge = true
+                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                }
             }
             popupView.btn_parked.setOnClickListener {
                 popupView.btn_failed.isActivated = false
                 popupView.btn_parked.isActivated = true
                 popupView.btn_docked.isActivated = false
                 popupView.btn_engaged.isActivated = false
-                charge_level = Constants.ChargeLevel.PARKED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
+                if (is_teleop_activated) {
+                    tele_charge_level = Constants.ChargeLevel.PARK
+                    did_tele_charge = true
+                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                } else {
+                    auto_charge_level = Constants.ChargeLevel.PARK
+                    did_auto_charge = true
+                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                }
             }
             popupView.btn_docked.setOnClickListener {
                 popupView.btn_failed.isActivated = false
                 popupView.btn_parked.isActivated = false
                 popupView.btn_docked.isActivated = true
                 popupView.btn_engaged.isActivated = false
-                charge_level = Constants.ChargeLevel.DOCKED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
+                if (is_teleop_activated) {
+                    tele_charge_level = Constants.ChargeLevel.DOCKED
+                    did_tele_charge = true
+                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                } else {
+                    auto_charge_level = Constants.ChargeLevel.DOCKED
+                    did_auto_charge = true
+                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                }
             }
             popupView.btn_engaged.setOnClickListener {
                 popupView.btn_failed.isActivated = false
                 popupView.btn_parked.isActivated = false
                 popupView.btn_docked.isActivated = false
                 popupView.btn_engaged.isActivated = true
-                charge_level = Constants.ChargeLevel.ENGAGED
-                did_charge = true
-                popupView.btn_climb_done.isEnabled = did_charge
+                if (is_teleop_activated) {
+                    tele_charge_level = Constants.ChargeLevel.ENGAGED
+                    did_tele_charge = true
+                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                } else {
+                    auto_charge_level = Constants.ChargeLevel.ENGAGED
+                    did_auto_charge = true
+                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                }
             }
         }
 

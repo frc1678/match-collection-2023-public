@@ -33,7 +33,7 @@ class Constants {
     enum class ChargeLevel {
         NONE,
         FAILED,
-        PARKED,
+        PARK,
         DOCKED,
         ENGAGED
     }

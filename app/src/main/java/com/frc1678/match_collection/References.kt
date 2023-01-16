@@ -23,7 +23,8 @@ var popup_open = false
 var is_match_time_ended: Boolean = false
 var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
-var did_charge: Boolean = false
+var did_auto_charge: Boolean = false
+var did_tele_charge: Boolean = false
 
 // Data that is shared between the objective and subjective QRs.
 var serial_number: String? = ""
@@ -40,8 +41,8 @@ var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
 var timeline: ArrayList<HashMap<String, String>> = ArrayList()
-var charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
-
+var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
+var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
 
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
@@ -65,10 +66,12 @@ fun resetCollectionReferences() {
     numActionTen = 0
 
     is_teleop_activated = false
-    did_charge = false
+    did_auto_charge = false
+    did_tele_charge = false
 
     popup_open = false
-    charge_level = Constants.ChargeLevel.NONE
+    auto_charge_level = Constants.ChargeLevel.NONE
+    tele_charge_level = Constants.ChargeLevel.NONE
 
     timestamp = 0
 
