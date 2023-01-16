@@ -23,8 +23,14 @@
 
     <color name="blue_error_popup_borders">#0F5EAE</color>
 
-    <color name="action_yellow">#FFF4B8</color>
-    <color name="action_yellow_pressed">#FFED87</color>
+    <color name="action_brown">#C5844D</color>
+    <color name="action_brown_pressed">#FBC68E</color>
+    <color name="action_blue">#52AEFF</color>
+    <color name="action_blue_pressed">#A5DCFF</color>
+    <color name="action_green">#3CCF13</color>
+    <color name="action_green_pressed">#ADFF9E</color>
+    <color name="action_red">#FF3838</color>
+    <color name="action_red_pressed">#FF7272</color>
     <color name="proceed_blue">#2AF5FF</color>
     <color name="proceed_blue_border">#23C9D1</color>
     <color name="proceed_pressed">#17A9C3</color>
@@ -61,10 +67,6 @@
     <color name="blue_start_four">#6EC6FF</color>
     <color name="high_text">#FF00C3</color>
     <color name="low_text">#FF6A00</color>
-    <color name="high">#FF57D7</color>
-    <color name="high_pressed">#FFA5E9</color>
-    <color name="low">#FF8031</color>
-    <color name="low_pressed">#FFB485</color>
 
     <color name="plus_green">#b7e1cd</color>
     <color name="plus_green_border">#A5CA9E</color>

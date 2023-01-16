@@ -34,7 +34,8 @@ objective_tim:
   scout_id: [ 'Y', int ] # Used to determine which tablets have not submitted ('Y' in quotes because it's a keyword on its own)
   start_position: [ X, str ] # str representing where a robot starts in auto ('one', 'two', 'three', or 'four')
   timeline: [ W, list, dict ] # List of dictionaries
-  climb_level: [ V, str ] # str representing where a robot climbs to ('none', 'low', 'mid', 'high' or 'traversal')
+  auto_charge_level: [ V, str ] # str representing where a robot finishes in auto to ('none', 'docked', 'engaged')
+  tele_charge_level: [ U, str ] # str representing where a robot finished in the endgame ('none', 'park', 'docked', 'engaged')
   preloaded_piece: [T, str] # str representing the preloaded game piece of a robot ('NONE', 'CONE', 'CUBE')
 
 # Timeline is part of objective match collection QR
@@ -62,9 +63,16 @@ subjective_aim:
 # Contains all the enums and their values
 # Action type is a alphabet base 26 string representation
 action_type:
-  score_ball_high: AA
-  score_ball_low: AB
-  intake: AC
-  start_incap: AD
-  end_incap: AE
-  climb_attempt: AF
+  score_cone_high: AA
+  score_cone_mid: AB
+  score_cone_low: AC
+  score_cube_high: AD
+  score_cube_mid: AE
+  score_cube_low: AF
+  intake_ground: AG
+  intake_station: AH
+  intake_low_row: AI
+  start_incap: AJ
+  end_incap: AK
+  charge_attempt: AL
+  to_teleop: AM

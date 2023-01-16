@@ -46,8 +46,10 @@ class TimerUtility {
                     // Convert time to a three-digit string to be recorded in timeline.
                     match_time = (time - 1).toInt().toString().padStart(3, '0')
 
-                    if (!is_teleop_activated and (time.roundToInt() == 135)) {
+                    if (!is_teleop_activated and (time.roundToInt() <= 135)) {
                         layout.setBackgroundColor(Color.RED)
+                    } else {
+                        layout.setBackgroundColor(Color.WHITE)
                     }
                 }
 
