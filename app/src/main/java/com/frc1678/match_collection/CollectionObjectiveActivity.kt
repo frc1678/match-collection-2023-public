@@ -269,7 +269,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
         btn_proceed_edit.isEnabled =
-            ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
+            isTimerRunning and ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
         btn_proceed_edit.text = if (!is_teleop_activated) getString(R.string.btn_to_teleop)
         else getString(R.string.btn_proceed)
     }
