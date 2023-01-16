@@ -14,19 +14,19 @@
     <ToggleButton
         android:id="@+id/defense_toggle"
         style="@style/tb_subj_defense"
-        android:layout_below="@id/tv_team_number"
         android:layout_width="120dp"
+        android:layout_below="@id/tv_team_number"
         android:textOff="@string/playing_defense"
         android:textOn="Defense" />
 
     <ToggleButton
-        style="@style/tb_subj_defense"
         android:id="@+id/intake_cone_orientation_toggle"
-        android:layout_below="@id/tv_team_number"
+        style="@style/tb_subj_defense"
         android:layout_width="120dp"
+        android:layout_below="@id/tv_team_number"
         android:layout_toEndOf="@id/defense_toggle"
-        android:textOff="@string/intake_cone_orientation"
-        android:textOn="Tilted Cones" />
+        android:textOff="@string/Intake_Tilted_Cones"
+        android:textOn="Tilted" />
 
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
