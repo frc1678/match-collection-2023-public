@@ -1,44 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/objective_match_collection_layout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/white"
     android:keepScreenOn="true"
     android:orientation="vertical"
     android:padding="@dimen/very_small">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.7"
-            android:orientation="horizontal">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_undo"
-                style="@style/btn_action_hor"
-                android:text="@string/btn_undo"
-                android:layout_weight="1"
-                android:background="@drawable/btn_undo_selector"
-                />
+        <Button
+            android:id="@+id/btn_undo"
+            style="@style/btn_action_hor"
+            android:layout_weight="1"
+            android:background="@drawable/btn_undo_selector"
+            android:text="@string/btn_undo" />
 
-            <Button
-                android:id="@+id/btn_redo"
-                style="@style/btn_action_hor"
-                android:text="@string/btn_redo"
-                android:layout_weight="1"
-                android:background="@drawable/btn_redo_selector"
-                />
+        <Button
+            android:id="@+id/btn_redo"
+            style="@style/btn_action_hor"
+            android:layout_weight="1"
+            android:background="@drawable/btn_redo_selector"
+            android:text="@string/btn_redo" />
 
-        </LinearLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/action_btn_frame"
         android:name="com.frc1678.match_collection.ObjectiveScoringPanel"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
-        android:layout_marginVertical="@dimen/small" />
+        android:layout_marginVertical="@dimen/small"
+        android:layout_weight="4" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,17 +47,17 @@
         <ToggleButton
             android:id="@+id/tb_action_one"
             style="@style/btn_action_hor"
-            android:textOff="@string/tb_action_bool_one_off"
-            android:textOn="@string/tb_action_bool_one_on"
             android:layout_weight="1"
-            android:background="@drawable/tb_incap_selector"/>
+            android:background="@drawable/tb_incap_selector"
+            android:textOff="@string/tb_action_bool_one_off"
+            android:textOn="@string/tb_action_bool_one_on" />
 
         <Button
             android:id="@+id/btn_charge"
             style="@style/btn_action_hor"
             android:layout_weight="1"
-            android:text="@string/btn_charge"
-            android:background="@drawable/tb_charge_selector"/>
+            android:background="@drawable/tb_charge_selector"
+            android:text="@string/btn_charge" />
 
     </LinearLayout>
 
@@ -71,15 +69,15 @@
 
         <Button
             android:id="@+id/btn_timer"
-            android:background="@drawable/btn_proceed"
             style="@style/btn_proceed"
+            android:background="@drawable/btn_proceed"
             android:enabled="true"
             android:text="@string/btn_timer_start" />
 
         <TextView
             android:id="@+id/tv_team_number"
             style="@style/tv_standard"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:textSize="@dimen/small_text" />
@@ -87,9 +85,9 @@
         <Button
             android:id="@+id/btn_proceed_edit"
             style="@style/btn_proceed"
+            android:background="@drawable/btn_proceed_selector"
             android:enabled="false"
-            android:text="@string/btn_to_teleop"
-            android:background="@drawable/btn_proceed_selector"/>
+            android:text="@string/btn_to_teleop" />
 
     </LinearLayout>
 
