@@ -70,7 +70,7 @@
         <Button
             android:id="@+id/btn_timer"
             style="@style/btn_proceed"
-            android:background="@drawable/btn_proceed"
+            android:background="@drawable/btn_proceed_selector"
             android:enabled="true"
             android:text="@string/btn_timer_start" />
 

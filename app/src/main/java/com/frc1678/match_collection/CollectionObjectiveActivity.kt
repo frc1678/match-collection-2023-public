@@ -525,7 +525,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
         setContentView(R.layout.collection_objective_activity)
 
         // Set the currently displayed fragment to the scoring panel
-        supportFragmentManager.beginTransaction().add(R.id.action_btn_frame, scoringPanel).commit()
+        supportFragmentManager.beginTransaction().add(
+            R.id.action_btn_frame,
+            if (preloaded == Constants.Preloaded.NONE) intakePanel else scoringPanel
+        ).commit()
 
         comingBack()
         if ((comingBack != "match information edit") and (comingBack != "QRGenerate")) {
