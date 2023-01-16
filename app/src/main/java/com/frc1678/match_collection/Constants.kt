@@ -38,6 +38,12 @@ class Constants {
         ENGAGED
     }
 
+    enum class GamePiecePositions {
+        CONE,
+        CUBE,
+        NONE
+    }
+
     enum class Preloaded {
         NONE,
         CONE,

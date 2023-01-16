@@ -53,7 +53,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
 
     fun setListenerConeOrientation() {
         intake_cone_orientation_toggle.setOnCheckedChangeListener(){ _, checked ->
-            defense_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
+            intake_cone_orientation_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 null, null, null,
                 if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
