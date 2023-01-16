@@ -40,7 +40,7 @@ var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
-var timeline: ArrayList<HashMap<String, String>> = ArrayList()
+var timeline = mutableListOf<Map<String, String>>()
 var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
 var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
 

@@ -27,12 +27,14 @@ import kotlinx.android.synthetic.main.collection_objective_activity.btn_undo
 import kotlinx.android.synthetic.main.collection_objective_activity.objective_match_collection_layout
 import kotlinx.android.synthetic.main.collection_objective_activity.tb_action_one
 import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_number
-import java.lang.Integer.parseInt
 
-// Activity for Objective Match Collection to scout the objective gameplay of a single team in a match.
+/**
+ * Activity for Objective Match Collection to scout the objective gameplay of a single team in a
+ * match.
+ */
 class CollectionObjectiveActivity : CollectionActivity() {
 
-    var scoringScreen: Boolean = true
+    var scoringScreen = true
         set(value) {
             field = value
             supportFragmentManager.beginTransaction()
@@ -47,8 +49,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     val isIncap get() = tb_action_one.isChecked
 
-    //FALSE = LOW
-    private var removedTimelineActions: ArrayList<HashMap<String, String>> = ArrayList()
+    private var removedTimelineActions = mutableListOf<Map<String, String>>()
 
     companion object {
         var comingBack: String? = ""
@@ -63,45 +64,42 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_timer.text = getString(R.string.btn_timer_start)
     }
 
-    // Add performed action to timeline, including action type and time of action.
-    private fun timelineAdd(match_time: String, action_type: Constants.ActionType) {
-        val actionHashMap: HashMap<String, String> = hashMapOf(
-            Pair("match_time", match_time),
-            Pair("action_type", "$action_type")
-        )
-        timeline.add(actionHashMap)
+    /**
+     * Add performed action to timeline, including action type and time of action.
+     */
+    private fun timelineAdd(matchTime: String, actionType: Constants.ActionType) {
+        timeline.add(mapOf("match_time" to matchTime, "action_type" to "$actionType"))
         removedTimelineActions.clear()
 
         enableButtons()
     }
 
-    // If stage and time contradict when action is recorded, add action to timeline with time value
-    // dictated by stage.
-    fun timelineAddWithStage(action_type: Constants.ActionType) {
-        when {
-            !is_teleop_activated and (parseInt(match_time) < parseInt(getString(R.string.final_auto_time))) -> {
-                timelineAdd(
-                    match_time = getString(R.string.final_auto_time),
-                    action_type = action_type
-                )
-            }
-
-            is_teleop_activated and (parseInt(match_time) > parseInt(getString(R.string.initial_teleop_time))) -> {
-                timelineAdd(
-                    match_time = getString(R.string.initial_teleop_time),
-                    action_type = action_type
-                )
-            }
-
-            else -> {
-                timelineAdd(match_time = match_time, action_type = action_type)
-            }
+    /**
+     * If stage and time contradict when action is recorded, add action to timeline with time value
+     * dictated by stage.
+     */
+    fun timelineAddWithStage(action_type: Constants.ActionType) = when {
+        !is_teleop_activated and (match_time.toInt() < getString(R.string.final_auto_time).toInt()) -> {
+            timelineAdd(
+                matchTime = getString(R.string.final_auto_time),
+                actionType = action_type
+            )
         }
+
+        is_teleop_activated and (match_time.toInt() > getString(R.string.initial_teleop_time).toInt()) -> {
+            timelineAdd(
+                matchTime = getString(R.string.initial_teleop_time),
+                actionType = action_type
+            )
+        }
+
+        else -> timelineAdd(matchTime = match_time, actionType = action_type)
     }
 
-    // Remove previously inputted action from timeline.
+    /**
+     * Remove previously inputted action from timeline.
+     */
     private fun timelineRemove() {
-        var removeOneMore = false
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
             Constants.ActionType.INTAKE_STATION.toString() -> {
@@ -159,34 +157,26 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 else did_auto_charge = false
             }
 
-            Constants.ActionType.START_INCAP.toString() -> {
-                tb_action_one.isChecked = false
-            }
-
-            Constants.ActionType.END_INCAP.toString() -> {
-                tb_action_one.isChecked = true
-            }
-
-            Constants.ActionType.TO_TELEOP.toString() -> {
-                is_teleop_activated = false
-            }
+            Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = false
+            Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = true
+            Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = false
         }
 
         // Add removed action to removedTimelineActions so it can be redone if needed.
-        removedTimelineActions.add(timeline[timeline.size - 1])
+        removedTimelineActions.add(timeline.last())
 
         // Remove most recent timeline entry.
-        timeline.removeAt(timeline.size - 1)
+        timeline.removeAt(timeline.lastIndex)
         enableButtons()
-        if (removeOneMore) timelineRemove()
     }
 
-    // Pull from removedTimelineActions to redo timeline actions after undo.
+    /**
+     * Redoes timeline actions after undo.
+     */
     private fun timelineReplace() {
-        var replaceOneMore = false
 
         // Add most recently undone action from removedTimelineActions back to timeline.
-        timeline.add(removedTimelineActions[removedTimelineActions.size - 1])
+        timeline.add(removedTimelineActions.last())
 
         // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
@@ -245,26 +235,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 else did_auto_charge = true
             }
 
-            Constants.ActionType.START_INCAP.toString() -> {
-                tb_action_one.isChecked = true
-            }
-
-            Constants.ActionType.END_INCAP.toString() -> {
-                tb_action_one.isChecked = false
-            }
-
-            Constants.ActionType.TO_TELEOP.toString() -> {
-                is_teleop_activated = true
-            }
+            Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = true
+            Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = false
+            Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = true
         }
 
         // Remove the redone action from removedTimelineActions.
-        removedTimelineActions.removeAt(removedTimelineActions.size - 1)
+        removedTimelineActions.removeAt(removedTimelineActions.lastIndex)
         enableButtons()
-        if (replaceOneMore) timelineReplace()
     }
 
-    // Enable and disable buttons based on actions in timeline and timer stage.
+    /**
+     * Enable and disable buttons based on actions in timeline and timer stage.
+     */
     fun enableButtons() {
         if (!scoringScreen) {
             intakePanel.enableButtons(isIncap)
@@ -284,24 +267,26 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
-
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
         btn_proceed_edit.isEnabled =
             ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
-        btn_proceed_edit.text =
-            if (!is_teleop_activated) getString(R.string.btn_to_teleop)
-            else getString(R.string.btn_proceed)
+        btn_proceed_edit.text = if (!is_teleop_activated) getString(R.string.btn_to_teleop)
+        else getString(R.string.btn_proceed)
     }
 
-    // Function to end incap if still activated at end of the match.
+    /**
+     * Ends incap if still activated at end of the match.
+     */
     fun endAction() {
         if (tb_action_one.isChecked) {
             tb_action_one.isChecked = false
-            timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
+            timelineAdd(matchTime = match_time, actionType = Constants.ActionType.END_INCAP)
         }
     }
 
-    // Initialize button and toggle button onClickListeners.
+    /**
+     * Initialize button and toggle button `onClickListeners`.
+     */
     private fun initOnClicks() {
         btn_proceed_edit.setOnClickListener {
             if (!is_teleop_activated) {
@@ -362,9 +347,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Otherwise, end incap.
         tb_action_one.setOnClickListener {
             if (tb_action_one.isChecked) {
-                timelineAdd(match_time = match_time, action_type = Constants.ActionType.START_INCAP)
+                timelineAdd(matchTime = match_time, actionType = Constants.ActionType.START_INCAP)
             } else {
-                timelineAdd(match_time = match_time, action_type = Constants.ActionType.END_INCAP)
+                timelineAdd(matchTime = match_time, actionType = Constants.ActionType.END_INCAP)
             }
         }
 
@@ -473,14 +458,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
             timelineRemove()
         }
 
-
         // Replace previously undone action to timeline when redo button is clicked.
         btn_redo.setOnClickListener {
             timelineReplace()
         }
     }
 
-    // Set team number view to team number defined in References.kt and set team number to alliance color.
+    /**
+     * Set team number view to team number defined in `References` and set team number to alliance
+     * color.
+     */
     private fun initTeamNum() {
         tv_team_number.text = team_number
 
@@ -493,7 +480,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
     }
 
-    // Begin intent used in onKeyLongPress to restart app from StartingPositionObjectiveActivity.kt.
+    /**
+     * Initialize intent used in [onKeyLongPress] to restart app from
+     * [StartingPositionObjectiveActivity].
+     */
     private fun intentToPreviousActivity() {
         is_teleop_activated = false
         startActivity(
@@ -502,7 +492,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         )
     }
 
-    // resets and enables everything if you entered this screen by pressing the back button
+    /**
+     * Resets and enables everything if the user entered this screen by pressing the back button.
+     */
     private fun comingBack() {
         if ((comingBack == "match information edit") or (comingBack == "QRGenerate")) {
             isTimerRunning = false
@@ -515,7 +507,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
     }
 
-    // Restart app from StartingPositionObjectiveActivity.kt when back button is long pressed.
+    /**
+     * Restart app from [StartingPositionObjectiveActivity] when back button is long pressed.
+     */
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
@@ -530,10 +524,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_objective_activity)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.action_btn_frame, scoringPanel)
-            .commit()
+        // Set the currently displayed fragment to the scoring panel
+        supportFragmentManager.beginTransaction().add(R.id.action_btn_frame, scoringPanel).commit()
 
         comingBack()
         if ((comingBack != "match information edit") and (comingBack != "QRGenerate")) {
