@@ -34,19 +34,37 @@ import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_numb
  */
 class CollectionObjectiveActivity : CollectionActivity() {
 
+    /**
+     * Whether the scoring fragment is currently being enabled. When this is set, the fragment will
+     * automatically update.
+     */
     var scoringScreen = true
         set(value) {
             field = value
-            supportFragmentManager.beginTransaction() //sets current screen to scoring or intake so we can switch between them
+            // Set the current fragment to scoring or intake depending on the new value
+            supportFragmentManager.beginTransaction()
                 .replace(R.id.action_btn_frame, if (value) scoringPanel else intakePanel).commit()
             enableButtons()
         }
 
-    private val scoringPanel = ObjectiveScoringFragment() //fragment with scoring buttons
-    private val intakePanel = ObjectiveIntakeFragment() //fragment with intake buttons
+    /**
+     * The fragment with the scoring buttons.
+     */
+    private val scoringPanel = ObjectiveScoringFragment()
 
+    /**
+     * The fragment with the intake buttons.
+     */
+    private val intakePanel = ObjectiveIntakeFragment()
+
+    /**
+     * True if the match timer is running or the timer has ended.
+     */
     var isTimerRunning = false
 
+    /**
+     * Whether the robot is currently incap.
+     */
     val isIncap get() = tb_action_one.isChecked
 
     private var removedTimelineActions = mutableListOf<Map<String, String>>()
@@ -55,7 +73,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         var comingBack: String? = ""
     }
 
-    // Set timer to start match when timer is started or reset.
+    /**
+     * Set timer to start match when timer is started or reset.
+     */
     private fun timerReset() {
         match_timer?.cancel()
         match_timer = null
@@ -361,11 +381,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
             val popupWindow = PopupWindow(popupView, width, height, false)
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
+            // Hide the 'Parked' button if still in the auto period.
             if (!is_teleop_activated) popupView.btn_parked.isVisible = false
             timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
             enableButtons()
 
-            // OnClickListeners for the buttons in the charge popup. different for teleop vs auto
+            // OnClickListeners for the buttons in the charge popup.
             popupView.btn_charge_cancel.setOnClickListener {
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.NONE

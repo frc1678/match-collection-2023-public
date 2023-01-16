@@ -9,8 +9,14 @@ import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_three
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_two
 
+/**
+ * [Fragment] used for showing the intake buttons in [CollectionObjectiveActivity].
+ */
 class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fragment) {
 
+    /**
+     * The main view of this fragment.
+     */
     private var mainView: View? = null
 
     override fun onCreateView(
@@ -25,8 +31,16 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         return mainView
     }
 
+    /**
+     * The parent activity of this fragment.
+     *
+     * @see getActivity
+     */
     private val collectionObjectiveActivity get() = activity as CollectionObjectiveActivity
 
+    /**
+     * Updates the text of the buttons with the number of times they have been pressed.
+     */
     private fun setCounterTexts() {
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
@@ -35,26 +49,25 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         }
     }
 
+    /**
+     * Initializes the `OnClickListener`s of the intake buttons.
+     */
     private fun initOnClicks() {
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_STATION)
                 numActionOne++
                 collectionObjectiveActivity.scoringScreen = true
                 setCounterTexts()
             }
 
-            // Increment button action two by one when clicked and add action to timeline.
             btn_action_two.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_LOW_ROW)
                 numActionTwo++
                 collectionObjectiveActivity.scoringScreen = true
                 setCounterTexts()
             }
 
-            // Increment button action three by one when clicked and add action to timeline.
             btn_action_three.setOnClickListener {
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_GROUND)
                 numActionThree++
@@ -64,6 +77,11 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         }
     }
 
+    /**
+     * Updates whether the intake buttons are enabled.
+     *
+     * @param isIncap Whether the robot is currently incap.
+     */
     fun enableButtons(isIncap: Boolean) {
         if (mainView != null && activity != null) with(mainView!!) {
             for (btn in listOf(btn_action_one, btn_action_two, btn_action_three)) {

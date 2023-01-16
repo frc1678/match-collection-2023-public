@@ -13,9 +13,14 @@ import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view
 import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_six
 import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_ten
 
-class ObjectiveScoringFragment :
-    Fragment(R.layout.collection_objective_scoring_fragment) {// fragment for scoring buttons
+/**
+ * [Fragment] used for showing the scoring buttons in [CollectionObjectiveActivity].
+ */
+class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_fragment) {
 
+    /**
+     * The main view of this fragment.
+     */
     private var mainView: View? = null
 
     override fun onCreateView(
@@ -30,6 +35,11 @@ class ObjectiveScoringFragment :
         return mainView
     }
 
+    /**
+     * The parent activity of this fragment.
+     *
+     * @see getActivity
+     */
     private val collectionObjectiveActivity get() = activity as CollectionObjectiveActivity
 
     /**
@@ -47,6 +57,9 @@ class ObjectiveScoringFragment :
         }
     }
 
+    /**
+     * Initializes the `OnClickListener`s for the scoring buttons.
+     */
     private fun initOnClicks() {
         if (mainView != null && activity != null) with(mainView!!) {
             // Increment button action one by one when clicked and add action to timeline.
@@ -101,6 +114,11 @@ class ObjectiveScoringFragment :
         }
     }
 
+    /**
+     * Updates whether the scoring buttons are enabled.
+     *
+     * @param isIncap Whether the robot is currently incap.
+     */
     fun enableButtons(isIncap: Boolean) {
         if (mainView != null && activity != null) with(mainView!!) {
             for (btn in listOf(
