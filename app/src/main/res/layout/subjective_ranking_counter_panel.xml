@@ -26,7 +26,7 @@
         android:layout_below="@id/tv_team_number"
         android:layout_toEndOf="@id/defense_toggle"
         android:textOff="@string/Intake_Tilted_Cones"
-        android:textOn="Tilted" />
+        android:textOn="@string/Tilted" />
 
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
