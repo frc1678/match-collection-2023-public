@@ -41,17 +41,14 @@
 
         <Button
             android:id="@+id/btn_switch_orientation_game_pieces"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/btn_switch_orientation"/>
+            style="@style/btn_starting_position"
+            android:text="@string/btn_switch_orientation"
+            android:textSize="@dimen/small" />
 
         <Button
             android:id="@+id/btn_proceed_game_piece"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="@string/btn_proceed"/>
+            style="@style/btn_starting_position_proceed"
+            android:text="@string/btn_proceed" />
 
     </LinearLayout>
 
