@@ -14,7 +14,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.charge_popup.view.btn_charge_cancel
-import kotlinx.android.synthetic.main.charge_popup.view.btn_climb_done
+import kotlinx.android.synthetic.main.charge_popup.view.btn_charge_done
 import kotlinx.android.synthetic.main.charge_popup.view.btn_docked
 import kotlinx.android.synthetic.main.charge_popup.view.btn_engaged
 import kotlinx.android.synthetic.main.charge_popup.view.btn_failed
@@ -37,13 +37,13 @@ class CollectionObjectiveActivity : CollectionActivity() {
     var scoringScreen = true
         set(value) {
             field = value
-            supportFragmentManager.beginTransaction()
+            supportFragmentManager.beginTransaction() //sets current screen to scoring or intake so we can switch between them
                 .replace(R.id.action_btn_frame, if (value) scoringPanel else intakePanel).commit()
             enableButtons()
         }
 
-    private val scoringPanel = ObjectiveScoringFragment()
-    private val intakePanel = ObjectiveIntakeFragment()
+    private val scoringPanel = ObjectiveScoringFragment() //fragment with scoring buttons
+    private val intakePanel = ObjectiveIntakeFragment() //fragment with intake buttons
 
     var isTimerRunning = false
 
@@ -365,7 +365,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
             enableButtons()
 
-            // OnClickListeners for the buttons in the climb popup
+            // OnClickListeners for the buttons in the charge popup. different for teleop vs auto
             popupView.btn_charge_cancel.setOnClickListener {
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.NONE
@@ -380,7 +380,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 enableButtons()
             }
 
-            popupView.btn_climb_done.setOnClickListener {
+            popupView.btn_charge_done.setOnClickListener {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popup_open = false
@@ -399,11 +399,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.FAILED
                     did_tele_charge = true
-                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                    popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
                     auto_charge_level = Constants.ChargeLevel.FAILED
                     did_auto_charge = true
-                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                    popupView.btn_charge_done.isEnabled = did_auto_charge
                 }
             }
             popupView.btn_parked.setOnClickListener {
@@ -414,11 +414,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.PARK
                     did_tele_charge = true
-                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                    popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
                     auto_charge_level = Constants.ChargeLevel.PARK
                     did_auto_charge = true
-                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                    popupView.btn_charge_done.isEnabled = did_auto_charge
                 }
             }
             popupView.btn_docked.setOnClickListener {
@@ -429,11 +429,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.DOCKED
                     did_tele_charge = true
-                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                    popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
                     auto_charge_level = Constants.ChargeLevel.DOCKED
                     did_auto_charge = true
-                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                    popupView.btn_charge_done.isEnabled = did_auto_charge
                 }
             }
             popupView.btn_engaged.setOnClickListener {
@@ -444,11 +444,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.ENGAGED
                     did_tele_charge = true
-                    popupView.btn_climb_done.isEnabled = did_tele_charge
+                    popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
                     auto_charge_level = Constants.ChargeLevel.ENGAGED
                     did_auto_charge = true
-                    popupView.btn_climb_done.isEnabled = did_auto_charge
+                    popupView.btn_charge_done.isEnabled = did_auto_charge
                 }
             }
         }

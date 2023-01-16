@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view
 import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_six
 import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_ten
 
-class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_fragment) {
+class ObjectiveScoringFragment :
+    Fragment(R.layout.collection_objective_scoring_fragment) {// fragment for scoring buttons
 
     private var mainView: View? = null
 
@@ -31,6 +32,9 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
 
     private val collectionObjectiveActivity get() = activity as CollectionObjectiveActivity
 
+    /**
+     * Updates buttons with the number of times they have been pressed.
+     */
     private fun setCounterTexts() {
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
@@ -47,7 +51,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
         if (mainView != null && activity != null) with(mainView!!) {
             // Increment button action one by one when clicked and add action to timeline.
             btn_action_four.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_HIGH)
                 numActionFour++
                 collectionObjectiveActivity.scoringScreen = false
@@ -55,7 +58,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_five.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
                 numActionFive++
                 collectionObjectiveActivity.scoringScreen = false
@@ -63,7 +65,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_six.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
                 numActionSix++
                 collectionObjectiveActivity.scoringScreen = false
@@ -71,7 +72,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_seven.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
                 numActionSeven++
                 collectionObjectiveActivity.scoringScreen = false
@@ -79,7 +79,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_eight.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
                 numActionEight++
                 collectionObjectiveActivity.scoringScreen = false
@@ -87,7 +86,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_nine.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
                 numActionNine++
                 collectionObjectiveActivity.scoringScreen = false
@@ -95,7 +93,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_ten.setOnClickListener {
-                // FALSE = LOW
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.FAIL)
                 numActionTen++
                 collectionObjectiveActivity.scoringScreen = false
@@ -115,9 +112,10 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 btn_action_nine,
                 btn_action_ten
             )) {
-                btn.isEnabled = CollectionObjectiveActivity.comingBack == "match information edit" ||
-                        CollectionObjectiveActivity.comingBack == "QRGenerate" ||
-                        !(!collectionObjectiveActivity.isTimerRunning || popup_open || isIncap)
+                btn.isEnabled =
+                    CollectionObjectiveActivity.comingBack == "match information edit" ||
+                            CollectionObjectiveActivity.comingBack == "QRGenerate" ||
+                            !(!collectionObjectiveActivity.isTimerRunning || popup_open || isIncap)
             }
         }
     }

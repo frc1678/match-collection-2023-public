@@ -63,7 +63,7 @@
         <!--Done-->
         <Button
             android:enabled = "false"
-            android:id="@+id/btn_climb_done"
+            android:id="@+id/btn_charge_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
