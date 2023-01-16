@@ -63,7 +63,8 @@ class Constants {
         INTAKE_GROUND,
         START_INCAP,
         END_INCAP,
-        CHARGE_ATTEMPT
+        CHARGE_ATTEMPT,
+        TO_TELEOP
     }
 
     enum class Stage {

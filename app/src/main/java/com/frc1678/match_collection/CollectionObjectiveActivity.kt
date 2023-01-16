@@ -72,7 +72,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         timeline.add(actionHashMap)
         removedTimelineActions.clear()
 
-        enablePanelButtons()
         enableButtons()
     }
 
@@ -166,6 +165,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.END_INCAP.toString() -> {
                 tb_action_one.isChecked = true
             }
+
+            Constants.ActionType.TO_TELEOP.toString() -> {
+                is_teleop_activated = false
+            }
         }
 
         // Add removed action to removedTimelineActions so it can be redone if needed.
@@ -247,16 +250,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.END_INCAP.toString() -> {
                 tb_action_one.isChecked = false
             }
+
+            Constants.ActionType.TO_TELEOP.toString() -> {
+                is_teleop_activated = true
+            }
         }
 
         // Remove the redone action from removedTimelineActions.
         removedTimelineActions.removeAt(removedTimelineActions.size - 1)
         enableButtons()
         if (replaceOneMore) timelineReplace()
-    }
-
-    private fun enablePanelButtons() {
-
     }
 
     // Enable and disable buttons based on actions in timeline and timer stage.
@@ -295,7 +298,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_proceed_edit.setOnClickListener {
             if (!is_teleop_activated) {
                 is_teleop_activated = true
-                enablePanelButtons()
+                timelineAdd(match_time, Constants.ActionType.TO_TELEOP)
                 enableButtons()
                 btn_proceed_edit.text = getString(R.string.btn_proceed)
                 btn_proceed_edit.isEnabled = false
@@ -327,7 +330,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         layout = objective_match_collection_layout
                     )
                 isTimerRunning = true
-                enablePanelButtons()
                 enableButtons()
                 btn_proceed_edit.isEnabled = true
             }
@@ -340,7 +342,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 timeline = ArrayList()
                 isTimerRunning = false
                 is_teleop_activated = false
-                enablePanelButtons()
                 enableButtons()
                 btn_proceed_edit.isEnabled = false
                 btn_proceed_edit.text = getString(R.string.btn_to_teleop)
@@ -367,7 +368,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             val popupWindow = PopupWindow(popupView, width, height, false)
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
-            enablePanelButtons()
             enableButtons()
 
             // OnClickListeners for the buttons in the climb popup
@@ -376,7 +376,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 charge_level = Constants.ChargeLevel.NONE
                 popupWindow.dismiss()
                 popup_open = false
-                enablePanelButtons()
                 enableButtons()
             }
 
@@ -385,7 +384,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 btn_charge.isEnabled = false
                 popup_open = false
                 timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
-                enablePanelButtons()
                 enableButtons()
             }
 
