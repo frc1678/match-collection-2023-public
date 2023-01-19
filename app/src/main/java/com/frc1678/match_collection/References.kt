@@ -14,6 +14,10 @@ var numActionSeven = 0 //SCORE_CONE_HIGH
 var numActionEight = 0 //SCORE_CONE_MID
 var numActionNine = 0 //SCORE_CONE_LOW
 var numActionTen = 0 //FAIL
+var autoIntakeGamePieceOne: Boolean = false
+var autoIntakeGamePieceTwo: Boolean = false
+var autoIntakeGamePieceThree: Boolean= false
+var autoIntakeGamePieceFour: Boolean= false
 
 
 var match_timer: CountDownTimer? = null

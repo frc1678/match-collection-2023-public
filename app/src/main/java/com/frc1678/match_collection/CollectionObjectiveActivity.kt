@@ -43,7 +43,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
             field = value
             // Set the current fragment to scoring or intake depending on the new value
             supportFragmentManager.beginTransaction()
-                .replace(R.id.action_btn_frame, if (value) scoringPanel else intakePanel).commit()
+                .replace(R.id.action_btn_frame,
+                    if (value) {scoringPanel
+                    } else { if (is_teleop_activated == true ) {intakePanel
+                    } else { intakeAutoPanel
+                    } }).commit()
             enableButtons()
         }
 
@@ -53,9 +57,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private val scoringPanel = ObjectiveScoringFragment()
 
     /**
-     * The fragment with the intake buttons.
+     * The fragment with the intake buttons for teleop.
      */
     private val intakePanel = ObjectiveIntakeFragment()
+
+    /**
+     * The fragment with the intake buttons for auto
+     */
+    private val intakeAutoPanel = ObjectiveAutoIntakeFragment()
 
     /**
      * True if the match timer is running or the timer has ended.
@@ -182,7 +191,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = false
         }
 
-        // Add removed action to removedTimelineActions so it can be redone if needed.
+        // Add removed action to removedTimelineActions, so it can be redone if needed.
         removedTimelineActions.add(timeline.last())
 
         // Remove most recent timeline entry.
