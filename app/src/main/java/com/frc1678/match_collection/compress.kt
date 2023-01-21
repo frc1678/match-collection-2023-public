@@ -56,7 +56,7 @@ fun compress(
     val compressAwareScore =
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
-    val compressGamePiece = subjectiveData.getValue("game_piece").toString().split(",")[0]
+    val compressGamePiece = subjectiveData.getValue("auto_pieces_start_position").toString().split(",")[0]
     val compressIntakeConeOrientation =
         subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
     val compressDefenseTimestamp = subjectiveData.getValue("defense_timestamp").toString().split(",")[0]
