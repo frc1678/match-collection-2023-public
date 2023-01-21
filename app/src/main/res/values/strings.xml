@@ -69,6 +69,7 @@
     <string name="field_aware">Field Aware</string>
     <string name="timer_run_down">Teleop - 0</string>
     <string name="preloaded">Preloaded:</string>
-    <string name="Intake_Tilted_Cones">Intake Titled Cones?</string>
+    <string name="Intake_Tilted_Cones">Intake Tilted Cones?</string>
     <string name="Tilted">Tilted</string>
+
 </resources>

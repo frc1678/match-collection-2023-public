@@ -109,7 +109,7 @@ class StartingGamePieceActivity : CollectionActivity() {
             // Otherwise create warning message
             if((gamePiecePositionList[0] == Constants.GamePiecePositions.NONE) or (gamePiecePositionList[1] == Constants.GamePiecePositions.NONE) or
                 (gamePiecePositionList[2] == Constants.GamePiecePositions.NONE) or (gamePiecePositionList[3] == Constants.GamePiecePositions.NONE)){
-                AlertDialog.Builder(this).setTitle("Warning! You have not selected for all game pieces!")
+                AlertDialog.Builder(this).setTitle("Warning! You have not selected the type for all of the game pieces!")
                     .setNegativeButton("Cancel") { dialog, _ ->
                         dialog.cancel()
                     }.setPositiveButton("Proceed") { _: DialogInterface, _: Int ->
