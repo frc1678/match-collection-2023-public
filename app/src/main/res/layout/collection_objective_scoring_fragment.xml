@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/objective_match_collection_layout_scoring"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:keepScreenOn="true"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/very_small">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_action_four"
+                style="@style/btn_action"
+                android:layout_weight="1"
+                android:background="@drawable/btn_action_selector_cube"
+                android:text="@string/btn_action_four" />
+
+            <Button
+                android:id="@+id/btn_action_five"
+                style="@style/btn_action"
+                android:layout_weight="1"
+                android:background="@drawable/btn_action_selector_cube"
+                android:text="@string/btn_action_five" />
+
+            <Button
+                android:id="@+id/btn_action_six"
+                style="@style/btn_action"
+                android:layout_weight="1"
+                android:background="@drawable/btn_action_selector_cube"
+                android:text="@string/btn_action_six" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_action_seven"
+                style="@style/btn_action"
+                android:layout_weight="1"
+                android:background="@drawable/btn_action_selector_cone"
+                android:text="@string/btn_action_seven" />
+
+            <Button
+                android:id="@+id/btn_action_eight"
+                style="@style/btn_action"
+                android:layout_weight="1"
+                android:background="@drawable/btn_action_selector_cone"
+                android:text="@string/btn_action_eight" />
+
+            <Button
+                android:id="@+id/btn_action_nine"
+                style="@style/btn_action"
+                android:layout_weight="1"
+                android:background="@drawable/btn_action_selector_cone"
+                android:text="@string/btn_action_nine" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_action_ten"
+        style="@style/btn_action"
+        android:layout_weight="0.7"
+        android:background="@drawable/btn_action_selector_failed"
+        android:text="@string/btn_action_ten" />
+
+</LinearLayout>

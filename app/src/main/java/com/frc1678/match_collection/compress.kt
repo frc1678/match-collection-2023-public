@@ -41,7 +41,8 @@ fun compress(
     val compressScoutId = objectiveData.getValue("scout_id").toString().split(",")[0]
     val compressStartingPosition = objectiveData.getValue("start_position").toString().split(",")[0]
     val compressTimeline = objectiveData.getValue("timeline").toString().split(",")[0]
-    val compressEndgame = objectiveData.getValue("climb_level").toString().split(",")[0]
+    val compressAutoChargeLevel = objectiveData.getValue("auto_charge_level").toString().split(",")[0]
+    val compressTeleChargeLevel = objectiveData.getValue("tele_charge_level").toString().split(",")[0]
     val compressPreloaded = objectiveData.getValue("preloaded_piece").toString().split(",")[0]
 
     // Define compression characters for subjective separators.
@@ -56,7 +57,8 @@ fun compress(
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
     val compressGamePiece = subjectiveData.getValue("game_piece").toString().split(",")[0]
-    val compressIntakeConeOrientation = subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
+    val compressIntakeConeOrientation =
+        subjectiveData.getValue("intake_cone_orientation").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
@@ -73,7 +75,10 @@ fun compress(
         // Compress timeline actions if timeline exists.
         var compressTimelineActions = ""
         if (timeline.isNotEmpty()) {
-            for (actions in timeline) {
+            for (actions in timeline.filterNot {
+                it["action_type"] == Constants.ActionType.FAIL.toString()
+                    || it["action_type"] == Constants.ActionType.CHARGE_ATTEMPT.toString()
+            }) {
                 // Compress and add timeline action attributes present for all actions.
                 compressTimelineActions = compressTimelineActions +
                         actions.getValue("match_time") + actionTypeData.getValue(
@@ -92,7 +97,8 @@ fun compress(
                     compressScoutId + scout_id + objectiveSeparator +
                     compressStartingPosition + starting_position.toString() + objectiveSeparator +
                     compressTimeline + compressTimelineActions + objectiveSeparator +
-                    compressEndgame + climb_level + objectiveSeparator +
+                    compressAutoChargeLevel + auto_charge_level + objectiveSeparator +
+                    compressTeleChargeLevel + tele_charge_level + objectiveSeparator +
                     compressPreloaded + preloaded
     }
     // Compress and add data specific to Subjective Match Collection.

@@ -30,6 +30,14 @@ class Constants {
         NONE
     }
 
+    enum class ChargeLevel {
+        NONE,
+        FAILED,
+        PARK,
+        DOCKED,
+        ENGAGED
+    }
+
     enum class GamePiecePositions {
         CONE,
         CUBE,
@@ -42,21 +50,21 @@ class Constants {
         CUBE
     }
 
-    enum class ClimbLevel {
-        NONE,
-        LOW,
-        MID,
-        HIGH,
-        TRAVERSAL,
-    }
-
     enum class ActionType {
-        SCORE_BALL_HIGH,
-        SCORE_BALL_LOW,
-        INTAKE,
+        SCORE_CUBE_HIGH,
+        SCORE_CUBE_MID,
+        SCORE_CUBE_LOW,
+        SCORE_CONE_HIGH,
+        SCORE_CONE_MID,
+        SCORE_CONE_LOW,
+        FAIL,
+        INTAKE_STATION,
+        INTAKE_LOW_ROW,
+        INTAKE_GROUND,
         START_INCAP,
         END_INCAP,
-        CLIMB_ATTEMPT,
+        CHARGE_ATTEMPT,
+        TO_TELEOP
     }
 
     enum class Stage {
