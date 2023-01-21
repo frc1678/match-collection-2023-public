@@ -129,11 +129,6 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                     )
                 }
             }
-            else{
-                startActivity(
-                    Intent(this, MatchInformationInputActivity::class.java)
-                )
-            }
         }
         return super.onKeyLongPress(keyCode, event)
     }

@@ -57,7 +57,8 @@ subjective_aim:
   field_awareness_score: [ C, int ] # A ranking value between 1 and 3
   played_defense: [ D, bool ] # True if robot played defense at least once in the match, else False
   intake_cone_orientation: [ E, bool ] # True if robot picked up a non-upright cone during the match, else False
-  game_piece: [F, int] # 0 for a cone, 1 for a cube
+  auto_pieces_start_position: [F, list, str, 1] # A list of length four for each auto starting position,
+  defense_timestamp: [G, int]
 
 
 # Contains all the enums and their values

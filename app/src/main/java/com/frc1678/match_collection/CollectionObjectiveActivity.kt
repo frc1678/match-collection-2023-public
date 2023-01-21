@@ -339,7 +339,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         context = this,
                         btn_timer = btn_timer,
                         btn_proceed = btn_proceed_edit,
-                        btn_incap = tb_action_one,
                         layout = objective_match_collection_layout
                     )
                 isTimerRunning = true
