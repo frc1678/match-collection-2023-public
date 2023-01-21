@@ -56,7 +56,7 @@ subjective_aim:
   quickness_score: [ B, int ] # A ranking value between 1 and 3
   field_awareness_score: [ C, int ] # A ranking value between 1 and 3
   played_defense: [ D, bool ] # True if robot played defense at least once in the match, else False
-  intake_cone_orientation: [ E, bool ] # True if robot picked up a non-upright cone during the match, else False
+  scored_coop: [E, bool] # True if robot scored in coop zone during match, else False
   auto_pieces_start_position: [F, list, str, 1] # A list of length four for each auto starting position,
   defense_timestamp: [G, int]
 

@@ -57,16 +57,16 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                 ranking.teamTwo?.teamNumber = et_team_two.text.toString()
                 ranking.teamThree?.teamNumber = et_team_three.text.toString()
             }
-            if (intake_cone_orientation_list.contains(teamNumberOne)){
-                intake_cone_orientation_list[intake_cone_orientation_list.indexOf(teamNumberOne)] =
+            if (scoredCoopList.contains(teamNumberOne)){
+                scoredCoopList[scoredCoopList.indexOf(teamNumberOne)] =
                     et_team_one.text.toString()
             }
-            if (intake_cone_orientation_list.contains(teamNumberTwo)){
-                intake_cone_orientation_list[intake_cone_orientation_list.indexOf(teamNumberTwo)] =
+            if (scoredCoopList.contains(teamNumberTwo)){
+                scoredCoopList[scoredCoopList.indexOf(teamNumberTwo)] =
                     et_team_two.text.toString()
             }
-            if (intake_cone_orientation_list.contains(teamNumberThree)){
-                intake_cone_orientation_list[intake_cone_orientation_list.indexOf(teamNumberThree)] =
+            if (scoredCoopList.contains(teamNumberThree)){
+                scoredCoopList[scoredCoopList.indexOf(teamNumberThree)] =
                     et_team_three.text.toString()
             }
 

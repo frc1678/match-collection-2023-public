@@ -61,7 +61,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         get() {
             val tempToggleList = arrayListOf<String>()
             for (x in 0 until panelList.size) {
-                if (panelList[x].intakeConeOrientation){
+                if (panelList[x].scoredCoop){
                     when (x) {}
                 }
             }
@@ -113,7 +113,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             quickness_score = recordRankingData(dataName = "quickness")
             field_awareness_score = recordRankingData(dataName = "field_awareness")
             played_defense_list = defenseToggleData
-            intake_cone_orientation_list = intakeConeOrientationToggleData
+            scoredCoopList = intakeConeOrientationToggleData
             defenseTimestamps = panelList.map { it.defenseTime }
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
