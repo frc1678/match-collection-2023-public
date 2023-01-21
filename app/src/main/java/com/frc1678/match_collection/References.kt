@@ -51,6 +51,7 @@ var intake_cone_orientation_list: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
 var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.NONE,
     Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE)
+var defenseTimestamps = listOf<Int?>(null, null, null)
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
@@ -81,6 +82,7 @@ fun resetCollectionReferences() {
     field_awareness_score = SubjectiveTeamRankings()
     intake_cone_orientation_list = ArrayList()
     played_defense_list = ArrayList()
+    defenseTimestamps = listOf(null, null, null)
 }
 
 data class SubjectiveTeamRankings(

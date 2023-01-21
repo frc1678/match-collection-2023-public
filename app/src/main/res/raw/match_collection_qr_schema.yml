@@ -58,6 +58,7 @@ subjective_aim:
   played_defense: [ D, bool ] # True if robot played defense at least once in the match, else False
   intake_cone_orientation: [ E, bool ] # True if robot picked up a non-upright cone during the match, else False
   game_piece: [F, int] # 0 for a cone, 1 for a cube
+  defense_timestamp: [G, int]
 
 
 # Contains all the enums and their values

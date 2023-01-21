@@ -12,6 +12,9 @@ import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
  * Every team being scouted gets a single panel.
  * @see R.layout.subjective_ranking_counter_panel */
 class SubjectiveRankingCounterPanel : Fragment() {
+
+    var defenseTime: Int? = null
+
     // Inflates the view for this counter panel.
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +51,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
                 // bottom
                 if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
+            if (defenseTime == null) defenseTime = match_time.toIntOrNull()
         }
     }
 

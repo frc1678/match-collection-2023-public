@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/subjective_match_collection_layout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:keepScreenOn="true"
@@ -18,31 +19,49 @@
             android:name="com.frc1678.match_collection.SubjectiveRankingCounterPanel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginVertical="@dimen/small" />
+            android:layout_marginVertical="@dimen/small"
+            android:layout_weight="1" />
 
         <fragment
             android:id="@+id/robotTwo"
             android:name="com.frc1678.match_collection.SubjectiveRankingCounterPanel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginVertical="@dimen/small" />
+            android:layout_marginVertical="@dimen/small"
+            android:layout_weight="1" />
 
         <fragment
             android:id="@+id/robotThree"
             android:name="com.frc1678.match_collection.SubjectiveRankingCounterPanel"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginVertical="@dimen/small" />
+            android:layout_marginVertical="@dimen/small"
+            android:layout_weight="1" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_proceed_edit"
-        style="@style/btn_white"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/btn_proceed" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_timer"
+            style="@style/btn_proceed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_proceed_selector"
+            android:text="@string/btn_timer_start" />
+
+        <Button
+            android:id="@+id/btn_proceed_edit"
+            style="@style/btn_proceed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_proceed_selector"
+            android:enabled="false"
+            android:text="@string/btn_proceed" />
+    </LinearLayout>
+
 </LinearLayout>
