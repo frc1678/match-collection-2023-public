@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
@@ -17,28 +18,36 @@
         android:orientation="vertical">
 
         <ToggleButton
-            android:id="@+id/collection_objective_intake_game_peice_one"
+            android:id="@+id/tb_collection_objective_intake_game_piece_one"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textOff="On Ground"
+            android:textOn="Taken"/>
 
         <ToggleButton
-            android:id="@+id/collection_objective_intake_game_peice_two"
+            android:id="@+id/tb_collection_objective_intake_game_piece_two"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textOff="On Ground"
+            android:textOn="Taken"/>
 
         <ToggleButton
-            android:id="@+id/collection_objective_intake_game_peice_three"
+            android:id="@+id/tb_collection_objective_intake_game_piece_three"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textOff="On Ground"
+            android:textOn="Taken"/>
 
         <ToggleButton
-            android:id="@+id/collection_objective_intake_game_peice_four"
+            android:id="@+id/tb_collection_objective_intake_game_piece_four"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:textOff="On Ground"
+            android:textOn="Taken"/>
 
     </LinearLayout>
 

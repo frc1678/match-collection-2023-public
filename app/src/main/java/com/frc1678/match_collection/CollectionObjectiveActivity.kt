@@ -45,7 +45,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.action_btn_frame,
                     if (value) {scoringPanel
-                    } else { if (is_teleop_activated == true ) {intakePanel
+                    } else { if (is_teleop_activated) {intakePanel
                     } else { intakeAutoPanel
                     } }).commit()
             enableButtons()
