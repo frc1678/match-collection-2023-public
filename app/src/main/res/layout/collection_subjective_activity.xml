@@ -51,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/btn_proceed_selector"
+            android:padding="@dimen/small"
             android:text="@string/btn_timer_start" />
 
         <Button
@@ -61,6 +62,7 @@
             android:layout_weight="1"
             android:background="@drawable/btn_proceed_selector"
             android:enabled="false"
+            android:padding="@dimen/small"
             android:text="@string/btn_proceed" />
     </LinearLayout>
 
