@@ -244,7 +244,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
             Constants.ActionType.AUTO_INTAKE_THREE.toString() -> {
                 autoIntakeGamePieceThree = 1
-                scoringScreen = false
+                scoringScreen = true
             }
 
             Constants.ActionType.AUTO_INTAKE_FOUR.toString() -> {
