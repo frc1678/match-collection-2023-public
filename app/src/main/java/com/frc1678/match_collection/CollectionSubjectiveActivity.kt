@@ -136,7 +136,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     // Begin intent used in onKeyLongPress to restart app from StartingGamePieceActivity.kt.
     private fun intentToMatchInput() {
         startActivity(
-            Intent(this, StartingGamePieceActivity::class.java),
+            Intent(this, StartingGamePieceActivity::class.java).putExtras(intent),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
