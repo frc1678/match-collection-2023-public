@@ -69,7 +69,7 @@
     <string name="field_aware">Field Aware</string>
     <string name="timer_run_down">Teleop - 0</string>
     <string name="preloaded">Preloaded:</string>
-    <string name="Intake_Tilted_Cones">Intake Tilted Cones?</string>
-    <string name="Tilted">Tilted</string>
+    <string name="scored_in_coop_zone">Scored in coop zone?</string>
+    <string name="coop_zone">Coop zone</string>
 
 </resources>
