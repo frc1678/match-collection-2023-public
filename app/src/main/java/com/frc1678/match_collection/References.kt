@@ -14,10 +14,10 @@ var numActionSeven = 0 //SCORE_CONE_HIGH
 var numActionEight = 0 //SCORE_CONE_MID
 var numActionNine = 0 //SCORE_CONE_LOW
 var numActionTen = 0 //FAIL
-var autoIntakeGamePieceOne: Boolean = false
-var autoIntakeGamePieceTwo: Boolean = false
-var autoIntakeGamePieceThree: Boolean= false
-var autoIntakeGamePieceFour: Boolean= false
+var autoIntakeGamePieceOne = 0
+var autoIntakeGamePieceTwo = 0
+var autoIntakeGamePieceThree = 0
+var autoIntakeGamePieceFour = 0
 
 
 var match_timer: CountDownTimer? = null
@@ -69,10 +69,10 @@ fun resetCollectionReferences() {
     numActionEight = 0
     numActionNine = 0
     numActionTen = 0
-    autoIntakeGamePieceOne = false
-    autoIntakeGamePieceTwo = false
-    autoIntakeGamePieceThree = false
-    autoIntakeGamePieceFour = false
+    autoIntakeGamePieceOne = 0
+    autoIntakeGamePieceTwo = 0
+    autoIntakeGamePieceThree = 0
+    autoIntakeGamePieceFour = 0
 
     is_teleop_activated = false
     did_auto_charge = false
