@@ -71,5 +71,6 @@
     <string name="preloaded">Preloaded:</string>
     <string name="scored_in_coop_zone">Scored in coop zone?</string>
     <string name="coop_zone">Coop zone</string>
-
+    <string name="taken">Taken</string>
+    <string name="on_ground">On Ground</string>
 </resources>

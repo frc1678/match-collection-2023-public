@@ -41,9 +41,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
     var scoringScreen = true
         set(value) {
             field = value
-            // Set the current fragment to scoring or intake depending on the new value
+            /**Set the current fragment to scoring or intake depending on the new value,if teleop is activated set intakePanel
+             *
+             */
             supportFragmentManager.beginTransaction()
-                .replace(R.id.action_btn_frame, if (value) scoringPanel else intakePanel).commit()
+                .replace(R.id.action_btn_frame,
+                    if (value) {scoringPanel
+                    } else { if (is_teleop_activated) {intakePanel
+                    } else { intakeAutoPanel
+                    } }).commit()
             enableButtons()
         }
 
@@ -53,9 +59,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private val scoringPanel = ObjectiveScoringFragment()
 
     /**
-     * The fragment with the intake buttons.
+     * The fragment with the intake buttons for teleop.
      */
     private val intakePanel = ObjectiveIntakeFragment()
+
+    /**
+     * The fragment with the intake buttons for auto
+     */
+    private val intakeAutoPanel = ObjectiveAutoIntakeFragment()
 
     /**
      * True if the match timer is running or the timer has ended.
@@ -122,6 +133,27 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun timelineRemove() {
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
+            // Removes auto intake and scoring screen in timeline for specific game piece when undo button is used
+            Constants.ActionType.AUTO_INTAKE_ONE.toString() -> {
+                autoIntakeGamePieceOne = 0
+                scoringScreen = false
+            }
+
+            Constants.ActionType.AUTO_INTAKE_TWO.toString() -> {
+                autoIntakeGamePieceTwo = 0
+                scoringScreen = false
+            }
+
+            Constants.ActionType.AUTO_INTAKE_THREE.toString() -> {
+                autoIntakeGamePieceThree = 0
+                scoringScreen = false
+            }
+
+            Constants.ActionType.AUTO_INTAKE_FOUR.toString() -> {
+                autoIntakeGamePieceFour = 0
+                scoringScreen = false
+            }
+
             Constants.ActionType.INTAKE_STATION.toString() -> {
                 numActionOne--
                 scoringScreen = false
@@ -182,7 +214,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = false
         }
 
-        // Add removed action to removedTimelineActions so it can be redone if needed.
+        // Add removed action to removedTimelineActions, so it can be redone if needed.
         removedTimelineActions.add(timeline.last())
 
         // Remove most recent timeline entry.
@@ -200,6 +232,26 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
+            Constants.ActionType.AUTO_INTAKE_ONE.toString() -> {
+                autoIntakeGamePieceOne = 1
+                scoringScreen = true
+            }
+
+            Constants.ActionType.AUTO_INTAKE_TWO.toString() -> {
+                autoIntakeGamePieceTwo = 1
+                scoringScreen = true
+            }
+
+            Constants.ActionType.AUTO_INTAKE_THREE.toString() -> {
+                autoIntakeGamePieceThree = 1
+                scoringScreen = true
+            }
+
+            Constants.ActionType.AUTO_INTAKE_FOUR.toString() -> {
+                autoIntakeGamePieceFour = 1
+                scoringScreen = true
+            }
+
             Constants.ActionType.INTAKE_STATION.toString() -> {
                 numActionOne++
                 scoringScreen = true
@@ -266,11 +318,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     /**
-     * Enable and disable buttons based on actions in timeline and timer stage.
+     * Enable and disable buttons based on actions in timeline and timer stage. If in teleop enable intake Panel,
+     * if teleop is not activated enable inake auto panel
      */
     fun enableButtons() {
         if (!scoringScreen) {
-            intakePanel.enableButtons(isIncap)
+            if(is_teleop_activated) {
+                intakePanel.enableButtons(isIncap)
+            } else if (!is_teleop_activated) {
+                intakeAutoPanel.enableButtons()
+            }
         } else {
             scoringPanel.enableButtons(isIncap)
         }
@@ -317,6 +374,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 btn_proceed_edit.isEnabled = false
                 btn_timer.isEnabled = false
                 objective_match_collection_layout.setBackgroundColor(Color.WHITE)
+
+                /**
+                 * If you are in the ObjectiveAutoIntakeFragment screen switches you to the ObjectiveIntakeFragment
+                 */
+                if (!scoringScreen) supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame, intakePanel).commit()
 
             } else {
                 endAction()
