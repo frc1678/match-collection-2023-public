@@ -131,6 +131,26 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun timelineRemove() {
         // Decrement action values displayed on action counters.
         when (timeline[timeline.size - 1]["action_type"].toString()) {
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_ONE.toString() -> {
+                autoIntakeGamePieceOne = false
+                scoringScreen = false
+            }
+
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_TWO.toString() -> {
+                autoIntakeGamePieceTwo = false
+                scoringScreen = false
+            }
+
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_THREE.toString() -> {
+                autoIntakeGamePieceThree = false
+                scoringScreen = false
+            }
+
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_FOUR.toString() -> {
+                autoIntakeGamePieceFour = false
+                scoringScreen = false
+            }
+
             Constants.ActionType.INTAKE_STATION.toString() -> {
                 numActionOne--
                 scoringScreen = false
@@ -209,6 +229,26 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Increment action values and display on action counters if re-adding a counter action from the timeline.
         when (removedTimelineActions[removedTimelineActions.size - 1]["action_type"].toString()) {
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_ONE.toString() -> {
+                autoIntakeGamePieceOne = true
+                scoringScreen = true
+            }
+
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_TWO.toString() -> {
+                autoIntakeGamePieceTwo = true
+                scoringScreen = true
+            }
+
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_THREE.toString() -> {
+                autoIntakeGamePieceThree = true
+                scoringScreen = false
+            }
+
+            Constants.ActionType.AUTO_INTAKE_GAME_PIECE_FOUR.toString() -> {
+                autoIntakeGamePieceFour = true
+                scoringScreen = true
+            }
+
             Constants.ActionType.INTAKE_STATION.toString() -> {
                 numActionOne++
                 scoringScreen = true
@@ -279,7 +319,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
      */
     fun enableButtons() {
         if (!scoringScreen) {
-            intakePanel.enableButtons(isIncap)
+            if(is_teleop_activated) {
+                intakePanel.enableButtons(isIncap)
+            } else if (!is_teleop_activated) {
+                intakeAutoPanel.enableButtons()
+            }
         } else {
             scoringPanel.enableButtons(isIncap)
         }
@@ -326,6 +370,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 btn_proceed_edit.isEnabled = false
                 btn_timer.isEnabled = false
                 objective_match_collection_layout.setBackgroundColor(Color.WHITE)
+                if (!scoringScreen) supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame, intakePanel).commit()
+
 
             } else {
                 endAction()

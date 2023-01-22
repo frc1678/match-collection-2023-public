@@ -17,37 +17,29 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <ToggleButton
+        <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_one"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textOff="On Ground"
-            android:textOn="Taken"/>
+            android:layout_weight="1"/>
 
-        <ToggleButton
+        <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_two"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textOff="On Ground"
-            android:textOn="Taken"/>
+            android:layout_weight="1"/>
 
-        <ToggleButton
+        <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_three"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textOff="On Ground"
-            android:textOn="Taken"/>
+            android:layout_weight="1"/>
 
-        <ToggleButton
+        <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_four"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:textOff="On Ground"
-            android:textOn="Taken"/>
+            android:layout_weight="1"/>
 
     </LinearLayout>
 

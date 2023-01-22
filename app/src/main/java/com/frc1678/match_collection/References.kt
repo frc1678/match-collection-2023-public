@@ -68,6 +68,10 @@ fun resetCollectionReferences() {
     numActionEight = 0
     numActionNine = 0
     numActionTen = 0
+    autoIntakeGamePieceOne = false
+    autoIntakeGamePieceTwo = false
+    autoIntakeGamePieceThree = false
+    autoIntakeGamePieceFour = false
 
     is_teleop_activated = false
     did_auto_charge = false
