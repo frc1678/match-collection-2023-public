@@ -49,6 +49,7 @@ fun compress(
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
     val subjectiveSeparator = subjectiveData.getValue("_separator").toString()
     val subjectiveTeamSeparator = subjectiveData.getValue("_team_separator").toString()
+    val subjectiveAllianceDataSeparator = subjectiveData.getValue("_alliance_data_separator").toString()
     val subjectiveTeamNumberSeparator =
         subjectiveData.getValue("team_number").toString().split(",")[0]
     // Define compression characters for subjective data.
@@ -56,7 +57,7 @@ fun compress(
     val compressAwareScore =
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
-    val compressGamePiece = subjectiveData.getValue("auto_pieces_start_position").toString().split(",")[0]
+    val compressAutoPiecesStartPosition = subjectiveData.getValue("auto_pieces_start_position").toString().split(",")[0]
     val compressScoredCoop =
         subjectiveData.getValue("scored_coop").toString().split(",")[0]
     val compressDefenseTimestamp = subjectiveData.getValue("defense_timestamp").toString().split(",")[0]
@@ -114,21 +115,6 @@ fun compress(
             val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
             val playedDefense = played_defense_list.contains(teamNum)
             val scoredCoop = scoredCoopList.contains(teamNum)
-            var gamePiece = " "
-
-            // Goes through all the game pieces and checks if they are either a cone or cube
-            // if it is a cone, then adds 0 to gamePiece, 1 if it is a cube
-            for (x in 0..3) {
-                if(gamePiecePositionList[x] == Constants.GamePiecePositions.CONE) {
-                    gamePiece += "0"
-                } else if (gamePiecePositionList[x] == Constants.GamePiecePositions.CUBE) {
-                    gamePiece +="1"
-                }
-                // Shouldn't ever happen
-                else {
-                    gamePiece += "2"
-                }
-            }
 
             subjDataString += subjectiveSeparator
             subjDataString += compressQuicknessScore
@@ -143,20 +129,28 @@ fun compress(
             subjDataString += if (playedDefense) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
-            subjDataString += compressGamePiece
-            subjDataString += gamePiece
-
-            subjDataString += subjectiveSeparator
             subjDataString += compressScoredCoop
             subjDataString += if (scoredCoop) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
             subjDataString += compressDefenseTimestamp
-            subjDataString += defenseTimestamps[i] ?: 0
+            subjDataString += (defenseTimestamps[i] ?: 0).toString().padStart(3, '0')
 
             if (i + 1 != teamNumbers.size) subjDataString += subjectiveTeamSeparator
         }
 
+        subjDataString += subjectiveAllianceDataSeparator
+
+        val autoPiecesStartPosition = gamePiecePositionList.map {
+            when (it) {
+                Constants.GamePiecePositions.CONE -> '0'
+                Constants.GamePiecePositions.CUBE -> '1'
+                else -> '2'
+            }
+        }.joinToString("")
+
+        subjDataString += compressAutoPiecesStartPosition
+        subjDataString += autoPiecesStartPosition
 
         // Compress and add all Subjective Match Collection data including previously compressed timeline actions.
         compressedMatchInformation =
