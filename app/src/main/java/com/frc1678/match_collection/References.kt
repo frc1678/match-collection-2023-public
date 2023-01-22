@@ -51,10 +51,11 @@ var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
-var intake_cone_orientation_list: ArrayList<String> = ArrayList()
+var scoredCoopList: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
 var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.NONE,
     Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE)
+var defenseTimestamps = listOf<Int?>(null, null, null)
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
@@ -87,8 +88,9 @@ fun resetCollectionReferences() {
 
     quickness_score = SubjectiveTeamRankings()
     field_awareness_score = SubjectiveTeamRankings()
-    intake_cone_orientation_list = ArrayList()
+    scoredCoopList = ArrayList()
     played_defense_list = ArrayList()
+    defenseTimestamps = listOf(null, null, null)
 }
 
 data class SubjectiveTeamRankings(

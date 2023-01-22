@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.frc1678.match_collection.Constants.AllianceColor
 import kotlinx.android.synthetic.main.collection_objective_auto_intake_fragment.*
 import kotlinx.android.synthetic.main.collection_objective_auto_intake_fragment.view.*
 
@@ -32,41 +33,36 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
         if (mainView != null) {
             mainView!!.tb_collection_objective_intake_game_piece_one.setOnClickListener {
                 if (!autoIntakeGamePieceOne) {
-                    tb_collection_objective_intake_game_piece_one.text = "Taken"
                     autoIntakeGamePieceOne = true
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_GAME_PIECE_ONE)
-                    mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.WHITE)
+                    mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.LTGRAY)
                     collectionObjectiveActivity.scoringScreen = true
                 }
             }
 
             mainView!!.tb_collection_objective_intake_game_piece_two.setOnClickListener {
-
                 if (!autoIntakeGamePieceTwo) {
-                    tb_collection_objective_intake_game_piece_two.text = "Taken"
                     autoIntakeGamePieceTwo = true
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_GAME_PIECE_TWO)
-                    mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.WHITE)
+                    mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.LTGRAY)
                     collectionObjectiveActivity.scoringScreen = true
                 }
             }
 
             mainView!!.tb_collection_objective_intake_game_piece_three.setOnClickListener {
                 if (!autoIntakeGamePieceThree) {
-                    tb_collection_objective_intake_game_piece_three.text = "Taken"
                     autoIntakeGamePieceThree = true
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_GAME_PIECE_THREE)
-                    mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.WHITE)
+                    mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.LTGRAY)
                     collectionObjectiveActivity.scoringScreen = true
                 }
             }
 
             mainView!!.tb_collection_objective_intake_game_piece_four.setOnClickListener {
                 if (!autoIntakeGamePieceFour) {
-                    tb_collection_objective_intake_game_piece_four.text = "Taken"
                     autoIntakeGamePieceFour = true
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_GAME_PIECE_FOUR)
-                    mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.WHITE)
+                    mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.LTGRAY)
                     collectionObjectiveActivity.scoringScreen = true
                 }
             }
@@ -75,49 +71,73 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
 
     private fun setBackgrounds(){
         when {
-            (orientation && alliance_color == Constants.AllianceColor.BLUE) ->
+            (orientation && alliance_color == AllianceColor.BLUE) ->
                 mainView!!.objective_collection_intake_map.setImageResource(R.drawable.blue_up_game_pieces)
-            (!orientation && alliance_color == Constants.AllianceColor.BLUE) ->
+            (!orientation && alliance_color == AllianceColor.BLUE) ->
                 mainView!!.objective_collection_intake_map.setImageResource(R.drawable.blue_down_game_pieces)
-            (orientation && alliance_color == Constants.AllianceColor.RED) ->
+            (orientation && alliance_color == AllianceColor.RED) ->
                 mainView!!.objective_collection_intake_map.setImageResource(R.drawable.red_up_game_pieces)
-            (!orientation && alliance_color == Constants.AllianceColor.RED) ->
+            (!orientation && alliance_color == AllianceColor.RED) ->
                 mainView!!.objective_collection_intake_map.setImageResource(R.drawable.red_down_game_pieces)
         }
         when {
             (autoIntakeGamePieceOne) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.WHITE)
-                mainView!!.tb_collection_objective_intake_game_piece_one.text = "Taken"
+                mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.LTGRAY)
+                mainView!!.tb_collection_objective_intake_game_piece_one.text = "${getString(R.string.taken)} ${getString(R.string.one_starting_position)}"
+                mainView!!.tb_collection_objective_intake_game_piece_one.textSize = 18F
             } (!autoIntakeGamePieceOne) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.MAGENTA)
-                mainView!!.tb_collection_objective_intake_game_piece_one.text = "On Ground"
+            if(alliance_color == AllianceColor.BLUE) {
+                mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.BLUE)
+            } else {
+                mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.RED)
+            }
+                mainView!!.tb_collection_objective_intake_game_piece_one.text = getString(R.string.one_starting_position)
+                mainView!!.tb_collection_objective_intake_game_piece_one.textSize = 50F
             }
         }
         when {
             (autoIntakeGamePieceTwo) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.WHITE)
-                mainView!!.tb_collection_objective_intake_game_piece_two.text = "Taken"
+                mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.LTGRAY)
+                mainView!!.tb_collection_objective_intake_game_piece_two.text = "${getString(R.string.taken)} ${getString(R.string.two_starting_position)}"
+                mainView!!.tb_collection_objective_intake_game_piece_two.textSize = 18F
             } (!autoIntakeGamePieceTwo) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.MAGENTA)
-                mainView!!.tb_collection_objective_intake_game_piece_two.text = "On Ground"
+            if(alliance_color == AllianceColor.BLUE) {
+                mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.BLUE)
+            } else {
+                mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.RED)
+            }
+                mainView!!.tb_collection_objective_intake_game_piece_two.text = getString(R.string.two_starting_position)
+                mainView!!.tb_collection_objective_intake_game_piece_two.textSize = 50F
             }
         }
         when {
             (autoIntakeGamePieceThree) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.WHITE)
-                mainView!!.tb_collection_objective_intake_game_piece_three.text = "Taken"
+                mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.LTGRAY)
+                mainView!!.tb_collection_objective_intake_game_piece_three.text = "${getString(R.string.taken)} ${getString(R.string.three_starting_position)}"
+                mainView!!.tb_collection_objective_intake_game_piece_three.textSize = 18F
             } (!autoIntakeGamePieceThree) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.MAGENTA)
-                mainView!!.tb_collection_objective_intake_game_piece_three.text = "On Ground"
+            if(alliance_color == AllianceColor.BLUE) {
+                mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.BLUE)
+            } else {
+                mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.RED)
+            }
+                mainView!!.tb_collection_objective_intake_game_piece_three.text = getString(R.string.three_starting_position)
+                mainView!!.tb_collection_objective_intake_game_piece_three.textSize = 50F
             }
         }
         when {
             (autoIntakeGamePieceFour) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.WHITE)
-                mainView!!.tb_collection_objective_intake_game_piece_four.text = "Taken"
+                mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.LTGRAY)
+                mainView!!.tb_collection_objective_intake_game_piece_four.text = "${getString(R.string.taken)} ${getString(R.string.four_starting_position)}"
+                mainView!!.tb_collection_objective_intake_game_piece_four.textSize = 18F
             } (!autoIntakeGamePieceFour) -> {
-                mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.MAGENTA)
-                mainView!!.tb_collection_objective_intake_game_piece_four.text = "On Ground"
+                if(alliance_color == AllianceColor.BLUE) {
+                    mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.BLUE)
+                } else {
+                    mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.RED)
+                }
+                mainView!!.tb_collection_objective_intake_game_piece_four.text = getString(R.string.four_starting_position)
+                mainView!!.tb_collection_objective_intake_game_piece_four.textSize = 50F
             }
         }
     }

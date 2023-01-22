@@ -12,6 +12,9 @@ import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
  * Every team being scouted gets a single panel.
  * @see R.layout.subjective_ranking_counter_panel */
 class SubjectiveRankingCounterPanel : Fragment() {
+
+    var defenseTime: Int? = null
+
     // Inflates the view for this counter panel.
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,12 +51,13 @@ class SubjectiveRankingCounterPanel : Fragment() {
                 // bottom
                 if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
+            if (defenseTime == null) defenseTime = match_time.toIntOrNull()
         }
     }
 
     fun setListenerConeOrientation() {
-        intake_cone_orientation_toggle.setOnCheckedChangeListener(){ _, checked ->
-            intake_cone_orientation_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
+        scored_coop_toggle.setOnCheckedChangeListener(){ _, checked ->
+            scored_coop_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 null, null, null,
                 if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
@@ -73,8 +77,8 @@ class SubjectiveRankingCounterPanel : Fragment() {
     val playedDefense: Boolean
         get() = defense_toggle.isChecked
 
-    // Whether this team picked up a cone that was tilted during the match.
-    val intakeConeOrientation: Boolean
-        get() = intake_cone_orientation_toggle.isChecked
+    // Whether this team scored a game piece in the coop zone.
+    val scoredCoop: Boolean
+        get() = scored_coop_toggle.isChecked
 
 }

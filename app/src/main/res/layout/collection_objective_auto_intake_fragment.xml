@@ -9,37 +9,29 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="5"
-        android:id="@+id/objective_collection_intake_map"/>
+        android:id="@+id/objective_collection_intake_map" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="1.25"
         android:orientation="vertical">
 
         <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_one"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            style="@style/tb_collection_objective_intake_game_pieces"/>
 
         <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_two"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            style="@style/tb_collection_objective_intake_game_pieces"/>
 
         <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_three"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            style="@style/tb_collection_objective_intake_game_pieces"/>
 
         <Button
             android:id="@+id/tb_collection_objective_intake_game_piece_four"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            style="@style/tb_collection_objective_intake_game_pieces"/>
 
     </LinearLayout>
 
