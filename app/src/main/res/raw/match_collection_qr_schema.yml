@@ -78,3 +78,7 @@ action_type:
   end_incap: AK
   charge_attempt: AL
   to_teleop: AM
+  auto_intake_one: AN
+  auto_intake_two: AO
+  auto_intake_three: AP
+  auto_intake_four: AQ
