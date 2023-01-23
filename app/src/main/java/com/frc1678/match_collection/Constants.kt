@@ -31,11 +31,11 @@ class Constants {
     }
 
     enum class ChargeLevel {
-        NONE,
-        FAILED,
-        PARK,
-        DOCKED,
-        ENGAGED
+        N, // NONE
+        F, // FAILED
+        P, // PARKED
+        D, // DOCKED
+        E  // ENGAGED
     }
 
     enum class GamePiecePositions {

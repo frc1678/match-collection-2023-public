@@ -389,10 +389,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             // OnClickListeners for the buttons in the charge popup.
             popupView.btn_charge_cancel.setOnClickListener {
                 if (is_teleop_activated) {
-                    tele_charge_level = Constants.ChargeLevel.NONE
+                    tele_charge_level = Constants.ChargeLevel.N
                     did_tele_charge = false
                 } else {
-                    auto_charge_level = Constants.ChargeLevel.NONE
+                    auto_charge_level = Constants.ChargeLevel.N
                     did_auto_charge = false
                 }
                 popupWindow.dismiss()
@@ -409,8 +409,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             popupView.btn_failed.isActivated = false
-            if (is_teleop_activated) tele_charge_level = Constants.ChargeLevel.NONE
-            else auto_charge_level = Constants.ChargeLevel.NONE
+            if (is_teleop_activated) tele_charge_level = Constants.ChargeLevel.N
+            else auto_charge_level = Constants.ChargeLevel.N
 
             popupView.btn_failed.setOnClickListener {
                 popupView.btn_failed.isActivated = true
@@ -418,11 +418,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_docked.isActivated = false
                 popupView.btn_engaged.isActivated = false
                 if (is_teleop_activated) {
-                    tele_charge_level = Constants.ChargeLevel.FAILED
+                    tele_charge_level = Constants.ChargeLevel.F
                     did_tele_charge = true
                     popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
-                    auto_charge_level = Constants.ChargeLevel.FAILED
+                    auto_charge_level = Constants.ChargeLevel.F
                     did_auto_charge = true
                     popupView.btn_charge_done.isEnabled = did_auto_charge
                 }
@@ -433,11 +433,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_docked.isActivated = false
                 popupView.btn_engaged.isActivated = false
                 if (is_teleop_activated) {
-                    tele_charge_level = Constants.ChargeLevel.PARK
+                    tele_charge_level = Constants.ChargeLevel.P
                     did_tele_charge = true
                     popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
-                    auto_charge_level = Constants.ChargeLevel.PARK
+                    auto_charge_level = Constants.ChargeLevel.P
                     did_auto_charge = true
                     popupView.btn_charge_done.isEnabled = did_auto_charge
                 }
@@ -448,11 +448,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_docked.isActivated = true
                 popupView.btn_engaged.isActivated = false
                 if (is_teleop_activated) {
-                    tele_charge_level = Constants.ChargeLevel.DOCKED
+                    tele_charge_level = Constants.ChargeLevel.D
                     did_tele_charge = true
                     popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
-                    auto_charge_level = Constants.ChargeLevel.DOCKED
+                    auto_charge_level = Constants.ChargeLevel.D
                     did_auto_charge = true
                     popupView.btn_charge_done.isEnabled = did_auto_charge
                 }
@@ -463,11 +463,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_docked.isActivated = false
                 popupView.btn_engaged.isActivated = true
                 if (is_teleop_activated) {
-                    tele_charge_level = Constants.ChargeLevel.ENGAGED
+                    tele_charge_level = Constants.ChargeLevel.E
                     did_tele_charge = true
                     popupView.btn_charge_done.isEnabled = did_tele_charge
                 } else {
-                    auto_charge_level = Constants.ChargeLevel.ENGAGED
+                    auto_charge_level = Constants.ChargeLevel.E
                     did_auto_charge = true
                     popupView.btn_charge_done.isEnabled = did_auto_charge
                 }

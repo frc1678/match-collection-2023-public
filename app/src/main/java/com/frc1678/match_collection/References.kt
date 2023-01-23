@@ -41,8 +41,8 @@ var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
 var timeline = mutableListOf<Map<String, String>>()
-var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
-var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
+var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
+var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
 
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
@@ -70,8 +70,8 @@ fun resetCollectionReferences() {
     did_tele_charge = false
 
     popup_open = false
-    auto_charge_level = Constants.ChargeLevel.NONE
-    tele_charge_level = Constants.ChargeLevel.NONE
+    auto_charge_level = Constants.ChargeLevel.N
+    tele_charge_level = Constants.ChargeLevel.N
 
     timestamp = 0
 
