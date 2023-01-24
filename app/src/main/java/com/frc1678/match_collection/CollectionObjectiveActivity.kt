@@ -41,8 +41,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
     var scoringScreen = true
         set(value) {
             field = value
-            /**Set the current fragment to scoring or intake depending on the new value,if teleop is activated set intakePanel
-             *
+            /** Set the current fragment to scoring or intake depending on the new value,if teleop is activated set intakePanel
+             * If auto, set intake auto panel
              */
             supportFragmentManager.beginTransaction()
                 .replace(R.id.action_btn_frame,
@@ -131,9 +131,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Remove previously inputted action from timeline.
      */
     private fun timelineRemove() {
-        // Decrement action values displayed on action counters.
+        /**
+         *    Decrement action values displayed on action counters.
+          */
+
         when (timeline[timeline.size - 1]["action_type"].toString()) {
-            // Removes auto intake and scoring screen in timeline for specific game piece when undo button is used
+            /**
+             * Removes auto intake and scoring screen in timeline for specific game piece when undo button is used
+             */
             Constants.ActionType.AUTO_INTAKE_ONE.toString() -> {
                 autoIntakeGamePieceOne = 0
                 scoringScreen = false

@@ -43,7 +43,7 @@ fun compress(
     val compressTimeline = objectiveData.getValue("timeline").toString().split(",")[0]
     val compressAutoChargeLevel = objectiveData.getValue("auto_charge_level").toString().split(",")[0]
     val compressTeleChargeLevel = objectiveData.getValue("tele_charge_level").toString().split(",")[0]
-    val compressPreloaded = objectiveData.getValue("preloaded_piece").toString().split(",")[0]
+    val compressPreloaded = objectiveData.getValue("preloaded_gamepiece").toString().split(",")[0]
 
     // Define compression characters for subjective separators.
     val subjectiveStartCharacter = subjectiveData.getValue("_start_character").toString()
