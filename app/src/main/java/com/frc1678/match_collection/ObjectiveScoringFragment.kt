@@ -64,6 +64,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
         if (mainView != null && activity != null) with(mainView!!) {
             // Increment button action one by one when clicked and add action to timeline.
             btn_action_four.setOnClickListener {
+                if (numActionFour >= ACTION_FOUR_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_HIGH)
                 numActionFour++
                 collectionObjectiveActivity.scoringScreen = false
@@ -71,6 +72,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_five.setOnClickListener {
+                if (numActionFive >= ACTION_FIVE_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
                 numActionFive++
                 collectionObjectiveActivity.scoringScreen = false
@@ -78,6 +80,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_six.setOnClickListener {
+                if (numActionSix >= ACTION_SIX_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
                 numActionSix++
                 collectionObjectiveActivity.scoringScreen = false
@@ -85,6 +88,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_seven.setOnClickListener {
+                if (numActionSeven >= ACTION_SEVEN_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
                 numActionSeven++
                 collectionObjectiveActivity.scoringScreen = false
@@ -92,6 +96,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_eight.setOnClickListener {
+                if (numActionEight >= ACTION_EIGHT_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
                 numActionEight++
                 collectionObjectiveActivity.scoringScreen = false
@@ -99,6 +104,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_nine.setOnClickListener {
+                if (numActionNine >= ACTION_NINE_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
                 numActionNine++
                 collectionObjectiveActivity.scoringScreen = false
@@ -135,6 +141,19 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                             CollectionObjectiveActivity.comingBack == "QRGenerate" ||
                             !(!collectionObjectiveActivity.isTimerRunning || popup_open || isIncap)
             }
+            // Disable scoring buttons if their count is at the max
+            btn_action_four.isEnabled =
+                btn_action_four.isEnabled && numActionFour < ACTION_FOUR_MAX
+            btn_action_five.isEnabled =
+                btn_action_five.isEnabled && numActionFive < ACTION_FIVE_MAX
+            btn_action_six.isEnabled =
+                btn_action_six.isEnabled && numActionSix < ACTION_SIX_MAX
+            btn_action_seven.isEnabled =
+                btn_action_seven.isEnabled && numActionSeven < ACTION_SEVEN_MAX
+            btn_action_eight.isEnabled =
+                btn_action_eight.isEnabled && numActionEight < ACTION_EIGHT_MAX
+            btn_action_nine.isEnabled =
+                btn_action_nine.isEnabled && numActionNine < ACTION_NINE_MAX
         }
     }
 }
