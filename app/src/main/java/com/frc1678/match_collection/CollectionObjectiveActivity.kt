@@ -366,10 +366,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
         tb_action_one.setOnClickListener {
-            if (tb_action_one.isChecked) {
-                timelineAdd(matchTime = match_time, actionType = Constants.ActionType.START_INCAP)
-            } else {
-                timelineAdd(matchTime = match_time, actionType = Constants.ActionType.END_INCAP)
+            if (!is_match_time_ended) {
+                if (tb_action_one.isChecked) {
+                    timelineAdd(matchTime = match_time, actionType = Constants.ActionType.START_INCAP)
+                } else {
+                    timelineAdd(matchTime = match_time, actionType = Constants.ActionType.END_INCAP)
+                }
+            }
+            else {
+                tb_action_one.isChecked = false
             }
         }
 
