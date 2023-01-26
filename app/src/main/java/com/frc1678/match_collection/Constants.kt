@@ -39,15 +39,15 @@ class Constants {
     }
 
     enum class GamePiecePositions {
-        CONE,
-        CUBE,
-        NONE
+        O, // CONE
+        U, // CUBE
+        N  // NONE
     }
 
     enum class Preloaded {
-        NONE,
-        CONE,
-        CUBE
+        O, // CONE
+        U, // CUBE
+        N  // NONE
     }
 
     enum class ActionType {

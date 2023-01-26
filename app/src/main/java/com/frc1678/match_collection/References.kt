@@ -53,8 +53,8 @@ var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var scoredCoopList: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
-var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.NONE,
-    Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE)
+var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.N,
+    Constants.GamePiecePositions.N, Constants.GamePiecePositions.N, Constants.GamePiecePositions.N)
 var defenseTimestamps = listOf<Int?>(null, null, null)
 
 // Function to reset References.kt variables for new match.
@@ -119,7 +119,7 @@ data class TeamRank(var teamNumber: String, val rank: Int)
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
     for (x in 0..3) {
-        gamePiecePositionList[x] = Constants.GamePiecePositions.NONE
+        gamePiecePositionList[x] = Constants.GamePiecePositions.N
     }
     preloaded = Constants.Preloaded.NONE
     team_number = ""
