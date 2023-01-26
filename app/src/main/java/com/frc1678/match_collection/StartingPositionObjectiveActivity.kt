@@ -128,8 +128,8 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     setBackgroundColor(
                         resources.getColor(
                             when ((this as TextView).text) {
-                                Constants.Preloaded.CONE.toString() -> R.color.cone_yellow
-                                Constants.Preloaded.CUBE.toString() -> R.color.cube_purple
+                                Constants.Preloaded.O.toString() -> R.color.cone_yellow
+                                Constants.Preloaded.U.toString() -> R.color.cube_purple
                                 else -> R.color.light_gray
                             }, null
                         )
@@ -145,9 +145,9 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                 // Set the background color of the spinner based on its value
                 spinner_preloaded.setBackgroundColor(
                     when (preloaded) {
-                        Constants.Preloaded.NONE -> resources.getColor(R.color.light_gray, null)
-                        Constants.Preloaded.CONE -> resources.getColor(R.color.cone_yellow, null)
-                        Constants.Preloaded.CUBE -> resources.getColor(R.color.cube_purple, null)
+                        Constants.Preloaded.N -> resources.getColor(R.color.light_gray, null)
+                        Constants.Preloaded.O -> resources.getColor(R.color.cone_yellow, null)
+                        Constants.Preloaded.U -> resources.getColor(R.color.cube_purple, null)
                     }
                 )
             }

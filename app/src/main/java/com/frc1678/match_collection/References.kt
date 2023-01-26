@@ -43,7 +43,7 @@ var team_number: String = ""
 var scout_id: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
-var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
+var preloaded: Constants.Preloaded = Constants.Preloaded.N
 var timeline = mutableListOf<Map<String, String>>()
 var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
 var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
@@ -121,6 +121,6 @@ fun resetStartingReferences() {
     for (x in 0..3) {
         gamePiecePositionList[x] = Constants.GamePiecePositions.N
     }
-    preloaded = Constants.Preloaded.NONE
+    preloaded = Constants.Preloaded.N
     team_number = ""
 }
