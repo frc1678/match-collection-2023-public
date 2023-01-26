@@ -14,6 +14,10 @@ var numActionSeven = 0 //SCORE_CONE_HIGH
 var numActionEight = 0 //SCORE_CONE_MID
 var numActionNine = 0 //SCORE_CONE_LOW
 var numActionTen = 0 //FAIL
+var autoIntakeGamePieceOne = 0
+var autoIntakeGamePieceTwo = 0
+var autoIntakeGamePieceThree = 0
+var autoIntakeGamePieceFour = 0
 
 
 var match_timer: CountDownTimer? = null
@@ -47,10 +51,11 @@ var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
-var intake_cone_orientation_list: ArrayList<String> = ArrayList()
+var scoredCoopList: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
 var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.NONE,
     Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE)
+var defenseTimestamps = listOf<Int?>(null, null, null)
 
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
@@ -64,6 +69,10 @@ fun resetCollectionReferences() {
     numActionEight = 0
     numActionNine = 0
     numActionTen = 0
+    autoIntakeGamePieceOne = 0
+    autoIntakeGamePieceTwo = 0
+    autoIntakeGamePieceThree = 0
+    autoIntakeGamePieceFour = 0
 
     is_teleop_activated = false
     did_auto_charge = false
@@ -79,8 +88,9 @@ fun resetCollectionReferences() {
 
     quickness_score = SubjectiveTeamRankings()
     field_awareness_score = SubjectiveTeamRankings()
-    intake_cone_orientation_list = ArrayList()
+    scoredCoopList = ArrayList()
     played_defense_list = ArrayList()
+    defenseTimestamps = listOf(null, null, null)
 }
 
 data class SubjectiveTeamRankings(

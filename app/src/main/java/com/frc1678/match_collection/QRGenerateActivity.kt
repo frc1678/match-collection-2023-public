@@ -21,7 +21,7 @@ import kotlin.text.Regex.Companion.escape
 // Activity to display QR code of data collected in the match.
 class QRGenerateActivity : CollectionActivity() {
     // Define regex to validate that QR only contains acceptable characters.
-    private var regex: Pattern = Pattern.compile("[A-Z0-9" + escape("$%*+-./# ") + "]+")
+    private var regex: Pattern = Pattern.compile("[A-Z0-9" + escape("$%*+-./#^ ") + "]+")
 
     // Read YAML schema file and return its contents as a HashMap.
     private fun schemaRead(context: Context): HashMap<String, HashMap<String, Any>> {

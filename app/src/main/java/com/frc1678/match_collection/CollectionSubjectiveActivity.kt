@@ -61,7 +61,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         get() {
             val tempToggleList = arrayListOf<String>()
             for (x in 0 until panelList.size) {
-                if (panelList[x].intakeConeOrientation){
+                if (panelList[x].scoredCoop){
                     when (x) {}
                 }
             }
@@ -97,6 +97,15 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelThree.setListenerConeOrientation()
     }
 
+    private fun initTimer() {
+        btn_timer.setOnClickListener {
+            TimerUtility.MatchTimerThread().initTimer(
+                this, btn_timer, btn_proceed_edit, subjective_match_collection_layout
+            )
+            btn_timer.isEnabled = false
+        }
+    }
+
     // Initialize proceed button to record ranking data and proceed to MatchInformationEditActivity.kt
     // when proceed button is pressed.
     private fun initProceedButton() {
@@ -104,7 +113,8 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             quickness_score = recordRankingData(dataName = "quickness")
             field_awareness_score = recordRankingData(dataName = "field_awareness")
             played_defense_list = defenseToggleData
-            intake_cone_orientation_list = intakeConeOrientationToggleData
+            scoredCoopList = intakeConeOrientationToggleData
+            defenseTimestamps = panelList.map { it.defenseTime }
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
@@ -126,7 +136,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     // Begin intent used in onKeyLongPress to restart app from StartingGamePieceActivity.kt.
     private fun intentToMatchInput() {
         startActivity(
-            Intent(this, StartingGamePieceActivity::class.java),
+            Intent(this, StartingGamePieceActivity::class.java).putExtras(intent),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
@@ -146,6 +156,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         setContentView(R.layout.collection_subjective_activity)
 
         getExtras()
+        initTimer()
         initProceedButton()
         initPanels()
     }
