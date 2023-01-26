@@ -143,8 +143,8 @@ fun compress(
 
         val autoPiecesStartPosition = gamePiecePositionList.map {
             when (it) {
-                Constants.GamePiecePositions.CONE -> '0'
-                Constants.GamePiecePositions.CUBE -> '1'
+                Constants.GamePiecePositions.O -> '0'
+                Constants.GamePiecePositions.U -> '1'
                 else -> '2'
             }
         }.joinToString("")

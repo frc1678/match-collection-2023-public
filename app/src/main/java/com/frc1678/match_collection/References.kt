@@ -45,16 +45,16 @@ var orientation: Boolean = true //true = UP, false = DOWN
 var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
 var preloaded: Constants.Preloaded = Constants.Preloaded.NONE
 var timeline = mutableListOf<Map<String, String>>()
-var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
-var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.NONE
+var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
+var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
 
 // Data specific to Subjective Match Collection QR.
 var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var scoredCoopList: ArrayList<String> = ArrayList()
 var played_defense_list: ArrayList<String> = ArrayList()
-var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.NONE,
-    Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE, Constants.GamePiecePositions.NONE)
+var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.N,
+    Constants.GamePiecePositions.N, Constants.GamePiecePositions.N, Constants.GamePiecePositions.N)
 var defenseTimestamps = listOf<Int?>(null, null, null)
 
 // Function to reset References.kt variables for new match.
@@ -79,8 +79,8 @@ fun resetCollectionReferences() {
     did_tele_charge = false
 
     popup_open = false
-    auto_charge_level = Constants.ChargeLevel.NONE
-    tele_charge_level = Constants.ChargeLevel.NONE
+    auto_charge_level = Constants.ChargeLevel.N
+    tele_charge_level = Constants.ChargeLevel.N
 
     timestamp = 0
 
@@ -119,7 +119,7 @@ data class TeamRank(var teamNumber: String, val rank: Int)
 fun resetStartingReferences() {
     starting_position = Constants.StartingPosition.NONE
     for (x in 0..3) {
-        gamePiecePositionList[x] = Constants.GamePiecePositions.NONE
+        gamePiecePositionList[x] = Constants.GamePiecePositions.N
     }
     preloaded = Constants.Preloaded.NONE
     team_number = ""
