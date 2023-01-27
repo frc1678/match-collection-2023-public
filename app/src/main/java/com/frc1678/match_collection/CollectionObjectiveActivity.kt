@@ -621,7 +621,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         scoringScreen = preloaded != Constants.Preloaded.N
 
         comingBack()
-        if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT
+        if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT
             && previousScreen != Constants.Screens.QR_GENERATE
         ) {
             timerReset()
