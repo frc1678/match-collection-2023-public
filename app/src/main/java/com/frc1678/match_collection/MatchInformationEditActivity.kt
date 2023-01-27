@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
-import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
+import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
 import java.lang.Integer.parseInt
 
@@ -90,6 +90,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         updateMatchInformation()
 
         val intent = Intent(this, QRGenerateActivity::class.java)
+            .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
         startActivity(
             intent, ActivityOptions.makeSceneTransitionAnimation(
                 this,
@@ -118,14 +119,15 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(collection_mode == Constants.ModeSelection.OBJECTIVE){
                 if(starting_position.toString() != "ZERO"){
-                    comingBack = "match information edit"
                     startActivity(
                         Intent(this, CollectionObjectiveActivity::class.java)
+                            .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
                     )
                 }
                 else{
                     startActivity(
                         Intent(this, StartingPositionObjectiveActivity::class.java)
+                            .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
                     )
                 }
             }

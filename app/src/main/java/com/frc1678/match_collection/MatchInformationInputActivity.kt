@@ -16,7 +16,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
-import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
+import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
@@ -495,7 +495,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                         if ((fileName.substringBefore("_") == selectedItem) and fileName.endsWith(".txt")) {
                             val qrContents = it.readText()
                             val intent = Intent(this, QRGenerateActivity::class.java)
-                            intent.putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
+                                .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT)
+                                .putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
                             startActivity(intent)
                         }
                     }
@@ -591,6 +592,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
             team_number = et_team_one.text.toString()
             val intent = Intent(this, StartingPositionObjectiveActivity::class.java)
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT)
             startActivity(
                 intent, ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -599,7 +601,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             )
         } else {
             val intent = Intent(this, StartingGamePieceActivity::class.java)
-            intent.putExtra("team_one", et_team_one.text.toString())
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT)
+                .putExtra("team_one", et_team_one.text.toString())
                 .putExtra("team_two", et_team_two.text.toString())
                 .putExtra("team_three", et_team_three.text.toString())
             startActivity(
@@ -625,7 +628,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     private fun intentToMatchInput() {
         this.getSharedPreferences("PREFS", 0).edit().remove("collection_mode").apply()
         startActivity(
-            Intent(this, ModeCollectionSelectActivity::class.java),
+            Intent(this, ModeCollectionSelectActivity::class.java)
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
@@ -668,6 +672,5 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         initMatchNumberTextChangeListener()
         initProceedButton()
         initAssignModeSpinner()
-        comingBack = ""
     }
 }

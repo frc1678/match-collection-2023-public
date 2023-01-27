@@ -7,6 +7,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
+import com.frc1678.match_collection.Constants.Screens.COLLECTION_SUBJECTIVE
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
@@ -136,7 +138,8 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     // Begin intent used in onKeyLongPress to restart app from StartingGamePieceActivity.kt.
     private fun intentToMatchInput() {
         startActivity(
-            Intent(this, StartingGamePieceActivity::class.java).putExtras(intent),
+            Intent(this, StartingGamePieceActivity::class.java).putExtras(intent)
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_SUBJECTIVE),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
@@ -163,7 +166,8 @@ class CollectionSubjectiveActivity : CollectionActivity() {
 
     fun goToNextActivity() {
         val intent = Intent(this, MatchInformationEditActivity::class.java)
-        intent.putExtra("team_one", teamNumberOne)
+            .putExtra(PREVIOUS_SCREEN, COLLECTION_SUBJECTIVE)
+            .putExtra("team_one", teamNumberOne)
             .putExtra("team_two", teamNumberTwo)
             .putExtra("team_three", teamNumberThree)
         startActivity(
