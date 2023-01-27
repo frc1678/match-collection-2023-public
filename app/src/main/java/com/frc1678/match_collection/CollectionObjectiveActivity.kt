@@ -13,6 +13,8 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.core.view.isVisible
+import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
+import com.frc1678.match_collection.Constants.Companion.previousScreen
 import kotlinx.android.synthetic.main.charge_popup.view.btn_charge_cancel
 import kotlinx.android.synthetic.main.charge_popup.view.btn_charge_done
 import kotlinx.android.synthetic.main.charge_popup.view.btn_docked
@@ -79,10 +81,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     val isIncap get() = tb_action_one.isChecked
 
     private var removedTimelineActions = mutableListOf<Map<String, String>>()
-
-    companion object {
-        var comingBack: String? = ""
-    }
 
     /**
      * Set timer to start match when timer is started or reset.
@@ -388,6 +386,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             } else {
                 endAction()
                 val intent = Intent(this, MatchInformationEditActivity::class.java)
+                    .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE)
                 startActivity(
                     intent, ActivityOptions.makeSceneTransitionAnimation(
                         this,
@@ -579,7 +578,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun intentToPreviousActivity() {
         is_teleop_activated = false
         startActivity(
-            Intent(this, StartingPositionObjectiveActivity::class.java),
+            Intent(this, StartingPositionObjectiveActivity::class.java)
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
@@ -588,7 +588,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Resets and enables everything if the user entered this screen by pressing the back button.
      */
     private fun comingBack() {
-        if ((comingBack == "match information edit") or (comingBack == "QRGenerate")) {
+        if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+            previousScreen == Constants.Screens.QR_GENERATE
+        ) {
             isTimerRunning = false
             Log.d("coming-back", "came back")
             btn_proceed_edit.text = getString(R.string.btn_proceed)
@@ -607,7 +609,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             AlertDialog.Builder(this).setMessage(R.string.error_back_reset)
                 .setPositiveButton("Yes") { _, _ -> intentToPreviousActivity() }
                 .show()
-            comingBack = "collection objective activity"
         }
         return super.onKeyLongPress(keyCode, event)
     }
@@ -620,7 +621,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
         scoringScreen = preloaded != Constants.Preloaded.N
 
         comingBack()
-        if ((comingBack != "match information edit") and (comingBack != "QRGenerate")) {
+        if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT
+            && previousScreen != Constants.Screens.QR_GENERATE
+        ) {
             timerReset()
         }
 

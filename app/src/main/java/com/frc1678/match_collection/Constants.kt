@@ -1,12 +1,36 @@
 // Copyright (c) 2019 FRC Team 1678: Citrus Circuits
 package com.frc1678.match_collection
 
+import android.app.Activity
+
 // Contains constant values and enum classes.
 class Constants {
     companion object {
         const val NONE_VALUE: String = "NONE"
         const val NUMBER_OF_ACTIVE_SCOUTS: Int = 18
         const val COMPRESSED_QR_TAG = "QR"
+        const val PREVIOUS_SCREEN = "previous_screen"
+
+        /**
+         * The previous activity that was visited before this one. This is found by looking for the
+         * intent extra with key [PREVIOUS_SCREEN].
+         */
+        val Activity.previousScreen
+            get() = intent.getSerializableExtra(PREVIOUS_SCREEN) as? Screens
+    }
+
+    /**
+     * Every screen in the app.
+     */
+    enum class Screens {
+        COLLECTION_OBJECTIVE,
+        COLLECTION_SUBJECTIVE,
+        MATCH_INFORMATION_INPUT,
+        MATCH_INFORMATION_EDIT,
+        MODE_COLLECTION_SELECT,
+        QR_GENERATE,
+        STARTING_GAME_PIECE,
+        STARTING_POSITION_OBJECTIVE
     }
 
     enum class ModeSelection {
