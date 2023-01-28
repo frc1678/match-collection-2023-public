@@ -85,9 +85,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
      */
     var isCharging = false
 
-//        if(is_teleop_activated and did_tele_charge) { true
-//    } else !is_teleop_activated and did_auto_charge
-
     private var removedTimelineActions = mutableListOf<Map<String, String>>()
 
     /**
