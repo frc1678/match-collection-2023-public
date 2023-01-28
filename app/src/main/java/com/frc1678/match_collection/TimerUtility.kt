@@ -15,7 +15,7 @@ class TimerUtility {
 
         // Return stage to be displayed on timer.
         private fun stage(time: Int): Constants.Stage {
-            return if (time >= 135) {
+            return if (time >= 138) {
                 Constants.Stage.AUTO
             } else {
                 Constants.Stage.TELEOP
@@ -50,7 +50,7 @@ class TimerUtility {
                     match_time = (time - 1).toInt().toString().padStart(3, '0')
 
                     if (context is CollectionObjectiveActivity) {
-                        if (!is_teleop_activated and (time.roundToInt() <= 135)) {
+                        if (!is_teleop_activated and (time.roundToInt() <= 138)) {
                             layout.setBackgroundColor(Color.RED)
                         } else {
                             layout.setBackgroundColor(Color.WHITE)
