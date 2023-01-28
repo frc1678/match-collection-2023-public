@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
 
 class StartingGamePieceActivity : CollectionActivity() {
@@ -102,9 +103,6 @@ class StartingGamePieceActivity : CollectionActivity() {
 
         // Moves onto the next screen if you have inputted all the information
         btn_proceed_game_piece.setOnClickListener { view ->
-            if (CollectionObjectiveActivity.comingBack == "collection subjective activity") {
-                CollectionObjectiveActivity.comingBack = "Starting position game piece activity"
-            }
             // If all game pieces have been selected then proceed to CollectionSubjectiveActivity.kt
             // Otherwise create warning message
             if((gamePiecePositionList[0] == Constants.GamePiecePositions.N) or (gamePiecePositionList[1] == Constants.GamePiecePositions.N) or
@@ -125,7 +123,8 @@ class StartingGamePieceActivity : CollectionActivity() {
     // Goes to next activity
     private fun goToNextActivity() {
         startActivity(
-            Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent),
+            Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_GAME_PIECE),
             ActivityOptions.makeSceneTransitionAnimation(
                 this,
                 btn_proceed_game_piece, "proceed_button"
@@ -193,7 +192,8 @@ class StartingGamePieceActivity : CollectionActivity() {
     // Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.kt.
     private fun intentToPreviousActivity() {
         startActivity(
-            Intent(this, MatchInformationInputActivity::class.java),
+            Intent(this, MatchInformationInputActivity::class.java)
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_GAME_PIECE),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }

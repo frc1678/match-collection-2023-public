@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.frc1678.match_collection.Constants.Companion.previousScreen
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_one
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_three
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_two
@@ -87,8 +88,8 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         if (mainView != null && activity != null) with(mainView!!) {
             for (btn in listOf(btn_action_one, btn_action_two, btn_action_three)) {
                 btn.isEnabled =
-                    CollectionObjectiveActivity.comingBack == "match information edit" ||
-                            CollectionObjectiveActivity.comingBack == "QRGenerate" ||
+                    activity!!.previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+                            activity!!.previousScreen == Constants.Screens.QR_GENERATE ||
                             !(!collectionObjectiveActivity.isTimerRunning || popup_open || isIncap || isCharging)
             }
         }

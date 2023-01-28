@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.mode_collection_select_activity.*
 
 // Activity for selecting objective or subjective mode.
@@ -32,7 +33,8 @@ class ModeCollectionSelectActivity : CollectionActivity() {
             Constants.ModeSelection.OBJECTIVE -> {
                 finish()
                 startActivity(
-                    Intent(this, MatchInformationInputActivity::class.java),
+                    Intent(this, MatchInformationInputActivity::class.java)
+                        .putExtra(PREVIOUS_SCREEN, Constants.Screens.MODE_COLLECTION_SELECT),
                     ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         btn_objective_collection_select, "proceed_button"
@@ -42,7 +44,8 @@ class ModeCollectionSelectActivity : CollectionActivity() {
             Constants.ModeSelection.SUBJECTIVE -> {
                 finish()
                 startActivity(
-                    Intent(this, MatchInformationInputActivity::class.java),
+                    Intent(this, MatchInformationInputActivity::class.java)
+                        .putExtra(PREVIOUS_SCREEN, Constants.Screens.MODE_COLLECTION_SELECT),
                     ActivityOptions.makeSceneTransitionAnimation(
                         this,
                         btn_subjective_collection_select, "proceed_button"

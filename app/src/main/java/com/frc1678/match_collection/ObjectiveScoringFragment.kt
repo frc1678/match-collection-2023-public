@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.frc1678.match_collection.Constants.Companion.previousScreen
 import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_eight
 import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_five
 import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_four
@@ -138,8 +139,8 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 btn_action_ten
             )) {
                 btn.isEnabled =
-                    CollectionObjectiveActivity.comingBack == "match information edit" ||
-                            CollectionObjectiveActivity.comingBack == "QRGenerate" ||
+                    activity!!.previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+                            activity!!.previousScreen == Constants.Screens.QR_GENERATE ||
                             !(!collectionObjectiveActivity.isTimerRunning || popup_open || isIncap || isCharging)
             }
             // Disable scoring buttons if their count is at the max

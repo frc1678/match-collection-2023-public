@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.frc1678.match_collection.CollectionObjectiveActivity.Companion.comingBack
+import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.starting_position_activity.btn_four
 import kotlinx.android.synthetic.main.starting_position_activity.btn_one
 import kotlinx.android.synthetic.main.starting_position_activity.btn_proceed_starting_position
@@ -97,14 +97,11 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             if (starting_position != Constants.StartingPosition.NONE) {
                 // If you did not select a starting position, the team is assumed to be a no-show.
                 // This will allow you to skip the collection activity.
-                if (starting_position == Constants.StartingPosition.ZERO) {
-                    intent = Intent(this, MatchInformationEditActivity::class.java)
+                intent = if (starting_position == Constants.StartingPosition.ZERO) {
+                    Intent(this, MatchInformationEditActivity::class.java)
                 } else {
-                    intent = Intent(this, CollectionObjectiveActivity::class.java)
-                    if (comingBack == "collection objective activity") {
-                        comingBack = "Starting position activity"
-                    }
-                }
+                    Intent(this, CollectionObjectiveActivity::class.java)
+                }.putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_POSITION_OBJECTIVE)
                 startActivity(
                     intent, ActivityOptions.makeSceneTransitionAnimation(
                         this, btn_proceed_starting_position, "proceed_button"
@@ -136,6 +133,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     )
                 }
         }
+
+        // Saves what the preloaded piece spinner says
+        spinner_preloaded.setSelection(Constants.Preloaded.values().indexOf(preloaded))
+
         spinner_preloaded.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?, view: View?, position: Int, id: Long
@@ -164,7 +165,8 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             .setMessage(R.string.error_back_reset)
             .setPositiveButton("Yes") { _, _ ->
                 startActivity(
-                    Intent(this, MatchInformationInputActivity::class.java),
+                    Intent(this, MatchInformationInputActivity::class.java)
+                        .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_POSITION_OBJECTIVE),
                     ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
                 )
             }
