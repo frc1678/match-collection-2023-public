@@ -133,6 +133,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     )
                 }
         }
+
+        // Saves what the preloaded piece spinner says
+        spinner_preloaded.setSelection(Constants.Preloaded.values().indexOf(preloaded))
+
         spinner_preloaded.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?, view: View?, position: Int, id: Long
