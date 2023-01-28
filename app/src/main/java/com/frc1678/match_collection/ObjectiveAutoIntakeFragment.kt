@@ -26,7 +26,7 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
     ): View? {
         mainView = super.onCreateView(inflater, container, savedInstanceState)!!
         initOnClicks()
-        enableButtons()
+        enableButtons(collectionObjectiveActivity.isCharging)
         setBackgrounds()
         return mainView
     }
@@ -206,18 +206,20 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
 
     /**
      * Enables the intake buttons when the match is going, the activity is not null,
-     * the mainView is not null, and a popup is not open.
+     * the mainView is not null, a popup is not open, and you have not already charged.
      * Other wise it disables the intake buttons.
+     *
+     * @param isCharging Whether the robot has charged already.
      */
-    fun enableButtons() {
-        if (mainView != null && activity != null) with(mainView!!) {
+    fun enableButtons(isCharging: Boolean) {
+        if (mainView != null && activity != null) {
             for (btn in listOf(
                 mainView!!.tb_collection_objective_intake_game_piece_one,
                 mainView!!.tb_collection_objective_intake_game_piece_two,
                 mainView!!.tb_collection_objective_intake_game_piece_three,
                 mainView!!.tb_collection_objective_intake_game_piece_four
             )) {
-                btn.isEnabled = (collectionObjectiveActivity.isTimerRunning and !popup_open)
+                btn.isEnabled = (collectionObjectiveActivity.isTimerRunning and !popup_open and !isCharging)
             }
         }
     }
