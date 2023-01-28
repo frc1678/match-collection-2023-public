@@ -340,7 +340,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge)))
 
         btn_charge.text =
-            if (isTimerRunning && ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))) getString(
+            if (((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))) getString(
                 R.string.btn_charged
             )
             else getString(R.string.btn_charge)
@@ -591,13 +591,18 @@ class CollectionObjectiveActivity : CollectionActivity() {
         if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
             previousScreen == Constants.Screens.QR_GENERATE
         ) {
+            enableButtons()
             isTimerRunning = false
             Log.d("coming-back", "came back")
             btn_proceed_edit.text = getString(R.string.btn_proceed)
             btn_proceed_edit.isEnabled = true
             btn_timer.isEnabled = false
             btn_timer.text = getString(R.string.timer_run_down)
-            enableButtons()
+            if (did_tele_charge) {
+                btn_charge.text = getString(R.string.btn_charged)
+            } else {
+                btn_charge.isEnabled = true
+            }
         }
     }
 
