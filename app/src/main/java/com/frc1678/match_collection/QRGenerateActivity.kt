@@ -96,7 +96,11 @@ private fun intentToPreviousActivity() {
         } else {
             Intent(this, MatchInformationEditActivity::class.java)
         }
-    } else {
+    }
+    else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+        Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+    }
+    else {
         Intent(this, MatchInformationInputActivity::class.java)
     }.putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
 
