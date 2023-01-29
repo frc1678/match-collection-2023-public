@@ -96,6 +96,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         timeline.clear()
         removedTimelineActions.clear()
         btn_timer.text = getString(R.string.btn_timer_start)
+        is_match_time_ended = false
     }
 
     /**
@@ -104,7 +105,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun timelineAdd(matchTime: String, actionType: Constants.ActionType) {
         timeline.add(mapOf("match_time" to matchTime, "action_type" to "$actionType"))
         removedTimelineActions.clear()
-
         enableButtons()
     }
 
@@ -330,8 +330,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     /**
-     * Enable and disable buttons based on actions in timeline and timer stage. If in teleop enable intake Panel,
-     * if teleop is not activated enable inake auto panel
+     * Enable and disable buttons based on actions in timeline and timer stage. If in teleop, enable intake panel,
+     * if teleop is not activated, enable intake auto panel
      */
     fun enableButtons() {
         if (!scoringScreen) {
@@ -345,20 +345,22 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
         tb_action_one.isEnabled = !(!is_teleop_activated || popup_open || isCharging)
 
-        btn_charge.isEnabled = isTimerRunning && !(popup_open || isIncap ||
-                isCharging)
+        btn_charge.isEnabled = (isTimerRunning && !(popup_open || isIncap ||
+                ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))))
+                || (is_match_time_ended && !did_tele_charge)
 
         btn_charge.text =
-            if (isTimerRunning && isCharging) getString(
+            if (((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))) getString(
                 R.string.btn_charged
             )
             else getString(R.string.btn_charge)
+
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
         btn_proceed_edit.isEnabled =
-            isTimerRunning and ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
+            ((isTimerRunning and (!is_teleop_activated)) or (is_match_time_ended)) and !popup_open
         btn_proceed_edit.text = if (!is_teleop_activated) getString(R.string.btn_to_teleop)
         else getString(R.string.btn_proceed)
     }
@@ -588,6 +590,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
      */
     private fun intentToPreviousActivity() {
         is_teleop_activated = false
+        timerReset()
         startActivity(
             Intent(this, StartingPositionObjectiveActivity::class.java)
                 .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE),
@@ -599,17 +602,13 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Resets and enables everything if the user entered this screen by pressing the back button.
      */
     private fun comingBack() {
-        if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
-            previousScreen == Constants.Screens.QR_GENERATE
-        ) {
-            isTimerRunning = false
-            Log.d("coming-back", "came back")
-            btn_proceed_edit.text = getString(R.string.btn_proceed)
-            btn_proceed_edit.isEnabled = true
-            btn_timer.isEnabled = false
-            btn_timer.text = getString(R.string.timer_run_down)
-            enableButtons()
-        }
+        isTimerRunning = false
+        is_match_time_ended = true
+        Log.d("coming-back", "came back")
+        btn_proceed_edit.text = getString(R.string.btn_proceed)
+        btn_proceed_edit.isEnabled = true
+        btn_timer.isEnabled = false
+        btn_timer.text = getString(R.string.timer_run_down)
     }
 
     /**
@@ -631,13 +630,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Set the currently displayed fragment to the scoring panel
         scoringScreen = preloaded != Constants.Preloaded.N
 
-        comingBack()
         if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT
             && previousScreen != Constants.Screens.QR_GENERATE
         ) {
             timerReset()
+        } else {
+            comingBack()
         }
 
+        enableButtons()
         initOnClicks()
         initTeamNum()
     }
