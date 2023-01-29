@@ -313,8 +313,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                if (is_teleop_activated) did_tele_charge = true
-                else did_auto_charge = true
+                if (is_teleop_activated) {
+                    did_tele_charge = tele_charge_level != Constants.ChargeLevel.F
+                } else {
+                    did_auto_charge = auto_charge_level != Constants.ChargeLevel.F
+                }
                 isCharging = ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))
                 enableButtons()
             }
@@ -487,7 +490,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popup_open = false
-                isCharging = true
+                if (!(is_teleop_activated && tele_charge_level == Constants.ChargeLevel.F) &&
+                    !(!is_teleop_activated && auto_charge_level == Constants.ChargeLevel.F)
+                ) {
+                    isCharging = true
+                }
                 enableButtons()
             }
 
@@ -502,12 +509,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_engaged.isActivated = false
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.F
-                    did_tele_charge = true
-                    popupView.btn_charge_done.isEnabled = did_tele_charge
+                    did_tele_charge = false
+                    popupView.btn_charge_done.isEnabled = true
                 } else {
                     auto_charge_level = Constants.ChargeLevel.F
-                    did_auto_charge = true
-                    popupView.btn_charge_done.isEnabled = did_auto_charge
+                    did_auto_charge = false
+                    popupView.btn_charge_done.isEnabled = true
                 }
             }
             popupView.btn_parked.setOnClickListener {
