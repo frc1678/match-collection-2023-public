@@ -27,6 +27,27 @@ class SubjectiveRankingCounterPanel : Fragment() {
         tv_team_number.text = teamNumber
     }
 
+    // Sets wether or not the defense button is checked
+    fun setDefense(defense: Boolean) {
+        defense_toggle.isChecked = defense
+    }
+
+    // Sets wether or not the coop button is checked
+    fun setCOOP(coop: Boolean) {
+        scored_coop_toggle.isChecked = coop
+    }
+
+    // Sets the Quickness value
+    fun setQuickness(score: Int) {
+        counter_quickness.value = score
+    }
+
+    // Sets the Field Awareness value
+    fun setAwareness(score: Int) {
+        counter_field_awareness.value = score
+    }
+
+
     // Sets the text color of the team number to the alliance color.
     fun setAllianceColor() {
         tv_team_number.setTextColor(
