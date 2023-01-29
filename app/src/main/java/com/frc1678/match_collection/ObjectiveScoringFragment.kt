@@ -113,7 +113,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_ten.setOnClickListener {
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.FAIL)
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_FAIL)
                 numActionTen++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()

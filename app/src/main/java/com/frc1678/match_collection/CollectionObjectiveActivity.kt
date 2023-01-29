@@ -207,7 +207,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 scoringScreen = true
             }
 
-            Constants.ActionType.FAIL.toString() -> {
+            Constants.ActionType.SCORE_FAIL.toString() -> {
                 numActionTen--
                 scoringScreen = true
             }
@@ -307,7 +307,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 scoringScreen = false
             }
 
-            Constants.ActionType.FAIL.toString() -> {
+            Constants.ActionType.SCORE_FAIL.toString() -> {
                 numActionTen++
                 scoringScreen = false
             }

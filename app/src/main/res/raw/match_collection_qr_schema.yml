@@ -82,3 +82,4 @@ action_type:
   auto_intake_two: AO
   auto_intake_three: AP
   auto_intake_four: AQ
+  score_fail: AR
