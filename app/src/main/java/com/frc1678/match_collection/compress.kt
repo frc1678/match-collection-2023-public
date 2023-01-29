@@ -79,7 +79,6 @@ fun compress(
         if (timeline.isNotEmpty()) {
             for (actions in timeline.filterNot {
                 it["action_type"] == Constants.ActionType.FAIL.toString()
-                    || it["action_type"] == Constants.ActionType.CHARGE_ATTEMPT.toString()
             }) {
                 // Compress and add timeline action attributes present for all actions.
                 compressTimelineActions = compressTimelineActions +
