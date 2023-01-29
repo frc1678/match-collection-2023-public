@@ -77,9 +77,7 @@ fun compress(
         // Compress timeline actions if timeline exists.
         var compressTimelineActions = ""
         if (timeline.isNotEmpty()) {
-            for (actions in timeline.filterNot {
-                it["action_type"] == Constants.ActionType.FAIL.toString()
-            }) {
+            for (actions in timeline) {
                 // Compress and add timeline action attributes present for all actions.
                 compressTimelineActions = compressTimelineActions +
                         actions.getValue("match_time") + actionTypeData.getValue(

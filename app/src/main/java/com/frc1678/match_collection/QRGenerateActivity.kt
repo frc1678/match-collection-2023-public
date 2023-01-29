@@ -85,23 +85,18 @@ class QRGenerateActivity : CollectionActivity() {
         }
     }
 
-/*     Begin intent used in onKeyLongPress to go back to a pprevious activity depending
+/*     Begin intent used in onKeyLongPress to go back to a previous activity depending
      on your mode and starting position.*/
 private fun intentToPreviousActivity() {
     is_teleop_activated = true
-    is_match_time_ended = true
     val intent = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
         if (starting_position.toString() != "ZERO") {
             Intent(this, CollectionObjectiveActivity::class.java)
         } else {
             Intent(this, MatchInformationEditActivity::class.java)
         }
-    }
-    else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+    } else {
         Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
-    }
-    else {
-        Intent(this, MatchInformationInputActivity::class.java)
     }.putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
 
     startActivity(

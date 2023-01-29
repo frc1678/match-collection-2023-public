@@ -81,7 +81,10 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             val tempToggleList = arrayListOf<String>()
             for (x in 0 until panelList.size) {
                 if (panelList[x].scoredCoop){
-                    when (x) {}
+                    when (x) {
+                        0 -> tempToggleList.add(teamNumberOne)
+                        1 -> tempToggleList.add(teamNumberTwo)
+                        2 -> tempToggleList.add(teamNumberThree)}
                 }
                 when (x) {
                     0 -> teamOneCOOP = panelList[x].scoredCoop
