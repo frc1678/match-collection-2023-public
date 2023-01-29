@@ -313,8 +313,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                if (is_teleop_activated) did_tele_charge = true
-                else did_auto_charge = true
+                if (is_teleop_activated) {
+                    did_tele_charge = tele_charge_level != Constants.ChargeLevel.F
+                } else {
+                    did_auto_charge = auto_charge_level != Constants.ChargeLevel.F
+                }
                 isCharging = ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))
                 enableButtons()
             }
