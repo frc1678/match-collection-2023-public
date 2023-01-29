@@ -81,7 +81,7 @@ class Constants {
         SCORE_CONE_HIGH,
         SCORE_CONE_MID,
         SCORE_CONE_LOW,
-        FAIL,
+        SCORE_FAIL,
         INTAKE_STATION,
         INTAKE_LOW_ROW,
         INTAKE_GROUND,
