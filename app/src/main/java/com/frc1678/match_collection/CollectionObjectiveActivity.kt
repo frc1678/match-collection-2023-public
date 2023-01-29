@@ -105,7 +105,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun timelineAdd(matchTime: String, actionType: Constants.ActionType) {
         timeline.add(mapOf("match_time" to matchTime, "action_type" to "$actionType"))
         removedTimelineActions.clear()
-        Log.d("asdfghjkl", "$timeline")
         enableButtons()
     }
 
