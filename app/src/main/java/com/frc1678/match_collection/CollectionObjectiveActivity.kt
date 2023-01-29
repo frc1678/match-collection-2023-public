@@ -91,6 +91,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         timeline.clear()
         removedTimelineActions.clear()
         btn_timer.text = getString(R.string.btn_timer_start)
+        is_match_time_ended = false
     }
 
     /**
@@ -336,20 +337,22 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
         tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
 
-        btn_charge.isEnabled = isTimerRunning && !(popup_open || isIncap ||
-                ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge)))
+        btn_charge.isEnabled = (isTimerRunning && !(popup_open || isIncap ||
+                ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))))
+                || (is_match_time_ended && !did_tele_charge)
 
         btn_charge.text =
             if (((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))) getString(
                 R.string.btn_charged
             )
             else getString(R.string.btn_charge)
+
         btn_undo.isEnabled = (timeline.size > 0) and !popup_open
         btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
 
         btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
         btn_proceed_edit.isEnabled =
-            isTimerRunning and ((!is_teleop_activated) or (is_match_time_ended)) and !popup_open
+            ((isTimerRunning and (!is_teleop_activated)) or (is_match_time_ended)) and !popup_open
         btn_proceed_edit.text = if (!is_teleop_activated) getString(R.string.btn_to_teleop)
         else getString(R.string.btn_proceed)
     }
@@ -588,22 +591,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Resets and enables everything if the user entered this screen by pressing the back button.
      */
     private fun comingBack() {
-        if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
-            previousScreen == Constants.Screens.QR_GENERATE
-        ) {
-            enableButtons()
             isTimerRunning = false
             Log.d("coming-back", "came back")
             btn_proceed_edit.text = getString(R.string.btn_proceed)
             btn_proceed_edit.isEnabled = true
             btn_timer.isEnabled = false
             btn_timer.text = getString(R.string.timer_run_down)
-            if (did_tele_charge) {
-                btn_charge.text = getString(R.string.btn_charged)
-            } else {
-                btn_charge.isEnabled = true
-            }
-        }
     }
 
     /**
@@ -625,13 +618,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Set the currently displayed fragment to the scoring panel
         scoringScreen = preloaded != Constants.Preloaded.N
 
-        comingBack()
         if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT
             && previousScreen != Constants.Screens.QR_GENERATE
         ) {
             timerReset()
+        } else {
+            comingBack()
         }
 
+        enableButtons()
         initOnClicks()
         initTeamNum()
     }

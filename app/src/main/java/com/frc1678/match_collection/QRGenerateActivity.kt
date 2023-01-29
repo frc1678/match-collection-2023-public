@@ -85,7 +85,7 @@ class QRGenerateActivity : CollectionActivity() {
         }
     }
 
-/*     Begin intent used in onKeyLongPress to go back to a pprevious activity depending
+/*     Begin intent used in onKeyLongPress to go back to a previous activity depending
      on your mode and starting position.*/
 private fun intentToPreviousActivity() {
     is_teleop_activated = true
