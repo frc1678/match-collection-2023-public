@@ -105,7 +105,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private fun timelineAdd(matchTime: String, actionType: Constants.ActionType) {
         timeline.add(mapOf("match_time" to matchTime, "action_type" to "$actionType"))
         removedTimelineActions.clear()
-
+        Log.d("asdfghjkl", "$timeline")
         enableButtons()
     }
 
@@ -331,8 +331,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     /**
-     * Enable and disable buttons based on actions in timeline and timer stage. If in teleop enable intake Panel,
-     * if teleop is not activated enable inake auto panel
+     * Enable and disable buttons based on actions in timeline and timer stage. If in teleop, enable intake panel,
+     * if teleop is not activated, enable intake auto panel
      */
     fun enableButtons() {
         if (!scoringScreen) {
@@ -591,6 +591,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
      */
     private fun intentToPreviousActivity() {
         is_teleop_activated = false
+        timerReset()
         startActivity(
             Intent(this, StartingPositionObjectiveActivity::class.java)
                 .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE),
@@ -602,12 +603,13 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Resets and enables everything if the user entered this screen by pressing the back button.
      */
     private fun comingBack() {
-            isTimerRunning = false
-            Log.d("coming-back", "came back")
-            btn_proceed_edit.text = getString(R.string.btn_proceed)
-            btn_proceed_edit.isEnabled = true
-            btn_timer.isEnabled = false
-            btn_timer.text = getString(R.string.timer_run_down)
+        isTimerRunning = false
+        is_match_time_ended = true
+        Log.d("coming-back", "came back")
+        btn_proceed_edit.text = getString(R.string.btn_proceed)
+        btn_proceed_edit.isEnabled = true
+        btn_timer.isEnabled = false
+        btn_timer.text = getString(R.string.timer_run_down)
     }
 
     /**
