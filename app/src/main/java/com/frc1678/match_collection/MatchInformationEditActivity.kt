@@ -89,7 +89,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     private fun generateQR() {
         updateMatchInformation()
 
-        val intent = Intent(this, QRGenerateActivity::class.java)
+        val intent = Intent(this, QRGenerateActivity::class.java).putExtras(intent)
             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
         startActivity(
             intent, ActivityOptions.makeSceneTransitionAnimation(
@@ -130,6 +130,12 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
                     )
                 }
+            }
+            else if(collection_mode == Constants.ModeSelection.SUBJECTIVE){
+                startActivity(
+                    Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+                        .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
+                )
             }
         }
         return super.onKeyLongPress(keyCode, event)

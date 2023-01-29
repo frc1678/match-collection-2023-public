@@ -96,7 +96,11 @@ private fun intentToPreviousActivity() {
         } else {
             Intent(this, MatchInformationEditActivity::class.java)
         }
-    } else {
+    }
+    else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+        Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+    }
+    else {
         Intent(this, MatchInformationInputActivity::class.java)
     }.putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
 
@@ -115,6 +119,7 @@ private fun intentToPreviousActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_generate_activity)
+        if (starting_position == Constants.StartingPosition.ZERO) preloaded = Constants.Preloaded.N
 
         timestamp = System.currentTimeMillis() / 1000
         val compressedQR = intent.extras?.getString(Constants.COMPRESSED_QR_TAG)

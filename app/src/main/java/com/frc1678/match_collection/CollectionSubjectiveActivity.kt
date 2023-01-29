@@ -6,10 +6,16 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
+import com.frc1678.match_collection.Constants.Companion.previousScreen
 import com.frc1678.match_collection.Constants.Screens.COLLECTION_SUBJECTIVE
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
+import kotlinx.android.synthetic.main.collection_subjective_activity.btn_proceed_edit
+import kotlinx.android.synthetic.main.collection_subjective_activity.btn_timer
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
@@ -22,6 +28,12 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private lateinit var teamNumberOne: String
     private lateinit var teamNumberTwo: String
     private lateinit var teamNumberThree: String
+    private var teamOneDefense: Boolean = false
+    private var teamTwoDefense: Boolean = false
+    private var teamThreeDefense: Boolean = false
+    private var teamOneCOOP: Boolean = false
+    private var teamTwoCOOP: Boolean = false
+    private var teamThreeCOOP: Boolean = false
 
     // Finds the teams that are playing in that match
     private fun getExtras() {
@@ -54,6 +66,11 @@ class CollectionSubjectiveActivity : CollectionActivity() {
                         2 -> tempToggleList.add(teamNumberThree)
                     }
                 }
+                when (x) {
+                    0 -> teamOneDefense = panelList[x].playedDefense
+                    1 -> teamTwoDefense = panelList[x].playedDefense
+                    2 -> teamThreeDefense = panelList[x].playedDefense
+                }
             }
             return tempToggleList
         }
@@ -65,6 +82,11 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             for (x in 0 until panelList.size) {
                 if (panelList[x].scoredCoop){
                     when (x) {}
+                }
+                when (x) {
+                    0 -> teamOneCOOP = panelList[x].scoredCoop
+                    1 -> teamTwoCOOP = panelList[x].scoredCoop
+                    2 -> teamThreeCOOP = panelList[x].scoredCoop
                 }
             }
             return tempToggleList
@@ -85,6 +107,17 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelOne.setTeamNumber(teamNumber = teamNumberOne)
         panelTwo.setTeamNumber(teamNumber = teamNumberTwo)
         panelThree.setTeamNumber(teamNumber = teamNumberThree)
+        if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+            previousScreen == Constants.Screens.QR_GENERATE
+        ) {
+            quickness_score.teamOne?.let { panelOne.setQuickness(score = it.rank) }
+            quickness_score.teamTwo?.let { panelTwo.setQuickness(score = it.rank) }
+            quickness_score.teamThree?.let { panelThree.setQuickness(score = it.rank) }
+
+            field_awareness_score.teamOne?.let { panelOne.setAwareness(score = it.rank) }
+            field_awareness_score.teamTwo?.let { panelTwo.setAwareness(score = it.rank) }
+            field_awareness_score.teamThree?.let { panelThree.setAwareness(score = it.rank) }
+        }
 
         panelOne.setAllianceColor()
         panelTwo.setAllianceColor()
@@ -97,6 +130,14 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelOne.setListenerConeOrientation()
         panelTwo.setListenerConeOrientation()
         panelThree.setListenerConeOrientation()
+
+        panelOne.setDefense(defense = teamOneDefense)
+        panelTwo.setDefense(defense = teamTwoDefense)
+        panelThree.setDefense(defense = teamThreeDefense)
+
+        panelOne.setCOOP(coop = teamOneCOOP)
+        panelTwo.setCOOP(coop = teamTwoCOOP)
+        panelThree.setCOOP(coop = teamThreeCOOP)
     }
 
     private fun initTimer() {
@@ -144,6 +185,27 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         )
     }
 
+    /**
+     * ends timer and displays the data if the user entered this screen by pressing the back button.
+     */
+    private fun comingBack() {
+        if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+            previousScreen == Constants.Screens.QR_GENERATE
+        ) {
+            Log.d("coming-back-subjective", "came back")
+            btn_proceed_edit.text = getString(R.string.btn_proceed)
+            btn_proceed_edit.isEnabled = true
+            btn_timer.isEnabled = false
+            btn_timer.text = "0"
+            teamOneDefense = intent.extras?.getBoolean("team_one_defense") ?: false
+            teamTwoDefense = intent.extras?.getBoolean("team_two_defense") ?: false
+            teamThreeDefense = intent.extras?.getBoolean("team_three_defense") ?: false
+            teamOneCOOP = intent.extras?.getBoolean("team_one_coop") ?: false
+            teamTwoCOOP = intent.extras?.getBoolean("team_two_coop") ?: false
+            teamThreeCOOP = intent.extras?.getBoolean("team_three_coop") ?: false
+        }
+    }
+
     // Restart app from StartingGamePieceActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -157,11 +219,18 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.collection_subjective_activity)
-
         getExtras()
-        initTimer()
+        comingBack()
+        if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT
+            && previousScreen != Constants.Screens.QR_GENERATE
+        ) {
+            initTimer()
+
+        }
         initProceedButton()
         initPanels()
+
+
     }
 
     fun goToNextActivity() {
@@ -170,6 +239,12 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             .putExtra("team_one", teamNumberOne)
             .putExtra("team_two", teamNumberTwo)
             .putExtra("team_three", teamNumberThree)
+            .putExtra("team_one_defense", teamOneDefense)
+            .putExtra("team_two_defense", teamTwoDefense)
+            .putExtra("team_three_defense", teamThreeDefense)
+            .putExtra("team_one_coop", teamOneCOOP)
+            .putExtra("team_two_coop", teamTwoCOOP)
+            .putExtra("team_three_coop", teamThreeCOOP)
         startActivity(
             intent, ActivityOptions.makeSceneTransitionAnimation(
                 this,

@@ -117,7 +117,14 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
     private fun initSpinner() {
         // Set the adapter for the spinner
         spinner_preloaded.adapter = object : ArrayAdapter<String>(
-            this, R.layout.spinner_preloaded, Constants.Preloaded.values().map { it.name }
+            this, R.layout.spinner_preloaded,
+            Constants.Preloaded.values().map {
+                when (it) {
+                    Constants.Preloaded.O -> "CONE"
+                    Constants.Preloaded.U -> "CUBE"
+                    Constants.Preloaded.N -> "NONE"
+                }
+            }
         ) {
             override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup) =
                 super.getDropDownView(position, convertView, parent).apply {
@@ -125,14 +132,18 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     setBackgroundColor(
                         resources.getColor(
                             when ((this as TextView).text) {
-                                Constants.Preloaded.O.toString() -> R.color.cone_yellow
-                                Constants.Preloaded.U.toString() -> R.color.cube_purple
+                                "CONE" -> R.color.cone_yellow
+                                "CUBE" -> R.color.cube_purple
                                 else -> R.color.light_gray
                             }, null
                         )
                     )
                 }
         }
+
+        // Saves what the preloaded piece spinner says
+        spinner_preloaded.setSelection(Constants.Preloaded.values().indexOf(preloaded))
+
         spinner_preloaded.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?, view: View?, position: Int, id: Long

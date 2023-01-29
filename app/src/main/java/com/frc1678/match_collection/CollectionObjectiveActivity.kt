@@ -80,6 +80,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
      */
     val isIncap get() = tb_action_one.isChecked
 
+    /**
+     * Whether the robot has charged during the current game period
+     */
+    var isCharging = false
+
     private var removedTimelineActions = mutableListOf<Map<String, String>>()
 
     /**
@@ -209,8 +214,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                if (is_teleop_activated) did_tele_charge = false
-                else did_auto_charge = false
+                if (is_teleop_activated) { did_tele_charge = false;
+                } else {did_auto_charge = false}
+                isCharging = ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))
+                enableButtons()
             }
 
             Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = false
@@ -309,6 +316,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
                 if (is_teleop_activated) did_tele_charge = true
                 else did_auto_charge = true
+                isCharging = ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))
+                enableButtons()
             }
 
             Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = true
@@ -328,14 +337,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
     fun enableButtons() {
         if (!scoringScreen) {
             if(is_teleop_activated) {
-                intakePanel.enableButtons(isIncap)
+                intakePanel.enableButtons(isIncap, isCharging)
             } else if (!is_teleop_activated) {
-                intakeAutoPanel.enableButtons()
+                intakeAutoPanel.enableButtons(isCharging)
             }
         } else {
-            scoringPanel.enableButtons(isIncap)
+            scoringPanel.enableButtons(isIncap, isCharging)
         }
-        tb_action_one.isEnabled = !(!is_teleop_activated or popup_open)
+        tb_action_one.isEnabled = !(!is_teleop_activated || popup_open || isCharging)
 
         btn_charge.isEnabled = (isTimerRunning && !(popup_open || isIncap ||
                 ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))))
@@ -375,6 +384,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
             if (!is_teleop_activated) {
                 is_teleop_activated = true
                 timelineAdd(match_time, Constants.ActionType.TO_TELEOP)
+                isCharging = false
                 enableButtons()
                 btn_proceed_edit.text = getString(R.string.btn_proceed)
                 btn_proceed_edit.isEnabled = false
@@ -478,6 +488,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popup_open = false
+                isCharging = true
                 enableButtons()
             }
 
