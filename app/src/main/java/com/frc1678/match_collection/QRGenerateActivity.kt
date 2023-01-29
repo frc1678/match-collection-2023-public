@@ -89,7 +89,6 @@ class QRGenerateActivity : CollectionActivity() {
      on your mode and starting position.*/
 private fun intentToPreviousActivity() {
     is_teleop_activated = true
-    //is_match_time_ended = true
     val intent = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
         if (starting_position.toString() != "ZERO") {
             Intent(this, CollectionObjectiveActivity::class.java)
