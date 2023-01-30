@@ -436,7 +436,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Reset timer on long click if timer is running.
         btn_timer.setOnLongClickListener(View.OnLongClickListener {
-            if (isTimerRunning and !is_teleop_activated) {
+            if ((isTimerRunning and !is_teleop_activated) or is_match_time_ended) {
                 timerReset()
                 timeline = ArrayList()
                 isTimerRunning = false

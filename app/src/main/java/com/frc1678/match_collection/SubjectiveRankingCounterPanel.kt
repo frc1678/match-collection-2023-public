@@ -72,7 +72,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
                 // bottom
                 if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
-            if (defenseTime == null) defenseTime = match_time.toIntOrNull()
+            defenseTime = if (checked) match_time.toIntOrNull() else null
         }
     }
 
