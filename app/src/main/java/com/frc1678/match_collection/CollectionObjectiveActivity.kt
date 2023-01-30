@@ -221,7 +221,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
             Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = false
             Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = true
-            Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = false
+            Constants.ActionType.TO_TELEOP.toString() -> {
+                is_teleop_activated = false
+                scoringScreen = scoringScreen
+            }
         }
 
         // Add removed action to removedTimelineActions, so it can be redone if needed.
@@ -324,7 +327,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
             Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = true
             Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = false
-            Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = true
+            Constants.ActionType.TO_TELEOP.toString() -> {
+                is_teleop_activated = true
+                scoringScreen = scoringScreen
+            }
         }
 
         // Remove the redone action from removedTimelineActions.
