@@ -221,7 +221,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
             Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = false
             Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = true
-            Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = false
+            Constants.ActionType.TO_TELEOP.toString() -> {
+                is_teleop_activated = false
+                scoringScreen = scoringScreen
+            }
         }
 
         // Add removed action to removedTimelineActions, so it can be redone if needed.
@@ -313,15 +316,21 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                if (is_teleop_activated) did_tele_charge = true
-                else did_auto_charge = true
+                if (is_teleop_activated) {
+                    did_tele_charge = tele_charge_level != Constants.ChargeLevel.F
+                } else {
+                    did_auto_charge = auto_charge_level != Constants.ChargeLevel.F
+                }
                 isCharging = ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))
                 enableButtons()
             }
 
             Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = true
             Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = false
-            Constants.ActionType.TO_TELEOP.toString() -> is_teleop_activated = true
+            Constants.ActionType.TO_TELEOP.toString() -> {
+                is_teleop_activated = true
+                scoringScreen = scoringScreen
+            }
         }
 
         // Remove the redone action from removedTimelineActions.
@@ -427,7 +436,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Reset timer on long click if timer is running.
         btn_timer.setOnLongClickListener(View.OnLongClickListener {
-            if (isTimerRunning and !is_teleop_activated) {
+            if ((isTimerRunning and !is_teleop_activated) or is_match_time_ended) {
                 timerReset()
                 timeline = ArrayList()
                 isTimerRunning = false
@@ -487,7 +496,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popup_open = false
-                isCharging = true
+                if (!(is_teleop_activated && tele_charge_level == Constants.ChargeLevel.F) &&
+                    !(!is_teleop_activated && auto_charge_level == Constants.ChargeLevel.F)
+                ) {
+                    isCharging = true
+                }
                 enableButtons()
             }
 
@@ -502,12 +515,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupView.btn_engaged.isActivated = false
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.F
-                    did_tele_charge = true
-                    popupView.btn_charge_done.isEnabled = did_tele_charge
+                    did_tele_charge = false
+                    popupView.btn_charge_done.isEnabled = true
                 } else {
                     auto_charge_level = Constants.ChargeLevel.F
-                    did_auto_charge = true
-                    popupView.btn_charge_done.isEnabled = did_auto_charge
+                    did_auto_charge = false
+                    popupView.btn_charge_done.isEnabled = true
                 }
             }
             popupView.btn_parked.setOnClickListener {
