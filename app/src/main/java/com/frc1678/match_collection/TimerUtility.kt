@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlin.math.roundToInt
 
 // Class for all timer functions.
@@ -73,6 +74,7 @@ class TimerUtility {
                     if (context is CollectionObjectiveActivity) {
                         context.endAction()
                         context.enableButtons()
+                        context.tb_action_one.isEnabled=false
                     }
                     btn_proceed.text = context.getString(R.string.btn_proceed)
                     is_match_time_ended = true
