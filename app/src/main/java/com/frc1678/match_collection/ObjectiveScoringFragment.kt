@@ -143,6 +143,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                             activity!!.previousScreen == Constants.Screens.QR_GENERATE ||
                             !(!collectionObjectiveActivity.isTimerRunning || popup_open || isIncap || isCharging)
             }
+
             // Disable scoring buttons if their count is at the max
             btn_action_four.isEnabled =
                 btn_action_four.isEnabled && numActionFour < ACTION_FOUR_MAX
@@ -156,6 +157,23 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 btn_action_eight.isEnabled && numActionEight < ACTION_EIGHT_MAX
             btn_action_nine.isEnabled =
                 btn_action_nine.isEnabled && numActionNine < ACTION_NINE_MAX
+
+            /**
+             * If you have yet to score your preload then this disables scoring sections that do not apply to your preload.
+             * For example, if you have a cone, you can not score a cube.
+             */
+            if((numActionFour == 0) and (numActionFive == 0) and (numActionSix == 0) and (numActionSeven == 0)
+                and (numActionEight == 0) and (numActionNine == 0) and (numActionTen == 0)) {
+                if (preloaded == Constants.Preloaded.O){
+                    btn_action_four.isEnabled = false
+                    btn_action_five.isEnabled = false
+                    btn_action_six.isEnabled = false
+                } else if (preloaded == Constants.Preloaded.U) {
+                    btn_action_seven.isEnabled = false
+                    btn_action_eight.isEnabled = false
+                    btn_action_nine.isEnabled = false
+                }
+            }
         }
     }
 }
