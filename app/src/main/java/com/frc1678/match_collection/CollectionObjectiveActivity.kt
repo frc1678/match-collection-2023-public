@@ -412,6 +412,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 getString(R.string.btn_proceed)
             }
         )
+        if (is_match_time_ended) {
+            tb_action_one.isEnabled = false
+        }
     }
 
     /**
@@ -489,11 +492,20 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
         tb_action_one.setOnClickListener {
-            if (tb_action_one.isChecked) {
-                timelineAdd(matchTime = match_time, actionType = Constants.ActionType.START_INCAP)
+            if (!is_match_time_ended) {
+                if (tb_action_one.isChecked) {
+                    timelineAdd(
+                        matchTime = match_time,
+                        actionType = Constants.ActionType.START_INCAP
+                    )
+                }
+                else {
+                    timelineAdd(matchTime = match_time, actionType = Constants.ActionType.END_INCAP)
+                }
             }
             else {
-                timelineAdd(matchTime = match_time, actionType = Constants.ActionType.END_INCAP)
+                tb_action_one.isChecked = false
+                tb_action_one.isEnabled = false
             }
         }
 
@@ -665,6 +677,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_proceed_edit.isEnabled = true
         btn_timer.isEnabled = false
         btn_timer.text = getString(R.string.timer_run_down)
+        tb_action_one.isEnabled = false
     }
 
     /**
