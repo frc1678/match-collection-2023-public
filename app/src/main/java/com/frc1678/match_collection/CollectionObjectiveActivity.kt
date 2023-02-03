@@ -46,12 +46,19 @@ class CollectionObjectiveActivity : CollectionActivity() {
             /** Set the current fragment to scoring or intake depending on the new value,if teleop is activated set intakePanel
              * If auto, set intake auto panel
              */
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.action_btn_frame,
-                    if (value) {scoringPanel
-                    } else { if (is_teleop_activated) {intakePanel
-                    } else { intakeAutoPanel
-                    } }).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame,
+                if (value) {
+                    scoringPanel
+                }
+                else {
+                    if (is_teleop_activated) {
+                        intakePanel
+                    }
+                    else {
+                        intakeAutoPanel
+                    }
+                }
+            ).commit()
             enableButtons()
         }
 
@@ -213,8 +220,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                if (is_teleop_activated) { did_tele_charge = false;
-                } else {did_auto_charge = false}
+                if (is_teleop_activated) {
+                    did_tele_charge = false
+                }
+                else {
+                    did_auto_charge = false
+                }
                 isCharging = ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))
                 enableButtons()
             }
@@ -318,7 +329,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
                 if (is_teleop_activated) {
                     did_tele_charge = tele_charge_level != Constants.ChargeLevel.F
-                } else {
+                }
+                else {
                     did_auto_charge = auto_charge_level != Constants.ChargeLevel.F
                 }
                 isCharging = ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))
@@ -346,32 +358,63 @@ class CollectionObjectiveActivity : CollectionActivity() {
         if (!scoringScreen) {
             if(is_teleop_activated) {
                 intakePanel.enableButtons(isIncap, isCharging)
-            } else if (!is_teleop_activated) {
+            }
+            else {
                 intakeAutoPanel.enableButtons(isCharging)
             }
-        } else {
+        }
+        else {
             scoringPanel.enableButtons(isIncap, isCharging)
         }
-        tb_action_one.isEnabled = !(!is_teleop_activated || popup_open || isCharging)
+        tb_action_one.isEnabled = (!(!is_teleop_activated || popup_open || isCharging))
 
-        btn_charge.isEnabled = (isTimerRunning && !(popup_open || isIncap ||
-                ((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))))
-                || (is_match_time_ended && !did_tele_charge)
-
-        btn_charge.text =
-            if (((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))) getString(
-                R.string.btn_charged
+        btn_charge.isEnabled = (
+            (
+                isTimerRunning && (
+                    !(
+                        popup_open || isIncap || (
+                            (is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge)
+                        )
+                    )
+                )
             )
-            else getString(R.string.btn_charge)
+            || (is_match_time_ended && !did_tele_charge)
+        )
 
-        btn_undo.isEnabled = (timeline.size > 0) and !popup_open
-        btn_redo.isEnabled = (removedTimelineActions.size > 0) and !popup_open
+        btn_charge.text = (
+            if (((is_teleop_activated && did_tele_charge) || (!is_teleop_activated && did_auto_charge))) {
+                getString(R.string.btn_charged)
+            }
+            else {
+                getString(R.string.btn_charge)
+            }
+        )
 
-        btn_timer.isEnabled = !((timeline.size > 0) or is_teleop_activated or popup_open)
-        btn_proceed_edit.isEnabled =
-            ((isTimerRunning and (!is_teleop_activated)) or (is_match_time_ended)) and !popup_open
-        btn_proceed_edit.text = if (!is_teleop_activated) getString(R.string.btn_to_teleop)
-        else getString(R.string.btn_proceed)
+        btn_undo.isEnabled = ((timeline.size > 0) && !popup_open)
+        btn_redo.isEnabled = ((removedTimelineActions.size > 0) && !popup_open)
+
+        btn_timer.isEnabled = (
+            !(
+                (timeline.size > 0) || is_teleop_activated || popup_open
+            )
+        )
+        btn_proceed_edit.isEnabled = (
+            (
+                (isTimerRunning && (!is_teleop_activated)) || (is_match_time_ended)
+            )
+            && !popup_open
+        )
+        btn_proceed_edit.text = (
+            if (!is_teleop_activated) {
+                getString(R.string.btn_to_teleop)
+            }
+            else {
+                getString(R.string.btn_proceed)
+            }
+        )
+        if (is_match_time_ended) {
+            tb_action_one.isEnabled = false
+        }
     }
 
     /**
@@ -402,18 +445,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 /**
                  * If you are in the ObjectiveAutoIntakeFragment screen switches you to the ObjectiveIntakeFragment
                  */
-                if (!scoringScreen) supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame, intakePanel).commit()
-
-            } else {
+                if (!scoringScreen) {
+                    supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame, intakePanel).commit()
+                }
+            }
+            else {
                 endAction()
-                val intent = Intent(this, MatchInformationEditActivity::class.java)
-                    .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE)
-                startActivity(
-                    intent, ActivityOptions.makeSceneTransitionAnimation(
-                        this,
-                        btn_proceed_edit, "proceed_button"
-                    ).toBundle()
-                )
+                val intent = Intent(this, MatchInformationEditActivity::class.java).putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this, btn_proceed_edit, "proceed_button").toBundle())
             }
         }
 
@@ -421,13 +460,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Start timer on normal click if timer is not running.
         btn_timer.setOnClickListener {
             if (!isTimerRunning) {
-                TimerUtility.MatchTimerThread()
-                    .initTimer(
-                        context = this,
-                        btn_timer = btn_timer,
-                        btn_proceed = btn_proceed_edit,
-                        layout = objective_match_collection_layout
-                    )
+                TimerUtility.MatchTimerThread().initTimer(
+                    context = this,
+                    btn_timer = btn_timer,
+                    btn_proceed = btn_proceed_edit,
+                    layout = objective_match_collection_layout
+                )
                 isTimerRunning = true
                 enableButtons()
                 btn_proceed_edit.isEnabled = true
@@ -435,32 +473,39 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Reset timer on long click if timer is running.
-        btn_timer.setOnLongClickListener(View.OnLongClickListener {
-            if ((isTimerRunning and !is_teleop_activated) or is_match_time_ended) {
-                timerReset()
-                timeline = ArrayList()
-                isTimerRunning = false
-                is_teleop_activated = false
-                enableButtons()
-                btn_proceed_edit.isEnabled = false
-                btn_proceed_edit.text = getString(R.string.btn_to_teleop)
-                objective_match_collection_layout.setBackgroundColor(Color.WHITE)
+        btn_timer.setOnLongClickListener(
+            View.OnLongClickListener {
+                if ((isTimerRunning and !is_teleop_activated) or is_match_time_ended) {
+                    timerReset()
+                    timeline = ArrayList()
+                    isTimerRunning = false
+                    is_teleop_activated = false
+                    enableButtons()
+                    btn_proceed_edit.isEnabled = false
+                    btn_proceed_edit.text = getString(R.string.btn_to_teleop)
+                    objective_match_collection_layout.setBackgroundColor(Color.WHITE)
+                }
+                return@OnLongClickListener true
             }
-            return@OnLongClickListener true
-        })
+        )
 
         // Start incap if clicking the incap toggle button checks the toggle button.
         // Otherwise, end incap.
         tb_action_one.setOnClickListener {
             if (!is_match_time_ended) {
                 if (tb_action_one.isChecked) {
-                    timelineAdd(matchTime = match_time, actionType = Constants.ActionType.START_INCAP)
-                } else {
+                    timelineAdd(
+                        matchTime = match_time,
+                        actionType = Constants.ActionType.START_INCAP
+                    )
+                }
+                else {
                     timelineAdd(matchTime = match_time, actionType = Constants.ActionType.END_INCAP)
                 }
             }
             else {
                 tb_action_one.isChecked = false
+                tb_action_one.isEnabled = false
             }
         }
 
@@ -473,7 +518,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
             popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
             popup_open = true
             // Hide the 'Parked' button if still in the auto period.
-            if (!is_teleop_activated) popupView.btn_parked.isVisible = false
+            if (!is_teleop_activated) {
+                popupView.btn_parked.isVisible = false
+            }
             timelineAdd(match_time, Constants.ActionType.CHARGE_ATTEMPT)
             enableButtons()
 
@@ -482,7 +529,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 if (is_teleop_activated) {
                     tele_charge_level = Constants.ChargeLevel.N
                     did_tele_charge = false
-                } else {
+                }
+                else {
                     auto_charge_level = Constants.ChargeLevel.N
                     did_auto_charge = false
                 }
@@ -496,8 +544,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popup_open = false
-                if (!(is_teleop_activated && tele_charge_level == Constants.ChargeLevel.F) &&
-                    !(!is_teleop_activated && auto_charge_level == Constants.ChargeLevel.F)
+                if (
+                    (!is_teleop_activated && tele_charge_level != Constants.ChargeLevel.F) &&
+                    (is_teleop_activated && auto_charge_level != Constants.ChargeLevel.F)
                 ) {
                     isCharging = true
                 }
@@ -505,8 +554,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             popupView.btn_failed.isActivated = false
-            if (is_teleop_activated) tele_charge_level = Constants.ChargeLevel.N
-            else auto_charge_level = Constants.ChargeLevel.N
+            if (is_teleop_activated) {
+                tele_charge_level = Constants.ChargeLevel.N
+            }
+            else {
+                auto_charge_level = Constants.ChargeLevel.N
+            }
 
             popupView.btn_failed.setOnClickListener {
                 popupView.btn_failed.isActivated = true
@@ -517,7 +570,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     tele_charge_level = Constants.ChargeLevel.F
                     did_tele_charge = false
                     popupView.btn_charge_done.isEnabled = true
-                } else {
+                }
+                else {
                     auto_charge_level = Constants.ChargeLevel.F
                     did_auto_charge = false
                     popupView.btn_charge_done.isEnabled = true
@@ -532,7 +586,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     tele_charge_level = Constants.ChargeLevel.P
                     did_tele_charge = true
                     popupView.btn_charge_done.isEnabled = did_tele_charge
-                } else {
+                }
+                else {
                     auto_charge_level = Constants.ChargeLevel.P
                     did_auto_charge = true
                     popupView.btn_charge_done.isEnabled = did_auto_charge
@@ -547,7 +602,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     tele_charge_level = Constants.ChargeLevel.D
                     did_tele_charge = true
                     popupView.btn_charge_done.isEnabled = did_tele_charge
-                } else {
+                }
+                else {
                     auto_charge_level = Constants.ChargeLevel.D
                     did_auto_charge = true
                     popupView.btn_charge_done.isEnabled = did_auto_charge
@@ -562,7 +618,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     tele_charge_level = Constants.ChargeLevel.E
                     did_tele_charge = true
                     popupView.btn_charge_done.isEnabled = did_tele_charge
-                } else {
+                }
+                else {
                     auto_charge_level = Constants.ChargeLevel.E
                     did_auto_charge = true
                     popupView.btn_charge_done.isEnabled = did_auto_charge
@@ -590,10 +647,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         if (alliance_color == Constants.AllianceColor.RED) {
             tv_team_number.setTextColor(resources.getColor(R.color.alliance_red_light, null))
-
-        } else if (alliance_color == Constants.AllianceColor.BLUE) {
+        }
+        else {
             tv_team_number.setTextColor(resources.getColor(R.color.alliance_blue_light, null))
-
         }
     }
 
@@ -605,8 +661,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         is_teleop_activated = false
         timerReset()
         startActivity(
-            Intent(this, StartingPositionObjectiveActivity::class.java)
-                .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE),
+            Intent(this, StartingPositionObjectiveActivity::class.java).putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }
@@ -622,6 +677,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         btn_proceed_edit.isEnabled = true
         btn_timer.isEnabled = false
         btn_timer.text = getString(R.string.timer_run_down)
+        tb_action_one.isEnabled = false
     }
 
     /**
@@ -643,11 +699,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
         // Set the currently displayed fragment to the scoring panel
         scoringScreen = preloaded != Constants.Preloaded.N
 
-        if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT
-            && previousScreen != Constants.Screens.QR_GENERATE
-        ) {
+        if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT && previousScreen != Constants.Screens.QR_GENERATE) {
             timerReset()
-        } else {
+        }
+        else {
             comingBack()
         }
 
