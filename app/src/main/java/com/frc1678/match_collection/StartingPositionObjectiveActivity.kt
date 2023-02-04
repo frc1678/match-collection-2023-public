@@ -58,34 +58,35 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         // Changes the color of the button if that starting position is selected
         val selectedColor = resources.getColor(R.color.selected_start, null)
         when (startingPosition) {
-            Constants.StartingPosition.ZERO -> btn_zero.setBackgroundColor(selectedColor)
-            Constants.StartingPosition.ONE -> btn_one.setBackgroundColor(selectedColor)
-            Constants.StartingPosition.TWO -> btn_two.setBackgroundColor(selectedColor)
-            Constants.StartingPosition.THREE -> btn_three.setBackgroundColor(selectedColor)
-            Constants.StartingPosition.FOUR -> btn_four.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.`0` -> btn_zero.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.`1` -> btn_one.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.`2` -> btn_two.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.`3` -> btn_three.setBackgroundColor(selectedColor)
+            Constants.StartingPosition.`4` -> btn_four.setBackgroundColor(selectedColor)
+
             else -> {}
         }
     }
 
     private fun initOnClicks() {
         btn_zero.setOnClickListener {
-            startingPosition = Constants.StartingPosition.ZERO
+            startingPosition = Constants.StartingPosition.`0`
             setBackgrounds()
         }
         btn_one.setOnClickListener {
-            startingPosition = Constants.StartingPosition.ONE
+            startingPosition = Constants.StartingPosition.`1`
             setBackgrounds()
         }
         btn_two.setOnClickListener {
-            startingPosition = Constants.StartingPosition.TWO
+            startingPosition = Constants.StartingPosition.`2`
             setBackgrounds()
         }
         btn_three.setOnClickListener {
-            startingPosition = Constants.StartingPosition.THREE
+            startingPosition = Constants.StartingPosition.`3`
             setBackgrounds()
         }
         btn_four.setOnClickListener {
-            startingPosition = Constants.StartingPosition.FOUR
+            startingPosition = Constants.StartingPosition.`4`
             setBackgrounds()
         }
         btn_switch_orientation.setOnClickListener {
@@ -97,7 +98,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             if (startingPosition != Constants.StartingPosition.NONE) {
                 // If you did not select a starting position, the team is assumed to be a no-show.
                 // This will allow you to skip the collection activity.
-                intent = if (startingPosition == Constants.StartingPosition.ZERO) {
+                intent = if (startingPosition == Constants.StartingPosition.`0`) {
                     Intent(this, MatchInformationEditActivity::class.java)
                 } else {
                     Intent(this, CollectionObjectiveActivity::class.java)
