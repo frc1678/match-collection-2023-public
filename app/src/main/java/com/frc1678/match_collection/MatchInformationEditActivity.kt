@@ -91,7 +91,6 @@ class MatchInformationEditActivity : MatchInformationActivity() {
 
         val intent = Intent(this, QRGenerateActivity::class.java).putExtras(intent)
             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
-//            .putExtra("previousScreen","collection")
         startActivity(
             intent, ActivityOptions.makeSceneTransitionAnimation(
                 this,

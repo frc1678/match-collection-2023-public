@@ -89,7 +89,6 @@ class QRGenerateActivity : CollectionActivity() {
 /*     Begin intent used in onKeyLongPress to go back to a previous activity depending
      on your mode and starting position.*/
 private fun intentToPreviousActivity() {
-//    if (intent.getStringExtra("previousScreen") != "matchInformationInput") {
     if (previousScreen != Constants.Screens.MATCH_INFORMATION_INPUT) {
         isTeleopActivated = true
         val intent = if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
