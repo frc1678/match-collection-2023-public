@@ -98,6 +98,22 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Set timer to start match when timer is started or reset.
      */
     private fun timerReset() {
+        popupOpen = false
+        isTeleopActivated = false
+        numActionOne = 0
+        numActionTwo = 0
+        numActionThree = 0
+        numActionFour = 0
+        numActionFive = 0
+        numActionSix = 0
+        numActionSeven = 0
+        numActionEight = 0
+        numActionNine = 0
+        numActionTen = 0
+        autoIntakeGamePieceOne = 0
+        autoIntakeGamePieceTwo = 0
+        autoIntakeGamePieceThree = 0
+        autoIntakeGamePieceFour = 0
         matchTimer?.cancel()
         matchTimer = null
         timeline.clear()
@@ -144,106 +160,107 @@ class CollectionObjectiveActivity : CollectionActivity() {
         /**
          *    Decrement action values displayed on action counters.
           */
-
-        when (timeline[timeline.size - 1]["action_type"].toString()) {
-            /**
-             * Removes auto intake and scoring screen in timeline for specific game piece when undo button is used
-             */
-            Constants.ActionType.AUTO_INTAKE_ONE.toString() -> {
-                autoIntakeGamePieceOne = 0
-                scoringScreen = false
-            }
-
-            Constants.ActionType.AUTO_INTAKE_TWO.toString() -> {
-                autoIntakeGamePieceTwo = 0
-                scoringScreen = false
-            }
-
-            Constants.ActionType.AUTO_INTAKE_THREE.toString() -> {
-                autoIntakeGamePieceThree = 0
-                scoringScreen = false
-            }
-
-            Constants.ActionType.AUTO_INTAKE_FOUR.toString() -> {
-                autoIntakeGamePieceFour = 0
-                scoringScreen = false
-            }
-
-            Constants.ActionType.INTAKE_STATION.toString() -> {
-                numActionOne--
-                scoringScreen = false
-            }
-
-            Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
-                numActionTwo--
-                scoringScreen = false
-            }
-
-            Constants.ActionType.INTAKE_GROUND.toString() -> {
-                numActionThree--
-                scoringScreen = false
-            }
-
-            Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
-                numActionFour--
-                scoringScreen = true
-            }
-
-            Constants.ActionType.SCORE_CUBE_MID.toString() -> {
-                numActionFive--
-                scoringScreen = true
-            }
-
-            Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
-                numActionSix--
-                scoringScreen = true
-            }
-
-            Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
-                numActionSeven--
-                scoringScreen = true
-            }
-
-            Constants.ActionType.SCORE_CONE_MID.toString() -> {
-                numActionEight--
-                scoringScreen = true
-            }
-
-            Constants.ActionType.SCORE_CONE_LOW.toString() -> {
-                numActionNine--
-                scoringScreen = true
-            }
-
-            Constants.ActionType.SCORE_FAIL.toString() -> {
-                numActionTen--
-                scoringScreen = true
-            }
-
-            Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
-                if (isTeleopActivated) {
-                    didTeleCharge = false
+        if (timeline.size>0) {
+            when (timeline[timeline.size - 1]["action_type"].toString()) {
+                /**
+                 * Removes auto intake and scoring screen in timeline for specific game piece when undo button is used
+                 */
+                Constants.ActionType.AUTO_INTAKE_ONE.toString() -> {
+                    autoIntakeGamePieceOne = 0
+                    scoringScreen = false
                 }
-                else {
-                    didAutoCharge = false
+
+                Constants.ActionType.AUTO_INTAKE_TWO.toString() -> {
+                    autoIntakeGamePieceTwo = 0
+                    scoringScreen = false
                 }
-                isCharging = ((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge))
-                enableButtons()
+
+                Constants.ActionType.AUTO_INTAKE_THREE.toString() -> {
+                    autoIntakeGamePieceThree = 0
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.AUTO_INTAKE_FOUR.toString() -> {
+                    autoIntakeGamePieceFour = 0
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.INTAKE_STATION.toString() -> {
+                    numActionOne--
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
+                    numActionTwo--
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.INTAKE_GROUND.toString() -> {
+                    numActionThree--
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
+                    numActionFour--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_CUBE_MID.toString() -> {
+                    numActionFive--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
+                    numActionSix--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
+                    numActionSeven--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_CONE_MID.toString() -> {
+                    numActionEight--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_CONE_LOW.toString() -> {
+                    numActionNine--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_FAIL.toString() -> {
+                    numActionTen--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
+                    if (isTeleopActivated) {
+                        didTeleCharge = false
+                    } else {
+                        didAutoCharge = false
+                    }
+                    isCharging =
+                        ((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge))
+                    enableButtons()
+                }
+
+                Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = false
+                Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = true
+                Constants.ActionType.TO_TELEOP.toString() -> {
+                    isTeleopActivated = false
+                    scoringScreen = scoringScreen
+                }
             }
 
-            Constants.ActionType.START_INCAP.toString() -> tb_action_one.isChecked = false
-            Constants.ActionType.END_INCAP.toString() -> tb_action_one.isChecked = true
-            Constants.ActionType.TO_TELEOP.toString() -> {
-                isTeleopActivated = false
-                scoringScreen = scoringScreen
-            }
+            // Add removed action to removedTimelineActions, so it can be redone if needed.
+            removedTimelineActions.add(timeline.last())
+
+            // Remove most recent timeline entry.
+            timeline.removeAt(timeline.lastIndex)
+            enableButtons()
         }
-
-        // Add removed action to removedTimelineActions, so it can be redone if needed.
-        removedTimelineActions.add(timeline.last())
-
-        // Remove most recent timeline entry.
-        timeline.removeAt(timeline.lastIndex)
-        enableButtons()
     }
 
     /**
