@@ -88,21 +88,27 @@ class QRGenerateActivity : CollectionActivity() {
 /*     Begin intent used in onKeyLongPress to go back to a previous activity depending
      on your mode and starting position.*/
 private fun intentToPreviousActivity() {
-    isTeleopActivated = true
-    val intent = if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
-        if (startingPosition.toString() != "ZERO") {
-            Intent(this, CollectionObjectiveActivity::class.java)
+    if (intent.getStringExtra("previousScreen") != "matchInformationInput") {
+        isTeleopActivated = true
+        val intent = if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+            if (startingPosition.toString() != "ZERO") {
+                Intent(this, CollectionObjectiveActivity::class.java)
+            } else {
+                Intent(this, MatchInformationEditActivity::class.java)
+            }
         } else {
-            Intent(this, MatchInformationEditActivity::class.java)
-        }
-    } else {
-        Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
-    }.putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
+            Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+        }.putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
 
-    startActivity(
-        intent,
-        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-    )
+        startActivity(
+            intent,
+            ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+        )
+    }
+    else {
+        val intent = Intent(this, MatchInformationInputActivity::class.java).putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
+        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
+    }
 }
 
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
