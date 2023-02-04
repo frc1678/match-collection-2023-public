@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.view.KeyEvent
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
+import com.frc1678.match_collection.Constants.Companion.previousScreen
 import com.github.sumimakito.awesomeqr.AwesomeQRCode
 import kotlinx.android.synthetic.main.qr_generate_activity.*
 import org.yaml.snakeyaml.Yaml
@@ -88,7 +89,8 @@ class QRGenerateActivity : CollectionActivity() {
 /*     Begin intent used in onKeyLongPress to go back to a previous activity depending
      on your mode and starting position.*/
 private fun intentToPreviousActivity() {
-    if (intent.getStringExtra("previousScreen") != "matchInformationInput") {
+//    if (intent.getStringExtra("previousScreen") != "matchInformationInput") {
+    if (previousScreen != Constants.Screens.MATCH_INFORMATION_INPUT) {
         isTeleopActivated = true
         val intent = if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
             if (startingPosition.toString() != "ZERO") {

@@ -497,7 +497,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                             val intent = Intent(this, QRGenerateActivity::class.java)
                                 .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT)
                                 .putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
-                                .putExtra("previousScreen", "matchInformationInput")
+//                                .putExtra("previousScreen", "matchInformationInput")
                             startActivity(intent)
                         }
                     }
