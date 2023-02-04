@@ -438,7 +438,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 isCharging = false
                 enableButtons()
                 btn_proceed_edit.text = getString(R.string.btn_proceed)
-                btn_proceed_edit.isEnabled = false
+                if (!isMatchTimeEnded) {
+                    btn_proceed_edit.isEnabled = false
+                }
                 btn_timer.isEnabled = false
                 objective_match_collection_layout.setBackgroundColor(Color.WHITE)
 
