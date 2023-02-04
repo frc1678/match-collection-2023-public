@@ -29,10 +29,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      */
     private fun setMapImage() = iv_starting_position_map.setImageResource(
         when {
-            (orientation && alliance_color == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_1
-            (!orientation && alliance_color == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_2
-            (orientation && alliance_color == Constants.AllianceColor.RED) -> R.drawable.red_map_1
-            (!orientation && alliance_color == Constants.AllianceColor.RED) -> R.drawable.red_map_2
+            (orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_1
+            (!orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_2
+            (orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_1
+            (!orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_2
             else -> error("Error setting map image")
         }
     )
@@ -41,7 +41,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      * Sets the colors of the buttons depending on the alliance color.
      */
     private fun setBackgrounds() {
-        if (alliance_color == Constants.AllianceColor.RED) {
+        if (allianceColor == Constants.AllianceColor.RED) {
             btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray, null))
             btn_one.setBackgroundColor(resources.getColor(R.color.red_start_one, null))
             btn_two.setBackgroundColor(resources.getColor(R.color.red_start_two, null))
@@ -63,6 +63,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             Constants.StartingPosition.`2` -> btn_two.setBackgroundColor(selectedColor)
             Constants.StartingPosition.`3` -> btn_three.setBackgroundColor(selectedColor)
             Constants.StartingPosition.`4` -> btn_four.setBackgroundColor(selectedColor)
+
             else -> {}
         }
     }
@@ -94,7 +95,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         }
         // Moves onto the next screen if you have inputted all the information
         btn_proceed_starting_position.setOnClickListener { view ->
-            if (starting_position != Constants.StartingPosition.NONE) {
+            if (startingPosition != Constants.StartingPosition.NONE) {
                 // If you did not select a starting position, the team is assumed to be a no-show.
                 // This will allow you to skip the collection activity.
                 intent = if (starting_position == Constants.StartingPosition.`0`) {
@@ -186,10 +187,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         setContentView(R.layout.starting_position_activity)
 
         // Initialize the team number text
-        tv_pos_team_number.text = team_number
+        tv_pos_team_number.text = teamNumber
         tv_pos_team_number.setTextColor(
             resources.getColor(
-                if (alliance_color == Constants.AllianceColor.RED) R.color.alliance_red_light
+                if (allianceColor == Constants.AllianceColor.RED) R.color.alliance_red_light
                 else R.color.alliance_blue_light,
                 null
             )

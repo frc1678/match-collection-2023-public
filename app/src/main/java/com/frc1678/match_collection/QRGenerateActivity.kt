@@ -65,15 +65,15 @@ class QRGenerateActivity : CollectionActivity() {
 
                 // Write compressed QR string to file.
                 // File name is dependent on mode (objective or subjective).
-                val fileName = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                    "${match_number}_${team_number}_${getSerialNum(context = this)}_$timestamp"
+                val fileName = if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+                    "${matchNumber}_${teamNumber}_${getSerialNum(context = this)}_$timestamp"
                 } else {
-                    "${match_number}_${getSerialNum(context = this)}_$timestamp"
+                    "${matchNumber}_${getSerialNum(context = this)}_$timestamp"
                 }
                 writeToFile(fileName = fileName, message = qrContents)
-                match_number += 1
+                matchNumber += 1
             }
-            putIntoStorage(context = this, key = "match_number", value = match_number)
+            putIntoStorage(context = this, key = "match_number", value = matchNumber)
             val intent = Intent(this, MatchInformationInputActivity::class.java)
                 .putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
             startActivity(
@@ -88,9 +88,9 @@ class QRGenerateActivity : CollectionActivity() {
 /*     Begin intent used in onKeyLongPress to go back to a previous activity depending
      on your mode and starting position.*/
 private fun intentToPreviousActivity() {
-    is_teleop_activated = true
-    val intent = if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-        if (starting_position.toString() != "ZERO") {
+    isTeleopActivated = true
+    val intent = if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+        if (startingPosition.toString() != "ZERO") {
             Intent(this, CollectionObjectiveActivity::class.java)
         } else {
             Intent(this, MatchInformationEditActivity::class.java)

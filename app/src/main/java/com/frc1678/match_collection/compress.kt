@@ -65,21 +65,19 @@ fun compress(
     // Compress and add data shared between the objective and subjective modes.
     compressedMatchInformation =
         compressSchemaVersion + schemaVersion + genericSeparator +
-                compressSerialNumber + serial_number + genericSeparator +
-                compressMatchNumber + match_number + genericSeparator +
+                compressSerialNumber + serialNumber + genericSeparator +
+                compressMatchNumber + matchNumber + genericSeparator +
                 compressTimestamp + timestamp + genericSeparator +
-                compressVersionNum + match_collection_version_number + genericSeparator +
-                compressScoutName + scout_name.toUpperCase(Locale.US) + genericSeparator +
-                compressAllianceColor + if (alliance_color == Constants.AllianceColor.RED) "TRUE" else "FALSE"
+                compressVersionNum + matchCollectionVersionNumber + genericSeparator +
+                compressScoutName + scoutName.toUpperCase(Locale.US) + genericSeparator +
+                compressAllianceColor + if (allianceColor == Constants.AllianceColor.RED) "TRUE" else "FALSE"
 
     // Compress and add data specific to Objective Match Collection.
-    if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+    if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
         // Compress timeline actions if timeline exists.
         var compressTimelineActions = ""
         if (timeline.isNotEmpty()) {
-            for (actions in timeline.filterNot {
-                it["action_type"] == Constants.ActionType.CHARGE_ATTEMPT.toString()
-            }) {
+            for (actions in timeline) {
                 // Compress and add timeline action attributes present for all actions.
                 compressTimelineActions = compressTimelineActions +
                         actions.getValue("match_time") + actionTypeData.getValue(
@@ -94,25 +92,25 @@ fun compress(
         // timeline actions.
         compressedMatchInformation =
             objectiveStartCharacter + compressedMatchInformation + genericSectionSeparator +
-                    compressTeamNumber + team_number + objectiveSeparator +
-                    compressScoutId + scout_id + objectiveSeparator +
-                    compressStartingPosition + starting_position.toString() + objectiveSeparator +
+                    compressTeamNumber + teamNumber + objectiveSeparator +
+                    compressScoutId + scoutId + objectiveSeparator +
+                    compressStartingPosition + startingPosition.toString() + objectiveSeparator +
                     compressTimeline + compressTimelineActions + objectiveSeparator +
-                    compressAutoChargeLevel + auto_charge_level + objectiveSeparator +
-                    compressTeleChargeLevel + tele_charge_level + objectiveSeparator +
+                    compressAutoChargeLevel + autoChargeLevel + objectiveSeparator +
+                    compressTeleChargeLevel + teleChargeLevel + objectiveSeparator +
                     compressPreloaded + preloaded
     }
     // Compress and add data specific to Subjective Match Collection.
-    else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+    else if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
         var subjDataString = ""
-        val teamNumbers = subjectiveTeamRankingsToList(quickness_score)
+        val teamNumbers = subjectiveTeamRankingsToList(quicknessScore)
 
         teamNumbers.forEachIndexed { i, teamNum ->
             subjDataString += subjectiveTeamNumberSeparator
             subjDataString += teamNum
-            val quickness = getRankForTeam(quickness_score, teamNum)
-            val fieldAwareness = getRankForTeam(field_awareness_score, teamNum)
-            val playedDefense = played_defense_list.contains(teamNum)
+            val quickness = getRankForTeam(quicknessScore, teamNum)
+            val fieldAwareness = getRankForTeam(fieldAwarenessScore, teamNum)
+            val playedDefense = playedDefenseList.contains(teamNum)
             val scoredCoop = scoredCoopList.contains(teamNum)
 
             subjDataString += subjectiveSeparator

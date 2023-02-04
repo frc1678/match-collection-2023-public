@@ -26,9 +26,9 @@ class MatchInformationEditActivity : MatchInformationActivity() {
 
     // Populate edit texts with previously inputted match information data.
     private fun populateData() {
-        et_match_number.setText(match_number.toString())
-        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-            et_team_one.setText(team_number)
+        et_match_number.setText(matchNumber.toString())
+        if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+            et_team_one.setText(teamNumber)
         } else {
             getExtras()
 
@@ -43,13 +43,13 @@ class MatchInformationEditActivity : MatchInformationActivity() {
 
     // Update match information based on newly inputted information.
     private fun updateMatchInformation() {
-        match_number = parseInt(et_match_number.text.toString())
-        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-            team_number = et_team_one.text.toString()
+        matchNumber = parseInt(et_match_number.text.toString())
+        if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+            teamNumber = et_team_one.text.toString()
         } else {
-            for (ranking in listOf(quickness_score, field_awareness_score)) {
-                Log.d("match-information-edit", quickness_score.toString())
-                Log.d("match-information-edit", field_awareness_score.toString())
+            for (ranking in listOf(quicknessScore, fieldAwarenessScore)) {
+                Log.d("match-information-edit", quicknessScore.toString())
+                Log.d("match-information-edit", fieldAwarenessScore.toString())
 
                 // Sets the teams for quickness, field awareness, and defense based on the team
                 // numbers being displayed
@@ -70,16 +70,16 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                     et_team_three.text.toString()
             }
 
-            if (played_defense_list.contains(teamNumberOne)) {
-                played_defense_list[played_defense_list.indexOf(teamNumberOne)] =
+            if (playedDefenseList.contains(teamNumberOne)) {
+                playedDefenseList[playedDefenseList.indexOf(teamNumberOne)] =
                     et_team_one.text.toString()
             }
-            if (played_defense_list.contains(teamNumberTwo)) {
-                played_defense_list[played_defense_list.indexOf(teamNumberTwo)] =
+            if (playedDefenseList.contains(teamNumberTwo)) {
+                playedDefenseList[playedDefenseList.indexOf(teamNumberTwo)] =
                     et_team_two.text.toString()
             }
-            if (played_defense_list.contains(teamNumberThree)) {
-                played_defense_list[played_defense_list.indexOf(teamNumberThree)] =
+            if (playedDefenseList.contains(teamNumberThree)) {
+                playedDefenseList[playedDefenseList.indexOf(teamNumberThree)] =
                     et_team_three.text.toString()
             }
         }
@@ -117,8 +117,8 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed if in Subjective
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean{
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            if(collection_mode == Constants.ModeSelection.OBJECTIVE){
-                if(starting_position.toString() != "ZERO"){
+            if(collectionMode == Constants.ModeSelection.OBJECTIVE){
+                if(startingPosition.toString() != "ZERO"){
                     startActivity(
                         Intent(this, CollectionObjectiveActivity::class.java)
                             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
@@ -131,7 +131,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                     )
                 }
             }
-            else if(collection_mode == Constants.ModeSelection.SUBJECTIVE){
+            else if(collectionMode == Constants.ModeSelection.SUBJECTIVE){
                 startActivity(
                     Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
                         .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
