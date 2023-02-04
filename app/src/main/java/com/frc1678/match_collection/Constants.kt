@@ -46,11 +46,11 @@ class Constants {
     }
 
     enum class StartingPosition {
-        ZERO,
-        ONE,
-        TWO,
-        THREE,
-        FOUR,
+        `0`,
+        `1`,
+        `2`,
+        `3`,
+        `4`,
         NONE
     }
 
