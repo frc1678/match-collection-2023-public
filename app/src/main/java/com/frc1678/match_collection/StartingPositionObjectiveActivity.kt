@@ -57,7 +57,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
 
         // Changes the color of the button if that starting position is selected
         val selectedColor = resources.getColor(R.color.selected_start, null)
-        when (starting_position) {
+        when (startingPosition) {
             Constants.StartingPosition.`0` -> btn_zero.setBackgroundColor(selectedColor)
             Constants.StartingPosition.`1` -> btn_one.setBackgroundColor(selectedColor)
             Constants.StartingPosition.`2` -> btn_two.setBackgroundColor(selectedColor)
