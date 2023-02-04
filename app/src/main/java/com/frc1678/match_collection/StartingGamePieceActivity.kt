@@ -14,13 +14,13 @@ class StartingGamePieceActivity : CollectionActivity() {
     // Chooses which map you will see depending on your alliance color and orientation
     private fun setMapPicture() {
         when {
-            (orientation && alliance_color == Constants.AllianceColor.BLUE) ->
+            (orientation && allianceColor == Constants.AllianceColor.BLUE) ->
                 iv_starting_game_pieces_map.setImageResource(R.drawable.blue_up_game_pieces)
-            (!orientation && alliance_color == Constants.AllianceColor.BLUE) ->
+            (!orientation && allianceColor == Constants.AllianceColor.BLUE) ->
                 iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_game_pieces)
-            (orientation && alliance_color == Constants.AllianceColor.RED) ->
+            (orientation && allianceColor == Constants.AllianceColor.RED) ->
                 iv_starting_game_pieces_map.setImageResource(R.drawable.red_up_game_pieces)
-            (!orientation && alliance_color == Constants.AllianceColor.RED) ->
+            (!orientation && allianceColor == Constants.AllianceColor.RED) ->
                 iv_starting_game_pieces_map.setImageResource(R.drawable.red_down_game_pieces)
         }
     }

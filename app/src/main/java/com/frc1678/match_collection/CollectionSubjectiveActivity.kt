@@ -11,11 +11,9 @@ import android.view.KeyEvent
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import com.frc1678.match_collection.Constants.Companion.previousScreen
 import com.frc1678.match_collection.Constants.Screens.COLLECTION_SUBJECTIVE
-import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
 import kotlinx.android.synthetic.main.collection_subjective_activity.btn_proceed_edit
 import kotlinx.android.synthetic.main.collection_subjective_activity.btn_timer
-import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
@@ -113,13 +111,13 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         if (previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
             previousScreen == Constants.Screens.QR_GENERATE
         ) {
-            quickness_score.teamOne?.let { panelOne.setQuickness(score = it.rank) }
-            quickness_score.teamTwo?.let { panelTwo.setQuickness(score = it.rank) }
-            quickness_score.teamThree?.let { panelThree.setQuickness(score = it.rank) }
+            quicknessScore.teamOne?.let { panelOne.setQuickness(score = it.rank) }
+            quicknessScore.teamTwo?.let { panelTwo.setQuickness(score = it.rank) }
+            quicknessScore.teamThree?.let { panelThree.setQuickness(score = it.rank) }
 
-            field_awareness_score.teamOne?.let { panelOne.setAwareness(score = it.rank) }
-            field_awareness_score.teamTwo?.let { panelTwo.setAwareness(score = it.rank) }
-            field_awareness_score.teamThree?.let { panelThree.setAwareness(score = it.rank) }
+            fieldAwarenessScore.teamOne?.let { panelOne.setAwareness(score = it.rank) }
+            fieldAwarenessScore.teamTwo?.let { panelTwo.setAwareness(score = it.rank) }
+            fieldAwarenessScore.teamThree?.let { panelThree.setAwareness(score = it.rank) }
         }
 
         panelOne.setAllianceColor()
@@ -156,15 +154,15 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     // when proceed button is pressed.
     private fun initProceedButton() {
         btn_proceed_edit.setOnClickListener { view ->
-            quickness_score = recordRankingData(dataName = "quickness")
-            field_awareness_score = recordRankingData(dataName = "field_awareness")
-            played_defense_list = defenseToggleData
+            quicknessScore = recordRankingData(dataName = "quickness")
+            fieldAwarenessScore = recordRankingData(dataName = "field_awareness")
+            playedDefenseList = defenseToggleData
             scoredCoopList = intakeConeOrientationToggleData
             defenseTimestamps = panelList.map { it.defenseTime }
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
             // Otherwise, create error message.
-            if (quickness_score.hasDuplicate() or field_awareness_score.hasDuplicate()
+            if (quicknessScore.hasDuplicate() or fieldAwarenessScore.hasDuplicate()
             ) {
                 AlertDialog.Builder(this).setTitle(R.string.warning_same_rankings)
                     .setNegativeButton("Cancel") { dialog, _ ->

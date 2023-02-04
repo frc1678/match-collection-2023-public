@@ -143,7 +143,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             ?.get(teamIndex ?: return)?.asJsonObject
             ?: return
         teamInput.setText(team.get("number")!!.asString)
-        alliance_color =
+        allianceColor =
             if (team.get("color")?.asString == "red") {
                 switchBorderToRedToggle()
                 Constants.AllianceColor.RED
@@ -170,18 +170,18 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     // Automatically assign team number(s) based on collection mode.
     private fun autoAssignTeamInputsGivenMatch() {
-        if (assign_mode == Constants.AssignmentMode.OVERRIDE) return
+        if (assignMode == Constants.AssignmentMode.OVERRIDE) return
         if (MatchSchedule.fileExists) {
-            if (assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
+            if (assignMode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                 // Assign three scouts per robot based on the scout order list in Objective
                 // Match Collection.
-                if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                    if (scout_id.isNotEmpty() and (scout_id != (Constants.NONE_VALUE))) {
+                if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+                    if (scoutId.isNotEmpty() and (scoutId != (Constants.NONE_VALUE))) {
                         assignTeamObjective(
                             teamInput = et_team_one,
                             teamIndex = getNewScoutAssignment(
                                 matchNumber = et_match_number.text.toString(),
-                                scoutID = scout_id.toInt()
+                                scoutID = scoutId.toInt()
                             ),
                             matchNumber = et_match_number.text.toString()
                         )
@@ -193,7 +193,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     listOf<EditText>(et_team_one, et_team_two, et_team_three).forEach {
                         assignTeamsSubjective(
                             teamInput = it,
-                            allianceColor = alliance_color,
+                            allianceColor = allianceColor,
                             matchNumber = et_match_number.text.toString(),
                             iterationNumber = iterationNumber
                         )
@@ -203,7 +203,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 }
             } else {
                 // Set team numbers to be empty if the user is not in automatic assignment mode
-                if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
                     et_team_one.setText("")
                     et_team_two.setText("")
                     et_team_three.setText("")
@@ -214,14 +214,14 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
 
             // Warn the user if they are in objective mode and do not have a scout ID
-            if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                if ((btn_scout_id.text == "Scout ID: NONE") or (scout_id.toIntOrNull() == null)) {
+            if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+                if ((btn_scout_id.text == "Scout ID: NONE") or (scoutId.toIntOrNull() == null)) {
                     AlertDialog.Builder(this).setMessage(R.string.error_scout_id_not_found)
                         .show()
                 }
             }
         } else {
-            if(assign_mode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
+            if(assignMode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                 AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
             }
         }
@@ -237,7 +237,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     if (et_match_number.text.toString() != "") {
                         if (MatchSchedule.fileExists) {
                             if (parseInt(et_match_number.text.toString()) > MatchSchedule.contents!!.keySet()!!.size) {
-                                if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+                                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
                                     et_team_one.setText("")
                                     et_team_two.setText("")
                                     et_team_three.setText("")
@@ -247,12 +247,12 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
                             } else {
                                 autoAssignTeamInputsGivenMatch()
-                                match_number = parseInt(et_match_number.text.toString())
+                                matchNumber = parseInt(et_match_number.text.toString())
                             }
                         }
                     }
                 } else {
-                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+                    if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
                         et_team_one.setText("")
                         et_team_two.setText("")
                         et_team_three.setText("")
@@ -341,42 +341,42 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         when (retrieveFromStorage(context = this, key = "alliance_color")) {
             Constants.AllianceColor.BLUE.toString(), "" -> {
                 switchBorderToBlueToggle()
-                alliance_color = Constants.AllianceColor.BLUE
+                allianceColor = Constants.AllianceColor.BLUE
             }
             Constants.AllianceColor.RED.toString() -> {
                 switchBorderToRedToggle()
-                alliance_color = Constants.AllianceColor.RED
+                allianceColor = Constants.AllianceColor.RED
             }
         }
 
         // Set onClickListeners to set alliance color when in objective collection mode.
         leftToggleButton.setOnClickListener {
-            if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                alliance_color = Constants.AllianceColor.BLUE
+            if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+                allianceColor = Constants.AllianceColor.BLUE
                 switchBorderToBlueToggle()
             }
         }
         rightToggleButton.setOnClickListener {
-            if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-                alliance_color = Constants.AllianceColor.RED
+            if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+                allianceColor = Constants.AllianceColor.RED
                 switchBorderToRedToggle()
             }
         }
 
         // Set onLongClickListeners to set alliance color in subjective collection mode when long clicked.
         leftToggleButton.setOnLongClickListener {
-            if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
-                alliance_color = Constants.AllianceColor.BLUE
-                putIntoStorage(context = this, key = "alliance_color", value = alliance_color)
+            if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                allianceColor = Constants.AllianceColor.BLUE
+                putIntoStorage(context = this, key = "alliance_color", value = allianceColor)
                 autoAssignTeamInputsGivenMatch()
                 switchBorderToBlueToggle()
             }
             return@setOnLongClickListener true
         }
         rightToggleButton.setOnLongClickListener {
-            if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
-                alliance_color = Constants.AllianceColor.RED
-                putIntoStorage(context = this, key = "alliance_color", value = alliance_color)
+            if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                allianceColor = Constants.AllianceColor.RED
+                putIntoStorage(context = this, key = "alliance_color", value = allianceColor)
                 autoAssignTeamInputsGivenMatch()
                 switchBorderToRedToggle()
             }
@@ -403,7 +403,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 R.string.btn_scout_id_message,
                 retrieveFromStorage(context = this, key = "scout_id")
             )
-            scout_id = retrieveFromStorage(context = this, key = "scout_id")
+            scoutId = retrieveFromStorage(context = this, key = "scout_id")
         }
 
         // Opens up a spinner with scout id numbers when the scout id button is clicked
@@ -420,8 +420,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     scoutIdContentsList()[position].toString()
                 )
                 // Set scout ID and save it to internal storage.
-                scout_id = scoutIdContentsList()[position].toString()
-                putIntoStorage(context = this, key = "scout_id", value = scout_id)
+                scoutId = scoutIdContentsList()[position].toString()
+                putIntoStorage(context = this, key = "scout_id", value = scoutId)
                 autoAssignTeamInputsGivenMatch()
                 dialog.dismiss()
             }
@@ -457,7 +457,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
              * file into matchesPlayed. */
             File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}/").walkTopDown().forEach {
                 val name = it.nameWithoutExtension
-                if (collection_mode == differentiateSubjectiveAndObjectiveQRFileNames(name)) {
+                if (collectionMode == differentiateSubjectiveAndObjectiveQRFileNames(name)) {
                     // Both subjective and objective QR files start with the match number and
                     // immediately after the match number have an underscore
                     matchesPlayed.add(name.substringBefore("_"))
@@ -470,7 +470,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             val height = LinearLayout.LayoutParams.WRAP_CONTENT
             val popupWindow = PopupWindow(popupView, width, height, false)
             popupWindow.showAtLocation(view, Gravity.CENTER, 0, -175)
-            popup_open = true
+            popupOpen = true
 
             // Sets the list view equal to a list matchesPlayed
             val adapter = ArrayAdapter(
@@ -481,7 +481,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             // The Exit button closes the popup
             popupView.iv_old_qr_exit.setOnClickListener {
                 popupWindow.dismiss()
-                popup_open = false
+                popupOpen = false
             }
 
             popupView.lv_old_qrs.setOnItemClickListener { parent, _, position, _ ->
@@ -509,9 +509,9 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     private fun initAssignModeSpinner() {
         when (retrieveFromStorage(context = this, key = "assignment_mode")) {
             "0" ->
-                assign_mode = Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT
+                assignMode = Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT
             "1" ->
-                assign_mode = Constants.AssignmentMode.OVERRIDE
+                assignMode = Constants.AssignmentMode.OVERRIDE
         }
 
         val adapter = ArrayAdapter(
@@ -549,8 +549,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 // Automatically assign teams if in automatic assignment mode and disable user input.
                 // Otherwise, enable team number edit texts and alliance color toggles.
                 if (position == 0) {
-                    assign_mode = Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT
-                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+                    assignMode = Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT
+                    if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
                         et_team_one.isEnabled = false
                         et_team_two.isEnabled = false
                         et_team_three.isEnabled = false
@@ -561,15 +561,15 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     }
                     autoAssignTeamInputsGivenMatch()
                 } else {
-                    assign_mode = Constants.AssignmentMode.OVERRIDE
-                    if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+                    assignMode = Constants.AssignmentMode.OVERRIDE
+                    if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
                         et_team_one.isEnabled = true
                         et_team_two.isEnabled = true
                         et_team_three.isEnabled = true
                     } else {
                         et_team_one.isEnabled = true
                     }
-                    if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+                    if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
                         left_toggle_button.isEnabled = true
                         right_toggle_button.isEnabled = true
                     }
@@ -577,20 +577,20 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                assign_mode = Constants.AssignmentMode.NONE
+                assignMode = Constants.AssignmentMode.NONE
             }
         }
     }
 
     // Transition into the next activity and set timestamp for specific match.
     private fun startMatchActivity() {
-        match_number = parseInt(et_match_number.text.toString())
+        matchNumber = parseInt(et_match_number.text.toString())
 
-        putIntoStorage(context = this, key = "match_number", value = match_number)
-        putIntoStorage(context = this, key = "alliance_color", value = alliance_color)
+        putIntoStorage(context = this, key = "match_number", value = matchNumber)
+        putIntoStorage(context = this, key = "alliance_color", value = allianceColor)
 
-        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
-            team_number = et_team_one.text.toString()
+        if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+            teamNumber = et_team_one.text.toString()
             val intent = Intent(this, StartingPositionObjectiveActivity::class.java)
                 .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT)
             startActivity(
@@ -647,19 +647,19 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+        if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
             setContentView(R.layout.match_information_input_activity_objective)
             initScoutIdLongClick()
-        } else if (collection_mode == Constants.ModeSelection.SUBJECTIVE) {
+        } else if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
             setContentView(R.layout.match_information_input_activity_subjective)
         }
 
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         et_match_number.setText(retrieveFromStorage(context = this, key = "match_number"))
-        tv_version_number.text = getString(R.string.tv_version_num, match_collection_version_number)
+        tv_version_number.text = getString(R.string.tv_version_num, matchCollectionVersionNumber)
 
-        serial_number = getSerialNum(context = this)
+        serialNumber = getSerialNum(context = this)
 
         resetCollectionReferences()
         resetStartingReferences()

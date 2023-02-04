@@ -29,10 +29,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      */
     private fun setMapImage() = iv_starting_position_map.setImageResource(
         when {
-            (orientation && alliance_color == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_1
-            (!orientation && alliance_color == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_2
-            (orientation && alliance_color == Constants.AllianceColor.RED) -> R.drawable.red_map_1
-            (!orientation && alliance_color == Constants.AllianceColor.RED) -> R.drawable.red_map_2
+            (orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_1
+            (!orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_2
+            (orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_1
+            (!orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_2
             else -> error("Error setting map image")
         }
     )
@@ -41,7 +41,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      * Sets the colors of the buttons depending on the alliance color.
      */
     private fun setBackgrounds() {
-        if (alliance_color == Constants.AllianceColor.RED) {
+        if (allianceColor == Constants.AllianceColor.RED) {
             btn_zero.setBackgroundColor(resources.getColor(R.color.light_gray, null))
             btn_one.setBackgroundColor(resources.getColor(R.color.red_start_one, null))
             btn_two.setBackgroundColor(resources.getColor(R.color.red_start_two, null))
@@ -57,7 +57,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
 
         // Changes the color of the button if that starting position is selected
         val selectedColor = resources.getColor(R.color.selected_start, null)
-        when (starting_position) {
+        when (startingPosition) {
             Constants.StartingPosition.ZERO -> btn_zero.setBackgroundColor(selectedColor)
             Constants.StartingPosition.ONE -> btn_one.setBackgroundColor(selectedColor)
             Constants.StartingPosition.TWO -> btn_two.setBackgroundColor(selectedColor)
@@ -69,23 +69,23 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
 
     private fun initOnClicks() {
         btn_zero.setOnClickListener {
-            starting_position = Constants.StartingPosition.ZERO
+            startingPosition = Constants.StartingPosition.ZERO
             setBackgrounds()
         }
         btn_one.setOnClickListener {
-            starting_position = Constants.StartingPosition.ONE
+            startingPosition = Constants.StartingPosition.ONE
             setBackgrounds()
         }
         btn_two.setOnClickListener {
-            starting_position = Constants.StartingPosition.TWO
+            startingPosition = Constants.StartingPosition.TWO
             setBackgrounds()
         }
         btn_three.setOnClickListener {
-            starting_position = Constants.StartingPosition.THREE
+            startingPosition = Constants.StartingPosition.THREE
             setBackgrounds()
         }
         btn_four.setOnClickListener {
-            starting_position = Constants.StartingPosition.FOUR
+            startingPosition = Constants.StartingPosition.FOUR
             setBackgrounds()
         }
         btn_switch_orientation.setOnClickListener {
@@ -94,10 +94,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         }
         // Moves onto the next screen if you have inputted all the information
         btn_proceed_starting_position.setOnClickListener { view ->
-            if (starting_position != Constants.StartingPosition.NONE) {
+            if (startingPosition != Constants.StartingPosition.NONE) {
                 // If you did not select a starting position, the team is assumed to be a no-show.
                 // This will allow you to skip the collection activity.
-                intent = if (starting_position == Constants.StartingPosition.ZERO) {
+                intent = if (startingPosition == Constants.StartingPosition.ZERO) {
                     Intent(this, MatchInformationEditActivity::class.java)
                 } else {
                     Intent(this, CollectionObjectiveActivity::class.java)
@@ -186,10 +186,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         setContentView(R.layout.starting_position_activity)
 
         // Initialize the team number text
-        tv_pos_team_number.text = team_number
+        tv_pos_team_number.text = teamNumber
         tv_pos_team_number.setTextColor(
             resources.getColor(
-                if (alliance_color == Constants.AllianceColor.RED) R.color.alliance_red_light
+                if (allianceColor == Constants.AllianceColor.RED) R.color.alliance_red_light
                 else R.color.alliance_blue_light,
                 null
             )

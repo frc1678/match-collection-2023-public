@@ -106,13 +106,13 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
          * Based on the orientation and alliance color stored in references it brings the corresponding map.
          */
         mainView!!.objective_collection_intake_map.setImageResource( when {
-            (orientation && alliance_color == AllianceColor.BLUE) ->
+            (orientation && allianceColor == AllianceColor.BLUE) ->
                 R.drawable.blue_up_game_pieces
-            (orientation && alliance_color == AllianceColor.RED) ->
+            (orientation && allianceColor == AllianceColor.RED) ->
                 R.drawable.red_up_game_pieces
-            (!orientation && alliance_color == AllianceColor.BLUE) ->
+            (!orientation && allianceColor == AllianceColor.BLUE) ->
                 R.drawable.blue_down_game_pieces
-            (!orientation && alliance_color == AllianceColor.RED) ->
+            (!orientation && allianceColor == AllianceColor.RED) ->
                 R.drawable.red_down_game_pieces
             else ->
                 R.drawable.blue_up_game_pieces
@@ -130,7 +130,7 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
             /**
              * Based on the alliance color it will set to the corresponding color and show "1".
              */
-            if(alliance_color == AllianceColor.BLUE) {
+            if(allianceColor == AllianceColor.BLUE) {
                 mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.BLUE)
             } else {
                 mainView!!.tb_collection_objective_intake_game_piece_one.setBackgroundColor(Color.RED)
@@ -151,7 +151,7 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
             /**
              * Based on the alliance color it will set to the corresponding color and show "2".
              */
-            if(alliance_color == AllianceColor.BLUE) {
+            if(allianceColor == AllianceColor.BLUE) {
                 mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.BLUE)
             } else {
                 mainView!!.tb_collection_objective_intake_game_piece_two.setBackgroundColor(Color.RED)
@@ -172,7 +172,7 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
             /**
              * Based on the alliance color it will set to the corresponding color and show "3".
              */
-            if(alliance_color == AllianceColor.BLUE) {
+            if(allianceColor == AllianceColor.BLUE) {
                 mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.BLUE)
             } else {
                 mainView!!.tb_collection_objective_intake_game_piece_three.setBackgroundColor(Color.RED)
@@ -193,7 +193,7 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
             /**
              * Based on the alliance color it will set to the corresponding color and show "4".
              */
-                if(alliance_color == AllianceColor.BLUE) {
+                if(allianceColor == AllianceColor.BLUE) {
                     mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.BLUE)
                 } else {
                     mainView!!.tb_collection_objective_intake_game_piece_four.setBackgroundColor(Color.RED)
@@ -219,7 +219,7 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                 mainView!!.tb_collection_objective_intake_game_piece_three,
                 mainView!!.tb_collection_objective_intake_game_piece_four
             )) {
-                btn.isEnabled = (collectionObjectiveActivity.isTimerRunning and !popup_open and !isCharging)
+                btn.isEnabled = (collectionObjectiveActivity.isTimerRunning and !popupOpen and !isCharging)
             }
         }
     }

@@ -26,39 +26,39 @@ var autoIntakeGamePieceThree = 0
 var autoIntakeGamePieceFour = 0
 
 
-var match_timer: CountDownTimer? = null
-var match_time: String = ""
-var is_teleop_activated: Boolean = false
-var popup_open = false
-var is_match_time_ended: Boolean = false
-var collection_mode: Constants.ModeSelection = Constants.ModeSelection.NONE
-var assign_mode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
-var did_auto_charge: Boolean = false
-var did_tele_charge: Boolean = false
+var matchTimer: CountDownTimer? = null
+var matchTime: String = ""
+var isTeleopActivated: Boolean = false
+var popupOpen = false
+var isMatchTimeEnded: Boolean = false
+var collectionMode: Constants.ModeSelection = Constants.ModeSelection.NONE
+var assignMode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
+var didAutoCharge: Boolean = false
+var didTeleCharge: Boolean = false
 
 // Data that is shared between the objective and subjective QRs.
-var serial_number: String? = ""
-var match_number: Int = 0
-var alliance_color: Constants.AllianceColor = Constants.AllianceColor.NONE
+var serialNumber: String? = ""
+var matchNumber: Int = 0
+var allianceColor: Constants.AllianceColor = Constants.AllianceColor.NONE
 var timestamp: Long = 0
-var match_collection_version_number: String = "1.0.0"
-var scout_name: String = Constants.NONE_VALUE
+var matchCollectionVersionNumber: String = "1.0.0"
+var scoutName: String = Constants.NONE_VALUE
 
 // Data specific to Objective Match Collection QR.
-var team_number: String = ""
-var scout_id: String = Constants.NONE_VALUE
+var teamNumber: String = ""
+var scoutId: String = Constants.NONE_VALUE
 var orientation: Boolean = true //true = UP, false = DOWN
-var starting_position: Constants.StartingPosition = Constants.StartingPosition.NONE
+var startingPosition: Constants.StartingPosition = Constants.StartingPosition.NONE
 var preloaded: Constants.Preloaded = Constants.Preloaded.N
 var timeline = mutableListOf<Map<String, String>>()
-var auto_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
-var tele_charge_level: Constants.ChargeLevel = Constants.ChargeLevel.N
+var autoChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
+var teleChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
 
 // Data specific to Subjective Match Collection QR.
-var quickness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
-var field_awareness_score: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var quicknessScore: SubjectiveTeamRankings = SubjectiveTeamRankings()
+var fieldAwarenessScore: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var scoredCoopList: ArrayList<String> = ArrayList()
-var played_defense_list: ArrayList<String> = ArrayList()
+var playedDefenseList: ArrayList<String> = ArrayList()
 var gamePiecePositionList = mutableListOf(Constants.GamePiecePositions.N,
     Constants.GamePiecePositions.N, Constants.GamePiecePositions.N, Constants.GamePiecePositions.N)
 var defenseTimestamps = listOf<Int?>(null, null, null)
@@ -80,22 +80,22 @@ fun resetCollectionReferences() {
     autoIntakeGamePieceThree = 0
     autoIntakeGamePieceFour = 0
 
-    is_teleop_activated = false
-    did_auto_charge = false
-    did_tele_charge = false
+    isTeleopActivated = false
+    didAutoCharge = false
+    didTeleCharge = false
 
-    popup_open = false
-    auto_charge_level = Constants.ChargeLevel.N
-    tele_charge_level = Constants.ChargeLevel.N
+    popupOpen = false
+    autoChargeLevel = Constants.ChargeLevel.N
+    teleChargeLevel = Constants.ChargeLevel.N
 
     timestamp = 0
 
     timeline = ArrayList()
 
-    quickness_score = SubjectiveTeamRankings()
-    field_awareness_score = SubjectiveTeamRankings()
+    quicknessScore = SubjectiveTeamRankings()
+    fieldAwarenessScore = SubjectiveTeamRankings()
     scoredCoopList = ArrayList()
-    played_defense_list = ArrayList()
+    playedDefenseList = ArrayList()
     defenseTimestamps = listOf(null, null, null)
 }
 
@@ -123,10 +123,10 @@ data class SubjectiveTeamRankings(
 data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
-    starting_position = Constants.StartingPosition.NONE
+    startingPosition = Constants.StartingPosition.NONE
     for (x in 0..3) {
         gamePiecePositionList[x] = Constants.GamePiecePositions.N
     }
     preloaded = Constants.Preloaded.N
-    team_number = ""
+    teamNumber = ""
 }

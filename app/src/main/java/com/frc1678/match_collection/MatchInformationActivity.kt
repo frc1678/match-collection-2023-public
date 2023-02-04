@@ -73,8 +73,8 @@ open class MatchInformationActivity : CollectionActivity() {
                 position: Int,
                 id: Long
             ) {
-                scout_name = populateScoutNameSpinner(context = context)[position]
-                putIntoStorage(context = context, key = "scout_name", value = scout_name)
+                scoutName = populateScoutNameSpinner(context = context)[position]
+                putIntoStorage(context = context, key = "scout_name", value = scoutName)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {}
@@ -89,11 +89,11 @@ open class MatchInformationActivity : CollectionActivity() {
         } else if (checkInputNotEmpty(
                 et_match_number,
                 et_team_one
-            ) and (alliance_color != Constants.AllianceColor.NONE)
+            ) and (allianceColor != Constants.AllianceColor.NONE)
         ) {
-            if (collection_mode == Constants.ModeSelection.OBJECTIVE) {
+            if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
                 // Check to make sure all objective-related inputs are not empty.
-                return if (scout_id != Constants.NONE_VALUE) {
+                return if (scoutId != Constants.NONE_VALUE) {
                     true
                 } else {
                     createErrorMessage(
