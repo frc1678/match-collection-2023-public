@@ -16,20 +16,20 @@ class ModeCollectionSelectActivity : CollectionActivity() {
     // When clicked, buttons set collection_mode and start MatchInformationInputActivity.kt.
     private fun initButtonOnClicks() {
         btn_objective_collection_select.setOnClickListener {
-            collection_mode = Constants.ModeSelection.OBJECTIVE
+            collectionMode = Constants.ModeSelection.OBJECTIVE
             startMatchInformationInputActivity()
         }
         btn_subjective_collection_select.setOnClickListener {
-            collection_mode = Constants.ModeSelection.SUBJECTIVE
+            collectionMode = Constants.ModeSelection.SUBJECTIVE
             startMatchInformationInputActivity()
         }
     }
 
     // Create the intent to start the respective mode activity.
     private fun startMatchInformationInputActivity() {
-        putIntoStorage(context = this, key = "collection_mode", value = collection_mode)
+        putIntoStorage(context = this, key = "collection_mode", value = collectionMode)
         // Start respective mode activity.
-        when (collection_mode) {
+        when (collectionMode) {
             Constants.ModeSelection.OBJECTIVE -> {
                 finish()
                 startActivity(
@@ -100,7 +100,7 @@ class ModeCollectionSelectActivity : CollectionActivity() {
                 key = "collection_mode"
             ) != Constants.ModeSelection.NONE.toString())
         ) {
-            collection_mode = when (retrieveFromStorage(context = this, key = "collection_mode")) {
+            collectionMode = when (retrieveFromStorage(context = this, key = "collection_mode")) {
                 Constants.ModeSelection.SUBJECTIVE.toString() ->
                     Constants.ModeSelection.SUBJECTIVE
                 Constants.ModeSelection.OBJECTIVE.toString() ->

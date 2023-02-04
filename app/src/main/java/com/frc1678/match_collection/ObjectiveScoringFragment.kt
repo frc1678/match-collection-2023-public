@@ -141,7 +141,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 btn.isEnabled =
                     activity!!.previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
                             activity!!.previousScreen == Constants.Screens.QR_GENERATE ||
-                            !(!collectionObjectiveActivity.isTimerRunning || popup_open || isIncap || isCharging)
+                            !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap || isCharging)
             }
 
             // Disable scoring buttons if their count is at the max

@@ -52,7 +52,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
     fun setAllianceColor() {
         tv_team_number.setTextColor(
             resources.getColor(
-                if (alliance_color == Constants.AllianceColor.RED) R.color.alliance_red_light
+                if (allianceColor == Constants.AllianceColor.RED) R.color.alliance_red_light
                 else R.color.alliance_blue_light,
                 null
             )
@@ -72,7 +72,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
                 // bottom
                 if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
-            defenseTime = if (checked) match_time.toIntOrNull() else null
+            defenseTime = if (checked) matchTime.toIntOrNull() else null
         }
     }
 
