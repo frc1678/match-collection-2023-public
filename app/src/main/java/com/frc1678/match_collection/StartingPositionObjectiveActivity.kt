@@ -70,23 +70,23 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
 
     private fun initOnClicks() {
         btn_zero.setOnClickListener {
-            starting_position = Constants.StartingPosition.`0`
+            startingPosition = Constants.StartingPosition.`0`
             setBackgrounds()
         }
         btn_one.setOnClickListener {
-            starting_position = Constants.StartingPosition.`1`
+            startingPosition = Constants.StartingPosition.`1`
             setBackgrounds()
         }
         btn_two.setOnClickListener {
-            starting_position = Constants.StartingPosition.`2`
+            startingPosition = Constants.StartingPosition.`2`
             setBackgrounds()
         }
         btn_three.setOnClickListener {
-            starting_position = Constants.StartingPosition.`3`
+            startingPosition = Constants.StartingPosition.`3`
             setBackgrounds()
         }
         btn_four.setOnClickListener {
-            starting_position = Constants.StartingPosition.`4`
+            startingPosition = Constants.StartingPosition.`4`
             setBackgrounds()
         }
         btn_switch_orientation.setOnClickListener {
@@ -98,7 +98,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             if (startingPosition != Constants.StartingPosition.NONE) {
                 // If you did not select a starting position, the team is assumed to be a no-show.
                 // This will allow you to skip the collection activity.
-                intent = if (starting_position == Constants.StartingPosition.`0`) {
+                intent = if (startingPosition == Constants.StartingPosition.`0`) {
                     Intent(this, MatchInformationEditActivity::class.java)
                 } else {
                     Intent(this, CollectionObjectiveActivity::class.java)
