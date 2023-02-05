@@ -125,6 +125,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(collectionMode == Constants.ModeSelection.OBJECTIVE){
                 if(startingPosition.toString() != "0"){
+                    teamNumber = et_team_one.text.toString()
                     startActivity(
                         Intent(this, CollectionObjectiveActivity::class.java)
                             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
