@@ -140,6 +140,9 @@ class MatchInformationEditActivity : MatchInformationActivity() {
             else if(collectionMode == Constants.ModeSelection.SUBJECTIVE){
                 startActivity(
                     Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+                        .putExtra("team_one",et_team_one.text.toString())
+                        .putExtra("team_two",et_team_two.text.toString())
+                        .putExtra("team_three",et_team_three.text.toString())
                         .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
                 )
             }

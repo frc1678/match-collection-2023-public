@@ -18,6 +18,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
+import com.frc1678.match_collection.Constants.Companion.previousScreen
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
@@ -171,7 +172,27 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     // Automatically assign team number(s) based on collection mode.
     private fun autoAssignTeamInputsGivenMatch() {
-        if (assignMode == Constants.AssignmentMode.OVERRIDE) return
+        if (assignMode == Constants.AssignmentMode.OVERRIDE) {
+            if (previousScreen == Constants.Screens.STARTING_POSITION_OBJECTIVE || previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT) {
+                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                    et_team_one.setText(intent.extras?.getString("team_one").toString())
+                    et_team_two.setText(intent.extras?.getString("team_two").toString())
+                    et_team_three.setText(intent.extras?.getString("team_three").toString())
+                } else {
+                    et_team_one.setText(intent.extras?.getString("team_number").toString())
+                }
+            }
+            else {
+                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                    et_team_one.setText("")
+                    et_team_two.setText("")
+                    et_team_three.setText("")
+                } else {
+                    et_team_one.setText("")
+                }
+            }
+            return
+        }
         if (MatchSchedule.fileExists) {
             if (assignMode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                 // Assign three scouts per robot based on the scout order list in Objective
@@ -202,16 +223,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     }
 
                 }
-            } else {
-                // Set team numbers to be empty if the user is not in automatic assignment mode
-                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
-                    et_team_one.setText("")
-                    et_team_two.setText("")
-                    et_team_three.setText("")
-                } else {
-                    et_team_one.setText("")
-                }
-
             }
 
             // Warn the user if they are in objective mode and do not have a scout ID
@@ -716,5 +727,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         initTeamNumberTextChangeListeners()
         initProceedButton()
         initAssignModeSpinner()
+        autoAssignTeamInputsGivenMatch()
     }
 }
