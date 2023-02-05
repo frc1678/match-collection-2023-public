@@ -118,7 +118,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean{
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(collectionMode == Constants.ModeSelection.OBJECTIVE){
-                if(startingPosition.toString() != "ZERO"){
+                if(startingPosition.toString() != "0"){
                     startActivity(
                         Intent(this, CollectionObjectiveActivity::class.java)
                             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
