@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -264,6 +265,48 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
             override fun afterTextChanged(s: Editable) {}
         })
+    }
+    // Only lets the user type in numbers and uppercase letters
+    private fun initTeamNumberTextChangeListeners() {
+        val regex = "[^A-Z0-9]".toRegex()
+        et_team_one.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                if (checkInputNotEmpty(et_team_one)) {
+                    if (s.toString().contains(regex)) {
+                        val tempString: String = et_team_one.text.toString()
+                        et_team_one.setText(regex.replace(tempString,""))
+                    }
+                }
+            }
+        })
+        if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+            et_team_two.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    if (checkInputNotEmpty(et_team_one)) {
+                        if (s.toString().contains(regex)) {
+                            val tempString: String = et_team_two.text.toString()
+                            et_team_two.setText(regex.replace(tempString,""))
+                        }
+                    }
+                }
+            })
+            et_team_three.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    if (checkInputNotEmpty(et_team_one)) {
+                        if (s.toString().contains(regex)) {
+                            val tempString: String = et_team_three.text.toString()
+                            et_team_three.setText(regex.replace(tempString,""))
+                        }
+                    }
+                }
+            })
+        }
     }
 
     // Create an alliance color toggle button given its specifications.
@@ -670,6 +713,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         initToggleButtons()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
         initMatchNumberTextChangeListener()
+        initTeamNumberTextChangeListeners()
         initProceedButton()
         initAssignModeSpinner()
     }

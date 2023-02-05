@@ -141,7 +141,8 @@
             <EditText
                 android:id="@+id/et_team_one"
                 style="@style/et_standard_linear_layout_number"
-                android:maxLength="5" />
+                android:maxLength="5"
+                android:inputType="text" />
 
         </LinearLayout>
 
@@ -163,7 +164,8 @@
             <EditText
                 android:id="@+id/et_team_two"
                 style="@style/et_standard_linear_layout_number"
-                android:maxLength="5" />
+                android:maxLength="5"
+                android:inputType="text" />
 
         </LinearLayout>
 
@@ -185,7 +187,8 @@
             <EditText
                 android:id="@+id/et_team_three"
                 style="@style/et_standard_linear_layout_number"
-                android:maxLength="5" />
+                android:maxLength="5"
+                android:inputType="text" />
 
         </LinearLayout>
 
