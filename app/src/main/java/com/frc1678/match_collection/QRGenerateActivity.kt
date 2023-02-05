@@ -92,10 +92,10 @@ private fun intentToPreviousActivity() {
     if (previousScreen != Constants.Screens.MATCH_INFORMATION_INPUT) {
         isTeleopActivated = true
         val intent = if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
-            if (startingPosition.toString() != "ZERO") {
+            if (startingPosition.toString() != "0") {
                 Intent(this, CollectionObjectiveActivity::class.java)
             } else {
-                Intent(this, MatchInformationEditActivity::class.java)
+                Intent(this, StartingPositionObjectiveActivity::class.java)
             }
         } else {
             Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
