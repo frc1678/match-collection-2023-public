@@ -180,6 +180,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
             .setPositiveButton("Yes") { _, _ ->
                 startActivity(
                     Intent(this, MatchInformationInputActivity::class.java)
+                        .putExtra("team_number",teamNumber)
                         .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_POSITION_OBJECTIVE),
                     ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
                 )

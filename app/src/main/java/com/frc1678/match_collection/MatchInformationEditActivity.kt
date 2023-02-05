@@ -125,6 +125,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(collectionMode == Constants.ModeSelection.OBJECTIVE){
                 if(startingPosition.toString() != "0"){
+                    teamNumber = et_team_one.text.toString()
                     startActivity(
                         Intent(this, CollectionObjectiveActivity::class.java)
                             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
@@ -140,6 +141,9 @@ class MatchInformationEditActivity : MatchInformationActivity() {
             else if(collectionMode == Constants.ModeSelection.SUBJECTIVE){
                 startActivity(
                     Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+                        .putExtra("team_one",et_team_one.text.toString())
+                        .putExtra("team_two",et_team_two.text.toString())
+                        .putExtra("team_three",et_team_three.text.toString())
                         .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
                 )
             }
