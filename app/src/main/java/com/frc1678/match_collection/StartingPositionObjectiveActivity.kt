@@ -71,22 +71,28 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
     private fun initOnClicks() {
         btn_zero.setOnClickListener {
             startingPosition = Constants.StartingPosition.`0`
+            spinner_preloaded.setSelection(Constants.Preloaded.values().indexOf(Constants.Preloaded.N))
+            spinner_preloaded.isEnabled = false
             setBackgrounds()
         }
         btn_one.setOnClickListener {
             startingPosition = Constants.StartingPosition.`1`
+            spinner_preloaded.isEnabled = true
             setBackgrounds()
         }
         btn_two.setOnClickListener {
             startingPosition = Constants.StartingPosition.`2`
+            spinner_preloaded.isEnabled = true
             setBackgrounds()
         }
         btn_three.setOnClickListener {
             startingPosition = Constants.StartingPosition.`3`
+            spinner_preloaded.isEnabled = true
             setBackgrounds()
         }
         btn_four.setOnClickListener {
             startingPosition = Constants.StartingPosition.`4`
+            spinner_preloaded.isEnabled = true
             setBackgrounds()
         }
         btn_switch_orientation.setOnClickListener {
@@ -202,5 +208,6 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         setBackgrounds()
         initOnClicks()
         initSpinner()
+        spinner_preloaded.isEnabled = (startingPosition != Constants.StartingPosition.`0`)
     }
 }
