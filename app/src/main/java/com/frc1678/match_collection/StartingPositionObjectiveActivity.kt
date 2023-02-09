@@ -29,10 +29,10 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
      */
     private fun setMapImage() = iv_starting_position_map.setImageResource(
         when {
-            (orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_1
-            (!orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_2
-            (orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_1
-            (!orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_2
+            (orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_2
+            (!orientation && allianceColor == Constants.AllianceColor.BLUE) -> R.drawable.blue_map_1
+            (orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_2
+            (!orientation && allianceColor == Constants.AllianceColor.RED) -> R.drawable.red_map_1
             else -> error("Error setting map image")
         }
     )

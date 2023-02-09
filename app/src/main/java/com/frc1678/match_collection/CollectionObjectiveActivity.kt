@@ -377,7 +377,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 intakePanel.enableButtons(isIncap, isCharging)
             }
             else {
-                intakeAutoPanel.enableButtons(isCharging)
+                // TODO
+                // intakeAutoPanel.enableButtons(isCharging)
             }
         }
         else {

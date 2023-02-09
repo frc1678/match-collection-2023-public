@@ -1,10 +1,19 @@
 package com.frc1678.match_collection
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import com.frc1678.match_collection.Constants.AllianceColor
 import kotlinx.android.synthetic.main.collection_objective_auto_intake_fragment.view.*
@@ -14,8 +23,8 @@ import kotlinx.android.synthetic.main.collection_objective_auto_intake_fragment.
  */
 class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_intake_fragment) {
 
-    /**
-     * The main view of this fragment.
+    /*
+     The main view of this fragment.
      */
     private var mainView: View? = null
 
@@ -25,9 +34,10 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
         savedInstanceState: Bundle?
     ): View? {
         mainView = super.onCreateView(inflater, container, savedInstanceState)!!
-        initOnClicks()
-        enableButtons(collectionObjectiveActivity.isCharging)
-        setBackgrounds()
+        setContent()
+//        initOnClicks()
+//        enableButtons(collectionObjectiveActivity.isCharging)
+//        setBackgrounds()
         return mainView
     }
 
@@ -36,6 +46,245 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
      */
     private val collectionObjectiveActivity get() = activity as CollectionObjectiveActivity
 
+    /**
+     * This is the compose function that creates the layout for the compose view in collection_objective_auto_intake_fragment
+     */
+
+    private fun setContent() {
+        mainView!!.compose_view.setContent {
+            Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+                /*
+                  It sets the image based on the orientation and alliance color stored in references.
+                  Todo: make string for content description
+                 */
+                Image(painter = painterResource(
+                        id = when {
+                            (orientation && allianceColor == AllianceColor.BLUE) ->
+                                R.drawable.blue_up_game_pieces
+                            (orientation && allianceColor == AllianceColor.RED) ->
+                                R.drawable.red_up_game_pieces
+                            (!orientation && allianceColor == AllianceColor.BLUE) ->
+                                R.drawable.blue_down_game_pieces
+                            (!orientation && allianceColor == AllianceColor.RED) ->
+                                R.drawable.red_down_game_pieces
+                            else -> R.drawable.red_down_game_pieces
+                        }
+                    ), contentDescription = "Map with game pieces",
+                    modifier = Modifier.size(950.dp)
+                )
+                Row {
+                    Spacer(modifier = Modifier.width(100.dp))
+
+                    Column() {
+                        Spacer(modifier = Modifier.height(100.dp))
+
+                        // Button 1
+                        TextButton(
+                            onClick = {
+                                if (orientation) {
+                                    if (autoIntakeGamePieceFour == 0) {
+                                        autoIntakeGamePieceFour = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_FOUR)
+                                    }
+                                } else {
+                                    if (autoIntakeGamePieceOne == 0) {
+                                        autoIntakeGamePieceOne = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_ONE)
+                                    }
+                                }
+                                collectionObjectiveActivity.scoringScreen = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = colorResource(
+                                    id =
+                                    if (allianceColor == Constants.AllianceColor.RED) {
+                                        if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
+                                            R.color.action_red
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    } else {
+                                        if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
+                                            R.color.action_blue
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    }
+                                )
+                            )
+                        ) {
+                            if (orientation) {
+                                if (autoIntakeGamePieceFour == 0) {
+                                    Text(text = getString(R.string.four_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            } else {
+                                if (autoIntakeGamePieceOne == 0) {
+                                    Text(text = getString(R.string.one_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            }
+                        }
+                        // Button 2
+                        TextButton(
+                            onClick = {
+                                if (orientation) {
+                                    if (autoIntakeGamePieceThree == 0) {
+                                        autoIntakeGamePieceThree = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_THREE)
+                                    }
+                                } else {
+                                    if (autoIntakeGamePieceTwo == 0) {
+                                        autoIntakeGamePieceTwo = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_TWO)
+                                    }
+                                }
+                                collectionObjectiveActivity.scoringScreen = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = colorResource(
+                                    id =
+                                    if (allianceColor == Constants.AllianceColor.RED) {
+                                        if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
+                                            R.color.action_red
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    } else {
+                                        if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
+                                            R.color.action_blue
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    }
+                                )
+                            )
+                        ) {
+                            if (orientation) {
+                                if (autoIntakeGamePieceThree == 0) {
+                                    Text(text = getString(R.string.three_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            } else {
+                                if (autoIntakeGamePieceTwo == 0) {
+                                    Text(text = getString(R.string.two_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            }
+                        }
+
+                        // Button 3
+                        TextButton(
+                            onClick = {
+                                if (orientation) {
+                                    if (autoIntakeGamePieceTwo == 0) {
+                                        autoIntakeGamePieceTwo = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_THREE)
+                                    }
+                                } else {
+                                    if (autoIntakeGamePieceTwo == 0) {
+                                        autoIntakeGamePieceTwo = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_TWO)
+                                    }
+                                }
+                                collectionObjectiveActivity.scoringScreen = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = colorResource(
+                                    id =
+                                    if (allianceColor == Constants.AllianceColor.RED) {
+                                        if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
+                                            R.color.action_red
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    } else {
+                                        if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
+                                            R.color.action_blue
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    }
+                                )
+                            )
+                        ) {
+                            if (orientation) {
+                                if (autoIntakeGamePieceThree == 0) {
+                                    Text(text = getString(R.string.three_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            } else {
+                                if (autoIntakeGamePieceThree == 0) {
+                                    Text(text = getString(R.string.two_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            }
+                        }
+
+                        // Button 4
+                        TextButton(
+                            onClick = {
+                                if (orientation) {
+                                    if (autoIntakeGamePieceFour == 0) {
+                                        autoIntakeGamePieceFour = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_FOUR)
+                                    }
+                                } else {
+                                    if (autoIntakeGamePieceOne == 0) {
+                                        autoIntakeGamePieceOne = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_ONE)
+                                    }
+                                }
+                                collectionObjectiveActivity.scoringScreen = true
+                            },
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = colorResource(
+                                    id =
+                                    if (allianceColor == Constants.AllianceColor.RED) {
+                                        if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
+                                            R.color.action_red
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    } else {
+                                        if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
+                                            R.color.action_blue
+                                        } else {
+                                            R.color.light_gray
+                                        }
+                                    }
+                                )
+                            )
+                        ) {
+                            if (orientation) {
+                                if (autoIntakeGamePieceFour == 0) {
+                                    Text(text = getString(R.string.four_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            } else {
+                                if (autoIntakeGamePieceOne == 0) {
+                                    Text(text = getString(R.string.one_starting_position))
+                                } else {
+                                    Text(text = getString(R.string.taken))
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(100.dp))
+                    }
+                    Spacer(modifier = Modifier.width(100.dp))
+                }
+            }
+        }
+    }
+    /*
     /**
      * Initialize button and toggle button `onClickListeners`.
      */
@@ -100,7 +349,9 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
             }
         }
     }
+     */
 
+    /*
     private fun setBackgrounds(){
         /**
          * Based on the orientation and alliance color stored in references it brings the corresponding map.
@@ -203,8 +454,10 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
             }
         }
     }
+     */
 
-    /**
+    /*
+     /**
      * Enables the intake buttons when the match is going, the activity is not null,
      * the mainView is not null, a popup is not open, and you have not already charged.
      * Other wise it disables the intake buttons.
@@ -223,4 +476,5 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
             }
         }
     }
+     */
 }
