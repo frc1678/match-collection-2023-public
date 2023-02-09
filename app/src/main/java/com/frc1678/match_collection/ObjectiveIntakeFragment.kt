@@ -63,6 +63,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
             }
 
             btn_action_two.setOnClickListener {
+                IntakeDialogAlert().show(requireActivity().supportFragmentManager, null)
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_LOW_ROW)
                 numActionTwo++
                 collectionObjectiveActivity.scoringScreen = true
@@ -88,8 +89,8 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         if (mainView != null && activity != null) with(mainView!!) {
             for (btn in listOf(btn_action_one, btn_action_two, btn_action_three)) {
                 btn.isEnabled =
-                    activity!!.previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
-                            activity!!.previousScreen == Constants.Screens.QR_GENERATE ||
+                    requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+                            requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
                             !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap || isCharging)
             }
         }
