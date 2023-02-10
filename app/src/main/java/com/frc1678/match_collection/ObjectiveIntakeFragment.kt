@@ -92,9 +92,6 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
                 }
 
                 popupView.btn_intake_low_row.setOnClickListener {
-                    popupView.btn_intake_low_row.isActivated = true
-                    popupView.btn_intake_mid_row.isActivated = false
-                    popupView.btn_intake_high_row.isActivated = false
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_LOW_ROW)
                     numActionTwo++
                     popupWindow.dismiss()
@@ -104,9 +101,6 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
                 }
 
                 popupView.btn_intake_mid_row.setOnClickListener {
-                    popupView.btn_intake_low_row.isActivated = false
-                    popupView.btn_intake_mid_row.isActivated = true
-                    popupView.btn_intake_high_row.isActivated = false
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_MID_ROW)
                     numActionEleven++
                     popupWindow.dismiss()
@@ -116,9 +110,6 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
                 }
 
                 popupView.btn_intake_high_row.setOnClickListener {
-                    popupView.btn_intake_low_row.isActivated = false
-                    popupView.btn_intake_mid_row.isActivated = false
-                    popupView.btn_intake_high_row.isActivated = true
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_HIGH_ROW)
                     numActionTwelve++
                     popupWindow.dismiss()
