@@ -19,29 +19,21 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_engaged"
-                style="@style/btn_charge_level"
-                android:text="@string/btn_engaged" />
+                android:id="@+id/btn_intake_high_row"
+                style="@style/btn_intake_row"
+                android:text="@string/btn_high_row" />
 
             <Button
-                android:id="@+id/btn_docked"
-                style="@style/btn_charge_level"
-                android:text="@string/btn_docked" />
+                android:id="@+id/btn_intake_mid_row"
+                style="@style/btn_intake_row"
+                android:text="@string/btn_mid_row" />
 
             <Button
-                android:id="@+id/btn_parked"
-                style="@style/btn_charge_level"
-                android:text="@string/btn_parked" />
-
-            <Button
-                android:id="@+id/btn_failed"
-                style="@style/btn_charge_level"
-                android:text="@string/btn_failed"
-                />
+                android:id="@+id/btn_intake_low_row"
+                style="@style/btn_intake_row"
+                android:text="@string/btn_low_row" />
 
         </LinearLayout>
-
-
 
     </LinearLayout>
 
@@ -52,22 +44,13 @@
 
         <!--Cancel-->
         <Button
-            android:id="@+id/btn_charge_cancel"
+            android:id="@+id/btn_intake_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:text="@string/cancel"
             android:textColor="@color/alliance_red_med"
             style="?android:attr/buttonBarButtonStyle" />
-
-        <!--Done-->
-        <Button
-            android:enabled = "false"
-            android:id="@+id/btn_charge_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|center_vertical"
-            android:text="@string/done" />
 
     </LinearLayout>
 

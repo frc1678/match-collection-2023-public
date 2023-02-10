@@ -1,14 +1,20 @@
 package com.frc1678.match_collection
 
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import com.frc1678.match_collection.Constants.Companion.previousScreen
+import kotlinx.android.synthetic.main.charge_popup.view.*
+import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_one
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_three
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_two
+import kotlinx.android.synthetic.main.intake_popup.view.*
 
 /**
  * [Fragment] used for showing the intake buttons in [CollectionObjectiveActivity].
@@ -45,7 +51,6 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
     private fun setCounterTexts() {
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
-            btn_action_two.text = getString(R.string.btn_action_two, numActionTwo.toString())
             btn_action_three.text = getString(R.string.btn_action_three, numActionThree.toString())
         }
     }
@@ -62,11 +67,56 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
                 setCounterTexts()
             }
 
+            /**
+             * Creates a popup for intaking from different row levels
+             * Sets functionality for the buttons
+             */
             btn_action_two.setOnClickListener {
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_LOW_ROW)
-                numActionTwo++
-                collectionObjectiveActivity.scoringScreen = true
-                setCounterTexts()
+                val popupView = View.inflate(collectionObjectiveActivity, R.layout.intake_popup, null)
+                val width = LinearLayout.LayoutParams.WRAP_CONTENT
+                val height = LinearLayout.LayoutParams.WRAP_CONTENT
+                val popupWindow = PopupWindow(popupView, width, height, false)
+                popupWindow.showAtLocation(it, Gravity.CENTER, 0, 0)
+                popupOpen = true
+                collectionObjectiveActivity.enableButtons()
+
+                popupView.btn_intake_low_row.text = getString(R.string.btn_low_row, numActionTwo.toString())
+                popupView.btn_intake_mid_row.text = getString(R.string.btn_mid_row, numActionEleven.toString())
+                popupView.btn_intake_high_row.text = getString(R.string.btn_high_row, numActionTwelve.toString())
+
+                // OnClickListeners for the buttons in the intake popup.
+                popupView.btn_intake_cancel.setOnClickListener {
+                    popupWindow.dismiss()
+                    popupOpen = false
+                    collectionObjectiveActivity.enableButtons()
+                }
+
+                popupView.btn_intake_low_row.setOnClickListener {
+                    collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_LOW_ROW)
+                    numActionTwo++
+                    popupWindow.dismiss()
+                    popupOpen = false
+                    collectionObjectiveActivity.scoringScreen = true
+                    collectionObjectiveActivity.enableButtons()
+                }
+
+                popupView.btn_intake_mid_row.setOnClickListener {
+                    collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_MID_ROW)
+                    numActionEleven++
+                    popupWindow.dismiss()
+                    popupOpen = false
+                    collectionObjectiveActivity.scoringScreen = true
+                    collectionObjectiveActivity.enableButtons()
+                }
+
+                popupView.btn_intake_high_row.setOnClickListener {
+                    collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_HIGH_ROW)
+                    numActionTwelve++
+                    popupWindow.dismiss()
+                    popupOpen = false
+                    collectionObjectiveActivity.scoringScreen = true
+                    collectionObjectiveActivity.enableButtons()
+                }
             }
 
             btn_action_three.setOnClickListener {
@@ -88,8 +138,8 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         if (mainView != null && activity != null) with(mainView!!) {
             for (btn in listOf(btn_action_one, btn_action_two, btn_action_three)) {
                 btn.isEnabled =
-                    activity!!.previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
-                            activity!!.previousScreen == Constants.Screens.QR_GENERATE ||
+                    requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+                            requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
                             !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap || isCharging)
             }
         }
