@@ -24,7 +24,7 @@
     <color name="blue_error_popup_borders">#0F5EAE</color>
 
     <color name="action_yellow">#F8ED89</color>
-    <color name="action_yellow_pressed">#FBF08E</color>
+    <color name="action_yellow_pressed">#FFF599</color>
     <color name="action_orange">#E29578</color>
     <color name="action_orange_pressed">#D8A18C</color>
     <color name="action_blue">#2AB7CA</color>
