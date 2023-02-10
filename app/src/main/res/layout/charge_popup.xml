@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|center_vertical"
             android:text="@string/cancel"
-            android:textColor="@color/black"
+            android:textColor="@color/alliance_red_med"
             style="?android:attr/buttonBarButtonStyle" />
 
         <!--Done-->

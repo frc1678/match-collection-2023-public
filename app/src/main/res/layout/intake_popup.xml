@@ -1,24 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/popup_background"
     android:padding="@dimen/very_small">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!--Charging Dock Buttons-->
+        <LinearLayout
+            android:layout_width="270dp"
+            android:layout_height="500dp"
+            android:layout_margin="@dimen/small"
+            android:orientation="vertical">
+
             <Button
-                android:id="@+id/btn_high_row"
-                style="@style/btn_charge_level"
+                android:id="@+id/btn_intake_high_row"
+                style="@style/btn_intake_row"
                 android:text="@string/btn_high_row" />
 
             <Button
-                android:id="@+id/btn_docked"
-                style="@style/btn_charge_level"
+                android:id="@+id/btn_intake_mid_row"
+                style="@style/btn_intake_row"
                 android:text="@string/btn_mid_row" />
 
             <Button
-                android:id="@+id/btn_parked"
-                style="@style/btn_charge_level"
+                android:id="@+id/btn_intake_low_row"
+                style="@style/btn_intake_row"
                 android:text="@string/btn_low_row" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <!--Cancel-->
+        <Button
+            android:id="@+id/btn_intake_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|center_vertical"
+            android:text="@string/cancel"
+            android:textColor="@color/alliance_red_med"
+            style="?android:attr/buttonBarButtonStyle" />
+
+    </LinearLayout>
 
 </LinearLayout>
