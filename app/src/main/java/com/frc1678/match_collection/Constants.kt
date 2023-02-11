@@ -84,6 +84,8 @@ class Constants {
         SCORE_FAIL,
         INTAKE_STATION,
         INTAKE_LOW_ROW,
+        INTAKE_MID_ROW,
+        INTAKE_HIGH_ROW,
         INTAKE_GROUND,
         AUTO_INTAKE_ONE,
         AUTO_INTAKE_TWO,

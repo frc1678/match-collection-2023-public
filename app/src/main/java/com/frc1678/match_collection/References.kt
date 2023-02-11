@@ -20,6 +20,8 @@ const val ACTION_EIGHT_MAX = 6
 var numActionNine = 0 //SCORE_CONE_LOW
 const val ACTION_NINE_MAX = 9
 var numActionTen = 0 //SCORE_FAIL
+var numActionEleven = 0 //INTAKE_MID_ROW
+var numActionTwelve = 0 //INTAKE_HIGH_ROW
 var autoIntakeGamePieceOne = 0
 var autoIntakeGamePieceTwo = 0
 var autoIntakeGamePieceThree = 0
@@ -75,6 +77,8 @@ fun resetCollectionReferences() {
     numActionEight = 0
     numActionNine = 0
     numActionTen = 0
+    numActionEleven = 0
+    numActionTwelve = 0
     autoIntakeGamePieceOne = 0
     autoIntakeGamePieceTwo = 0
     autoIntakeGamePieceThree = 0

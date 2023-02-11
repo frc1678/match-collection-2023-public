@@ -6,7 +6,7 @@
     <string name="high_label">High</string>
     <string name="btn_timer_start">Start Match</string>
     <string name="btn_action_one">Intake Station - %1$s</string>
-    <string name="btn_action_two">Intake Low Row - %1$s</string>
+    <string name="btn_action_two">Intake Row</string>
     <string name="btn_action_three">Intake Ground - %1$s</string>
     <string name="btn_action_four">High Cube - %1$s</string>
     <string name="btn_action_five">Mid Cube - %1$s</string>
@@ -58,6 +58,9 @@
     <string name="btn_docked">Docked</string>
     <string name="btn_parked">Parked</string>
     <string name="btn_failed">Failed</string>
+    <string name="btn_high_row">High Row - %1$s</string>
+    <string name="btn_mid_row">Mid Row - %1$s</string>
+    <string name="btn_low_row">Low Row - %1$s</string>
     <string name="Five">5</string>
     <string name="start_climb_timer">Start Timer</string>
     <string name="climb_timer">Time: %1$s</string>

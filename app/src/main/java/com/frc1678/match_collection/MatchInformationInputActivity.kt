@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -17,6 +18,7 @@ import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
+import com.frc1678.match_collection.Constants.Companion.previousScreen
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
@@ -170,7 +172,27 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     // Automatically assign team number(s) based on collection mode.
     private fun autoAssignTeamInputsGivenMatch() {
-        if (assignMode == Constants.AssignmentMode.OVERRIDE) return
+        if (assignMode == Constants.AssignmentMode.OVERRIDE) {
+            if (previousScreen == Constants.Screens.STARTING_POSITION_OBJECTIVE || previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT) {
+                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                    et_team_one.setText(intent.extras?.getString("team_one").toString())
+                    et_team_two.setText(intent.extras?.getString("team_two").toString())
+                    et_team_three.setText(intent.extras?.getString("team_three").toString())
+                } else {
+                    et_team_one.setText(intent.extras?.getString("team_number").toString())
+                }
+            }
+            else {
+                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                    et_team_one.setText("")
+                    et_team_two.setText("")
+                    et_team_three.setText("")
+                } else {
+                    et_team_one.setText("")
+                }
+            }
+            return
+        }
         if (MatchSchedule.fileExists) {
             if (assignMode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                 // Assign three scouts per robot based on the scout order list in Objective
@@ -201,16 +223,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                     }
 
                 }
-            } else {
-                // Set team numbers to be empty if the user is not in automatic assignment mode
-                if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
-                    et_team_one.setText("")
-                    et_team_two.setText("")
-                    et_team_three.setText("")
-                } else {
-                    et_team_one.setText("")
-                }
-
             }
 
             // Warn the user if they are in objective mode and do not have a scout ID
@@ -264,6 +276,48 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
             override fun afterTextChanged(s: Editable) {}
         })
+    }
+    // Only lets the user type in numbers and uppercase letters
+    private fun initTeamNumberTextChangeListeners() {
+        val regex = "[^A-Z0-9]".toRegex()
+        et_team_one.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                if (checkInputNotEmpty(et_team_one)) {
+                    if (s.toString().contains(regex)) {
+                        val tempString: String = et_team_one.text.toString()
+                        et_team_one.setText(regex.replace(tempString,""))
+                    }
+                }
+            }
+        })
+        if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+            et_team_two.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    if (checkInputNotEmpty(et_team_one)) {
+                        if (s.toString().contains(regex)) {
+                            val tempString: String = et_team_two.text.toString()
+                            et_team_two.setText(regex.replace(tempString,""))
+                        }
+                    }
+                }
+            })
+            et_team_three.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    if (checkInputNotEmpty(et_team_one)) {
+                        if (s.toString().contains(regex)) {
+                            val tempString: String = et_team_three.text.toString()
+                            et_team_three.setText(regex.replace(tempString,""))
+                        }
+                    }
+                }
+            })
+        }
     }
 
     // Create an alliance color toggle button given its specifications.
@@ -670,7 +724,9 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         initToggleButtons()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
         initMatchNumberTextChangeListener()
+        initTeamNumberTextChangeListeners()
         initProceedButton()
         initAssignModeSpinner()
+        autoAssignTeamInputsGivenMatch()
     }
 }
