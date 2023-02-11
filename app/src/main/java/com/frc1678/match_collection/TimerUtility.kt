@@ -76,8 +76,10 @@ class TimerUtility {
                         context.enableButtons()
                         context.tb_action_one.isEnabled=false
                     }
+                    btn_proceed.text = context.getString(R.string.btn_proceed)
                     isMatchTimeEnded = true
                     btn_proceed.isEnabled = true
+                    isTeleopActivated = true
                 }
             }.start()
         }
