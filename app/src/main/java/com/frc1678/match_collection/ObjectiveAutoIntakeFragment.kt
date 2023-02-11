@@ -95,18 +95,25 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                         // Button 1
                         TextButton(
                             onClick = {
-                                if (orientation) {
-                                    if (autoIntakeGamePieceFour == 0) {
-                                        autoIntakeGamePieceFour = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_FOUR)
-                                    }
-                                } else {
-                                    if (autoIntakeGamePieceOne == 0) {
-                                        autoIntakeGamePieceOne = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_ONE)
+                                if (matchTimer != null) {
+                                    if (orientation) {
+                                        if (autoIntakeGamePieceFour == 0) {
+                                            autoIntakeGamePieceFour = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_FOUR
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
+                                    } else {
+                                        if (autoIntakeGamePieceOne == 0) {
+                                            autoIntakeGamePieceOne = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_ONE
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
                                     }
                                 }
-                                collectionObjectiveActivity.scoringScreen = true
                             },
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = colorResource(
@@ -147,18 +154,25 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                         // Button 2
                         TextButton(
                             onClick = {
-                                if (orientation) {
-                                    if (autoIntakeGamePieceThree == 0) {
-                                        autoIntakeGamePieceThree = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_THREE)
-                                    }
-                                } else {
-                                    if (autoIntakeGamePieceTwo == 0) {
-                                        autoIntakeGamePieceTwo = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_TWO)
+                                if (matchTimer != null) {
+                                    if (orientation) {
+                                        if (autoIntakeGamePieceThree == 0) {
+                                            autoIntakeGamePieceThree = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_THREE
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
+                                    } else {
+                                        if (autoIntakeGamePieceTwo == 0) {
+                                            autoIntakeGamePieceTwo = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_TWO
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
                                     }
                                 }
-                                collectionObjectiveActivity.scoringScreen = true
                             },
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = colorResource(
@@ -200,18 +214,25 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                         // Button 3
                         TextButton(
                             onClick = {
-                                if (orientation) {
-                                    if (autoIntakeGamePieceTwo == 0) {
-                                        autoIntakeGamePieceTwo = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_TWO)
-                                    }
-                                } else {
-                                    if (autoIntakeGamePieceThree == 0) {
-                                        autoIntakeGamePieceThree = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_THREE)
+                                if (matchTimer != null) {
+                                    if (orientation) {
+                                        if (autoIntakeGamePieceTwo == 0) {
+                                            autoIntakeGamePieceTwo = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_TWO
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
+                                    } else {
+                                        if (autoIntakeGamePieceThree == 0) {
+                                            autoIntakeGamePieceThree = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_THREE
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
                                     }
                                 }
-                                collectionObjectiveActivity.scoringScreen = true
                             },
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = colorResource(
@@ -253,18 +274,25 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                         // Button 4
                         TextButton(
                             onClick = {
-                                if (orientation) {
-                                    if (autoIntakeGamePieceOne == 0) {
-                                        autoIntakeGamePieceOne = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_ONE)
-                                    }
-                                } else {
-                                    if (autoIntakeGamePieceFour == 0) {
-                                        autoIntakeGamePieceFour = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_FOUR)
+                                if (matchTimer != null) {
+                                    if (orientation) {
+                                        if (autoIntakeGamePieceOne == 0) {
+                                            autoIntakeGamePieceOne = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_ONE
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
+                                    } else {
+                                        if (autoIntakeGamePieceFour == 0) {
+                                            autoIntakeGamePieceFour = 1
+                                            collectionObjectiveActivity.timelineAddWithStage(
+                                                action_type = Constants.ActionType.AUTO_INTAKE_FOUR
+                                            )
+                                            collectionObjectiveActivity.scoringScreen = true
+                                        }
                                     }
                                 }
-                                collectionObjectiveActivity.scoringScreen = true
                             },
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = colorResource(
