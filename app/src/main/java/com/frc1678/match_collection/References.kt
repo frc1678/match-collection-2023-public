@@ -6,22 +6,23 @@ import android.os.CountDownTimer
 // File to store information to be used to create the final match information map.
 var numActionOne = 0 //INTAKE_STATION
 var numActionTwo = 0 //INTAKE_LOW_ROW
-var numActionThree = 0 //INTAKE_GROUND
-var numActionFour = 0 //SCORE_CUBE_HIGH
+var numActionThree = 0 //INTAKE_MID_ROW
+var numActionFour = 0 //INTAKE_HIGH_ROW
+var numActionFive = 0 //INTAKE_GROUND
+var numActionSix = 0 //SCORE_CUBE_HIGH
 const val ACTION_FOUR_MAX = 3
-var numActionFive = 0 //SCORE_CUBE_MID
+var numActionSeven = 0 //SCORE_CUBE_MID
 const val ACTION_FIVE_MAX = 3
-var numActionSix = 0 //SCORE_CUBE_LOW
+var numActionEight = 0 //SCORE_CUBE_LOW
 const val ACTION_SIX_MAX = 9
-var numActionSeven = 0 //SCORE_CONE_HIGH
+var numActionNine = 0 //SCORE_CONE_HIGH
 const val ACTION_SEVEN_MAX = 6
-var numActionEight = 0 //SCORE_CONE_MID
+var numActionTen = 0 //SCORE_CONE_MID
 const val ACTION_EIGHT_MAX = 6
-var numActionNine = 0 //SCORE_CONE_LOW
+var numActionEleven = 0 //SCORE_CONE_LOW
 const val ACTION_NINE_MAX = 9
-var numActionTen = 0 //SCORE_FAIL
-var numActionEleven = 0 //INTAKE_MID_ROW
-var numActionTwelve = 0 //INTAKE_HIGH_ROW
+var numActionTwelve = 0 //SCORE_FAIL
+
 var autoIntakeGamePieceOne = 0
 var autoIntakeGamePieceTwo = 0
 var autoIntakeGamePieceThree = 0
@@ -69,8 +70,6 @@ var defenseTimestamps = listOf<Int?>(null, null, null)
 fun resetCollectionReferences() {
     numActionOne = 0
     numActionTwo = 0
-    numActionThree = 0
-    numActionFour = 0
     numActionFive = 0
     numActionSix = 0
     numActionSeven = 0
@@ -79,6 +78,8 @@ fun resetCollectionReferences() {
     numActionTen = 0
     numActionEleven = 0
     numActionTwelve = 0
+    numActionThree = 0
+    numActionFour = 0
     autoIntakeGamePieceOne = 0
     autoIntakeGamePieceTwo = 0
     autoIntakeGamePieceThree = 0

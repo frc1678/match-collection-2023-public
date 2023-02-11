@@ -183,52 +183,52 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 }
 
                 Constants.ActionType.INTAKE_MID_ROW.toString() -> {
-                    numActionEleven--
-                    scoringScreen = false
-                }
-
-                Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
-                    numActionTwelve--
-                    scoringScreen = false
-                }
-
-                Constants.ActionType.INTAKE_GROUND.toString() -> {
                     numActionThree--
                     scoringScreen = false
                 }
 
-                Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
+                Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
                     numActionFour--
-                    scoringScreen = true
+                    scoringScreen = false
                 }
 
-                Constants.ActionType.SCORE_CUBE_MID.toString() -> {
+                Constants.ActionType.INTAKE_GROUND.toString() -> {
                     numActionFive--
-                    scoringScreen = true
+                    scoringScreen = false
                 }
 
-                Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
+                Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
                     numActionSix--
                     scoringScreen = true
                 }
 
-                Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
+                Constants.ActionType.SCORE_CUBE_MID.toString() -> {
                     numActionSeven--
                     scoringScreen = true
                 }
 
-                Constants.ActionType.SCORE_CONE_MID.toString() -> {
+                Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
                     numActionEight--
                     scoringScreen = true
                 }
 
-                Constants.ActionType.SCORE_CONE_LOW.toString() -> {
+                Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
                     numActionNine--
                     scoringScreen = true
                 }
 
-                Constants.ActionType.SCORE_FAIL.toString() -> {
+                Constants.ActionType.SCORE_CONE_MID.toString() -> {
                     numActionTen--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_CONE_LOW.toString() -> {
+                    numActionEleven--
+                    scoringScreen = true
+                }
+
+                Constants.ActionType.SCORE_FAIL.toString() -> {
+                    numActionTwelve--
                     scoringScreen = true
                 }
 
@@ -301,52 +301,52 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
 
             Constants.ActionType.INTAKE_MID_ROW.toString() -> {
-                numActionEleven++
-                scoringScreen = true
-            }
-
-            Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
-                numActionTwelve++
-                scoringScreen = true
-            }
-
-            Constants.ActionType.INTAKE_GROUND.toString() -> {
                 numActionThree++
                 scoringScreen = true
             }
 
-            Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
+            Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
                 numActionFour++
-                scoringScreen = false
+                scoringScreen = true
             }
 
-            Constants.ActionType.SCORE_CUBE_MID.toString() -> {
+            Constants.ActionType.INTAKE_GROUND.toString() -> {
                 numActionFive++
-                scoringScreen = false
+                scoringScreen = true
             }
 
-            Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
+            Constants.ActionType.SCORE_CUBE_HIGH.toString() -> {
                 numActionSix++
                 scoringScreen = false
             }
 
-            Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
+            Constants.ActionType.SCORE_CUBE_MID.toString() -> {
                 numActionSeven++
                 scoringScreen = false
             }
 
-            Constants.ActionType.SCORE_CONE_MID.toString() -> {
+            Constants.ActionType.SCORE_CUBE_LOW.toString() -> {
                 numActionEight++
                 scoringScreen = false
             }
 
-            Constants.ActionType.SCORE_CONE_LOW.toString() -> {
+            Constants.ActionType.SCORE_CONE_HIGH.toString() -> {
                 numActionNine++
                 scoringScreen = false
             }
 
-            Constants.ActionType.SCORE_FAIL.toString() -> {
+            Constants.ActionType.SCORE_CONE_MID.toString() -> {
                 numActionTen++
+                scoringScreen = false
+            }
+
+            Constants.ActionType.SCORE_CONE_LOW.toString() -> {
+                numActionEleven++
+                scoringScreen = false
+            }
+
+            Constants.ActionType.SCORE_FAIL.toString() -> {
+                numActionTwelve++
                 scoringScreen = false
             }
 

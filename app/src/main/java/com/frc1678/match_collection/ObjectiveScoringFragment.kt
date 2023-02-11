@@ -48,13 +48,13 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
      */
     private fun setCounterTexts() {
         if (mainView != null && activity != null) with(mainView!!) {
-            btn_action_four.text = getString(R.string.btn_action_four, numActionFour.toString())
-            btn_action_five.text = getString(R.string.btn_action_five, numActionFive.toString())
-            btn_action_six.text = getString(R.string.btn_action_six, numActionSix.toString())
-            btn_action_seven.text = getString(R.string.btn_action_seven, numActionSeven.toString())
-            btn_action_eight.text = getString(R.string.btn_action_eight, numActionEight.toString())
-            btn_action_nine.text = getString(R.string.btn_action_nine, numActionNine.toString())
-            btn_action_ten.text = getString(R.string.btn_action_ten, numActionTen.toString())
+            btn_action_four.text = getString(R.string.btn_action_four, numActionSix.toString())
+            btn_action_five.text = getString(R.string.btn_action_five, numActionSeven.toString())
+            btn_action_six.text = getString(R.string.btn_action_six, numActionEight.toString())
+            btn_action_seven.text = getString(R.string.btn_action_seven, numActionNine.toString())
+            btn_action_eight.text = getString(R.string.btn_action_eight, numActionTen.toString())
+            btn_action_nine.text = getString(R.string.btn_action_nine, numActionEleven.toString())
+            btn_action_ten.text = getString(R.string.btn_action_ten, numActionTwelve.toString())
         }
     }
 
@@ -65,56 +65,56 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
         if (mainView != null && activity != null) with(mainView!!) {
             // Increment button action one by one when clicked and add action to timeline.
             btn_action_four.setOnClickListener {
-                if (numActionFour >= ACTION_FOUR_MAX) return@setOnClickListener
+                if (numActionSix >= ACTION_FOUR_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_HIGH)
-                numActionFour++
-                collectionObjectiveActivity.scoringScreen = false
-                setCounterTexts()
-            }
-
-            btn_action_five.setOnClickListener {
-                if (numActionFive >= ACTION_FIVE_MAX) return@setOnClickListener
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
-                numActionFive++
-                collectionObjectiveActivity.scoringScreen = false
-                setCounterTexts()
-            }
-
-            btn_action_six.setOnClickListener {
-                if (numActionSix >= ACTION_SIX_MAX) return@setOnClickListener
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
                 numActionSix++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
             }
 
-            btn_action_seven.setOnClickListener {
-                if (numActionSeven >= ACTION_SEVEN_MAX) return@setOnClickListener
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
+            btn_action_five.setOnClickListener {
+                if (numActionSeven >= ACTION_FIVE_MAX) return@setOnClickListener
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
                 numActionSeven++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
             }
 
-            btn_action_eight.setOnClickListener {
-                if (numActionEight >= ACTION_EIGHT_MAX) return@setOnClickListener
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
+            btn_action_six.setOnClickListener {
+                if (numActionEight >= ACTION_SIX_MAX) return@setOnClickListener
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
                 numActionEight++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
             }
 
-            btn_action_nine.setOnClickListener {
-                if (numActionNine >= ACTION_NINE_MAX) return@setOnClickListener
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
+            btn_action_seven.setOnClickListener {
+                if (numActionNine >= ACTION_SEVEN_MAX) return@setOnClickListener
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
                 numActionNine++
+                collectionObjectiveActivity.scoringScreen = false
+                setCounterTexts()
+            }
+
+            btn_action_eight.setOnClickListener {
+                if (numActionTen >= ACTION_EIGHT_MAX) return@setOnClickListener
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
+                numActionTen++
+                collectionObjectiveActivity.scoringScreen = false
+                setCounterTexts()
+            }
+
+            btn_action_nine.setOnClickListener {
+                if (numActionEleven >= ACTION_NINE_MAX) return@setOnClickListener
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
+                numActionEleven++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
             }
 
             btn_action_ten.setOnClickListener {
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_FAIL)
-                numActionTen++
+                numActionTwelve++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
             }
@@ -146,24 +146,24 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
 
             // Disable scoring buttons if their count is at the max
             btn_action_four.isEnabled =
-                btn_action_four.isEnabled && numActionFour < ACTION_FOUR_MAX
+                btn_action_four.isEnabled && numActionSix < ACTION_FOUR_MAX
             btn_action_five.isEnabled =
-                btn_action_five.isEnabled && numActionFive < ACTION_FIVE_MAX
+                btn_action_five.isEnabled && numActionSeven < ACTION_FIVE_MAX
             btn_action_six.isEnabled =
-                btn_action_six.isEnabled && numActionSix < ACTION_SIX_MAX
+                btn_action_six.isEnabled && numActionEight < ACTION_SIX_MAX
             btn_action_seven.isEnabled =
-                btn_action_seven.isEnabled && numActionSeven < ACTION_SEVEN_MAX
+                btn_action_seven.isEnabled && numActionNine < ACTION_SEVEN_MAX
             btn_action_eight.isEnabled =
-                btn_action_eight.isEnabled && numActionEight < ACTION_EIGHT_MAX
+                btn_action_eight.isEnabled && numActionTen < ACTION_EIGHT_MAX
             btn_action_nine.isEnabled =
-                btn_action_nine.isEnabled && numActionNine < ACTION_NINE_MAX
+                btn_action_nine.isEnabled && numActionEleven < ACTION_NINE_MAX
 
             /**
              * If you have yet to score your preload then this disables scoring sections that do not apply to your preload.
              * For example, if you have a cone, you can not score a cube.
              */
-            if((numActionFour == 0) and (numActionFive == 0) and (numActionSix == 0) and (numActionSeven == 0)
-                and (numActionEight == 0) and (numActionNine == 0) and (numActionTen == 0)) {
+            if((numActionSix == 0) and (numActionSeven == 0) and (numActionEight == 0) and (numActionNine == 0)
+                and (numActionTen == 0) and (numActionEleven == 0) and (numActionTwelve == 0)) {
                 if (preloaded == Constants.Preloaded.O){
                     btn_action_four.isEnabled = false
                     btn_action_five.isEnabled = false

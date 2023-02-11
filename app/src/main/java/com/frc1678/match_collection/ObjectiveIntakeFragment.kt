@@ -9,8 +9,6 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import com.frc1678.match_collection.Constants.Companion.previousScreen
-import kotlinx.android.synthetic.main.charge_popup.view.*
-import kotlinx.android.synthetic.main.collection_objective_activity.*
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_one
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_three
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_two
@@ -51,7 +49,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
     private fun setCounterTexts() {
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
-            btn_action_three.text = getString(R.string.btn_action_three, numActionThree.toString())
+            btn_action_three.text = getString(R.string.btn_action_three, numActionFive.toString())
         }
     }
 
@@ -81,8 +79,8 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
                 collectionObjectiveActivity.enableButtons()
 
                 popupView.btn_intake_low_row.text = getString(R.string.btn_low_row, numActionTwo.toString())
-                popupView.btn_intake_mid_row.text = getString(R.string.btn_mid_row, numActionEleven.toString())
-                popupView.btn_intake_high_row.text = getString(R.string.btn_high_row, numActionTwelve.toString())
+                popupView.btn_intake_mid_row.text = getString(R.string.btn_mid_row, numActionThree.toString())
+                popupView.btn_intake_high_row.text = getString(R.string.btn_high_row, numActionFour.toString())
 
                 // OnClickListeners for the buttons in the intake popup.
                 popupView.btn_intake_cancel.setOnClickListener {
@@ -102,7 +100,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
 
                 popupView.btn_intake_mid_row.setOnClickListener {
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_MID_ROW)
-                    numActionEleven++
+                    numActionThree++
                     popupWindow.dismiss()
                     popupOpen = false
                     collectionObjectiveActivity.scoringScreen = true
@@ -111,7 +109,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
 
                 popupView.btn_intake_high_row.setOnClickListener {
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_HIGH_ROW)
-                    numActionTwelve++
+                    numActionFour++
                     popupWindow.dismiss()
                     popupOpen = false
                     collectionObjectiveActivity.scoringScreen = true
@@ -121,7 +119,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
 
             btn_action_three.setOnClickListener {
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_GROUND)
-                numActionThree++
+                numActionFive++
                 collectionObjectiveActivity.scoringScreen = true
                 setCounterTexts()
             }
