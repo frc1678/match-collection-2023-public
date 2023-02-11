@@ -409,7 +409,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         isTimerRunning && !popupOpen && !isIncap &&
                                 !(isTeleopActivated && didTeleCharge) && !(!isTeleopActivated && didAutoCharge)
                         )
-                        || (isMatchTimeEnded && !didTeleCharge && !popupOpen)
+                        || (isMatchTimeEnded && !didTeleCharge && !popupOpen && !(!isTeleopActivated && didAutoCharge))
                 )
 
         /**
