@@ -13,10 +13,16 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import com.frc1678.match_collection.Constants.AllianceColor
 import kotlinx.android.synthetic.main.collection_objective_auto_intake_fragment.view.*
+import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
 
 /**
  * [Fragment] used for showing intake buttons in [ObjectiveAutoIntakeFragment]
@@ -73,11 +79,19 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                     modifier = Modifier.size(950.dp)
                 )
                 Row {
-                    Spacer(modifier = Modifier.width(100.dp))
-
+                    if (orientation && allianceColor == AllianceColor.RED) {
+                        Spacer(modifier = Modifier.width(195.dp))
+                    }
+                    if (!orientation && allianceColor == AllianceColor.BLUE) {
+                        Spacer(modifier = Modifier.width(195.dp))
+                    }
                     Column() {
-                        Spacer(modifier = Modifier.height(100.dp))
-
+                        if (!orientation && allianceColor == AllianceColor.RED) {
+                            Spacer(modifier = Modifier.height(50.dp))
+                        }
+                        if (!orientation && allianceColor == AllianceColor.BLUE) {
+                            Spacer(modifier = Modifier.height(60.dp))
+                        }
                         // Button 1
                         TextButton(
                             onClick = {
@@ -111,19 +125,22 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                                         }
                                     }
                                 )
-                            )
+                            ),
+                            modifier = Modifier
+                                .size(120.dp)
+                                .padding(10.dp)
                         ) {
                             if (orientation) {
                                 if (autoIntakeGamePieceFour == 0) {
-                                    Text(text = getString(R.string.four_starting_position))
+                                    Text(text = getString(R.string.four_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             } else {
                                 if (autoIntakeGamePieceOne == 0) {
-                                    Text(text = getString(R.string.one_starting_position))
+                                    Text(text = getString(R.string.one_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
@@ -160,19 +177,22 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                                         }
                                     }
                                 )
-                            )
+                            ),
+                            modifier = Modifier
+                                .size(120.dp)
+                                .padding(10.dp)
                         ) {
                             if (orientation) {
                                 if (autoIntakeGamePieceThree == 0) {
-                                    Text(text = getString(R.string.three_starting_position))
+                                    Text(text = getString(R.string.three_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             } else {
                                 if (autoIntakeGamePieceTwo == 0) {
-                                    Text(text = getString(R.string.two_starting_position))
+                                    Text(text = getString(R.string.two_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
@@ -183,12 +203,12 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                                 if (orientation) {
                                     if (autoIntakeGamePieceTwo == 0) {
                                         autoIntakeGamePieceTwo = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_THREE)
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_TWO)
                                     }
                                 } else {
-                                    if (autoIntakeGamePieceTwo == 0) {
-                                        autoIntakeGamePieceTwo = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_TWO)
+                                    if (autoIntakeGamePieceThree == 0) {
+                                        autoIntakeGamePieceThree = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_THREE)
                                     }
                                 }
                                 collectionObjectiveActivity.scoringScreen = true
@@ -197,32 +217,35 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                                 backgroundColor = colorResource(
                                     id =
                                     if (allianceColor == Constants.AllianceColor.RED) {
-                                        if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
+                                        if ((orientation && autoIntakeGamePieceTwo == 0) || (!orientation && autoIntakeGamePieceThree == 0)) {
                                             R.color.action_red
                                         } else {
                                             R.color.light_gray
                                         }
                                     } else {
-                                        if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
+                                        if ((orientation && autoIntakeGamePieceTwo == 0) || (!orientation && autoIntakeGamePieceThree == 0)) {
                                             R.color.action_blue
                                         } else {
                                             R.color.light_gray
                                         }
                                     }
                                 )
-                            )
+                            ),
+                            modifier = Modifier
+                                .size(120.dp)
+                                .padding(10.dp)
                         ) {
                             if (orientation) {
-                                if (autoIntakeGamePieceThree == 0) {
-                                    Text(text = getString(R.string.three_starting_position))
+                                if (autoIntakeGamePieceTwo == 0) {
+                                    Text(text = getString(R.string.two_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             } else {
                                 if (autoIntakeGamePieceThree == 0) {
-                                    Text(text = getString(R.string.two_starting_position))
+                                    Text(text = getString(R.string.three_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
@@ -231,14 +254,14 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                         TextButton(
                             onClick = {
                                 if (orientation) {
-                                    if (autoIntakeGamePieceFour == 0) {
-                                        autoIntakeGamePieceFour = 1
-                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_FOUR)
-                                    }
-                                } else {
                                     if (autoIntakeGamePieceOne == 0) {
                                         autoIntakeGamePieceOne = 1
                                         collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_ONE)
+                                    }
+                                } else {
+                                    if (autoIntakeGamePieceFour == 0) {
+                                        autoIntakeGamePieceFour = 1
+                                        collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.AUTO_INTAKE_FOUR)
                                     }
                                 }
                                 collectionObjectiveActivity.scoringScreen = true
@@ -247,39 +270,51 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                                 backgroundColor = colorResource(
                                     id =
                                     if (allianceColor == Constants.AllianceColor.RED) {
-                                        if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
+                                        if ((orientation && autoIntakeGamePieceOne == 0) || (!orientation && autoIntakeGamePieceFour == 0)) {
                                             R.color.action_red
                                         } else {
                                             R.color.light_gray
                                         }
                                     } else {
-                                        if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
+                                        if ((orientation && autoIntakeGamePieceOne == 0) || (!orientation && autoIntakeGamePieceFour == 0)) {
                                             R.color.action_blue
                                         } else {
                                             R.color.light_gray
                                         }
                                     }
                                 )
-                            )
+                            ),
+                            modifier = Modifier
+                                .size(120.dp)
+                                .padding(10.dp)
                         ) {
                             if (orientation) {
-                                if (autoIntakeGamePieceFour == 0) {
-                                    Text(text = getString(R.string.four_starting_position))
+                                if (autoIntakeGamePieceOne == 0) {
+                                    Text(text = getString(R.string.one_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             } else {
-                                if (autoIntakeGamePieceOne == 0) {
-                                    Text(text = getString(R.string.one_starting_position))
+                                if (autoIntakeGamePieceFour == 0) {
+                                    Text(text = getString(R.string.four_starting_position), fontSize = 30.sp, fontWeight = FontWeight.Bold)
                                 } else {
-                                    Text(text = getString(R.string.taken))
+                                    Text(text = getString(R.string.taken), fontSize = 20.sp, fontWeight = FontWeight.Bold)
                                 }
                             }
                         }
-
-                        Spacer(modifier = Modifier.height(100.dp))
+                        if (orientation && allianceColor == AllianceColor.RED) {
+                            Spacer(modifier = Modifier.height(100.dp))
+                        }
+                        if (orientation && allianceColor == AllianceColor.BLUE) {
+                            Spacer(modifier = Modifier.height(75.dp))
+                        }
                     }
-                    Spacer(modifier = Modifier.width(100.dp))
+                    if(!orientation && allianceColor == AllianceColor.RED){
+                        Spacer(modifier = Modifier.width(170.dp))
+                    }
+                    if(orientation && allianceColor == AllianceColor.BLUE){
+                        Spacer(modifier = Modifier.width(195.dp))
+                    }
                 }
             }
         }

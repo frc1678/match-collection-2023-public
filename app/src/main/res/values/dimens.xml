@@ -15,4 +15,5 @@
     <dimen name="small_text">25sp</dimen>
     <dimen name="medium_text">35sp</dimen>
     <dimen name="large_text">50sp</dimen>
+    <dimen name="compose_medium_text">40.sp</dimen>
 </resources>
