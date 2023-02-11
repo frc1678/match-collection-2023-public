@@ -402,14 +402,14 @@ class CollectionObjectiveActivity : CollectionActivity() {
         /**
          * Enables charge button during the match if the robot isn't incap and a popup isn't open
          * And the robot did not charge during tele and didn't charge during auto
-         * Or if the match is over and the robot didn't charge during teleop and a popup isn't open
+         * Or if the match is over and the robot didn't charge during auto or teleop and a popup isn't open
          */
         btn_charge.isEnabled = (
                 (
                         isTimerRunning && !popupOpen && !isIncap &&
                                 !(isTeleopActivated && didTeleCharge) && !(!isTeleopActivated && didAutoCharge)
                         )
-                        || (isMatchTimeEnded && !didTeleCharge && !popupOpen)
+                        || (isMatchTimeEnded && !didTeleCharge && !popupOpen && !(!isTeleopActivated && didAutoCharge))
                 )
 
         /**
