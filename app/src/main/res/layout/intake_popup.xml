@@ -26,12 +26,12 @@
             <Button
                 android:id="@+id/btn_intake_mid_row"
                 style="@style/btn_intake_row"
-                android:text="@string/btn_mid_row" />
+                android:text="@string/btn_mid_row"/>
 
             <Button
                 android:id="@+id/btn_intake_low_row"
                 style="@style/btn_intake_row"
-                android:text="@string/btn_low_row" />
+                android:text="@string/btn_low_row"/>
 
         </LinearLayout>
 
