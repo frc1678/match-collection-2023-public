@@ -193,7 +193,8 @@ class StartingGamePieceActivity : CollectionActivity() {
     private fun intentToPreviousActivity() {
         startActivity(
             Intent(this, MatchInformationInputActivity::class.java)
-                .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_GAME_PIECE),
+                .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_GAME_PIECE)
+                .putExtras(intent),
             ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
         )
     }

@@ -24,7 +24,7 @@
     <color name="blue_error_popup_borders">#0F5EAE</color>
 
     <color name="action_yellow">#F8ED89</color>
-    <color name="action_yellow_pressed">#FBF08E</color>
+    <color name="action_yellow_pressed">#FFF599</color>
     <color name="action_orange">#E29578</color>
     <color name="action_orange_pressed">#D8A18C</color>
     <color name="action_blue">#2AB7CA</color>
@@ -36,10 +36,10 @@
     <color name="proceed_blue_border">#23C9D1</color>
     <color name="proceed_pressed">#17A9C3</color>
     <color name="proceed_pressed_border">#118291</color>
-    <color name="incap_white">#EAF2D7</color>
-    <color name="incap_white_activated">#DBE4C2</color>
-    <color name="incap_white_activated_pressed">#EAF2D7</color>
-    <color name="incap_white_pressed">#DBE4C2</color>
+    <color name="incap_white">#cff0c7</color>
+    <color name="incap_white_activated">#a7cc8f</color>
+    <color name="incap_white_activated_pressed">#cff0c7</color>
+    <color name="incap_white_pressed">#a7cc8f</color>
     <color name="climb_purple_start">#EDCDEA</color>
     <color name="climb_purple_end">#E7BBE3</color>
     <color name="climb_pressed">#C184BE</color>

@@ -4,11 +4,17 @@ package com.frc1678.match_collection
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
+import kotlinx.android.synthetic.main.edit_match_information_activity.et_match_number
+import kotlinx.android.synthetic.main.edit_match_information_activity.et_team_one
+import kotlinx.android.synthetic.main.edit_match_information_activity.spinner_scout_name
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
 import java.lang.Integer.parseInt
 
 // Class to edit previously inputted match information.
@@ -119,6 +125,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if(collectionMode == Constants.ModeSelection.OBJECTIVE){
                 if(startingPosition.toString() != "0"){
+                    teamNumber = et_team_one.text.toString()
                     startActivity(
                         Intent(this, CollectionObjectiveActivity::class.java)
                             .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
@@ -134,11 +141,57 @@ class MatchInformationEditActivity : MatchInformationActivity() {
             else if(collectionMode == Constants.ModeSelection.SUBJECTIVE){
                 startActivity(
                     Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
+                        .putExtra("team_one",et_team_one.text.toString())
+                        .putExtra("team_two",et_team_two.text.toString())
+                        .putExtra("team_three",et_team_three.text.toString())
                         .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_EDIT)
                 )
             }
         }
         return super.onKeyLongPress(keyCode, event)
+    }
+
+    // Only lets the user type in numbers and uppercase letters
+    private fun initTeamNumberTextChangeListeners() {
+        val regex = "[^A-Z0-9]".toRegex()
+        et_team_one.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                if (checkInputNotEmpty(et_team_one)) {
+                    if (s.toString().contains(regex)) {
+                        val tempString: String = et_team_one.text.toString()
+                        et_team_one.setText(regex.replace(tempString,""))
+                    }
+                }
+            }
+        })
+        if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+            et_team_two.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    if (checkInputNotEmpty(et_team_one)) {
+                        if (s.toString().contains(regex)) {
+                            val tempString: String = et_team_two.text.toString()
+                            et_team_two.setText(regex.replace(tempString,""))
+                        }
+                    }
+                }
+            })
+            et_team_three.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    if (checkInputNotEmpty(et_team_one)) {
+                        if (s.toString().contains(regex)) {
+                            val tempString: String = et_team_three.text.toString()
+                            et_team_three.setText(regex.replace(tempString,""))
+                        }
+                    }
+                }
+            })
+        }
     }
 
     // Sets the edit match information activity screen the populates it with previously inputted data
@@ -148,6 +201,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         setContentView(R.layout.edit_match_information_activity)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         populateData()
+        initTeamNumberTextChangeListeners()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
         initProceedButton()
     }

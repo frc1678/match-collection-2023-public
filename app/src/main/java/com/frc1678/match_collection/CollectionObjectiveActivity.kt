@@ -96,24 +96,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     /**
      * Set timer to start match when timer is started or reset.
+     * Resets all actions
+     * Resets the timeline
      */
     private fun timerReset() {
-        popupOpen = false
-        isTeleopActivated = false
-        numActionOne = 0
-        numActionTwo = 0
-        numActionThree = 0
-        numActionFour = 0
-        numActionFive = 0
-        numActionSix = 0
-        numActionSeven = 0
-        numActionEight = 0
-        numActionNine = 0
-        numActionTen = 0
-        autoIntakeGamePieceOne = 0
-        autoIntakeGamePieceTwo = 0
-        autoIntakeGamePieceThree = 0
-        autoIntakeGamePieceFour = 0
+        resetCollectionReferences()
         matchTimer?.cancel()
         matchTimer = null
         timeline.clear()
@@ -192,6 +179,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
                 Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
                     numActionTwo--
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.INTAKE_MID_ROW.toString() -> {
+                    numActionEleven--
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
+                    numActionTwelve--
                     scoringScreen = false
                 }
 
@@ -303,6 +300,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 scoringScreen = true
             }
 
+            Constants.ActionType.INTAKE_MID_ROW.toString() -> {
+                numActionEleven++
+                scoringScreen = true
+            }
+
+            Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
+                numActionTwelve++
+                scoringScreen = true
+            }
+
             Constants.ActionType.INTAKE_GROUND.toString() -> {
                 numActionThree++
                 scoringScreen = true
@@ -372,33 +379,40 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * if teleop is not activated, enable intake auto panel
      */
     fun enableButtons() {
+        /**
+         * During teleop,
+         * When the intake screen is open it enables and disables the appropriate  buttons on the intakePanel
+         * Otherwise, if the scoring screen is enables and disables the appropriate  buttons on the scoringPanel
+         */
         if (!scoringScreen) {
             if(isTeleopActivated) {
                 intakePanel.enableButtons(isIncap, isCharging)
-            }
-            else {
-                // TODO
-                // intakeAutoPanel.enableButtons(isCharging)
             }
         }
         else {
             scoringPanel.enableButtons(isIncap, isCharging)
         }
-        tb_action_one.isEnabled = (!(!isTeleopActivated || popupOpen || isCharging))
 
+        // Enables the incap toggle button if teleop is activated, a popup isn't open, the robot hasn't charged, and the match hasn't ended
+        tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isCharging && !isMatchTimeEnded
+
+        /**
+         * Enables charge button during the match if the robot isn't incap and a popup isn't open
+         * And the robot did not charge during tele and didn't charge during auto
+         * Or if the match is over and the robot didn't charge during auto or teleop and a popup isn't open
+         */
         btn_charge.isEnabled = (
-            (
-                isTimerRunning && (
-                    !(
-                        popupOpen || isIncap || (
-                            (isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge)
+                (
+                        isTimerRunning && !popupOpen && !isIncap &&
+                                !(isTeleopActivated && didTeleCharge) && !(!isTeleopActivated && didAutoCharge)
                         )
-                    )
+                        || (isMatchTimeEnded && !didTeleCharge && !popupOpen && !(!isTeleopActivated && didAutoCharge))
                 )
-            )
-            || (isMatchTimeEnded && !didTeleCharge)
-        )
 
+        /**
+         * Sets the text of the charge button to New Charge Attempt... or Charge Attempted depending
+         * on if the robot has charged or not
+         */
         btn_charge.text = (
             if (((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge))) {
                 getString(R.string.btn_charged)
@@ -408,20 +422,26 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         )
 
+        // Enables the undo button if the timeline is not empty and a popup isn't open
         btn_undo.isEnabled = ((timeline.size > 0) && !popupOpen)
+
+        // Enables the redo button if the removedTimelineActions is not empty and a popup isn't open
         btn_redo.isEnabled = ((removedTimelineActions.size > 0) && !popupOpen)
 
+        // Enables the button timer if no buttons have been pressed and a popup isn't open
         btn_timer.isEnabled = (
-            !(
-                (timeline.size > 0) || isTeleopActivated || popupOpen
-            )
+                (timeline.size <= 0) && !popupOpen
         )
+
+        // Enables the proceed button during auto or if the match has ended and a popup isn't open
         btn_proceed_edit.isEnabled = (
             (
                 (isTimerRunning && (!isTeleopActivated)) || (isMatchTimeEnded)
             )
             && !popupOpen
         )
+
+        // Sets the proceed button text to "To Teleop" if it's auto and otherwise sets it to "Proceed"
         btn_proceed_edit.text = (
             if (!isTeleopActivated) {
                 getString(R.string.btn_to_teleop)
@@ -430,9 +450,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 getString(R.string.btn_proceed)
             }
         )
-        if (isMatchTimeEnded) {
-            tb_action_one.isEnabled = false
-        }
     }
 
     /**
