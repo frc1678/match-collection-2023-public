@@ -375,6 +375,39 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     /**
+     * Updates the text on the undo and redo buttons based on the timeline actions to be undone or
+     * redone.
+     */
+    private fun updateUndoRedo() {
+        // Get the "Undo" text
+        val undoText = resources.getText(R.string.btn_undo)
+        btn_undo.text = if (timeline.isEmpty()) {
+            // Nothing to undo
+            undoText
+        } else {
+            // Uses \n to put the action name on a newline
+            "$undoText\n${
+                timeline.last()["action_type"]?.split('_')?.joinToString(" ") {
+                    it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
+                }
+            }"
+        }
+        // Get the "Redo" text
+        val redoText = resources.getText(R.string.btn_redo)
+        btn_redo.text = if (removedTimelineActions.isEmpty()) {
+            // Nothing to redo
+            redoText
+        } else {
+            // Uses \n to put the action name on a newline
+            "$redoText\n${
+                removedTimelineActions.last()["action_type"]?.split('_')?.joinToString(" ") {
+                    it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
+                }
+            }"
+        }
+    }
+
+    /**
      * Enable and disable buttons based on actions in timeline and timer stage. If in teleop, enable intake panel,
      * if teleop is not activated, enable intake auto panel
      */
@@ -430,6 +463,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
         // Enables the redo button if the removedTimelineActions is not empty and a popup isn't open
         btn_redo.isEnabled = ((removedTimelineActions.size > 0) && !popupOpen)
+
+        // Updates the text on the undo and redo buttons
+        updateUndoRedo()
 
         // Enables the button timer if no buttons have been pressed and a popup isn't open
         btn_timer.isEnabled = (
@@ -749,5 +785,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         enableButtons()
         initOnClicks()
         initTeamNum()
+        updateUndoRedo()
     }
 }
