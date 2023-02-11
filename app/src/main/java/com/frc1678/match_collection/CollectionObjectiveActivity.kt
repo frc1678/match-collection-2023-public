@@ -29,7 +29,6 @@ import kotlinx.android.synthetic.main.collection_objective_activity.btn_undo
 import kotlinx.android.synthetic.main.collection_objective_activity.objective_match_collection_layout
 import kotlinx.android.synthetic.main.collection_objective_activity.tb_action_one
 import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_number
-import java.util.Locale
 
 /**
  * Activity for Objective Match Collection to scout the objective gameplay of a single team in a
