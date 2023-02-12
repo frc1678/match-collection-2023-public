@@ -5,17 +5,18 @@ import android.os.CountDownTimer
 
 // File to store information to be used to create the final match information map.
 var numActionOne = 0 //INTAKE_STATION
-var numActionTwo = 0 //INTAKE_LOW_ROW
-var numActionThree = 0 //INTAKE_GROUND
-var numActionFour = 0 //SCORE_CUBE_HIGH
-var numActionFive = 0 //SCORE_CUBE_MID
-var numActionSix = 0 //SCORE_CUBE_LOW
-var numActionSeven = 0 //SCORE_CONE_HIGH
-var numActionEight = 0 //SCORE_CONE_MID
-var numActionNine = 0 //SCORE_CONE_LOW
-var numActionTen = 0 //SCORE_FAIL
-var numActionEleven = 0 //INTAKE_MID_ROW
-var numActionTwelve = 0 //INTAKE_HIGH_ROW
+var numActionTwo = 0 //INTAKE_HIGH_ROW
+var numActionThree = 0 //INTAKE_MID_ROW
+var numActionFour = 0 //INTAKE_LOW_ROW
+var numActionFive = 0 //INTAKE_GROUND
+var numActionSix = 0 //SCORE_CUBE_HIGH
+var numActionSeven = 0 //SCORE_CUBE_MID
+var numActionEight = 0 //SCORE_CUBE_LOW
+var numActionNine = 0 //SCORE_CONE_HIGH
+var numActionTen = 0 //SCORE_CONE_MID
+var numActionEleven = 0 //SCORE_CONE_LOW
+var numActionTwelve = 0 //SCORE_FAIL
+
 var autoIntakeGamePieceOne = 0
 var autoIntakeGamePieceTwo = 0
 var autoIntakeGamePieceThree = 0

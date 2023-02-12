@@ -20,21 +20,21 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_action_four"
+                android:id="@+id/btn_action_six"
                 style="@style/btn_action"
                 android:layout_weight="1"
                 android:background="@drawable/btn_action_selector_cube"
                 android:text="@string/btn_action_four" />
 
             <Button
-                android:id="@+id/btn_action_five"
+                android:id="@+id/btn_action_seven"
                 style="@style/btn_action"
                 android:layout_weight="1"
                 android:background="@drawable/btn_action_selector_cube"
                 android:text="@string/btn_action_five" />
 
             <Button
-                android:id="@+id/btn_action_six"
+                android:id="@+id/btn_action_eight"
                 style="@style/btn_action"
                 android:layout_weight="1"
                 android:background="@drawable/btn_action_selector_cube"
@@ -50,21 +50,21 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btn_action_seven"
+                android:id="@+id/btn_action_nine"
                 style="@style/btn_action"
                 android:layout_weight="1"
                 android:background="@drawable/btn_action_selector_cone"
                 android:text="@string/btn_action_seven" />
 
             <Button
-                android:id="@+id/btn_action_eight"
+                android:id="@+id/btn_action_ten"
                 style="@style/btn_action"
                 android:layout_weight="1"
                 android:background="@drawable/btn_action_selector_cone"
                 android:text="@string/btn_action_eight" />
 
             <Button
-                android:id="@+id/btn_action_nine"
+                android:id="@+id/btn_action_eleven"
                 style="@style/btn_action"
                 android:layout_weight="1"
                 android:background="@drawable/btn_action_selector_cone"
@@ -75,7 +75,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_action_ten"
+        android:id="@+id/btn_action_twelve"
         style="@style/btn_action"
         android:layout_weight="0.7"
         android:background="@drawable/btn_action_selector_failed"
