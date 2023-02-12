@@ -10,8 +10,8 @@ import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import com.frc1678.match_collection.Constants.Companion.previousScreen
 import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_one
-import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_three
-import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_two
+import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_five
+import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_row
 import kotlinx.android.synthetic.main.intake_popup.view.*
 
 /**
@@ -49,7 +49,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
     private fun setCounterTexts() {
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
-            btn_action_three.text = getString(R.string.btn_action_three, numActionFive.toString())
+            btn_action_five.text = getString(R.string.btn_action_three, numActionFive.toString())
         }
     }
 
@@ -69,7 +69,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
              * Creates a popup for intaking from different row levels
              * Sets functionality for the buttons
              */
-            btn_action_two.setOnClickListener {
+            btn_action_row.setOnClickListener {
                 val popupView = View.inflate(collectionObjectiveActivity, R.layout.intake_popup, null)
                 val width = LinearLayout.LayoutParams.WRAP_CONTENT
                 val height = LinearLayout.LayoutParams.WRAP_CONTENT
@@ -78,9 +78,9 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
                 popupOpen = true
                 collectionObjectiveActivity.enableButtons()
 
-                popupView.btn_intake_low_row.text = getString(R.string.btn_low_row, numActionTwo.toString())
+                popupView.btn_intake_low_row.text = getString(R.string.btn_low_row, numActionFour.toString())
                 popupView.btn_intake_mid_row.text = getString(R.string.btn_mid_row, numActionThree.toString())
-                popupView.btn_intake_high_row.text = getString(R.string.btn_high_row, numActionFour.toString())
+                popupView.btn_intake_high_row.text = getString(R.string.btn_high_row, numActionTwo.toString())
 
                 // OnClickListeners for the buttons in the intake popup.
                 popupView.btn_intake_cancel.setOnClickListener {
@@ -91,7 +91,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
 
                 popupView.btn_intake_low_row.setOnClickListener {
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_LOW_ROW)
-                    numActionTwo++
+                    numActionFour++
                     popupWindow.dismiss()
                     popupOpen = false
                     collectionObjectiveActivity.scoringScreen = true
@@ -109,7 +109,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
 
                 popupView.btn_intake_high_row.setOnClickListener {
                     collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_HIGH_ROW)
-                    numActionFour++
+                    numActionTwo++
                     popupWindow.dismiss()
                     popupOpen = false
                     collectionObjectiveActivity.scoringScreen = true
@@ -117,7 +117,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
                 }
             }
 
-            btn_action_three.setOnClickListener {
+            btn_action_five.setOnClickListener {
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_GROUND)
                 numActionFive++
                 collectionObjectiveActivity.scoringScreen = true
@@ -134,7 +134,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
      */
     fun enableButtons(isIncap: Boolean, isCharging: Boolean) {
         if (mainView != null && activity != null) with(mainView!!) {
-            for (btn in listOf(btn_action_one, btn_action_two, btn_action_three)) {
+            for (btn in listOf(btn_action_one, btn_action_row, btn_action_five)) {
                 btn.isEnabled =
                     requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
                             requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||

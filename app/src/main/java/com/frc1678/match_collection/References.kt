@@ -5,9 +5,9 @@ import android.os.CountDownTimer
 
 // File to store information to be used to create the final match information map.
 var numActionOne = 0 //INTAKE_STATION
-var numActionTwo = 0 //INTAKE_LOW_ROW
+var numActionTwo = 0 //INTAKE_HIGH_ROW
 var numActionThree = 0 //INTAKE_MID_ROW
-var numActionFour = 0 //INTAKE_HIGH_ROW
+var numActionFour = 0 //INTAKE_LOW_ROW
 var numActionFive = 0 //INTAKE_GROUND
 var numActionSix = 0 //SCORE_CUBE_HIGH
 var numActionSeven = 0 //SCORE_CUBE_MID
@@ -63,9 +63,9 @@ var defenseTimestamps = listOf<Int?>(null, null, null)
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
     numActionOne = 0
-    numActionTwo = 0
-    numActionThree = 0
     numActionFour = 0
+    numActionThree = 0
+    numActionTwo = 0
     numActionFive = 0
     numActionSix = 0
     numActionSeven = 0

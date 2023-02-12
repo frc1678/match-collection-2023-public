@@ -178,7 +178,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 }
 
                 Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
-                    numActionTwo--
+                    numActionFour--
                     scoringScreen = false
                 }
 
@@ -188,7 +188,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 }
 
                 Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
-                    numActionFour--
+                    numActionTwo--
                     scoringScreen = false
                 }
 
@@ -295,7 +295,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 scoringScreen = true
             }
 
-            Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
+            Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
                 numActionTwo++
                 scoringScreen = true
             }
@@ -305,7 +305,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 scoringScreen = true
             }
 
-            Constants.ActionType.INTAKE_HIGH_ROW.toString() -> {
+            Constants.ActionType.INTAKE_LOW_ROW.toString() -> {
                 numActionFour++
                 scoringScreen = true
             }

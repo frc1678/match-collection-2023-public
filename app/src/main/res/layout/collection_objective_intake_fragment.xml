@@ -22,7 +22,7 @@
             android:text="@string/btn_action_one" />
 
         <Button
-            android:id="@+id/btn_action_two"
+            android:id="@+id/btn_action_row"
             style="@style/btn_action"
             android:layout_weight="0.7"
             android:background="@drawable/btn_action_selector_low_row"
@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btn_action_three"
+        android:id="@+id/btn_action_five"
         style="@style/btn_action"
         android:layout_width="0dp"
         android:layout_height="match_parent"
