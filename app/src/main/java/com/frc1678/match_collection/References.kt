@@ -64,6 +64,8 @@ var defenseTimestamps = listOf<Int?>(null, null, null)
 fun resetCollectionReferences() {
     numActionOne = 0
     numActionTwo = 0
+    numActionThree = 0
+    numActionFour = 0
     numActionFive = 0
     numActionSix = 0
     numActionSeven = 0
@@ -72,8 +74,6 @@ fun resetCollectionReferences() {
     numActionTen = 0
     numActionEleven = 0
     numActionTwelve = 0
-    numActionThree = 0
-    numActionFour = 0
     autoIntakeGamePieceOne = 0
     autoIntakeGamePieceTwo = 0
     autoIntakeGamePieceThree = 0
