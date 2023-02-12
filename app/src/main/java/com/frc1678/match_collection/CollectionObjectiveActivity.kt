@@ -436,7 +436,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
          */
         btn_charge.isEnabled = (
                 (
-                        isTimerRunning && !popupOpen && !isIncap &&
+                        isTimerRunning && !popupOpen  &&
                                 !(isTeleopActivated && didTeleCharge) && !(!isTeleopActivated && didAutoCharge)
                         )
                         || (isMatchTimeEnded && !didTeleCharge && !popupOpen && !(!isTeleopActivated && didAutoCharge))
@@ -593,6 +593,10 @@ class CollectionObjectiveActivity : CollectionActivity() {
             // Hide the 'Parked' button if still in the auto period.
             if (!isTeleopActivated) {
                 popupView.btn_parked.isVisible = false
+            }
+            if (isIncap) {
+                popupView.btn_engaged.isVisible = false
+                popupView.btn_docked.isVisible = false
             }
             timelineAdd(matchTime, Constants.ActionType.CHARGE_ATTEMPT)
             enableButtons()
