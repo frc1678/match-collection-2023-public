@@ -65,7 +65,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
         if (mainView != null && activity != null) with(mainView!!) {
             // Increment button action one by one when clicked and add action to timeline.
             btn_action_four.setOnClickListener {
-                if (numActionSix >= ACTION_FOUR_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_HIGH)
                 numActionSix++
                 collectionObjectiveActivity.scoringScreen = false
@@ -73,7 +72,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_five.setOnClickListener {
-                if (numActionSeven >= ACTION_FIVE_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_MID)
                 numActionSeven++
                 collectionObjectiveActivity.scoringScreen = false
@@ -81,7 +79,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_six.setOnClickListener {
-                if (numActionEight >= ACTION_SIX_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CUBE_LOW)
                 numActionEight++
                 collectionObjectiveActivity.scoringScreen = false
@@ -89,7 +86,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_seven.setOnClickListener {
-                if (numActionNine >= ACTION_SEVEN_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_HIGH)
                 numActionNine++
                 collectionObjectiveActivity.scoringScreen = false
@@ -97,7 +93,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_eight.setOnClickListener {
-                if (numActionTen >= ACTION_EIGHT_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_MID)
                 numActionTen++
                 collectionObjectiveActivity.scoringScreen = false
@@ -105,7 +100,6 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             }
 
             btn_action_nine.setOnClickListener {
-                if (numActionEleven >= ACTION_NINE_MAX) return@setOnClickListener
                 collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SCORE_CONE_LOW)
                 numActionEleven++
                 collectionObjectiveActivity.scoringScreen = false
@@ -146,17 +140,17 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
 
             // Disable scoring buttons if their count is at the max
             btn_action_four.isEnabled =
-                btn_action_four.isEnabled && numActionSix < ACTION_FOUR_MAX
+                btn_action_four.isEnabled
             btn_action_five.isEnabled =
-                btn_action_five.isEnabled && numActionSeven < ACTION_FIVE_MAX
+                btn_action_five.isEnabled
             btn_action_six.isEnabled =
-                btn_action_six.isEnabled && numActionEight < ACTION_SIX_MAX
+                btn_action_six.isEnabled
             btn_action_seven.isEnabled =
-                btn_action_seven.isEnabled && numActionNine < ACTION_SEVEN_MAX
+                btn_action_seven.isEnabled
             btn_action_eight.isEnabled =
-                btn_action_eight.isEnabled && numActionTen < ACTION_EIGHT_MAX
+                btn_action_eight.isEnabled
             btn_action_nine.isEnabled =
-                btn_action_nine.isEnabled && numActionEleven < ACTION_NINE_MAX
+                btn_action_nine.isEnabled
 
             /**
              * If you have yet to score your preload then this disables scoring sections that do not apply to your preload.

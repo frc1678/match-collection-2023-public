@@ -10,17 +10,11 @@ var numActionThree = 0 //INTAKE_MID_ROW
 var numActionFour = 0 //INTAKE_HIGH_ROW
 var numActionFive = 0 //INTAKE_GROUND
 var numActionSix = 0 //SCORE_CUBE_HIGH
-const val ACTION_FOUR_MAX = 3
 var numActionSeven = 0 //SCORE_CUBE_MID
-const val ACTION_FIVE_MAX = 3
 var numActionEight = 0 //SCORE_CUBE_LOW
-const val ACTION_SIX_MAX = 9
 var numActionNine = 0 //SCORE_CONE_HIGH
-const val ACTION_SEVEN_MAX = 6
 var numActionTen = 0 //SCORE_CONE_MID
-const val ACTION_EIGHT_MAX = 6
 var numActionEleven = 0 //SCORE_CONE_LOW
-const val ACTION_NINE_MAX = 9
 var numActionTwelve = 0 //SCORE_FAIL
 
 var autoIntakeGamePieceOne = 0
