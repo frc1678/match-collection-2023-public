@@ -270,12 +270,14 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                         }
                     }
                 } else {
-                    if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
-                        et_team_one.setText("")
-                        et_team_two.setText("")
-                        et_team_three.setText("")
-                    } else {
-                        et_team_one.setText("")
+                    if (assignMode != Constants.AssignmentMode.OVERRIDE) {
+                        if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                            et_team_one.setText("")
+                            et_team_two.setText("")
+                            et_team_three.setText("")
+                        } else {
+                            et_team_one.setText("")
+                        }
                     }
                 }
             }
