@@ -8,10 +8,12 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.KeyEvent
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import com.frc1678.match_collection.Constants.Companion.previousScreen
 import com.github.sumimakito.awesomeqr.AwesomeQRCode
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
 import kotlinx.android.synthetic.main.qr_generate_activity.*
 import org.yaml.snakeyaml.Yaml
 import java.io.BufferedWriter
@@ -75,8 +77,12 @@ class QRGenerateActivity : CollectionActivity() {
                 matchNumber += 1
             }
             putIntoStorage(context = this, key = "match_number", value = matchNumber)
+            val prevScreenInput: Boolean = (previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT)
             val intent = Intent(this, MatchInformationInputActivity::class.java)
+                .putExtra("old_qr", prevScreenInput)
                 .putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
+                .putExtras(intent)
+
             startActivity(
                 intent, ActivityOptions.makeSceneTransitionAnimation(
                     this,
@@ -107,7 +113,10 @@ private fun intentToPreviousActivity() {
         )
     }
     else {
-        val intent = Intent(this, MatchInformationInputActivity::class.java).putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
+        val intent = Intent(this, MatchInformationInputActivity::class.java)
+            .putExtra(PREVIOUS_SCREEN, Constants.Screens.QR_GENERATE)
+            .putExtra("old_qr", true)
+            .putExtras(intent)
         startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
     }
 }

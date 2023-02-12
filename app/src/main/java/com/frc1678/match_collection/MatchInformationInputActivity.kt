@@ -173,7 +173,11 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     // Automatically assign team number(s) based on collection mode.
     private fun autoAssignTeamInputsGivenMatch() {
         if (assignMode == Constants.AssignmentMode.OVERRIDE) {
-            if (previousScreen == Constants.Screens.STARTING_POSITION_OBJECTIVE || previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT) {
+            if (previousScreen == Constants.Screens.STARTING_POSITION_OBJECTIVE ||
+                (previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT && intent.extras?.getBoolean("old_qr") == true)) {
+                if (previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT) {
+                    et_match_number.setText(intent.extras?.getString("match_num").toString())
+                }
                 if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
                     et_team_one.setText(intent.extras?.getString("team_one").toString())
                     et_team_two.setText(intent.extras?.getString("team_two").toString())
@@ -258,7 +262,9 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                                 }
 
                             } else {
-                                autoAssignTeamInputsGivenMatch()
+                                if (assignMode != Constants.AssignmentMode.OVERRIDE) {
+                                    autoAssignTeamInputsGivenMatch()
+                                }
                                 matchNumber = parseInt(et_match_number.text.toString())
                             }
                         }
@@ -551,6 +557,16 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                             val intent = Intent(this, QRGenerateActivity::class.java)
                                 .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT)
                                 .putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
+                                .putExtra("match_num", et_match_number.text.toString())
+
+                            if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
+                                intent.putExtra("team_one", et_team_one.text.toString())
+                                    .putExtra("team_two", et_team_two.text.toString())
+                                    .putExtra("team_three", et_team_three.text.toString())
+                            }
+                            else {
+                                intent.putExtra("team_number", et_team_one.text.toString())
+                            }
                             startActivity(intent)
                         }
                     }
@@ -700,7 +716,6 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
             setContentView(R.layout.match_information_input_activity_objective)
             initScoutIdLongClick()

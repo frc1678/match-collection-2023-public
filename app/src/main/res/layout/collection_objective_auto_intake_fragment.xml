@@ -1,38 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5"
-        android:id="@+id/objective_collection_intake_map" />
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1.25"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/tb_collection_objective_intake_game_piece_one"
-            style="@style/tb_collection_objective_intake_game_pieces"/>
-
-        <Button
-            android:id="@+id/tb_collection_objective_intake_game_piece_two"
-            style="@style/tb_collection_objective_intake_game_pieces"/>
-
-        <Button
-            android:id="@+id/tb_collection_objective_intake_game_piece_three"
-            style="@style/tb_collection_objective_intake_game_pieces"/>
-
-        <Button
-            android:id="@+id/tb_collection_objective_intake_game_piece_four"
-            style="@style/tb_collection_objective_intake_game_pieces"/>
-
-    </LinearLayout>
+    </androidx.compose.ui.platform.ComposeView>
 
 </LinearLayout>

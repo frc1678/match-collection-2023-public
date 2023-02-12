@@ -19,14 +19,20 @@
             style="@style/btn_action_hor"
             android:layout_weight="1"
             android:background="@drawable/btn_undo_selector"
-            android:text="@string/btn_undo" />
+            android:text="@string/btn_undo"
+            android:padding="@dimen/very_very_small"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="@dimen/small_text" />
 
         <Button
             android:id="@+id/btn_redo"
             style="@style/btn_action_hor"
             android:layout_weight="1"
             android:background="@drawable/btn_redo_selector"
-            android:text="@string/btn_redo" />
+            android:text="@string/btn_redo"
+            android:padding="@dimen/very_very_small"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="@dimen/small_text" />
 
     </LinearLayout>
 
