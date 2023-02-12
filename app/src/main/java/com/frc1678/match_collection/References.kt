@@ -63,9 +63,9 @@ var defenseTimestamps = listOf<Int?>(null, null, null)
 // Function to reset References.kt variables for new match.
 fun resetCollectionReferences() {
     numActionOne = 0
-    numActionFour = 0
-    numActionThree = 0
     numActionTwo = 0
+    numActionThree = 0
+    numActionFour = 0
     numActionFive = 0
     numActionSix = 0
     numActionSeven = 0
