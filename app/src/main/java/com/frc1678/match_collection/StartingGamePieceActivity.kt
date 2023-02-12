@@ -19,9 +19,9 @@ class StartingGamePieceActivity : CollectionActivity() {
             (!orientation && allianceColor == Constants.AllianceColor.BLUE) ->
                 iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_game_pieces)
             (orientation && allianceColor == Constants.AllianceColor.RED) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.red_up_game_pieces)
-            (!orientation && allianceColor == Constants.AllianceColor.RED) ->
                 iv_starting_game_pieces_map.setImageResource(R.drawable.red_down_game_pieces)
+            (!orientation && allianceColor == Constants.AllianceColor.RED) ->
+                iv_starting_game_pieces_map.setImageResource(R.drawable.red_up_game_pieces)
         }
     }
 

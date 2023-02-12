@@ -421,9 +421,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             if(isTeleopActivated) {
                 intakePanel.enableButtons(isIncap, isCharging)
             }
-            else {
-                intakeAutoPanel.enableButtons(isCharging)
-            }
         }
         else {
             scoringPanel.enableButtons(isIncap, isCharging)
