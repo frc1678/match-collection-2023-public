@@ -77,7 +77,9 @@ class TimerUtility {
                         context.tb_action_one.isEnabled=false
                     }
                     isMatchTimeEnded = true
-                    btn_proceed.isEnabled = true
+                    if (!popupOpen) {
+                        btn_proceed.isEnabled = true
+                    }
                 }
             }.start()
         }
