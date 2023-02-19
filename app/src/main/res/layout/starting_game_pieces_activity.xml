@@ -15,23 +15,23 @@
 
         <Button
             android:id="@+id/btn_game_piece_one"
-            style="@style/btn_starting_position"
-            android:text="@string/one_starting_position"/>
+            style="@style/btn_starting_position_text"
+            android:text="@string/one_starting_position_none"/>
 
         <Button
             android:id="@+id/btn_game_piece_two"
-            style="@style/btn_starting_position"
-            android:text="@string/two_starting_position"/>
+            style="@style/btn_starting_position_text"
+            android:text="@string/two_starting_position_none"/>
 
         <Button
             android:id="@+id/btn_game_piece_three"
-            style="@style/btn_starting_position"
-            android:text="@string/three_starting_position"/>
+            style="@style/btn_starting_position_text"
+            android:text="@string/three_starting_position_none"/>
 
         <Button
             android:id="@+id/btn_game_piece_four"
-            style="@style/btn_starting_position"
-            android:text="@string/four_starting_position"/>
+            style="@style/btn_starting_position_text"
+            android:text="@string/four_starting_position_none"/>
     </LinearLayout>
 
     <LinearLayout
