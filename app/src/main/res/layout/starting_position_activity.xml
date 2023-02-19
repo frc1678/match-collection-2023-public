@@ -9,41 +9,7 @@
         android:id="@+id/compose_map"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_zero"
-            style="@style/btn_starting_position"
-            android:text="@string/no_show_starting_position"
-            android:textSize="@dimen/smaller_text" />
-
-        <Button
-            android:id="@+id/btn_one"
-            style="@style/btn_starting_position"
-            android:text="@string/one_starting_position" />
-
-        <Button
-            android:id="@+id/btn_two"
-            style="@style/btn_starting_position"
-            android:text="@string/two_starting_position" />
-
-        <Button
-            android:id="@+id/btn_three"
-            style="@style/btn_starting_position"
-            android:text="@string/three_starting_position" />
-
-        <Button
-            android:id="@+id/btn_four"
-            style="@style/btn_starting_position"
-            android:text="@string/four_starting_position" />
-
-    </LinearLayout>
+        android:layout_weight="11.5" />
 
     <LinearLayout
         android:layout_width="match_parent"

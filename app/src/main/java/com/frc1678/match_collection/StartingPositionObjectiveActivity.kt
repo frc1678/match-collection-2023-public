@@ -12,8 +12,10 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.material.Button
@@ -31,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -38,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.starting_position_activity.btn_proceed_starting_position
 import kotlinx.android.synthetic.main.starting_position_activity.btn_switch_orientation
-import kotlinx.android.synthetic.main.starting_position_activity.btn_zero
 import kotlinx.android.synthetic.main.starting_position_activity.compose_map
 import kotlinx.android.synthetic.main.starting_position_activity.spinner_preloaded
 import kotlinx.android.synthetic.main.starting_position_activity.tv_pos_team_number
@@ -46,13 +48,6 @@ import kotlinx.android.synthetic.main.starting_position_activity.tv_pos_team_num
 class StartingPositionObjectiveActivity : CollectionActivity() {
 
     private fun initOnClicks() {
-        btn_zero.setOnClickListener {
-            startingPosition = 0
-            spinner_preloaded.setSelection(
-                Constants.Preloaded.values().indexOf(Constants.Preloaded.N)
-            )
-            spinner_preloaded.isEnabled = false
-        }
         btn_switch_orientation.setOnClickListener {
             orientation = !orientation
         }
@@ -178,81 +173,102 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                 Constants.Preloaded.values().indexOf(Constants.Preloaded.N)
             )
         }
-        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-            Box(modifier = Modifier.requiredSize(600.dp)) {
-                when {
-                    orientation && allianceColor == Constants.AllianceColor.BLUE -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.blue_map_2),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                        MapButtons(
-                            paddingValues = listOf(
-                                310.dp to 415.dp,
-                                310.dp to 230.dp,
-                                310.dp to 44.dp,
-                                150.dp to 44.dp
-                            ),
-                            selected = selected,
-                            onSelect = { selected = it }
-                        )
-                    }
+        Column {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+            ) {
+                Box(modifier = Modifier.requiredSize(600.dp)) {
+                    when {
+                        orientation && allianceColor == Constants.AllianceColor.BLUE -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.blue_map_2),
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            MapButtons(
+                                paddingValues = listOf(
+                                    310.dp to 415.dp,
+                                    310.dp to 230.dp,
+                                    310.dp to 44.dp,
+                                    150.dp to 44.dp
+                                ),
+                                selected = selected,
+                                onSelect = { selected = it }
+                            )
+                        }
 
-                    !orientation && allianceColor == Constants.AllianceColor.BLUE -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.blue_map_1),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                        MapButtons(
-                            paddingValues = listOf(
-                                190.dp to 117.dp,
-                                190.dp to 302.dp,
-                                190.dp to 490.dp,
-                                350.dp to 490.dp
-                            ),
-                            selected = selected,
-                            onSelect = { selected = it }
-                        )
-                    }
+                        !orientation && allianceColor == Constants.AllianceColor.BLUE -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.blue_map_1),
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            MapButtons(
+                                paddingValues = listOf(
+                                    190.dp to 117.dp,
+                                    190.dp to 302.dp,
+                                    190.dp to 490.dp,
+                                    350.dp to 490.dp
+                                ),
+                                selected = selected,
+                                onSelect = { selected = it }
+                            )
+                        }
 
-                    orientation && allianceColor == Constants.AllianceColor.RED -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.red_map_2),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                        MapButtons(
-                            paddingValues = listOf(
-                                185.dp to 415.dp,
-                                185.dp to 230.dp,
-                                185.dp to 49.dp,
-                                348.dp to 49.dp
-                            ),
-                            selected = selected,
-                            onSelect = { selected = it }
-                        )
-                    }
+                        orientation && allianceColor == Constants.AllianceColor.RED -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.red_map_2),
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            MapButtons(
+                                paddingValues = listOf(
+                                    185.dp to 415.dp,
+                                    185.dp to 230.dp,
+                                    185.dp to 49.dp,
+                                    348.dp to 49.dp
+                                ),
+                                selected = selected,
+                                onSelect = { selected = it }
+                            )
+                        }
 
-                    !orientation && allianceColor == Constants.AllianceColor.RED -> {
-                        Image(
-                            painter = painterResource(id = R.drawable.red_map_1),
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize()
-                        )
-                        MapButtons(
-                            paddingValues = listOf(
-                                310.dp to 130.dp,
-                                310.dp to 300.dp,
-                                310.dp to 486.dp,
-                                150.dp to 486.dp
-                            ),
-                            selected = selected,
-                            onSelect = { selected = it }
-                        )
+                        !orientation && allianceColor == Constants.AllianceColor.RED -> {
+                            Image(
+                                painter = painterResource(id = R.drawable.red_map_1),
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                            MapButtons(
+                                paddingValues = listOf(
+                                    310.dp to 130.dp,
+                                    310.dp to 300.dp,
+                                    310.dp to 486.dp,
+                                    150.dp to 486.dp
+                                ),
+                                selected = selected,
+                                onSelect = { selected = it }
+                            )
+                        }
                     }
                 }
+            }
+            Button(
+                onClick = { selected = 0 },
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = colorResource(
+                        id = if (selected == 0) R.color.selected_start else R.color.light_gray
+                    ),
+                    contentColor = Color.Black
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 50.dp, end = 50.dp, bottom = 10.dp)
+            ) {
+                Text("No Show", style = TextStyle(fontSize = 25.sp, fontWeight = FontWeight.Bold))
             }
         }
     }
