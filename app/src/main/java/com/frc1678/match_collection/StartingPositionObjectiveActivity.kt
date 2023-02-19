@@ -164,9 +164,17 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         spinner_preloaded.isEnabled = (startingPosition != 0)
     }
 
+    /**
+     * All content for the map, including the buttons on the map and the No Show button.
+     */
     @Composable
     fun MapContent() {
+        /**
+         * The currently selected starting position.
+         */
         var selected: Int? by remember { mutableStateOf(null) }
+        // When the selected starting position is updated, update the global variable and update the
+        // preloaded spinner for no shows.
         LaunchedEffect(selected) {
             startingPosition = selected
             spinner_preloaded.isEnabled = selected != 0
@@ -174,14 +182,19 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                 Constants.Preloaded.values().indexOf(Constants.Preloaded.N)
             )
         }
+        // Contains the map on top and the No Show button on the bottom.
         Column {
+            // The map.
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f)
             ) {
+                // requiredSize makes sure we know how large the image will be displayed.
                 Box(modifier = Modifier.requiredSize(600.dp)) {
+                    // when statement for choosing the map and button placements depending on
+                    // orientation and alliance color.
                     when {
                         orientation && allianceColor == Constants.AllianceColor.BLUE -> Map(
                             drawableId = R.drawable.blue_map_2,
@@ -233,6 +246,7 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
                     }
                 }
             }
+            // The No Show button.
             Button(
                 onClick = { selected = 0 },
                 colors = ButtonDefaults.buttonColors(
@@ -250,6 +264,14 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         }
     }
 
+    /**
+     * The map, including the buttons on the map.
+     *
+     * @param drawableId The id for the map drawable.
+     * @param paddingValues The padding values used to position the buttons.
+     * @param selected The currently selected starting position.
+     * @param onSelect Callback to set the current starting position.
+     */
     @Composable
     fun Map(
         @DrawableRes drawableId: Int,
@@ -257,11 +279,13 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         selected: Int?,
         onSelect: (Int) -> Unit
     ) {
+        // The map image.
         Image(
             painter = painterResource(id = drawableId),
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )
+        // The four starting position buttons.
         for (i in 1..4) Button(
             onClick = { onSelect(i) },
             colors = ButtonDefaults.buttonColors(
