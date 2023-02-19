@@ -61,10 +61,10 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                 Image(
                     painter = painterResource(
                         id = when {
-                            (orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_up_game_pieces
-                            (orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_up_game_pieces
-                            (!orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_down_game_pieces
-                            (!orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_down_game_pieces
+                            (orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_up_game_pieces_two
+                            (orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_up_game_pieces_two
+                            (!orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_down_game_pieces_two
+                            (!orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_down_game_pieces_two
                             else -> R.drawable.red_down_game_pieces
                         }
                     ), contentDescription = "Map with game pieces", modifier = Modifier.size(950.dp)
@@ -73,7 +73,7 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                     // Creates padding around the buttons that move them depending on what the background is.
                     modifier = if (orientation && allianceColor == AllianceColor.RED) {
                         Modifier.padding(
-                            start = 195.dp, bottom = 100.dp
+                            start = 195.dp, bottom = 50.dp
                         )
                     } else if (!orientation && allianceColor == AllianceColor.RED) {
                         Modifier.padding(
@@ -81,11 +81,11 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                         )
                     } else if (!orientation && allianceColor == AllianceColor.BLUE) {
                         Modifier.padding(
-                            start = 195.dp, bottom = 75.dp
+                            start = 195.dp, bottom = 50.dp
                         )
                     } else if (orientation && allianceColor == AllianceColor.BLUE) {
                         Modifier.padding(
-                            top = 60.dp, end = 195.dp
+                            top = 50.dp, end = 195.dp
                         )
                     } else {
                         Modifier.padding()
@@ -130,15 +130,15 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                          */
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = colorResource(
-                                id = if (allianceColor == Constants.AllianceColor.RED) {
+                                id = if (allianceColor == AllianceColor.RED) {
                                     if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
-                                        R.color.action_red
+                                        R.color.alliance_red_light
                                     } else {
                                         R.color.light_gray
                                     }
                                 } else {
                                     if ((orientation && autoIntakeGamePieceFour == 0) || (!orientation && autoIntakeGamePieceOne == 0)) {
-                                        R.color.action_blue
+                                        R.color.alliance_blue_light
                                     } else {
                                         R.color.light_gray
                                     }
@@ -221,15 +221,15 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                          */
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = colorResource(
-                                id = if (allianceColor == Constants.AllianceColor.RED) {
+                                id = if (allianceColor == AllianceColor.RED) {
                                     if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
-                                        R.color.action_red
+                                        R.color.alliance_red_light
                                     } else {
                                         R.color.light_gray
                                     }
                                 } else {
                                     if ((orientation && autoIntakeGamePieceThree == 0) || (!orientation && autoIntakeGamePieceTwo == 0)) {
-                                        R.color.action_blue
+                                        R.color.alliance_blue_light
                                     } else {
                                         R.color.light_gray
                                     }
@@ -313,15 +313,15 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                         */
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = colorResource(
-                                id = if (allianceColor == Constants.AllianceColor.RED) {
+                                id = if (allianceColor == AllianceColor.RED) {
                                     if ((orientation && autoIntakeGamePieceTwo == 0) || (!orientation && autoIntakeGamePieceThree == 0)) {
-                                        R.color.action_red
+                                        R.color.alliance_red_light
                                     } else {
                                         R.color.light_gray
                                     }
                                 } else {
                                     if ((orientation && autoIntakeGamePieceTwo == 0) || (!orientation && autoIntakeGamePieceThree == 0)) {
-                                        R.color.action_blue
+                                        R.color.alliance_blue_light
                                     } else {
                                         R.color.light_gray
                                     }
@@ -405,15 +405,15 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                        */
                         colors = ButtonDefaults.buttonColors(
                             backgroundColor = colorResource(
-                                id = if (allianceColor == Constants.AllianceColor.RED) {
+                                id = if (allianceColor == AllianceColor.RED) {
                                     if ((orientation && autoIntakeGamePieceOne == 0) || (!orientation && autoIntakeGamePieceFour == 0)) {
-                                        R.color.action_red
+                                        R.color.alliance_red_light
                                     } else {
                                         R.color.light_gray
                                     }
                                 } else {
                                     if ((orientation && autoIntakeGamePieceOne == 0) || (!orientation && autoIntakeGamePieceFour == 0)) {
-                                        R.color.action_blue
+                                        R.color.alliance_blue_light
                                     } else {
                                         R.color.light_gray
                                     }

@@ -165,9 +165,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             if (quicknessScore.hasDuplicate() or fieldAwarenessScore.hasDuplicate()
             ) {
                 AlertDialog.Builder(this).setTitle(R.string.warning_same_rankings)
-                    .setNegativeButton("Cancel") { dialog, _ ->
+                    .setNegativeButton("No") { dialog, _ ->
                         dialog.cancel()
-                    }.setPositiveButton("Proceed") { _: DialogInterface, _: Int ->
+                    }.setPositiveButton("Yes") { _: DialogInterface, _: Int ->
                         goToNextActivity()
                     }.show()
             } else {
