@@ -1,21 +1,23 @@
-Scout Name # 1
-Scout Name # 2
-Scout Name # 3
-Scout Name # 4
-Scout Name # 5
-Scout Name # 6
-Scout Name # 7
-Scout Name # 8
-Scout Name # 9
-Scout Name # 10
-Scout Name # 11
-Scout Name # 12
-Scout Name # 13
-Scout Name # 14
-Scout Name # 15
-Scout Name # 16
-Scout Name # 17
-Scout Name # 18
+Anirudh Kashyap
+Annemarie Spiller
+Annika Larsen
+Cyan Ding
+Enzo Saraniti
+Henry Marsom
+Jackson Friend
+Jasmine Gomes
+Jett Nelson
+Kayla Lee
+Mason Terrazas
+Mehul Paparaju
+Michael Jao
+Michael Merced Harrington
+Olivet Yettou
+Owen Watkins
+Pearline Qin
+Soren Reisman
+Vienna Zhang
+Zoe Wang
 Backup 1
 Backup 2
 Backup 3
