@@ -45,15 +45,6 @@ class Constants {
         NONE
     }
 
-    enum class StartingPosition {
-        `0`,
-        `1`,
-        `2`,
-        `3`,
-        `4`,
-        NONE
-    }
-
     enum class ChargeLevel {
         N, // NONE
         F, // FAILED

@@ -2,6 +2,9 @@
 package com.frc1678.match_collection
 
 import android.os.CountDownTimer
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 
 // File to store information to be used to create the final match information map.
 var numActionOne = 0 //INTAKE_STATION
@@ -44,8 +47,8 @@ var scoutName: String = Constants.NONE_VALUE
 // Data specific to Objective Match Collection QR.
 var teamNumber: String = ""
 var scoutId: String = Constants.NONE_VALUE
-var orientation: Boolean = true //true = UP, false = DOWN
-var startingPosition: Constants.StartingPosition = Constants.StartingPosition.NONE
+var orientation by mutableStateOf(true)
+var startingPosition: Int? = null
 var preloaded: Constants.Preloaded = Constants.Preloaded.N
 var timeline = mutableListOf<Map<String, String>>()
 var autoChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
@@ -122,7 +125,7 @@ data class SubjectiveTeamRankings(
 data class TeamRank(var teamNumber: String, val rank: Int)
 
 fun resetStartingReferences() {
-    startingPosition = Constants.StartingPosition.NONE
+    startingPosition = null
     for (x in 0..3) {
         gamePiecePositionList[x] = Constants.GamePiecePositions.N
     }
