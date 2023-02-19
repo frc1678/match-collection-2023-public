@@ -134,57 +134,72 @@ class StartingGamePieceActivity : CollectionActivity() {
 
     // Sets the backgrounds of gamePieceOne, gamePieceTwo, gamePieceThree, gamePieceFour
     private fun setBackgrounds() {
-        // Sets backgroundColor of gamePieceOne to the corresponding game piece color
-        // or if not selected, then sets background to grey
+        // Sets backgroundColor of gamePieceOne to the corresponding game piece color andtext
+        // or if not selected, then sets background to grey and the text to nothing
         when (gamePiecePositionList[0]) {
             Constants.GamePiecePositions.N -> {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.light_gray))
+                btn_game_piece_one.setText(R.string.one_starting_position_none)
             }
             Constants.GamePiecePositions.O -> {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.cone_yellow))
+                btn_game_piece_one.setText(R.string.one_starting_position_cone)
             }
             Constants.GamePiecePositions.U -> {
                 btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.cube_purple))
+                btn_game_piece_one.setText(R.string.one_starting_position_cube)
+
             }
         }
-        // Sets backGroundColor of gamePieceTwo to the corresponding game piece color
-        // or if not selected, then sets background to grey
+        // Sets backGroundColor of gamePieceTwo to the corresponding game piece color and text
+        // or if not selected, then sets background to grey and the text to nothing
         when (gamePiecePositionList[1]) {
             Constants.GamePiecePositions.N -> {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.light_gray))
+                btn_game_piece_two.setText(R.string.two_starting_position_none)
+
             }
             Constants.GamePiecePositions.O -> {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.cone_yellow))
+                btn_game_piece_two.setText(R.string.two_starting_position_cone)
             }
             Constants.GamePiecePositions.U -> {
                 btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.cube_purple))
+                btn_game_piece_two.setText(R.string.two_starting_position_cube)
             }
         }
-        // Sets backGroundColor of gamePieceThree to the corresponding game piece color
-        // or if not selected, then sets background to grey
+        // Sets backGroundColor of gamePieceThree to the corresponding game piece color and text
+        // or if not selected, then sets background to grey and the text to nothing
         when (gamePiecePositionList[2]) {
             Constants.GamePiecePositions.N -> {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.light_gray))
+                btn_game_piece_three.setText(R.string.three_starting_position_none)
+
             }
             Constants.GamePiecePositions.O -> {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.cone_yellow))
+                btn_game_piece_three.setText(R.string.three_starting_position_cone)
             }
             Constants.GamePiecePositions.U -> {
                 btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.cube_purple))
+                btn_game_piece_three.setText(R.string.three_starting_position_cube)
             }
 
         }
-        // Sets backGroundColor of gamePieceFour to the corresponding game piece color
-        // or if not, then sets background to grey
+        // Sets backGroundColor of gamePieceFour to the corresponding game piece color and text
+        // or if not, then sets background to grey and text to nothing
         when (gamePiecePositionList[3]) {
             Constants.GamePiecePositions.N -> {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.light_gray))
+                btn_game_piece_four.setText(R.string.four_starting_position_none)
             }
             Constants.GamePiecePositions.O -> {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.cone_yellow))
+                btn_game_piece_four.setText(R.string.four_starting_position_cone)
             }
             Constants.GamePiecePositions.U -> {
                 btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.cube_purple))
+                btn_game_piece_four.setText(R.string.four_starting_position_cube)
             }
         }
     }
