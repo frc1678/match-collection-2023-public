@@ -130,7 +130,7 @@ private fun intentToPreviousActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_generate_activity)
-        if (startingPosition == Constants.StartingPosition.`0`) preloaded = Constants.Preloaded.N
+        if (startingPosition == 0) preloaded = Constants.Preloaded.N
 
         timestamp = System.currentTimeMillis() / 1000
         val compressedQR = intent.extras?.getString(Constants.COMPRESSED_QR_TAG)
