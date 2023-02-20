@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.ViewGroup
@@ -176,7 +177,11 @@ class StartingPositionObjectiveActivity : CollectionActivity() {
         // When the selected starting position is updated, update the global variable and update the
         // preloaded spinner for no shows.
         LaunchedEffect(selected) {
-            startingPosition = selected
+            /* If a button was selected, the selected option is saved as startingPosition.
+            selected is then set to startingPosition so the correct button will be highlighted
+            when going back from the previous screen */
+            if (selected != null) startingPosition = selected
+            selected = startingPosition
             spinner_preloaded.isEnabled = selected != 0
             if (selected == 0) spinner_preloaded.setSelection(
                 Constants.Preloaded.values().indexOf(Constants.Preloaded.N)
