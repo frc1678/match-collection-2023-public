@@ -1,38 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_starting_game_pieces_map"
-        style="@style/iv_starting_position_map"/>
-
-    <LinearLayout
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/compose_map"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" >
-
-        <Button
-            android:id="@+id/btn_game_piece_one"
-            style="@style/btn_starting_position_text"
-            android:text="@string/one_starting_position_none"/>
-
-        <Button
-            android:id="@+id/btn_game_piece_two"
-            style="@style/btn_starting_position_text"
-            android:text="@string/two_starting_position_none"/>
-
-        <Button
-            android:id="@+id/btn_game_piece_three"
-            style="@style/btn_starting_position_text"
-            android:text="@string/three_starting_position_none"/>
-
-        <Button
-            android:id="@+id/btn_game_piece_four"
-            style="@style/btn_starting_position_text"
-            android:text="@string/four_starting_position_none"/>
-    </LinearLayout>
+        android:layout_weight="7" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,15 +19,14 @@
         <Button
             android:id="@+id/btn_switch_orientation_game_pieces"
             style="@style/btn_switch_orientation"
-            android:layout_weight="2"
-            android:text="@string/btn_switch_orientation"/>
+            android:layout_weight="1"
+            android:text="@string/btn_switch_orientation" />
 
         <Button
             android:id="@+id/btn_proceed_game_piece"
             style="@style/btn_starting_position_proceed"
-            android:layout_weight="2"
-            android:text="@string/btn_proceed"/>
-
+            android:layout_weight="1"
+            android:text="@string/btn_proceed" />
 
     </LinearLayout>
 

@@ -6,108 +6,54 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
-import kotlinx.android.synthetic.main.starting_game_pieces_activity.*
+import kotlinx.android.synthetic.main.starting_game_pieces_activity.btn_proceed_game_piece
+import kotlinx.android.synthetic.main.starting_game_pieces_activity.btn_switch_orientation_game_pieces
+import kotlinx.android.synthetic.main.starting_game_pieces_activity.compose_map
 
 class StartingGamePieceActivity : CollectionActivity() {
 
-    // Chooses which map you will see depending on your alliance color and orientation
-    private fun setMapPicture() {
-        when {
-            (orientation && allianceColor == Constants.AllianceColor.BLUE) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_up_game_pieces)
-            (!orientation && allianceColor == Constants.AllianceColor.BLUE) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.blue_down_game_pieces)
-            (orientation && allianceColor == Constants.AllianceColor.RED) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.red_down_game_pieces)
-            (!orientation && allianceColor == Constants.AllianceColor.RED) ->
-                iv_starting_game_pieces_map.setImageResource(R.drawable.red_up_game_pieces)
-        }
-    }
-
     // Initiates the onClicks for all the buttons
     private fun initOnClicks() {
-        // When clicked, changes game_piece_one to either cone or cube depending on whatever one it was
-        // then, calls setBackgrounds
-        btn_game_piece_one.setOnClickListener {
-            gamePiecePositionList[0] = when (gamePiecePositionList[0]) {
-                Constants.GamePiecePositions.O -> {
-                    Constants.GamePiecePositions.U
-                }
-                Constants.GamePiecePositions.U -> {
-                    Constants.GamePiecePositions.O
-                }
-                Constants.GamePiecePositions.N -> {
-                    Constants.GamePiecePositions.O
-                }
-            }
-            setBackgrounds()
-        }
-
-        // When clicked, changes game_piece_two to either cone or cube depending on whatever one it was
-        // then, calls setBackgrounds
-        btn_game_piece_two.setOnClickListener {
-            gamePiecePositionList[1] = when (gamePiecePositionList[1]) {
-                Constants.GamePiecePositions.O -> {
-                    Constants.GamePiecePositions.U
-                }
-                Constants.GamePiecePositions.U -> {
-                    Constants.GamePiecePositions.O
-                }
-                Constants.GamePiecePositions.N -> {
-                    Constants.GamePiecePositions.O
-                }
-            }
-            setBackgrounds()
-        }
-
-        // When clicked, changes game_piece_three to either cone or cube depending on whatever one it was
-        // then, calls setBackgrounds
-        btn_game_piece_three.setOnClickListener {
-            gamePiecePositionList[2] = when (gamePiecePositionList[2]) {
-                Constants.GamePiecePositions.O -> {
-                    Constants.GamePiecePositions.U
-                }
-                Constants.GamePiecePositions.U -> {
-                    Constants.GamePiecePositions.O
-                }
-                Constants.GamePiecePositions.N -> {
-                    Constants.GamePiecePositions.O
-                }
-            }
-            setBackgrounds()
-        }
-
-        // When clicked, changes game_piece_four to either cone or cube depending on whatever one it was
-        // then, calls setBackgrounds
-        btn_game_piece_four.setOnClickListener {
-            gamePiecePositionList[3] = when (gamePiecePositionList[3]) {
-                Constants.GamePiecePositions.O -> {
-                    Constants.GamePiecePositions.U
-                }
-                Constants.GamePiecePositions.U -> {
-                    Constants.GamePiecePositions.O
-                }
-                Constants.GamePiecePositions.N -> {
-                    Constants.GamePiecePositions.O
-                }
-            }
-            setBackgrounds()
-        }
-
         // Changes the orientation of the map and calls setMapPicture
-        btn_switch_orientation_game_pieces.setOnClickListener{
+        btn_switch_orientation_game_pieces.setOnClickListener {
             orientation = !orientation
-            setMapPicture()
         }
 
         // Moves onto the next screen if you have inputted all the information
-        btn_proceed_game_piece.setOnClickListener { view ->
+        btn_proceed_game_piece.setOnClickListener {
             // If all game pieces have been selected then proceed to CollectionSubjectiveActivity.kt
             // Otherwise create warning message
-            if((gamePiecePositionList[0] == Constants.GamePiecePositions.N) or (gamePiecePositionList[1] == Constants.GamePiecePositions.N) or
-                (gamePiecePositionList[2] == Constants.GamePiecePositions.N) or (gamePiecePositionList[3] == Constants.GamePiecePositions.N)){
-                AlertDialog.Builder(this).setTitle("Warning! You have not selected the type for all of the game pieces!")
+            if (Constants.GamePiecePositions.N in gamePiecePositionList) {
+                AlertDialog.Builder(this)
+                    .setTitle("Warning! You have not selected the type for all of the game pieces!")
                     .setNegativeButton("Cancel") { dialog, _ ->
                         dialog.cancel()
                     }.setPositiveButton("Proceed") { _: DialogInterface, _: Int ->
@@ -132,87 +78,13 @@ class StartingGamePieceActivity : CollectionActivity() {
         )
     }
 
-    // Sets the backgrounds of gamePieceOne, gamePieceTwo, gamePieceThree, gamePieceFour
-    private fun setBackgrounds() {
-        // Sets backgroundColor of gamePieceOne to the corresponding game piece color andtext
-        // or if not selected, then sets background to grey and the text to nothing
-        when (gamePiecePositionList[0]) {
-            Constants.GamePiecePositions.N -> {
-                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.light_gray))
-                btn_game_piece_one.setText(R.string.one_starting_position_none)
-            }
-            Constants.GamePiecePositions.O -> {
-                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.cone_yellow))
-                btn_game_piece_one.setText(R.string.one_starting_position_cone)
-            }
-            Constants.GamePiecePositions.U -> {
-                btn_game_piece_one.setBackgroundColor(resources.getColor(R.color.cube_purple))
-                btn_game_piece_one.setText(R.string.one_starting_position_cube)
-
-            }
-        }
-        // Sets backGroundColor of gamePieceTwo to the corresponding game piece color and text
-        // or if not selected, then sets background to grey and the text to nothing
-        when (gamePiecePositionList[1]) {
-            Constants.GamePiecePositions.N -> {
-                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.light_gray))
-                btn_game_piece_two.setText(R.string.two_starting_position_none)
-
-            }
-            Constants.GamePiecePositions.O -> {
-                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.cone_yellow))
-                btn_game_piece_two.setText(R.string.two_starting_position_cone)
-            }
-            Constants.GamePiecePositions.U -> {
-                btn_game_piece_two.setBackgroundColor(resources.getColor(R.color.cube_purple))
-                btn_game_piece_two.setText(R.string.two_starting_position_cube)
-            }
-        }
-        // Sets backGroundColor of gamePieceThree to the corresponding game piece color and text
-        // or if not selected, then sets background to grey and the text to nothing
-        when (gamePiecePositionList[2]) {
-            Constants.GamePiecePositions.N -> {
-                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.light_gray))
-                btn_game_piece_three.setText(R.string.three_starting_position_none)
-
-            }
-            Constants.GamePiecePositions.O -> {
-                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.cone_yellow))
-                btn_game_piece_three.setText(R.string.three_starting_position_cone)
-            }
-            Constants.GamePiecePositions.U -> {
-                btn_game_piece_three.setBackgroundColor(resources.getColor(R.color.cube_purple))
-                btn_game_piece_three.setText(R.string.three_starting_position_cube)
-            }
-
-        }
-        // Sets backGroundColor of gamePieceFour to the corresponding game piece color and text
-        // or if not, then sets background to grey and text to nothing
-        when (gamePiecePositionList[3]) {
-            Constants.GamePiecePositions.N -> {
-                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.light_gray))
-                btn_game_piece_four.setText(R.string.four_starting_position_none)
-            }
-            Constants.GamePiecePositions.O -> {
-                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.cone_yellow))
-                btn_game_piece_four.setText(R.string.four_starting_position_cone)
-            }
-            Constants.GamePiecePositions.U -> {
-                btn_game_piece_four.setBackgroundColor(resources.getColor(R.color.cube_purple))
-                btn_game_piece_four.setText(R.string.four_starting_position_cube)
-            }
-        }
-    }
-
     // Begin intent used in onKeyLongPress to restart app from MatchInformationInputActivity.kt.
-    private fun intentToPreviousActivity() {
-        startActivity(
-            Intent(this, MatchInformationInputActivity::class.java)
-                .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_GAME_PIECE)
-                .putExtras(intent),
-            ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
-        )
-    }
+    private fun intentToPreviousActivity() = startActivity(
+        Intent(this, MatchInformationInputActivity::class.java)
+            .putExtra(PREVIOUS_SCREEN, Constants.Screens.STARTING_GAME_PIECE)
+            .putExtras(intent),
+        ActivityOptions.makeSceneTransitionAnimation(this).toBundle()
+    )
 
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed.
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean {
@@ -228,14 +100,126 @@ class StartingGamePieceActivity : CollectionActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.starting_game_pieces_activity)
-
-        setMapPicture()
+        compose_map.setContent { MapContent() }
         initOnClicks()
-        setBackgrounds()
     }
 
-}
+    @Composable
+    fun MapContent() {
+        var gamePieces by remember { mutableStateOf(List(4) { Constants.GamePiecePositions.N }) }
+        LaunchedEffect(gamePieces) {
+            gamePiecePositionList = gamePieces.toMutableList()
+        }
+        Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+            Box(modifier = Modifier.requiredSize(600.dp)) {
+                when {
+                    orientation && allianceColor == Constants.AllianceColor.BLUE -> Map(
+                        drawableId = R.drawable.blue_up_game_pieces,
+                        paddingValues = listOf(
+                            100.dp to 450.dp,
+                            100.dp to 325.dp,
+                            100.dp to 200.dp,
+                            100.dp to 75.dp
+                        ),
+                        gamePieces = gamePieces,
+                        setGamePieces = { gamePieces = it }
+                    )
 
-private operator fun <R1> (() -> R1).set(i: Int, value: () -> R1) {
+                    !orientation && allianceColor == Constants.AllianceColor.BLUE -> Map(
+                        drawableId = R.drawable.blue_down_game_pieces,
+                        paddingValues = listOf(
+                            400.dp to 75.dp,
+                            400.dp to 200.dp,
+                            400.dp to 325.dp,
+                            400.dp to 450.dp
+                        ),
+                        gamePieces = gamePieces,
+                        setGamePieces = { gamePieces = it }
+                    )
 
+                    orientation && allianceColor == Constants.AllianceColor.RED -> Map(
+                        drawableId = R.drawable.red_up_game_pieces,
+                        paddingValues = listOf(
+                            400.dp to 450.dp,
+                            400.dp to 325.dp,
+                            400.dp to 200.dp,
+                            400.dp to 75.dp
+                        ),
+                        gamePieces = gamePieces,
+                        setGamePieces = { gamePieces = it }
+                    )
+
+                    !orientation && allianceColor == Constants.AllianceColor.RED -> Map(
+                        drawableId = R.drawable.red_down_game_pieces,
+                        paddingValues = listOf(
+                            100.dp to 75.dp,
+                            100.dp to 200.dp,
+                            100.dp to 325.dp,
+                            100.dp to 450.dp
+                        ),
+                        gamePieces = gamePieces,
+                        setGamePieces = { gamePieces = it }
+                    )
+                }
+            }
+        }
+    }
+
+    @Composable
+    fun Map(
+        @DrawableRes drawableId: Int,
+        paddingValues: List<Pair<Dp, Dp>>,
+        gamePieces: List<Constants.GamePiecePositions>,
+        setGamePieces: (List<Constants.GamePiecePositions>) -> Unit
+    ) {
+        Image(
+            painter = painterResource(id = drawableId),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize()
+        )
+        for (i in 1..4) Button(
+            onClick = {
+                setGamePieces(gamePieces.toMutableList().apply { this[i - 1] = this[i - 1].next() })
+            },
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = colorResource(
+                    id = when (gamePieces[i - 1]) {
+                        Constants.GamePiecePositions.N -> R.color.light_gray
+                        Constants.GamePiecePositions.O -> R.color.cone_yellow
+                        Constants.GamePiecePositions.U -> R.color.cube_purple
+                    }
+                ),
+                contentColor = Color.Black
+            ),
+            contentPadding = PaddingValues(horizontal = 40.dp, vertical = 10.dp),
+            modifier = Modifier.padding(
+                start = paddingValues[i - 1].first, top = paddingValues[i - 1].second
+            )
+        ) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    "$i",
+                    style = LocalTextStyle.current.copy(
+                        fontSize = 25.sp, fontWeight = FontWeight.Bold
+                    )
+                )
+                Text(
+                    when (gamePieces[i - 1]) {
+                        Constants.GamePiecePositions.N -> "NONE"
+                        Constants.GamePiecePositions.O -> "CONE"
+                        Constants.GamePiecePositions.U -> "CUBE"
+                    },
+                    style = LocalTextStyle.current.copy(
+                        fontSize = 16.sp, fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+        }
+    }
+
+    private fun Constants.GamePiecePositions.next() = when (this) {
+        Constants.GamePiecePositions.N -> Constants.GamePiecePositions.O
+        Constants.GamePiecePositions.O -> Constants.GamePiecePositions.U
+        Constants.GamePiecePositions.U -> Constants.GamePiecePositions.N
+    }
 }
