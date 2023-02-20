@@ -40,16 +40,18 @@ import kotlinx.android.synthetic.main.starting_game_pieces_activity.compose_map
 
 class StartingGamePieceActivity : CollectionActivity() {
 
-    // Initiates the onClicks for all the buttons
+    /**
+     * Initiates the callbacks for all the buttons.
+     */
     private fun initOnClicks() {
-        // Changes the orientation of the map and calls setMapPicture
+        // Changes the orientation of the map
         btn_switch_orientation_game_pieces.setOnClickListener {
             orientation = !orientation
         }
 
         // Moves onto the next screen if you have inputted all the information
         btn_proceed_game_piece.setOnClickListener {
-            // If all game pieces have been selected then proceed to CollectionSubjectiveActivity.kt
+            // If all game pieces have been selected then proceed to CollectionSubjectiveActivity
             // Otherwise create warning message
             if (Constants.GamePiecePositions.N in gamePiecePositionList) {
                 AlertDialog.Builder(this)
@@ -60,13 +62,15 @@ class StartingGamePieceActivity : CollectionActivity() {
                         goToNextActivity()
                     }.show()
             } else {
-                // Add alliance teams to the intent to be used in MatchInformationEditActivity.kt.
+                // Add alliance teams to the intent to be used in MatchInformationEditActivity
                 goToNextActivity()
             }
         }
     }
 
-    // Goes to next activity
+    /**
+     * Navigates to [CollectionSubjectiveActivity].
+     */
     private fun goToNextActivity() {
         startActivity(
             Intent(this, CollectionSubjectiveActivity::class.java).putExtras(intent)
@@ -104,14 +108,25 @@ class StartingGamePieceActivity : CollectionActivity() {
         initOnClicks()
     }
 
+    /**
+     * All the content in the map, including the buttons. Handles different orientations/alliance
+     * colors.
+     */
     @Composable
     fun MapContent() {
+        /**
+         * The current selections for game piece positions.
+         */
         var gamePieces by remember { mutableStateOf(gamePiecePositionList.toList()) }
+        // When the game piece selections are updated, update the global variable.
         LaunchedEffect(gamePieces) {
             gamePiecePositionList = gamePieces.toMutableList()
         }
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
+            // requiredSize makes sure we know how large the image will be displayed.
             Box(modifier = Modifier.requiredSize(600.dp)) {
+                // when statement for choosing the map and button placements depending on
+                // orientation and alliance color.
                 when {
                     orientation && allianceColor == Constants.AllianceColor.BLUE -> Map(
                         drawableId = R.drawable.blue_up_game_pieces,
@@ -165,6 +180,14 @@ class StartingGamePieceActivity : CollectionActivity() {
         }
     }
 
+    /**
+     * The map, including the buttons on the map.
+     *
+     * @param drawableId The id for the map drawable.
+     * @param paddingValues The padding values used to position the buttons.
+     * @param gamePieces The current selections for game piece positions.
+     * @param setGamePieces Callback to set the current selections for game piece positions.
+     */
     @Composable
     fun Map(
         @DrawableRes drawableId: Int,
@@ -172,11 +195,13 @@ class StartingGamePieceActivity : CollectionActivity() {
         gamePieces: List<Constants.GamePiecePositions>,
         setGamePieces: (List<Constants.GamePiecePositions>) -> Unit
     ) {
+        // The map image.
         Image(
             painter = painterResource(id = drawableId),
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
         )
+        // The four game piece position buttons.
         for (i in 1..4) Button(
             onClick = {
                 setGamePieces(gamePieces.toMutableList().apply {
@@ -203,12 +228,14 @@ class StartingGamePieceActivity : CollectionActivity() {
             )
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                // The position number text.
                 Text(
                     "$i",
                     style = LocalTextStyle.current.copy(
                         fontSize = 25.sp, fontWeight = FontWeight.Bold
                     )
                 )
+                // The text for the game piece selection.
                 Text(
                     when (gamePieces[i - 1]) {
                         Constants.GamePiecePositions.N -> "NONE"
