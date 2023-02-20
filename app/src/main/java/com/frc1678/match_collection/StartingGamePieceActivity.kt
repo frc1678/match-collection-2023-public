@@ -117,10 +117,10 @@ class StartingGamePieceActivity : CollectionActivity() {
         /**
          * The current selections for game piece positions.
          */
-        var gamePieces by remember { mutableStateOf(gamePiecePositionList.toList()) }
+        var gamePieces by remember { mutableStateOf(gamePiecePositionList) }
         // When the game piece selections are updated, update the global variable.
         LaunchedEffect(gamePieces) {
-            gamePiecePositionList = gamePieces.toMutableList()
+            gamePiecePositionList = gamePieces
         }
         Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             // requiredSize makes sure we know how large the image will be displayed.
