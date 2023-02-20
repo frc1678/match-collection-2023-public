@@ -106,7 +106,7 @@ class StartingGamePieceActivity : CollectionActivity() {
 
     @Composable
     fun MapContent() {
-        var gamePieces by remember { mutableStateOf(List(4) { Constants.GamePiecePositions.N }) }
+        var gamePieces by remember { mutableStateOf(gamePiecePositionList.toList()) }
         LaunchedEffect(gamePieces) {
             gamePiecePositionList = gamePieces.toMutableList()
         }
