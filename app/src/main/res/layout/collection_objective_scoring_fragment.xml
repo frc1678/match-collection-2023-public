@@ -77,7 +77,7 @@
     <Button
         android:id="@+id/btn_action_twelve"
         style="@style/btn_action"
-        android:layout_weight="0.7"
+        android:layout_weight=".9"
         android:background="@drawable/btn_action_selector_failed"
         android:text="@string/btn_action_ten" />
 
