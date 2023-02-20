@@ -774,13 +774,24 @@ class CollectionObjectiveActivity : CollectionActivity() {
         setContentView(R.layout.collection_objective_activity)
 
         // Set the currently displayed fragment to the scoring panel
-        scoringScreen = preloaded != Constants.Preloaded.N
 
         if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT && previousScreen != Constants.Screens.QR_GENERATE) {
             timerReset()
+            scoringScreen = preloaded != Constants.Preloaded.N
         }
         else {
             comingBack()
+            if (preloaded != Constants.Preloaded.N) {
+                scoringScreen = (numActionOne + numActionTwo + numActionThree + numActionFour +
+                        numActionFive + numActionSix + numActionSeven + numActionEight + numActionNine
+                        + numActionTen + numActionEleven + numActionTwelve + autoIntakeGamePieceOne
+                        + autoIntakeGamePieceTwo + autoIntakeGamePieceThree + autoIntakeGamePieceFour) % 2 == 0
+            } else {
+                scoringScreen = (numActionOne + numActionTwo + numActionThree + numActionFour +
+                        numActionFive + numActionSix + numActionSeven + numActionEight + numActionNine
+                        + numActionTen + numActionEleven + numActionTwelve + autoIntakeGamePieceOne
+                        + autoIntakeGamePieceTwo + autoIntakeGamePieceThree + autoIntakeGamePieceFour) % 2 != 0
+            }
         }
 
         enableButtons()
