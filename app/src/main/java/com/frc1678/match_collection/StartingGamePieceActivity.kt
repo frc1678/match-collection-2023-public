@@ -208,7 +208,7 @@ class StartingGamePieceActivity : CollectionActivity() {
                     this[i - 1] = when (this[i - 1]) {
                         Constants.GamePiecePositions.N -> Constants.GamePiecePositions.O
                         Constants.GamePiecePositions.O -> Constants.GamePiecePositions.U
-                        Constants.GamePiecePositions.U -> Constants.GamePiecePositions.N
+                        Constants.GamePiecePositions.U -> Constants.GamePiecePositions.O
                     }
                 })
             },
