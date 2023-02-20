@@ -50,7 +50,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame,
                 if (value) {
                     scoringPanel
-
                 }
                 else {
                     if (isTeleopActivated) {
