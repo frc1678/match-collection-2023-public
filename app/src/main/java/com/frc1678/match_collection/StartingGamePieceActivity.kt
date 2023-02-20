@@ -179,7 +179,13 @@ class StartingGamePieceActivity : CollectionActivity() {
         )
         for (i in 1..4) Button(
             onClick = {
-                setGamePieces(gamePieces.toMutableList().apply { this[i - 1] = this[i - 1].next() })
+                setGamePieces(gamePieces.toMutableList().apply {
+                    this[i - 1] = when (this[i - 1]) {
+                        Constants.GamePiecePositions.N -> Constants.GamePiecePositions.O
+                        Constants.GamePiecePositions.O -> Constants.GamePiecePositions.U
+                        Constants.GamePiecePositions.U -> Constants.GamePiecePositions.N
+                    }
+                })
             },
             colors = ButtonDefaults.buttonColors(
                 backgroundColor = colorResource(
@@ -215,11 +221,5 @@ class StartingGamePieceActivity : CollectionActivity() {
                 )
             }
         }
-    }
-
-    private fun Constants.GamePiecePositions.next() = when (this) {
-        Constants.GamePiecePositions.N -> Constants.GamePiecePositions.O
-        Constants.GamePiecePositions.O -> Constants.GamePiecePositions.U
-        Constants.GamePiecePositions.U -> Constants.GamePiecePositions.N
     }
 }
