@@ -744,6 +744,9 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         initTeamNumberTextChangeListeners()
         initProceedButton()
         initAssignModeSpinner()
-        autoAssignTeamInputsGivenMatch()
+        //If your in Override mode, then calls autoAssignTeamInputsGivenMatch()
+        if (assignMode == Constants.AssignmentMode.OVERRIDE){
+            autoAssignTeamInputsGivenMatch()
+        }
     }
 }
