@@ -4,13 +4,13 @@ package com.frc1678.match_collection
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.View
@@ -174,7 +174,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     private fun autoAssignTeamInputsGivenMatch() {
         if (assignMode == Constants.AssignmentMode.OVERRIDE) {
             if (previousScreen == Constants.Screens.STARTING_POSITION_OBJECTIVE ||
-                (previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT && intent.extras?.getBoolean("old_qr") == true)) {
+                (previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT && intent.extras?.getBoolean(
+                    "old_qr"
+                ) == true)
+            ) {
                 if (previousScreen == Constants.Screens.MATCH_INFORMATION_INPUT) {
                     et_match_number.setText(intent.extras?.getString("match_num").toString())
                 }
@@ -185,8 +188,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 } else {
                     et_team_one.setText(intent.extras?.getString("team_number").toString())
                 }
-            }
-            else {
+            } else {
                 if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
                     et_team_one.setText("")
                     et_team_two.setText("")
@@ -237,7 +239,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 }
             }
         } else {
-            if(assignMode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
+            if (assignMode == Constants.AssignmentMode.AUTOMATIC_ASSIGNMENT) {
                 AlertDialog.Builder(this).setMessage(R.string.error_file_missing).show()
             }
         }
@@ -285,6 +287,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             override fun afterTextChanged(s: Editable) {}
         })
     }
+
     // Only lets the user type in numbers and uppercase letters
     private fun initTeamNumberTextChangeListeners() {
         val regex = "[^A-Z0-9]".toRegex()
@@ -295,32 +298,46 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                 if (checkInputNotEmpty(et_team_one)) {
                     if (s.toString().contains(regex)) {
                         val tempString: String = et_team_one.text.toString()
-                        et_team_one.setText(regex.replace(tempString,""))
+                        et_team_one.setText(regex.replace(tempString, ""))
                     }
                 }
             }
         })
         if (collectionMode == Constants.ModeSelection.SUBJECTIVE) {
             et_team_two.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     if (checkInputNotEmpty(et_team_one)) {
                         if (s.toString().contains(regex)) {
                             val tempString: String = et_team_two.text.toString()
-                            et_team_two.setText(regex.replace(tempString,""))
+                            et_team_two.setText(regex.replace(tempString, ""))
                         }
                     }
                 }
             })
             et_team_three.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     if (checkInputNotEmpty(et_team_one)) {
                         if (s.toString().contains(regex)) {
                             val tempString: String = et_team_three.text.toString()
-                            et_team_three.setText(regex.replace(tempString,""))
+                            et_team_three.setText(regex.replace(tempString, ""))
                         }
                     }
                 }
@@ -470,7 +487,13 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         // Opens up a spinner with scout id numbers when the scout id button is clicked
         btn_scout_id.setOnLongClickListener {
-            dialog.show()
+            AlertDialog.Builder(this).setTitle("Are you sure you want to change scout id?")
+                .setNegativeButton("No") { dialog, _ ->
+                    dialog.cancel()
+                }.setPositiveButton("YES") { _: DialogInterface, _: Int ->
+                    dialog.show()
+
+                }.show()
             val adapter = ArrayAdapter(
                 this, R.layout.spinner_text_view,
                 scoutIdContentsList()
@@ -557,7 +580,10 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                         if ((fileName.substringBefore("_") == selectedItem) and fileName.endsWith(".txt")) {
                             val qrContents = it.readText()
                             val intent = Intent(this, QRGenerateActivity::class.java)
-                                .putExtra(PREVIOUS_SCREEN, Constants.Screens.MATCH_INFORMATION_INPUT)
+                                .putExtra(
+                                    PREVIOUS_SCREEN,
+                                    Constants.Screens.MATCH_INFORMATION_INPUT
+                                )
                                 .putExtra(Constants.COMPRESSED_QR_TAG, qrContents)
                                 .putExtra("match_num", et_match_number.text.toString())
 
@@ -565,8 +591,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
                                 intent.putExtra("team_one", et_team_one.text.toString())
                                     .putExtra("team_two", et_team_two.text.toString())
                                     .putExtra("team_three", et_team_three.text.toString())
-                            }
-                            else {
+                            } else {
                                 intent.putExtra("team_number", et_team_one.text.toString())
                             }
                             startActivity(intent)
@@ -745,7 +770,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         initProceedButton()
         initAssignModeSpinner()
         //If your in Override mode, then calls autoAssignTeamInputsGivenMatch()
-        if (assignMode == Constants.AssignmentMode.OVERRIDE){
+        if (assignMode == Constants.AssignmentMode.OVERRIDE) {
             autoAssignTeamInputsGivenMatch()
         }
     }
