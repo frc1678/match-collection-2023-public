@@ -79,6 +79,8 @@ class TimerUtility {
                     isMatchTimeEnded = true
                     if (!popupOpen) {
                         btn_proceed.isEnabled = true
+                    } else if (popupOpen) {
+                        btn_proceed.isEnabled = false
                     }
                 }
             }.start()

@@ -87,10 +87,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
      */
     val isIncap get() = tb_action_one.isChecked
 
-    /**
-     * Whether the robot has charged during the current game period
-     */
-    var isCharging = false
+
 
     private var removedTimelineActions = mutableListOf<Map<String, String>>()
 
@@ -238,8 +235,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     } else {
                         didAutoCharge = false
                     }
-                    isCharging =
-                        ((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge))
                     enableButtons()
                 }
 
@@ -357,7 +352,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 else {
                     didAutoCharge = autoChargeLevel != Constants.ChargeLevel.F
                 }
-                isCharging = ((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge))
                 enableButtons()
             }
 
@@ -419,15 +413,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
          */
         if (!scoringScreen) {
             if(isTeleopActivated) {
-                intakePanel.enableButtons(isIncap, isCharging)
+                intakePanel.enableButtons(isIncap)
             }
         }
         else {
-            scoringPanel.enableButtons(isIncap, isCharging)
+            scoringPanel.enableButtons(isIncap)
         }
 
         // Enables the incap toggle button if teleop is activated, a popup isn't open, the robot hasn't charged, and the match hasn't ended
-        tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isCharging && !isMatchTimeEnded
+        tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isMatchTimeEnded
 
         /**
          * Enables charge button during the match if the robot isn't incap and a popup isn't open
@@ -506,7 +500,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             if (!isTeleopActivated) {
                 isTeleopActivated = true
                 timelineAdd(matchTime, Constants.ActionType.TO_TELEOP)
-                isCharging = false
                 enableButtons()
                 btn_proceed_edit.text = getString(R.string.btn_proceed)
                 if (!isMatchTimeEnded) {
@@ -621,12 +614,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 popupWindow.dismiss()
                 btn_charge.isEnabled = false
                 popupOpen = false
-                if (
-                    (!isTeleopActivated && teleChargeLevel != Constants.ChargeLevel.F) &&
-                    (isTeleopActivated && autoChargeLevel != Constants.ChargeLevel.F)
-                ) {
-                    isCharging = true
-                }
+
                 enableButtons()
             }
 

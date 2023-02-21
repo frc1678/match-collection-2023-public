@@ -32,7 +32,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
         mainView = super.onCreateView(inflater, container, savedInstanceState)!!
         setCounterTexts()
         initOnClicks()
-        enableButtons(collectionObjectiveActivity.isIncap, collectionObjectiveActivity.isCharging)
+        enableButtons(collectionObjectiveActivity.isIncap)
         return mainView
     }
 
@@ -119,9 +119,8 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
      * Updates whether the scoring buttons are enabled.
      *
      * @param isIncap Whether the robot is currently incap.
-     * @param isCharging Whether the robot has charged already this game section.
      */
-    fun enableButtons(isIncap: Boolean, isCharging: Boolean) {
+    fun enableButtons(isIncap: Boolean) {
         if (mainView != null && activity != null) with(mainView!!) {
             for (btn in listOf(
                 btn_action_six,
@@ -133,9 +132,9 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 btn_action_twelve
             )) {
                 btn.isEnabled =
-                    activity!!.previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
-                            activity!!.previousScreen == Constants.Screens.QR_GENERATE ||
-                            !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap || isCharging)
+                    requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+                            requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
+                            !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap)
             }
 
             // Disable scoring buttons if their count is at the max

@@ -32,7 +32,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         mainView = super.onCreateView(inflater, container, savedInstanceState)!!
         setCounterTexts()
         initOnClicks()
-        enableButtons(collectionObjectiveActivity.isIncap, collectionObjectiveActivity.isCharging)
+        enableButtons(collectionObjectiveActivity.isIncap)
         return mainView
     }
 
@@ -130,15 +130,14 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
      * Updates whether the intake buttons are enabled.
      *
      * @param isIncap Whether the robot is currently incap.
-     * @param isCharging Whether the robot has charged already.
      */
-    fun enableButtons(isIncap: Boolean, isCharging: Boolean) {
+    fun enableButtons(isIncap: Boolean) {
         if (mainView != null && activity != null) with(mainView!!) {
             for (btn in listOf(btn_action_one, btn_action_row, btn_action_five)) {
                 btn.isEnabled =
                     requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
                             requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
-                            !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap || isCharging)
+                            !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap)
             }
         }
     }
