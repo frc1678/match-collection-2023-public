@@ -61,10 +61,10 @@ class ObjectiveAutoIntakeFragment : Fragment(R.layout.collection_objective_auto_
                 Image(
                     painter = painterResource(
                         id = when {
-                            (orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_up_game_pieces_two
-                            (orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_up_game_pieces_two
-                            (!orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_down_game_pieces_two
-                            (!orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_down_game_pieces_two
+                            (orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_up_game_pieces
+                            (orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_up_game_pieces
+                            (!orientation && allianceColor == AllianceColor.BLUE) -> R.drawable.blue_down_game_pieces
+                            (!orientation && allianceColor == AllianceColor.RED) -> R.drawable.red_down_game_pieces
                             else -> R.drawable.red_down_game_pieces
                         }
                     ), contentDescription = "Map with game pieces", modifier = Modifier.size(950.dp)

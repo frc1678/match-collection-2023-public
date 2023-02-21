@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.collection_objective_activity.btn_undo
 import kotlinx.android.synthetic.main.collection_objective_activity.objective_match_collection_layout
 import kotlinx.android.synthetic.main.collection_objective_activity.tb_action_one
 import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_number
+import kotlinx.android.synthetic.main.collection_objective_activity.intake_header
 
 /**
  * Activity for Objective Match Collection to scout the objective gameplay of a single team in a
@@ -411,13 +412,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
          * When the intake screen is open it enables and disables the appropriate  buttons on the intakePanel
          * Otherwise, if the scoring screen is enables and disables the appropriate  buttons on the scoringPanel
          */
+
         if (!scoringScreen) {
             if(isTeleopActivated) {
                 intakePanel.enableButtons(isIncap)
+                intake_header.text = "Intake"
             }
         }
         else {
             scoringPanel.enableButtons(isIncap)
+            intake_header.text = "Scoring"
         }
 
         // Enables the incap toggle button if teleop is activated, a popup isn't open, the robot hasn't charged, and the match hasn't ended
@@ -762,13 +766,24 @@ class CollectionObjectiveActivity : CollectionActivity() {
         setContentView(R.layout.collection_objective_activity)
 
         // Set the currently displayed fragment to the scoring panel
-        scoringScreen = preloaded != Constants.Preloaded.N
 
         if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT && previousScreen != Constants.Screens.QR_GENERATE) {
             timerReset()
+            scoringScreen = preloaded != Constants.Preloaded.N
         }
         else {
             comingBack()
+            if (preloaded != Constants.Preloaded.N) {
+                scoringScreen = (numActionOne + numActionTwo + numActionThree + numActionFour +
+                        numActionFive + numActionSix + numActionSeven + numActionEight + numActionNine
+                        + numActionTen + numActionEleven + numActionTwelve + autoIntakeGamePieceOne
+                        + autoIntakeGamePieceTwo + autoIntakeGamePieceThree + autoIntakeGamePieceFour) % 2 == 0
+            } else {
+                scoringScreen = (numActionOne + numActionTwo + numActionThree + numActionFour +
+                        numActionFive + numActionSix + numActionSeven + numActionEight + numActionNine
+                        + numActionTen + numActionEleven + numActionTwelve + autoIntakeGamePieceOne
+                        + autoIntakeGamePieceTwo + autoIntakeGamePieceThree + autoIntakeGamePieceFour) % 2 != 0
+            }
         }
 
         enableButtons()

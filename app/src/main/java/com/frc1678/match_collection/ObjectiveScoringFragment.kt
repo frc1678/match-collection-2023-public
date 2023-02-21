@@ -155,7 +155,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
              * If you have yet to score your preload then this disables scoring sections that do not apply to your preload.
              * For example, if you have a cone, you can not score a cube.
              */
-            if((numActionTwo == 0) and (numActionFive == 0) and (numActionSix == 0) and (numActionSeven == 0)
+            if((numActionEleven == 0) and (numActionTwelve == 0) and (numActionSix == 0) and (numActionSeven == 0)
                 and (numActionEight == 0) and (numActionNine == 0) and (numActionTen == 0)) {
                 if (preloaded == Constants.Preloaded.O){
                     btn_action_six.isEnabled = false
