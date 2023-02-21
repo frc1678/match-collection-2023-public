@@ -6,9 +6,11 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Environment
 import androidx.core.app.ActivityCompat
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.mode_collection_select_activity.*
+import java.io.File
 
 // Activity for selecting objective or subjective mode.
 class ModeCollectionSelectActivity : CollectionActivity() {
@@ -88,6 +90,7 @@ class ModeCollectionSelectActivity : CollectionActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        File("/storage/emulated/0/${Environment.DIRECTORY_DOWNLOADS}").mkdirs()
         setContentView(R.layout.mode_collection_select_activity)
 
         // If the collection mode exists on the device, retrieve it and skip to its match input screen.
