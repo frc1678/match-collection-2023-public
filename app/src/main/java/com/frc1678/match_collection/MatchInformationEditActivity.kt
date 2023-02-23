@@ -123,6 +123,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     // Restart app from MatchInformationInputActivity.kt when back button is long pressed if in Subjective
     override fun onKeyLongPress(keyCode: Int, event: KeyEvent): Boolean{
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            updateMatchInformation()
             if(collectionMode == Constants.ModeSelection.OBJECTIVE){
                 if(startingPosition.toString() != "0"){
                     teamNumber = et_team_one.text.toString()
