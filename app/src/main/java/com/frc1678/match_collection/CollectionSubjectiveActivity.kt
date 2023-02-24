@@ -14,6 +14,12 @@ import com.frc1678.match_collection.Constants.Screens.COLLECTION_SUBJECTIVE
 import kotlinx.android.synthetic.main.collection_subjective_activity.*
 import kotlinx.android.synthetic.main.collection_subjective_activity.btn_proceed_edit
 import kotlinx.android.synthetic.main.collection_subjective_activity.btn_timer
+import kotlinx.android.synthetic.main.subjective_ranking_counter.view.btn_minus
+import kotlinx.android.synthetic.main.subjective_ranking_counter.view.btn_plus
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.counter_field_awareness
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.counter_quickness
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.defense_toggle
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.scored_coop_toggle
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
@@ -32,6 +38,20 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private var teamOneCOOP: Boolean = false
     private var teamTwoCOOP: Boolean = false
     private var teamThreeCOOP: Boolean = false
+
+    private var matchStarted = false
+        set(value) {
+            Log.d("matchStarted", "")
+            field = value
+            panelList.forEach {
+                it.defense_toggle.isEnabled = value
+                it.scored_coop_toggle.isEnabled = value
+                it.counter_quickness.btn_minus.isEnabled = value
+                it.counter_quickness.btn_plus.isEnabled = value
+                it.counter_field_awareness.btn_minus.isEnabled = value
+                it.counter_field_awareness.btn_plus.isEnabled = value
+            }
+        }
 
     // Finds the teams that are playing in that match
     private fun getExtras() {
@@ -147,6 +167,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
                 this, btn_timer, btn_proceed_edit, subjective_match_collection_layout
             )
             btn_timer.isEnabled = false
+            matchStarted = true
         }
     }
 
@@ -222,6 +243,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         setContentView(R.layout.collection_subjective_activity)
         getExtras()
         comingBack()
+        initPanels()
+        matchStarted = previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT
+                || previousScreen == Constants.Screens.QR_GENERATE
         if (previousScreen != Constants.Screens.MATCH_INFORMATION_EDIT
             && previousScreen != Constants.Screens.QR_GENERATE
         ) {
@@ -229,9 +253,6 @@ class CollectionSubjectiveActivity : CollectionActivity() {
 
         }
         initProceedButton()
-        initPanels()
-
-
     }
 
     fun goToNextActivity() {
