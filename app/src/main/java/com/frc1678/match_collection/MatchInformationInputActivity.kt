@@ -487,7 +487,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
 
         // Opens up a spinner with scout id numbers when the scout id button is clicked
         btn_scout_id.setOnLongClickListener {
-            AlertDialog.Builder(this).setTitle("Are you sure you want to change scout Id?")
+            AlertDialog.Builder(this).setTitle("Are you sure you want to change Scout ID?")
                 .setNegativeButton("No") { dialog, _ ->
                     dialog.cancel()
                 }.setPositiveButton("YES") { _: DialogInterface, _: Int ->
