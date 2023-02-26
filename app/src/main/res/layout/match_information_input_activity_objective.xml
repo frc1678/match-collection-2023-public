@@ -147,7 +147,7 @@
             <TextView
                 android:id="@+id/tv_hint_team_one"
                 style="@style/tv_standard_linear_layout"
-                android:text="@string/tv_team_number_input_one" />
+                android:text="@string/tv_team_number_input" />
 
             <EditText
                 android:id="@+id/et_team_one"
