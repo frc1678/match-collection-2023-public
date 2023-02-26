@@ -32,6 +32,7 @@
 
         <TextView
             style="@style/tv_standard_linear_layout"
+            android:id="@+id/tv_team_one"
             android:text="@string/tv_team_number_input_one" />
 
         <EditText

@@ -205,5 +205,8 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         initTeamNumberTextChangeListeners()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
         initProceedButton()
+        if (collectionMode == Constants.ModeSelection.OBJECTIVE) {
+            tv_team_one.text = "Team Number"
+        }
     }
 }
