@@ -35,6 +35,8 @@ var collectionMode: Constants.ModeSelection = Constants.ModeSelection.NONE
 var assignMode: Constants.AssignmentMode = Constants.AssignmentMode.NONE
 var didAutoCharge: Boolean = false
 var didTeleCharge: Boolean = false
+var didAutoFail: Boolean = false
+var didTeleFail: Boolean = false
 
 // Data that is shared between the objective and subjective QRs.
 var serialNumber: String? = ""
@@ -53,6 +55,8 @@ var preloaded: Constants.Preloaded = Constants.Preloaded.N
 var timeline = mutableListOf<Map<String, String>>()
 var autoChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
 var teleChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
+var prevAutoChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
+var prevTeleChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
 
 // Data specific to Subjective Match Collection QR.
 var quicknessScore: SubjectiveTeamRankings = SubjectiveTeamRankings()
@@ -84,10 +88,14 @@ fun resetCollectionReferences() {
     isTeleopActivated = false
     didAutoCharge = false
     didTeleCharge = false
+    didAutoFail = false
+    didTeleFail = false
 
     popupOpen = false
     autoChargeLevel = Constants.ChargeLevel.N
     teleChargeLevel = Constants.ChargeLevel.N
+    prevAutoChargeLevel = Constants.ChargeLevel.N
+    prevTeleChargeLevel = Constants.ChargeLevel.N
 
     timestamp = 0
 
