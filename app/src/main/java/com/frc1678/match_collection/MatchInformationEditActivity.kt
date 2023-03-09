@@ -3,12 +3,16 @@ package com.frc1678.match_collection
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.WindowManager
+import android.widget.Button
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
 import kotlinx.android.synthetic.main.edit_match_information_activity.*
 import kotlinx.android.synthetic.main.edit_match_information_activity.et_match_number
@@ -22,6 +26,14 @@ class MatchInformationEditActivity : MatchInformationActivity() {
     private lateinit var teamNumberOne: String
     private lateinit var teamNumberTwo: String
     private lateinit var teamNumberThree: String
+
+    private var blueToggleButtonColor: Int = 0
+    private var redToggleButtonColor: Int = 0
+    private var blueToggleButtonColorDark: Int = 0
+    private var redToggleButtonColorDark: Int = 0
+
+    private lateinit var blueToggleButton: Button
+    private lateinit var redToggleButton: Button
 
     // Get subjective team numbers through intent extras from CollectionSubjectiveActivity.kt.
     private fun getExtras() {
@@ -195,6 +207,95 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         }
     }
 
+    // Create an alliance color toggle button given its specifications.
+    private fun createToggleButton(
+        isBordered: Boolean, toggleButton: Button,
+        toggleButtonColor: Int, toggleButtonColorDark: Int
+    ) {
+        val backgroundDrawable = GradientDrawable()
+
+        if (isBordered) {
+            backgroundDrawable.setStroke(10, toggleButtonColorDark)
+        }
+
+        backgroundDrawable.setColor(toggleButtonColor)
+        backgroundDrawable.cornerRadius = 10f
+        toggleButton.background = backgroundDrawable
+    }
+
+    private fun resetBackground() {
+        // Create the unselected alliance color left toggle.
+        createToggleButton(
+            isBordered = false,
+            toggleButton = blueToggleButton,
+            toggleButtonColor = blueToggleButtonColor,
+            toggleButtonColorDark = blueToggleButtonColorDark
+        )
+
+        // Create the unselected alliance color right toggle.
+        createToggleButton(
+            isBordered = false,
+            toggleButton = redToggleButton,
+            toggleButtonColor = redToggleButtonColor,
+            toggleButtonColorDark = redToggleButtonColorDark
+        )
+    }
+
+    private fun initToggleButtons() {
+        redToggleButtonColor = ContextCompat.getColor(this, R.color.alliance_red_light)
+        blueToggleButtonColor = ContextCompat.getColor(this, R.color.alliance_blue_light)
+        redToggleButtonColorDark = ContextCompat.getColor(this, R.color.alliance_red_dark)
+        blueToggleButtonColorDark = ContextCompat.getColor(this, R.color.alliance_blue_dark)
+        redToggleButton = red_toggle_button
+        blueToggleButton = blue_toggle_button
+
+        resetBackground()
+
+        when (allianceColor) {
+            Constants.AllianceColor.BLUE -> {
+                switchBorderToBlueToggle()
+            }
+            else -> {
+                switchBorderToRedToggle()
+            }
+        }
+
+        blueToggleButton.setOnClickListener {
+            allianceColor = Constants.AllianceColor.BLUE
+            switchBorderToBlueToggle()
+        }
+        redToggleButton.setOnClickListener {
+            allianceColor = Constants.AllianceColor.RED
+            switchBorderToRedToggle()
+        }
+    }
+
+    // Apply border to red alliance toggle when red alliance selected.
+    private fun switchBorderToRedToggle() {
+        resetBackground()
+
+        // Create selected red toggle.
+        createToggleButton(
+            isBordered = true,
+            toggleButton = redToggleButton,
+            toggleButtonColor = redToggleButtonColor,
+            toggleButtonColorDark = redToggleButtonColorDark
+        )
+    }
+
+    // Apply border to blue alliance toggle when blue alliance is selected.
+    private fun switchBorderToBlueToggle() {
+        resetBackground()
+
+        // Create selected blue toggle.
+        createToggleButton(
+            isBordered = true,
+            toggleButton = blueToggleButton,
+            toggleButtonColor = blueToggleButtonColor,
+            toggleButtonColorDark = blueToggleButtonColorDark
+        )
+    }
+
     // Sets the edit match information activity screen the populates it with previously inputted data
     // Initiates the scout name dropdown so that users can change their scout name if they need
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -202,6 +303,7 @@ class MatchInformationEditActivity : MatchInformationActivity() {
         setContentView(R.layout.edit_match_information_activity)
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         populateData()
+        initToggleButtons()
         initTeamNumberTextChangeListeners()
         initScoutNameSpinner(context = this, spinner = spinner_scout_name)
         initProceedButton()

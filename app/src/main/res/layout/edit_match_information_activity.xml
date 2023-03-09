@@ -95,6 +95,35 @@
 
     </LinearLayout>
 
+    <View style="@style/view_separator_horizontal" />
+
+    <LinearLayout
+        android:id="@+id/alliance_switch_toggles"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.25"
+        android:layout_margin="10dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/blue_toggle_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/very_small"
+            android:layout_weight="1"
+        />
+
+        <Button
+            android:id="@+id/red_toggle_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/very_small"
+            android:layout_weight="1"
+        />
+    </LinearLayout>
+
     <View
         android:id="@+id/separator_team_num_spinner"
         style="@style/view_separator_horizontal" />
