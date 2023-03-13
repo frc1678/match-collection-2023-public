@@ -21,15 +21,8 @@ import kotlinx.android.synthetic.main.charge_popup.view.btn_docked
 import kotlinx.android.synthetic.main.charge_popup.view.btn_engaged
 import kotlinx.android.synthetic.main.charge_popup.view.btn_failed
 import kotlinx.android.synthetic.main.charge_popup.view.btn_parked
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_charge
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_proceed_edit
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_redo
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_timer
-import kotlinx.android.synthetic.main.collection_objective_activity.btn_undo
-import kotlinx.android.synthetic.main.collection_objective_activity.objective_match_collection_layout
-import kotlinx.android.synthetic.main.collection_objective_activity.tb_action_one
-import kotlinx.android.synthetic.main.collection_objective_activity.tv_team_number
-import kotlinx.android.synthetic.main.collection_objective_activity.intake_header
+import kotlinx.android.synthetic.main.collection_objective_activity.*
+import kotlinx.android.synthetic.main.preloaded_fragment.*
 
 /**
  * Activity for Objective Match Collection to scout the objective gameplay of a single team in a
@@ -41,6 +34,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Whether the scoring fragment is currently being enabled. When this is set, the fragment will
      * automatically update.
      */
+    var undoRedoScreen = false
     var scoringScreen = true
         set(value) {
             field = value
@@ -79,6 +73,16 @@ class CollectionObjectiveActivity : CollectionActivity() {
     private val intakeAutoPanel = ObjectiveAutoIntakeFragment()
 
     /**
+     * The fragment with the redo and undo buttons
+     */
+    private val undoRedoPanel = UndoRedoFragment()
+
+    /**
+     * The fragment with the preloaded buttons
+     */
+    private val preloadedPanel = PreloadedFragment()
+
+    /**
      * True if the match timer is running or the timer has ended.
      */
     var isTimerRunning = false
@@ -88,9 +92,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
      */
     val isIncap get() = tb_action_one.isChecked
 
-
-
-    private var removedTimelineActions = mutableListOf<Map<String, String>>()
+    var removedTimelineActions = mutableListOf<Map<String, String>>()
 
     /**
      * Set timer to start match when timer is started or reset.
@@ -141,7 +143,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     /**
      * Remove previously inputted action from timeline.
      */
-    private fun timelineRemove() {
+    fun timelineRemove() {
         /**
          *    Decrement action values displayed on action counters.
           */
@@ -267,7 +269,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
     /**
      * Redoes timeline actions after undo.
      */
-    private fun timelineReplace() {
+    fun timelineReplace() {
 
         // Add most recently undone action from removedTimelineActions back to timeline.
         timeline.add(removedTimelineActions.last())
@@ -385,34 +387,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Updates the text on the undo and redo buttons based on the timeline actions to be undone or
      * redone.
      */
-    private fun updateUndoRedo() {
-        // Get the "Undo" text
-        val undoText = resources.getText(R.string.btn_undo)
-        btn_undo.text = if (timeline.isEmpty()) {
-            // Nothing to undo
-            undoText
-        } else {
-            // Uses \n to put the action name on a newline
-            "$undoText\n${
-                timeline.last()["action_type"]?.split('_')?.joinToString(" ") {
-                    it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
-                }
-            }"
-        }
-        // Get the "Redo" text
-        val redoText = resources.getText(R.string.btn_redo)
-        btn_redo.text = if (removedTimelineActions.isEmpty()) {
-            // Nothing to redo
-            redoText
-        } else {
-            // Uses \n to put the action name on a newline
-            "$redoText\n${
-                removedTimelineActions.last()["action_type"]?.split('_')?.joinToString(" ") {
-                    it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
-                }
-            }"
-        }
-    }
 
     /**
      * Enable and disable buttons based on actions in timeline and timer stage. If in teleop, enable intake panel,
@@ -428,12 +402,18 @@ class CollectionObjectiveActivity : CollectionActivity() {
         if (!scoringScreen) {
             if(isTeleopActivated) {
                 intakePanel.enableButtons(isIncap)
-                intake_header.text = "Intake"
             }
+            intake_header.text = "Intake"
         }
         else {
             scoringPanel.enableButtons(isIncap)
             intake_header.text = "Scoring"
+        }
+
+        if(undoRedoScreen) {
+            undoRedoPanel.enableButtons()
+        } else {
+            preloadedPanel.enableButtons()
         }
 
         // Enables the incap toggle button if teleop is activated, a popup isn't open, the robot hasn't charged, and the match hasn't ended
@@ -465,14 +445,18 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         )
 
-        // Enables the undo button if the timeline is not empty and a popup isn't open
-        btn_undo.isEnabled = ((timeline.size > 0) && !popupOpen)
-
-        // Enables the redo button if the removedTimelineActions is not empty and a popup isn't open
-        btn_redo.isEnabled = ((removedTimelineActions.size > 0) && !popupOpen)
+        if(timeline.size > 0 && !popupOpen) {
+            supportFragmentManager.beginTransaction().replace(R.id.undo_redo_btn_frame,
+                undoRedoPanel
+            ).commit()
+        } else{
+            supportFragmentManager.beginTransaction().replace(R.id.undo_redo_btn_frame,
+                preloadedPanel
+            ).commit()
+        }
 
         // Updates the text on the undo and redo buttons
-        updateUndoRedo()
+        undoRedoPanel.updateUndoRedo()
 
         // Enables the button timer if no buttons have been pressed and a popup isn't open
         btn_timer.isEnabled = (
@@ -550,6 +534,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 )
                 isTimerRunning = true
                 enableButtons()
+                preloadedPanel.enableButtons()
                 btn_proceed_edit.isEnabled = true
             }
         }
@@ -721,15 +706,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         }
 
-        // Remove previous action from timeline when undo button is clicked.
-        btn_undo.setOnClickListener {
-            timelineRemove()
-        }
-
-        // Replace previously undone action to timeline when redo button is clicked.
-        btn_redo.setOnClickListener {
-            timelineReplace()
-        }
     }
 
     /**
@@ -814,6 +790,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
         enableButtons()
         initOnClicks()
         initTeamNum()
-        updateUndoRedo()
+        undoRedoPanel.updateUndoRedo()
     }
 }
