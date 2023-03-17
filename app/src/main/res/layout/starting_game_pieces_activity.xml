@@ -18,13 +18,13 @@
 
         <Button
             android:id="@+id/btn_switch_orientation_game_pieces"
-            style="@style/btn_switch_orientation"
+            style="@style/btn_starting_position"
             android:layout_weight="1"
             android:text="@string/btn_switch_orientation" />
 
         <Button
             android:id="@+id/btn_proceed_game_piece"
-            style="@style/btn_starting_position_proceed"
+            style="@style/btn_starting_position"
             android:layout_weight="1"
             android:text="@string/btn_proceed" />
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cone"
+            style="@style/btn_action_hor"
+            android:layout_weight="1"
+            android:autoSizeMaxTextSize="@dimen/small_text"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/btn_preload_gray"
+            android:padding="@dimen/very_very_small"
+            android:layout_margin="0dp"
+            android:shadowRadius="0"
+            android:enabled="true"
+            android:text="@string/cone" />
+
+        <Button
+            android:id="@+id/btn_cube"
+            style="@style/btn_action_hor"
+            android:layout_weight="1"
+            android:autoSizeMaxTextSize="@dimen/small_text"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/btn_preload_gray"
+            android:padding="@dimen/very_very_small"
+            android:layout_margin="0dp"
+            android:enabled="true"
+            android:text="@string/cube" />
+
+        <Button
+            android:id="@+id/btn_none"
+            style="@style/btn_action_hor"
+            android:layout_margin="0dp"
+            android:layout_weight="1"
+            android:autoSizeMaxTextSize="@dimen/small_text"
+            android:autoSizeTextType="uniform"
+            android:background="@drawable/btn_preload_gray"
+            android:enabled="true"
+            android:padding="@dimen/very_very_small"
+            android:text="@string/none" />
+
+    </LinearLayout>
+
+</LinearLayout>

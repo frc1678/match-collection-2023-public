@@ -89,4 +89,7 @@
     <string name="coop_zone">Coop zone</string>
     <string name="taken">Taken</string>
     <string name="on_ground">On Ground</string>
+    <string name="cone">Cone</string>
+    <string name="cube">Cube</string>
+    <string name="none">None</string>
 </resources>

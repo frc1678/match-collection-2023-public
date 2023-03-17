@@ -42,7 +42,7 @@
 
         <Button
             android:id="@+id/btn_switch_orientation"
-            style="@style/btn_switch_orientation"
+            style="@style/btn_starting_position"
             android:layout_weight="2"
             android:text="@string/btn_switch_orientation" />
 
@@ -55,7 +55,7 @@
 
         <Button
             android:id="@+id/btn_proceed_starting_position"
-            style="@style/btn_starting_position_proceed"
+            style="@style/btn_starting_position"
             android:layout_weight="2"
             android:text="@string/btn_proceed" />
 

@@ -8,33 +8,13 @@
     android:orientation="vertical"
     android:padding="@dimen/very_small">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/undo_redo_btn_frame"
+        android:name="com.frc1678.match_collection.UndoRedoPanel"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/btn_undo"
-            style="@style/btn_action_hor"
-            android:layout_weight="1"
-            android:autoSizeMaxTextSize="@dimen/small_text"
-            android:autoSizeTextType="uniform"
-            android:background="@drawable/btn_undo_selector"
-            android:padding="@dimen/very_very_small"
-            android:text="@string/btn_undo" />
-
-        <Button
-            android:id="@+id/btn_redo"
-            style="@style/btn_action_hor"
-            android:layout_weight="1"
-            android:autoSizeMaxTextSize="@dimen/small_text"
-            android:autoSizeTextType="uniform"
-            android:background="@drawable/btn_redo_selector"
-            android:padding="@dimen/very_very_small"
-            android:text="@string/btn_redo" />
-
-    </LinearLayout>
+        android:layout_marginVertical="@dimen/quite_small"
+        android:layout_weight="0.7" />
 
     <TextView
         android:id="@+id/intake_header"
