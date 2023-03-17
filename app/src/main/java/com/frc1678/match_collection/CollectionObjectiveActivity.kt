@@ -445,6 +445,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
             }
         )
 
+        /**
+         * If no actions have been made, it sets the frame to the preloaded fragment
+         * If an action is made, it sets the frame to the undo/redo fragment
+         */
+
         if(timeline.size > 0 && !popupOpen) {
             supportFragmentManager.beginTransaction().replace(R.id.undo_redo_btn_frame,
                 undoRedoPanel

@@ -64,13 +64,13 @@ class PreloadedFragment : Fragment(R.layout.preloaded_fragment) {
     fun enableButtons() {
         if (mainView != null && activity != null) with(mainView!!) {
             // Enables the cone preload button if the match has started and a popup isn't open
-            btn_cone.isEnabled = (collectionObjectiveActivity.isTimerRunning && !(popupOpen))
+            btn_cone.isEnabled = (!(popupOpen))
 
             // Enables the cube preload button if the match has started and a popup isn't open
-            btn_cube.isEnabled = (collectionObjectiveActivity.isTimerRunning && !(popupOpen))
+            btn_cube.isEnabled = (!(popupOpen))
 
             // Enables the none preload button if the match has started and a popup isn't open
-            btn_none.isEnabled = (collectionObjectiveActivity.isTimerRunning && !(popupOpen))
+            btn_none.isEnabled = (!(popupOpen))
         }
     }
 
