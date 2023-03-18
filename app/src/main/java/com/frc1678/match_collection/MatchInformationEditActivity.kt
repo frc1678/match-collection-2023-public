@@ -75,16 +75,16 @@ class MatchInformationEditActivity : MatchInformationActivity() {
                 ranking.teamTwo?.teamNumber = et_team_two.text.toString()
                 ranking.teamThree?.teamNumber = et_team_three.text.toString()
             }
-            if (scoredCoopList.contains(teamNumberOne)){
-                scoredCoopList[scoredCoopList.indexOf(teamNumberOne)] =
+            if (tippyList.contains(teamNumberOne)){
+                tippyList[tippyList.indexOf(teamNumberOne)] =
                     et_team_one.text.toString()
             }
-            if (scoredCoopList.contains(teamNumberTwo)){
-                scoredCoopList[scoredCoopList.indexOf(teamNumberTwo)] =
+            if (tippyList.contains(teamNumberTwo)){
+                tippyList[tippyList.indexOf(teamNumberTwo)] =
                     et_team_two.text.toString()
             }
-            if (scoredCoopList.contains(teamNumberThree)){
-                scoredCoopList[scoredCoopList.indexOf(teamNumberThree)] =
+            if (tippyList.contains(teamNumberThree)){
+                tippyList[tippyList.indexOf(teamNumberThree)] =
                     et_team_three.text.toString()
             }
 

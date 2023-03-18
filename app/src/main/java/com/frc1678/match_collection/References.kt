@@ -61,7 +61,7 @@ var prevTeleChargeLevel: Constants.ChargeLevel = Constants.ChargeLevel.N
 // Data specific to Subjective Match Collection QR.
 var quicknessScore: SubjectiveTeamRankings = SubjectiveTeamRankings()
 var fieldAwarenessScore: SubjectiveTeamRankings = SubjectiveTeamRankings()
-var scoredCoopList: ArrayList<String> = ArrayList()
+var tippyList: ArrayList<String> = ArrayList()
 var playedDefenseList: ArrayList<String> = ArrayList()
 var gamePiecePositionList = List(4) { Constants.GamePiecePositions.N }
 var defenseTimestamps = listOf<Int?>(null, null, null)
@@ -103,7 +103,7 @@ fun resetCollectionReferences() {
 
     quicknessScore = SubjectiveTeamRankings()
     fieldAwarenessScore = SubjectiveTeamRankings()
-    scoredCoopList = ArrayList()
+    tippyList = ArrayList()
     playedDefenseList = ArrayList()
     defenseTimestamps = listOf(null, null, null)
 }

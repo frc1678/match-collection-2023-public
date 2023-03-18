@@ -20,20 +20,20 @@
         android:textOn="Defense" />
 
     <ToggleButton
-        android:id="@+id/scored_coop_toggle"
+        android:id="@+id/tippy_toggle"
         style="@style/tb_subj_defense"
         android:layout_width="120dp"
         android:layout_below="@id/tv_team_number"
         android:layout_toEndOf="@id/defense_toggle"
-        android:textOff="@string/scored_in_coop_zone"
-        android:textOn="@string/coop_zone" />
+        android:textOff="@string/tippy"
+        android:textOn="@string/tippy" />
 
 
     <com.frc1678.match_collection.SubjectiveRankingCounter
         android:id="@+id/counter_quickness"
         android:layout_width="150dp"
         android:layout_height="match_parent"
-        android:layout_toEndOf="@id/scored_coop_toggle"
+        android:layout_toEndOf="@id/tippy_toggle"
         android:layout_below="@id/tv_team_number"
         custom:dataName="@string/quickness" />
 
