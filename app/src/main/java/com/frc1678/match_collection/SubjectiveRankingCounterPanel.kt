@@ -32,7 +32,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
         defense_toggle.isChecked = defense
     }
 
-    // Sets wether or not the coop button is checked
+    // Sets wether or not the tippy button is checked
     fun setTippy(tippy: Boolean) {
         tippy_toggle.isChecked = tippy
     }
@@ -98,7 +98,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
     val playedDefense: Boolean
         get() = defense_toggle.isChecked
 
-    // Whether this team scored a game piece in the coop zone.
+    // Whether this team was tippy.
     val tippy: Boolean
         get() = tippy_toggle.isChecked
 

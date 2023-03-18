@@ -90,7 +90,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             return tempToggleList
         }
 
-    // Creates an Arraylist containing the teams that intook a turned over cone during the match.
+    // Creates an Arraylist containing the teams that were tippy during the match.
     private val tippyToggleData: ArrayList<String>
         get() {
             val tempToggleList = arrayListOf<String>()
