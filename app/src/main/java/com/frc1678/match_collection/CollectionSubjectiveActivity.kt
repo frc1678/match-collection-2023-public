@@ -16,10 +16,7 @@ import kotlinx.android.synthetic.main.collection_subjective_activity.btn_proceed
 import kotlinx.android.synthetic.main.collection_subjective_activity.btn_timer
 import kotlinx.android.synthetic.main.subjective_ranking_counter.view.btn_minus
 import kotlinx.android.synthetic.main.subjective_ranking_counter.view.btn_plus
-import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.counter_field_awareness
-import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.counter_quickness
-import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.defense_toggle
-import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.scored_coop_toggle
+import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
 // Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
 class CollectionSubjectiveActivity : CollectionActivity() {
@@ -35,9 +32,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
     private var teamOneDefense: Boolean = false
     private var teamTwoDefense: Boolean = false
     private var teamThreeDefense: Boolean = false
-    private var teamOneCOOP: Boolean = false
-    private var teamTwoCOOP: Boolean = false
-    private var teamThreeCOOP: Boolean = false
+    private var teamOneTippy: Boolean = false
+    private var teamTwoTippy: Boolean = false
+    private var teamThreeTippy: Boolean = false
 
     private var matchStarted = false
         set(value) {
@@ -45,7 +42,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             field = value
             panelList.forEach {
                 it.defense_toggle.isEnabled = value
-                it.scored_coop_toggle.isEnabled = value
+                it.tippy_toggle.isEnabled = value
                 it.counter_quickness.btn_minus.isEnabled = value
                 it.counter_quickness.btn_plus.isEnabled = value
                 it.counter_field_awareness.btn_minus.isEnabled = value
@@ -94,20 +91,20 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         }
 
     // Creates an Arraylist containing the teams that intook a turned over cone during the match.
-    private val intakeConeOrientationToggleData: ArrayList<String>
+    private val tippyToggleData: ArrayList<String>
         get() {
             val tempToggleList = arrayListOf<String>()
             for (x in 0 until panelList.size) {
-                if (panelList[x].scoredCoop){
+                if (panelList[x].tippy){
                     when (x) {
                         0 -> tempToggleList.add(teamNumberOne)
                         1 -> tempToggleList.add(teamNumberTwo)
                         2 -> tempToggleList.add(teamNumberThree)}
                 }
                 when (x) {
-                    0 -> teamOneCOOP = panelList[x].scoredCoop
-                    1 -> teamTwoCOOP = panelList[x].scoredCoop
-                    2 -> teamThreeCOOP = panelList[x].scoredCoop
+                    0 -> teamOneTippy = panelList[x].tippy
+                    1 -> teamTwoTippy = panelList[x].tippy
+                    2 -> teamThreeTippy = panelList[x].tippy
                 }
             }
             return tempToggleList
@@ -148,17 +145,17 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         panelTwo.setListenerDefense()
         panelThree.setListenerDefense()
 
-        panelOne.setListenerConeOrientation()
-        panelTwo.setListenerConeOrientation()
-        panelThree.setListenerConeOrientation()
+        panelOne.setListenerTippy()
+        panelTwo.setListenerTippy()
+        panelThree.setListenerTippy()
 
         panelOne.setDefense(defense = teamOneDefense)
         panelTwo.setDefense(defense = teamTwoDefense)
         panelThree.setDefense(defense = teamThreeDefense)
 
-        panelOne.setCOOP(coop = teamOneCOOP)
-        panelTwo.setCOOP(coop = teamTwoCOOP)
-        panelThree.setCOOP(coop = teamThreeCOOP)
+        panelOne.setTippy(tippy = teamOneTippy)
+        panelTwo.setTippy(tippy = teamTwoTippy)
+        panelThree.setTippy(tippy = teamThreeTippy)
     }
 
     private fun initTimer() {
@@ -178,7 +175,7 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             quicknessScore = recordRankingData(dataName = "quickness")
             fieldAwarenessScore = recordRankingData(dataName = "field_awareness")
             playedDefenseList = defenseToggleData
-            scoredCoopList = intakeConeOrientationToggleData
+            tippyList = tippyToggleData
             defenseTimestamps = panelList.map { it.defenseTime }
 
             // If no robots share the same rendezvous agility and agility rankings, continue.
@@ -222,9 +219,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             teamOneDefense = intent.extras?.getBoolean("team_one_defense") ?: false
             teamTwoDefense = intent.extras?.getBoolean("team_two_defense") ?: false
             teamThreeDefense = intent.extras?.getBoolean("team_three_defense") ?: false
-            teamOneCOOP = intent.extras?.getBoolean("team_one_coop") ?: false
-            teamTwoCOOP = intent.extras?.getBoolean("team_two_coop") ?: false
-            teamThreeCOOP = intent.extras?.getBoolean("team_three_coop") ?: false
+            teamOneTippy = intent.extras?.getBoolean("team_one_tippy") ?: false
+            teamTwoTippy = intent.extras?.getBoolean("team_two_tippy") ?: false
+            teamThreeTippy = intent.extras?.getBoolean("team_three_tippy") ?: false
         }
     }
 
@@ -264,9 +261,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             .putExtra("team_one_defense", teamOneDefense)
             .putExtra("team_two_defense", teamTwoDefense)
             .putExtra("team_three_defense", teamThreeDefense)
-            .putExtra("team_one_coop", teamOneCOOP)
-            .putExtra("team_two_coop", teamTwoCOOP)
-            .putExtra("team_three_coop", teamThreeCOOP)
+            .putExtra("team_one_tippy", teamOneTippy)
+            .putExtra("team_two_tippy", teamTwoTippy)
+            .putExtra("team_three_tippy", teamThreeTippy)
         startActivity(
             intent, ActivityOptions.makeSceneTransitionAnimation(
                 this,

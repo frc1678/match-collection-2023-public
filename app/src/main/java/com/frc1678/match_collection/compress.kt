@@ -58,8 +58,8 @@ fun compress(
         subjectiveData.getValue("field_awareness_score").toString().split(",")[0]
     val compressPlayedDefense = subjectiveData.getValue("played_defense").toString().split(",")[0]
     val compressAutoPiecesStartPosition = subjectiveData.getValue("auto_pieces_start_position").toString().split(",")[0]
-    val compressScoredCoop =
-        subjectiveData.getValue("scored_coop").toString().split(",")[0]
+    val compressTippy =
+        subjectiveData.getValue("tippy").toString().split(",")[0]
     val compressDefenseTimestamp = subjectiveData.getValue("defense_timestamp").toString().split(",")[0]
 
     // Compress and add data shared between the objective and subjective modes.
@@ -111,7 +111,7 @@ fun compress(
             val quickness = getRankForTeam(quicknessScore, teamNum)
             val fieldAwareness = getRankForTeam(fieldAwarenessScore, teamNum)
             val playedDefense = playedDefenseList.contains(teamNum)
-            val scoredCoop = scoredCoopList.contains(teamNum)
+            val tippy = tippyList.contains(teamNum)
 
             subjDataString += subjectiveSeparator
             subjDataString += compressQuicknessScore
@@ -126,8 +126,8 @@ fun compress(
             subjDataString += if (playedDefense) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
-            subjDataString += compressScoredCoop
-            subjDataString += if (scoredCoop) "TRUE" else "FALSE"
+            subjDataString += compressTippy
+            subjDataString += if (tippy) "TRUE" else "FALSE"
 
             subjDataString += subjectiveSeparator
             subjDataString += compressDefenseTimestamp

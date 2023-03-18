@@ -33,8 +33,8 @@ class SubjectiveRankingCounterPanel : Fragment() {
     }
 
     // Sets wether or not the coop button is checked
-    fun setCOOP(coop: Boolean) {
-        scored_coop_toggle.isChecked = coop
+    fun setTippy(tippy: Boolean) {
+        tippy_toggle.isChecked = tippy
     }
 
     // Sets the Quickness value
@@ -76,9 +76,9 @@ class SubjectiveRankingCounterPanel : Fragment() {
         }
     }
 
-    fun setListenerConeOrientation() {
-        scored_coop_toggle.setOnCheckedChangeListener(){ _, checked ->
-            scored_coop_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
+    fun setListenerTippy() {
+        tippy_toggle.setOnCheckedChangeListener(){ _, checked ->
+            tippy_toggle.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 null, null, null,
                 if (checked) resources.getDrawable(R.drawable.tb_green_check, null) else null
             )
@@ -99,7 +99,7 @@ class SubjectiveRankingCounterPanel : Fragment() {
         get() = defense_toggle.isChecked
 
     // Whether this team scored a game piece in the coop zone.
-    val scoredCoop: Boolean
-        get() = scored_coop_toggle.isChecked
+    val tippy: Boolean
+        get() = tippy_toggle.isChecked
 
 }
