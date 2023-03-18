@@ -410,12 +410,6 @@ class CollectionObjectiveActivity : CollectionActivity() {
             intake_header.text = "Scoring"
         }
 
-        if(undoRedoScreen) {
-            undoRedoPanel.enableButtons()
-        } else {
-            preloadedPanel.enableButtons()
-        }
-
         // Enables the incap toggle button if teleop is activated, a popup isn't open, the robot hasn't charged, and the match hasn't ended
         tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isMatchTimeEnded
 
@@ -454,10 +448,18 @@ class CollectionObjectiveActivity : CollectionActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.undo_redo_btn_frame,
                 undoRedoPanel
             ).commit()
+            undoRedoScreen = true
         } else{
             supportFragmentManager.beginTransaction().replace(R.id.undo_redo_btn_frame,
                 preloadedPanel
             ).commit()
+            undoRedoScreen = false
+        }
+
+        if(undoRedoScreen) {
+            undoRedoPanel.enableButtons()
+        } else {
+            preloadedPanel.enableButtons()
         }
 
         // Updates the text on the undo and redo buttons
