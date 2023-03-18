@@ -444,7 +444,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
          * If an action is made, it sets the frame to the undo/redo fragment
          */
 
-        if(timeline.size > 0 && !popupOpen) {
+        if(timeline.size > 0) {
             supportFragmentManager.beginTransaction().replace(R.id.undo_redo_btn_frame,
                 undoRedoPanel
             ).commit()
