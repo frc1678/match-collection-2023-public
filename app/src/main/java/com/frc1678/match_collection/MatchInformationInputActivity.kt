@@ -78,7 +78,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         * Currently it prioritizes 1 scout per robot then 3 scouts per robot
         * e.g. if there is 7 scouts it will assign like (2, 1, 1, 1, 1, 1)
         * */
-        val SCOUT_ASSIGNMENTS = listOf(
+        val OFFSEASON_SCOUT_ASSIGNMENTS = listOf(
             "A",
             "B",
             "C",
@@ -98,6 +98,28 @@ class MatchInformationInputActivity : MatchInformationActivity() {
             "F",
             "F"
         )
+
+        val COMPETITION_SCOUT_ASSIGNMENTS = listOf(
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F"
+        )
+
     }
 
     /** The [List] containing the random orderings of the scouts.
@@ -118,8 +140,8 @@ class MatchInformationInputActivity : MatchInformationActivity() {
     /** Fetches the new robot assignment given the match number and scout ID.
      * @return The assigned robot index in the match, from 0 to 5. */
     private fun getNewScoutAssignment(matchNumber: String, scoutID: Int): Int? {
-        // Used for randomization
-        val letter = SCOUT_ASSIGNMENTS[scoutID - 1]
+        // Used for randomization. Should be changed for offseason competitions
+        val letter = COMPETITION_SCOUT_ASSIGNMENTS[scoutID - 1]
         if (matchNumber.isEmpty()) return null
         if (matchNumber.toInt() > scoutOrders.size) return null
         // The if statement makes uses a different random scout order for the scout ids past 6
