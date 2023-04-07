@@ -47,8 +47,11 @@
             android:id="@+id/btn_charge"
             style="@style/btn_action_hor"
             android:layout_weight="1"
+            android:autoSizeMaxTextSize="@dimen/small_text"
+            android:autoSizeTextType="uniform"
             android:background="@drawable/tb_charge_selector"
-            android:text="@string/btn_charge" />
+            android:text="@string/btn_charge"
+            android:padding="2dp" />
 
     </LinearLayout>
 

@@ -19,7 +19,7 @@
     <string name="tb_action_bool_one_on">End Incap</string>
     <string name="tb_action_bool_two_disabled">Charge Attempted</string>
     <string name="btn_charge">New Charge Attempt…</string>
-    <string name="btn_charged">Charge Attempted</string>
+    <string name="btn_charged">Charge Attempted\n%1$s</string>
     <string name="btn_undo">Undo</string>
     <string name="btn_redo">Redo</string>
     <string name="btn_plus">+</string>

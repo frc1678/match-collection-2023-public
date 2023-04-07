@@ -99,3 +99,11 @@ class Constants {
         OVERRIDE
     }
 }
+
+fun Constants.ChargeLevel.translate() = when (this) {
+    Constants.ChargeLevel.N -> "None"
+    Constants.ChargeLevel.F -> "Failed"
+    Constants.ChargeLevel.P -> "Parked"
+    Constants.ChargeLevel.D -> "Docked"
+    Constants.ChargeLevel.E -> "Engaged"
+}
