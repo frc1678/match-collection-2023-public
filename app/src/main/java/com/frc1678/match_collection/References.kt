@@ -43,7 +43,6 @@ var serialNumber: String? = ""
 var matchNumber: Int = 0
 var allianceColor: Constants.AllianceColor = Constants.AllianceColor.NONE
 var timestamp: Long = 0
-var matchCollectionVersionNumber: String = "1.0.0"
 var scoutName: String = Constants.NONE_VALUE
 
 // Data specific to Objective Match Collection QR.

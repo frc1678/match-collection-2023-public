@@ -37,6 +37,7 @@
     <string name="btn_old_QRs_default">Old QRs</string>
     <string name="btn_scout_id_message">Scout ID: %1$s</string>
     <string name="tv_version_num">Version: %1$s</string>
+    <string name="tv_event_name">Event Key: %1$s</string>
     <string name="tv_time_display">%1$s - %2$s</string>
     <string name="final_auto_time">135</string>
     <string name="initial_teleop_time">134</string>
