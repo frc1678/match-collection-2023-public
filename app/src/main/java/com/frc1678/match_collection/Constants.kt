@@ -73,7 +73,8 @@ class Constants {
         SCORE_CONE_MID,
         SCORE_CONE_LOW,
         SCORE_FAIL,
-        INTAKE_STATION,
+        INTAKE_DOUBLE,
+        INTAKE_SINGLE,
         INTAKE_LOW_ROW,
         INTAKE_MID_ROW,
         INTAKE_HIGH_ROW,
@@ -85,7 +86,8 @@ class Constants {
         START_INCAP,
         END_INCAP,
         CHARGE_ATTEMPT,
-        TO_TELEOP
+        TO_TELEOP,
+        SUPERCHARGE
     }
 
     enum class Stage {

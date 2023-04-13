@@ -9,9 +9,7 @@ import android.widget.LinearLayout
 import android.widget.PopupWindow
 import androidx.fragment.app.Fragment
 import com.frc1678.match_collection.Constants.Companion.previousScreen
-import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_one
-import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_five
-import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.btn_action_row
+import kotlinx.android.synthetic.main.collection_objective_intake_fragment.view.*
 import kotlinx.android.synthetic.main.intake_popup.view.*
 
 /**
@@ -50,6 +48,7 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.text = getString(R.string.btn_action_one, numActionOne.toString())
             btn_action_five.text = getString(R.string.btn_action_three, numActionFive.toString())
+            btn_action_thirteen.text = getString(R.string.btn_action_thirteen, numActionThirteen.toString())
         }
     }
 
@@ -59,8 +58,15 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
     private fun initOnClicks() {
         if (mainView != null && activity != null) with(mainView!!) {
             btn_action_one.setOnClickListener {
-                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_STATION)
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_DOUBLE)
                 numActionOne++
+                collectionObjectiveActivity.scoringScreen = true
+                setCounterTexts()
+            }
+
+            btn_action_thirteen.setOnClickListener {
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.INTAKE_SINGLE)
+                numActionThirteen++
                 collectionObjectiveActivity.scoringScreen = true
                 setCounterTexts()
             }
@@ -133,11 +139,12 @@ class ObjectiveIntakeFragment : Fragment(R.layout.collection_objective_intake_fr
      */
     fun enableButtons(isIncap: Boolean) {
         if (mainView != null && activity != null) with(mainView!!) {
-            for (btn in listOf(btn_action_one, btn_action_row, btn_action_five)) {
+            for (btn in listOf(btn_action_one, btn_action_row, btn_action_five, btn_action_thirteen)) {
                 btn.isEnabled =
                     requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
                             requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
-                            !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap)
+                            !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap ||
+                                (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()))
             }
         }
     }

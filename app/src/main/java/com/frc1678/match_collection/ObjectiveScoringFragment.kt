@@ -6,13 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.frc1678.match_collection.Constants.Companion.previousScreen
-import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_ten
-import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_seven
-import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_six
-import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_eleven
-import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_nine
-import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_eight
-import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.btn_action_twelve
+import kotlinx.android.synthetic.main.collection_objective_scoring_fragment.view.*
 
 /**
  * [Fragment] used for showing the scoring buttons in [CollectionObjectiveActivity].
@@ -69,6 +63,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 numActionSix++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
+                collectionObjectiveActivity.enableButtons()
             }
 
             btn_action_seven.setOnClickListener {
@@ -76,6 +71,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 numActionSeven++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
+                collectionObjectiveActivity.enableButtons()
             }
 
             btn_action_eight.setOnClickListener {
@@ -83,6 +79,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 numActionEight++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
+                collectionObjectiveActivity.enableButtons()
             }
 
             btn_action_nine.setOnClickListener {
@@ -90,6 +87,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 numActionNine++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
+                collectionObjectiveActivity.enableButtons()
             }
 
             btn_action_ten.setOnClickListener {
@@ -97,6 +95,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 numActionTen++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
+                collectionObjectiveActivity.enableButtons()
             }
 
             btn_action_eleven.setOnClickListener {
@@ -104,6 +103,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 numActionEleven++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
+                collectionObjectiveActivity.enableButtons()
             }
 
             btn_action_twelve.setOnClickListener {
@@ -111,6 +111,13 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 numActionTwelve++
                 collectionObjectiveActivity.scoringScreen = false
                 setCounterTexts()
+                collectionObjectiveActivity.enableButtons()
+            }
+
+            btn_action_fourteen.setOnClickListener {
+                collectionObjectiveActivity.timelineAddWithStage(action_type = Constants.ActionType.SUPERCHARGE)
+                numActionFourteen++
+                collectionObjectiveActivity.enableButtons()
             }
         }
     }
@@ -128,14 +135,24 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                 btn_action_eight,
                 btn_action_nine,
                 btn_action_ten,
-                btn_action_eleven,
-                btn_action_twelve
+                btn_action_eleven
             )) {
                 btn.isEnabled =
                     requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
                             requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
                             !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap)
             }
+            btn_action_twelve.isEnabled =
+                requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+                    requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
+                    !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap ||
+                        (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()))
+            btn_action_fourteen.isEnabled =
+                requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
+                    requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
+                    !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap ||
+                        (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString())
+                            || !isTeleopActivated)
 
             // Disable scoring buttons if their count is at the max
             btn_action_six.isEnabled =
