@@ -37,24 +37,33 @@ class PreloadedFragment : Fragment(R.layout.preloaded_fragment) {
     private fun initOnClicks() {
         if (mainView != null && activity != null) with(mainView!!) {
             // Remove previous action from timeline when undo button is clicked.
-            btn_cone.setOnClickListener {
-                preloaded = Constants.Preloaded.O
-                setColors()
-                setScreen()
-            }
+            btn_cone.setOnLongClickListener(
+                View.OnLongClickListener {
+                    preloaded = Constants.Preloaded.O
+                    setColors()
+                    setScreen()
+                    return@OnLongClickListener true
+                }
+            )
 
             // Replace previously undone action to timeline when redo button is clicked.
-            btn_cube.setOnClickListener {
-                preloaded = Constants.Preloaded.U
-                setColors()
-                setScreen()
-            }
+            btn_cube.setOnLongClickListener(
+                View.OnLongClickListener {
+                    preloaded = Constants.Preloaded.U
+                    setColors()
+                    setScreen()
+                    return@OnLongClickListener true
+                }
+            )
 
-            btn_none.setOnClickListener {
-                preloaded = Constants.Preloaded.N
-                setColors()
-                setScreen()
-            }
+            btn_none.setOnLongClickListener(
+                View.OnLongClickListener {
+                    preloaded = Constants.Preloaded.N
+                    setColors()
+                    setScreen()
+                    return@OnLongClickListener true
+                }
+            )
         }
     }
 
