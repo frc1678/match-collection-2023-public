@@ -91,4 +91,5 @@
     <string name="cone">Cone</string>
     <string name="cube">Cube</string>
     <string name="none">None</string>
+    <string name="btn_playoffs">Playoffs</string>
 </resources>

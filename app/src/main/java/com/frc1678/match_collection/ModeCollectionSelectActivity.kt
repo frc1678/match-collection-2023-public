@@ -25,6 +25,9 @@ class ModeCollectionSelectActivity : CollectionActivity() {
             collectionMode = Constants.ModeSelection.SUBJECTIVE
             startMatchInformationInputActivity()
         }
+        btn_playoff_select.setOnClickListener {
+            startActivity(Intent(this, PlayoffActivity::class.java))
+        }
     }
 
     // Create the intent to start the respective mode activity.
