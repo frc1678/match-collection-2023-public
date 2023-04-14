@@ -51,7 +51,7 @@
             android:autoSizeTextType="uniform"
             android:background="@drawable/tb_charge_selector"
             android:text="@string/btn_charge"
-            android:padding="2dp" />
+            android:padding="5dp" />
 
     </LinearLayout>
 
