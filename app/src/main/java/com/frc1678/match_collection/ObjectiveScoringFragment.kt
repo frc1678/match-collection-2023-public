@@ -150,7 +150,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
             btn_action_fourteen.isEnabled =
                 requireActivity().previousScreen == Constants.Screens.MATCH_INFORMATION_EDIT ||
                     requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
-                    !(!collectionObjectiveActivity.isTimerRunning || popupOpen || isIncap ||
+                    !(popupOpen || isIncap ||
                         (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString())
                             || !isTeleopActivated)
 
