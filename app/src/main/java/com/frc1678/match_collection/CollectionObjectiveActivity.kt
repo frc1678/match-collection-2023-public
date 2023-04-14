@@ -438,14 +438,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
          */
         btn_charge.isEnabled = (
                 (
-                        isTimerRunning && !popupOpen && (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() != Constants.ActionType.SUPERCHARGE.toString()) &&
+                        isTimerRunning && !popupOpen &&
                                 !(isTeleopActivated && didTeleCharge) && !(!isTeleopActivated && didAutoCharge)
                         )
                         || (isMatchTimeEnded && !didTeleCharge && !popupOpen &&
-                        (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() != Constants.ActionType.SUPERCHARGE.toString()) &&
                         !(!isTeleopActivated && didAutoCharge))
                 )
-
+        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()) {
+            btn_charge.isEnabled = false
+        }
         /**
          * Sets the text of the charge button to New Charge Attempt... or Charge Attempted depending
          * on if the robot has charged or not
@@ -497,6 +498,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
             )
             && !popupOpen
         )
+        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()) {
+            btn_proceed_edit.isEnabled = false
+        }
 
         // Sets the proceed button text to "To Teleop" if it's auto and otherwise sets it to "Proceed"
         btn_proceed_edit.text = (

@@ -39,14 +39,14 @@
         <Button
             android:id="@+id/btn_action_thirteen"
             style="@style/btn_action"
-            android:layout_weight="1.3"
+            android:layout_weight="0.7"
             android:background="@drawable/btn_action_selector_single"
             android:text="@string/btn_action_thirteen" />
 
         <Button
             android:id="@+id/btn_action_five"
             style="@style/btn_action"
-            android:layout_weight="0.7"
+            android:layout_weight="1.3"
             android:background="@drawable/btn_action_selector_ground"
             android:text="@string/btn_action_three" />
 

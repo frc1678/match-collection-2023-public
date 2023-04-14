@@ -32,10 +32,10 @@
     <color name="action_blue_pressed">#7DBCC5</color>
     <color name="action_red">#EF6868</color>
     <color name="action_red_pressed">#ED8280</color>
-    <color name="action_green">#68FF6F</color>
-    <color name="action_green_pressed">#ACFF80</color>
-    <color name="action_pink">#CA2A7D</color>
-    <color name="action_pink_pressed">#C57DA2</color>
+    <color name="action_green">#5FC863</color>
+    <color name="action_green_pressed">#8AD364</color>
+    <color name="action_pink">#DD7FB0</color>
+    <color name="action_pink_pressed">#EF9EC7</color>
 
     <color name="proceed_blue">#2AF5FF</color>
     <color name="proceed_blue_border">#23C9D1</color>
