@@ -260,13 +260,15 @@ class MatchInformationEditActivity : MatchInformationActivity() {
             }
         }
 
-        blueToggleButton.setOnClickListener {
+        blueToggleButton.setOnLongClickListener {
             allianceColor = Constants.AllianceColor.BLUE
             switchBorderToBlueToggle()
+            return@setOnLongClickListener true
         }
-        redToggleButton.setOnClickListener {
+        redToggleButton.setOnLongClickListener {
             allianceColor = Constants.AllianceColor.RED
             switchBorderToRedToggle()
+            return@setOnLongClickListener true
         }
     }
 
