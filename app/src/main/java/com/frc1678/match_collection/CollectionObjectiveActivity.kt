@@ -430,14 +430,13 @@ class CollectionObjectiveActivity : CollectionActivity() {
          * Sets the text of the charge button to New Charge Attempt... or Charge Attempted depending
          * on if the robot has charged or not
          */
-        btn_charge.text = (
-            if (((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge))) {
-                getString(R.string.btn_charged)
-            }
-            else {
+        btn_charge.text =
+            if ((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge)) {
+                val chargeLevel = if (isTeleopActivated) teleChargeLevel else autoChargeLevel
+                getString(R.string.btn_charged, chargeLevel.translate())
+            } else {
                 getString(R.string.btn_charge)
             }
-        )
 
         /**
          * If no actions have been made, it sets the frame to the preloaded fragment

@@ -37,11 +37,11 @@ class UndoRedoFragment : Fragment(R.layout.undo_redo_fragment) {
                 undoText
             } else {
                 // Uses \n to put the action name on a newline
-                "$undoText\n${
-                    timeline.last()["action_type"]?.split('_')?.joinToString(" ") {
-                        it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
-                    }
-                }"
+                "$undoText\n" + timeline.last()["action_type"]?.split('_')?.joinToString(" ") {
+                    it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
+                } + if (timeline.last()["action_type"] == Constants.ActionType.CHARGE_ATTEMPT.toString()) {
+                    " (${(if (isTeleopActivated) teleChargeLevel else autoChargeLevel).translate()})"
+                } else ""
             }
             // Get the "Redo" text
             val redoText = resources.getText(R.string.btn_redo)
@@ -50,13 +50,14 @@ class UndoRedoFragment : Fragment(R.layout.undo_redo_fragment) {
                 redoText
             } else {
                 // Uses \n to put the action name on a newline
-                "$redoText\n${
-                    collectionObjectiveActivity.removedTimelineActions.last()["action_type"]?.split(
-                        '_'
-                    )?.joinToString(" ") {
+                "$redoText\n" + collectionObjectiveActivity.removedTimelineActions.last()["action_type"]
+                    ?.split('_')?.joinToString(" ") {
                         it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
-                    }
-                }"
+                    } + if (collectionObjectiveActivity.removedTimelineActions.last()["action_type"]
+                    == Constants.ActionType.CHARGE_ATTEMPT.toString()
+                ) {
+                    " (${(if (isTeleopActivated) prevTeleChargeLevel else prevAutoChargeLevel).translate()})"
+                } else ""
             }
         }
     }
