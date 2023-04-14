@@ -53,6 +53,13 @@ class PlayoffActivity : ComponentActivity() {
                 mutableStateOf(List(3) { List(3) { List(3) { null } } })
             }
 
+            /**
+             * Function to set a game piece for the specific location
+             * @param x the x coordinate
+             * @param y the y coordinate
+             * @param z the z coordinate
+             * @param gamePiece the game piece to set
+             */
             fun setGamePiece(x: Int, y: Int, z: Int, gamePiece: GamePiece?) {
                 scoringLocation = scoringLocation.run {
                     val state = this.toMutableList()
@@ -68,9 +75,6 @@ class PlayoffActivity : ComponentActivity() {
             /**
              * Gets the next gamepiece in the cycle.
              * @param gamePiece The current game piece.
-             * @param grid The row of the game piece.
-             * @param row The row of the game piece.
-             * @param column The column of the game piece.
              */
             fun getNextGamePiece(gamePiece: GamePiece?): GamePiece? {
                 return when (gamePiece) {
@@ -196,9 +200,6 @@ class PlayoffActivity : ComponentActivity() {
                                     )
                                 }
                             }
-                        }
-                        Row {
-
                         }
                     }
                 }
