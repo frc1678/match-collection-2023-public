@@ -775,7 +775,7 @@ class MatchInformationInputActivity : MatchInformationActivity() {
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
 
         et_match_number.setText(retrieveFromStorage(context = this, key = "match_number"))
-        tv_version_number.text = getString(R.string.tv_version_num, matchCollectionVersionNumber)
+        tv_version_number.text = getString(R.string.tv_version_num, Constants.VERSION_NUMBER)
 
         serialNumber = getSerialNum(context = this)
 

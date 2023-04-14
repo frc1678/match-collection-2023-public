@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Environment
 import androidx.core.app.ActivityCompat
 import com.frc1678.match_collection.Constants.Companion.PREVIOUS_SCREEN
+import kotlinx.android.synthetic.main.match_information_input_activity_objective.*
 import kotlinx.android.synthetic.main.mode_collection_select_activity.*
 import java.io.File
 
@@ -115,6 +116,8 @@ class ModeCollectionSelectActivity : CollectionActivity() {
             }
             startMatchInformationInputActivity()
         }
+        tv_version_number_mode_select.text = getString(R.string.tv_version_num, Constants.VERSION_NUMBER)
+        tv_event_name.text = getString(R.string.tv_event_name, Constants.EVENT_KEY)
         initButtonOnClicks()
     }
 }

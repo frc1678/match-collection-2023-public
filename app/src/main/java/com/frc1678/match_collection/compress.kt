@@ -68,7 +68,7 @@ fun compress(
                 compressSerialNumber + serialNumber + genericSeparator +
                 compressMatchNumber + matchNumber + genericSeparator +
                 compressTimestamp + timestamp + genericSeparator +
-                compressVersionNum + matchCollectionVersionNumber + genericSeparator +
+                compressVersionNum + Constants.VERSION_NUMBER + genericSeparator +
                 compressScoutName + scoutName.toUpperCase(Locale.US) + genericSeparator +
                 compressAllianceColor + if (allianceColor == Constants.AllianceColor.RED) "TRUE" else "FALSE"
 
