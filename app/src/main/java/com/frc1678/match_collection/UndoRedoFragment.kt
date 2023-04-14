@@ -40,7 +40,7 @@ class UndoRedoFragment : Fragment(R.layout.undo_redo_fragment) {
                 "$undoText\n" + timeline.last()["action_type"]?.split('_')?.joinToString(" ") {
                     it.lowercase().replaceFirstChar { char -> char.uppercaseChar() }
                 } + if (timeline.last()["action_type"] == Constants.ActionType.CHARGE_ATTEMPT.toString()) {
-                    "\n" + (if (isTeleopActivated) teleChargeLevel else autoChargeLevel).translate()
+                    " (${(if (isTeleopActivated) teleChargeLevel else autoChargeLevel).translate()})"
                 } else ""
             }
             // Get the "Redo" text
@@ -56,7 +56,7 @@ class UndoRedoFragment : Fragment(R.layout.undo_redo_fragment) {
                     } + if (collectionObjectiveActivity.removedTimelineActions.last()["action_type"]
                     == Constants.ActionType.CHARGE_ATTEMPT.toString()
                 ) {
-                    "\n" + (if (isTeleopActivated) prevTeleChargeLevel else prevAutoChargeLevel).translate()
+                    " (${(if (isTeleopActivated) prevTeleChargeLevel else prevAutoChargeLevel).translate()})"
                 } else ""
             }
         }
