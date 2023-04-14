@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 
 // File to store information to be used to create the final match information map.
-var numActionOne = 0 //INTAKE_STATION
+var numActionOne = 0 //INTAKE_DOUBLE
 var numActionTwo = 0 //INTAKE_HIGH_ROW
 var numActionThree = 0 //INTAKE_MID_ROW
 var numActionFour = 0 //INTAKE_LOW_ROW
@@ -19,6 +19,8 @@ var numActionNine = 0 //SCORE_CONE_HIGH
 var numActionTen = 0 //SCORE_CONE_MID
 var numActionEleven = 0 //SCORE_CONE_LOW
 var numActionTwelve = 0 //SCORE_FAIL
+var numActionThirteen = 0 //INTAKE_SINGLE
+var numActionFourteen = 0 //SUPERCHARGE
 
 var autoIntakeGamePieceOne = 0
 var autoIntakeGamePieceTwo = 0
@@ -80,6 +82,8 @@ fun resetCollectionReferences() {
     numActionTen = 0
     numActionEleven = 0
     numActionTwelve = 0
+    numActionThirteen = 0
+    numActionFourteen = 0
     autoIntakeGamePieceOne = 0
     autoIntakeGamePieceTwo = 0
     autoIntakeGamePieceThree = 0

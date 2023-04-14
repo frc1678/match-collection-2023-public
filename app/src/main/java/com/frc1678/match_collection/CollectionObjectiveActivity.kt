@@ -172,7 +172,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                     scoringScreen = false
                 }
 
-                Constants.ActionType.INTAKE_STATION.toString() -> {
+                Constants.ActionType.INTAKE_DOUBLE.toString() -> {
                     numActionOne--
                     scoringScreen = false
                 }
@@ -230,6 +230,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 Constants.ActionType.SCORE_FAIL.toString() -> {
                     numActionTwelve--
                     scoringScreen = true
+                }
+
+                Constants.ActionType.INTAKE_SINGLE.toString() -> {
+                    numActionThirteen--
+                    scoringScreen = false
+                }
+
+                Constants.ActionType.SUPERCHARGE.toString() -> {
+                    numActionFourteen--
                 }
 
                 Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
@@ -296,7 +305,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 scoringScreen = true
             }
 
-            Constants.ActionType.INTAKE_STATION.toString() -> {
+            Constants.ActionType.INTAKE_DOUBLE.toString() -> {
                 numActionOne++
                 scoringScreen = true
             }
@@ -356,6 +365,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 scoringScreen = false
             }
 
+            Constants.ActionType.INTAKE_SINGLE.toString() -> {
+                numActionThirteen++
+                scoringScreen = true
+            }
+
+            Constants.ActionType.SUPERCHARGE.toString() -> {
+                numActionFourteen++
+            }
+
             Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
                 if (isTeleopActivated) {
                     didTeleFail = prevTeleChargeLevel == Constants.ChargeLevel.F
@@ -411,7 +429,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
         }
 
         // Enables the incap toggle button if teleop is activated, a popup isn't open, the robot hasn't charged, and the match hasn't ended
-        tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isMatchTimeEnded
+        tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isMatchTimeEnded && (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() != Constants.ActionType.SUPERCHARGE.toString())
 
         /**
          * Enables charge button during the match if the robot isn't incap and a popup isn't open
@@ -420,12 +438,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
          */
         btn_charge.isEnabled = (
                 (
-                        isTimerRunning && !popupOpen  &&
+                        isTimerRunning && !popupOpen &&
                                 !(isTeleopActivated && didTeleCharge) && !(!isTeleopActivated && didAutoCharge)
                         )
-                        || (isMatchTimeEnded && !didTeleCharge && !popupOpen && !(!isTeleopActivated && didAutoCharge))
+                        || (isMatchTimeEnded && !didTeleCharge && !popupOpen &&
+                        !(!isTeleopActivated && didAutoCharge))
                 )
-
+        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()) {
+            btn_charge.isEnabled = false
+        }
         /**
          * Sets the text of the charge button to New Charge Attempt... or Charge Attempted depending
          * on if the robot has charged or not
@@ -476,6 +497,9 @@ class CollectionObjectiveActivity : CollectionActivity() {
             )
             && !popupOpen
         )
+        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()) {
+            btn_proceed_edit.isEnabled = false
+        }
 
         // Sets the proceed button text to "To Teleop" if it's auto and otherwise sets it to "Proceed"
         btn_proceed_edit.text = (
@@ -783,12 +807,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
             if (preloaded != Constants.Preloaded.N) {
                 scoringScreen = (numActionOne + numActionTwo + numActionThree + numActionFour +
                         numActionFive + numActionSix + numActionSeven + numActionEight + numActionNine
-                        + numActionTen + numActionEleven + numActionTwelve + autoIntakeGamePieceOne
+                        + numActionTen + numActionEleven + numActionTwelve + numActionThirteen + autoIntakeGamePieceOne
                         + autoIntakeGamePieceTwo + autoIntakeGamePieceThree + autoIntakeGamePieceFour) % 2 == 0
             } else {
                 scoringScreen = (numActionOne + numActionTwo + numActionThree + numActionFour +
                         numActionFive + numActionSix + numActionSeven + numActionEight + numActionNine
-                        + numActionTen + numActionEleven + numActionTwelve + autoIntakeGamePieceOne
+                        + numActionTen + numActionEleven + numActionTwelve + numActionThirteen + autoIntakeGamePieceOne
                         + autoIntakeGamePieceTwo + autoIntakeGamePieceThree + autoIntakeGamePieceFour) % 2 != 0
             }
         }

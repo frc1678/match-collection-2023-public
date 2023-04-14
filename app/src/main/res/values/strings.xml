@@ -5,7 +5,7 @@
     <string name="low_label">Low</string>
     <string name="high_label">High</string>
     <string name="btn_timer_start">Start Match</string>
-    <string name="btn_action_one">Intake Station - %1$s</string>
+    <string name="btn_action_one">Intake Double Station - %1$s</string>
     <string name="btn_action_two">Intake Row</string>
     <string name="btn_action_three">Intake Ground - %1$s</string>
     <string name="btn_action_four">High Cube - %1$s</string>
@@ -15,6 +15,8 @@
     <string name="btn_action_eight">Mid Cone - %1$s</string>
     <string name="btn_action_nine">Low Cone - %1$s</string>
     <string name="btn_action_ten">Failed - %1$s</string>
+    <string name="btn_action_thirteen">Intake Single Station - %1$s</string>
+    <string name="btn_action_fourteen">Supercharge</string>
     <string name="tb_action_bool_one_off">Start Incap</string>
     <string name="tb_action_bool_one_on">End Incap</string>
     <string name="tb_action_bool_two_disabled">Charge Attempted</string>
