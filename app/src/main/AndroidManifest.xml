@@ -52,6 +52,9 @@
         <activity
             android:name="com.frc1678.match_collection.StartingGamePieceActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.frc1678.match_collection.PlayoffActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -27,4 +27,16 @@
         android:layout_height="match_parent"
         android:text="@string/btn_subjective_collection_select" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/very_very_small"
+        android:layout_margin="@dimen/small"
+        android:background="@color/black" />
+
+    <Button
+        android:id="@+id/btn_playoff_select"
+        style="@style/btn_white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/btn_playoffs" />
 </LinearLayout>
