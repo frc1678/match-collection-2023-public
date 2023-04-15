@@ -1,6 +1,4 @@
-Adelia Biello
 Alison Lin
-Andy Zhang
 Annemarie Spiller
 Annika Larsen
 Aunish Barua
@@ -9,7 +7,6 @@ Daniel Qeli
 Edwin Chang
 Enzo Saraniti
 Eshel Dror
-Henry Marsom
 Hiroshi Griffin
 Jackson Friend
 Jasmine Gomes
@@ -18,13 +15,18 @@ Kathy Li
 Mason Ruiz
 Mason Terrazas
 Michael Jao
+Nathan Mills
 Noah Mannion
+Olivia Niemela
+Owen Watkins
+Rafael Sandoval
 Rohaan Sandhu
 Sabrina Parsons
 Sebastian Waters
 Soren Reisman
 Tiffany Chan
 Vienna Zhang
+Zoe Wang
 Backup 1
 Backup 2
 Backup 3
