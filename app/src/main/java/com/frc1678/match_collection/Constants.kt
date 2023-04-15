@@ -11,7 +11,7 @@ class Constants {
         const val COMPRESSED_QR_TAG = "QR"
         const val PREVIOUS_SCREEN = "previous_screen"
         const val VERSION_NUMBER = "1.0.0"
-        const val EVENT_KEY = "2023cmptx"
+        const val EVENT_KEY = "2023gal"
 
         /**
          * The previous activity that was visited before this one. This is found by looking for the
