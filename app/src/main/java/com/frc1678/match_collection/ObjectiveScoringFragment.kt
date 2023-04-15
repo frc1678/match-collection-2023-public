@@ -152,7 +152,7 @@ class ObjectiveScoringFragment : Fragment(R.layout.collection_objective_scoring_
                     requireActivity().previousScreen == Constants.Screens.QR_GENERATE ||
                     !(popupOpen || isIncap ||
                         (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString())
-                            || !isTeleopActivated)
+                        || !collectionObjectiveActivity.isTimerRunning)
 
             // Disable scoring buttons if their count is at the max
             btn_action_six.isEnabled =
