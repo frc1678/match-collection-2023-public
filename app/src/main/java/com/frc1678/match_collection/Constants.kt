@@ -10,7 +10,7 @@ class Constants {
         const val NUMBER_OF_ACTIVE_SCOUTS: Int = 18
         const val COMPRESSED_QR_TAG = "QR"
         const val PREVIOUS_SCREEN = "previous_screen"
-        const val VERSION_NUMBER = "1.0.0"
+        const val VERSION_NUMBER = "1.0.1"
         const val EVENT_KEY = "2023gal"
 
         /**
