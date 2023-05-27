@@ -1,4 +1,4 @@
-// Copyright (c) 2019 FRC Team 1678: Citrus Circuits
+// Copyright (c) 2023 FRC Team 1678: Citrus Circuits
 package com.frc1678.match_collection
 
 import android.app.ActivityOptions
@@ -18,20 +18,23 @@ import kotlinx.android.synthetic.main.subjective_ranking_counter.view.btn_minus
 import kotlinx.android.synthetic.main.subjective_ranking_counter.view.btn_plus
 import kotlinx.android.synthetic.main.subjective_ranking_counter_panel.*
 
-// Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
+/**
+ * Activity for Subjective Match Collection to scout the subjective gameplay of an alliance team in a match.
+ */
 class CollectionSubjectiveActivity : CollectionActivity() {
     private lateinit var panelOne: SubjectiveRankingCounterPanel
     private lateinit var panelTwo: SubjectiveRankingCounterPanel
     private lateinit var panelThree: SubjectiveRankingCounterPanel
-
     private lateinit var panelList: ArrayList<SubjectiveRankingCounterPanel>
 
     private lateinit var teamNumberOne: String
     private lateinit var teamNumberTwo: String
     private lateinit var teamNumberThree: String
+
     private var teamOneDefense: Boolean = false
     private var teamTwoDefense: Boolean = false
     private var teamThreeDefense: Boolean = false
+
     private var teamOneTippy: Boolean = false
     private var teamTwoTippy: Boolean = false
     private var teamThreeTippy: Boolean = false
@@ -50,14 +53,18 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             }
         }
 
-    // Finds the teams that are playing in that match
+    /**
+     * Finds the teams that are playing in that match
+     */
     private fun getExtras() {
         teamNumberOne = intent.extras?.getString("team_one").toString()
         teamNumberTwo = intent.extras?.getString("team_two").toString()
         teamNumberThree = intent.extras?.getString("team_three").toString()
     }
 
-    // Creates a list of teams ranked by a specific robot gameplay characteristic.
+    /**
+     * Creates a list of teams ranked by a specific robot gameplay characteristic.
+     */
     private fun recordRankingData(dataName: String): SubjectiveTeamRankings {
         val panelOneData = panelOne.rankingData[dataName]
         val panelTwoData = panelTwo.rankingData[dataName]
@@ -69,7 +76,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
         )
     }
 
-    // Creates an ArrayList containing the teams that played defense during the match.
+    /**
+     * Creates an ArrayList containing the teams that played defense during the match.
+     */
     private val defenseToggleData: ArrayList<String>
         get() {
             val tempToggleList = arrayListOf<String>()
@@ -90,7 +99,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             return tempToggleList
         }
 
-    // Creates an Arraylist containing the teams that were tippy during the match.
+    /**
+     * Creates an Arraylist containing the teams that were tippy during the match.
+     */
     private val tippyToggleData: ArrayList<String>
         get() {
             val tempToggleList = arrayListOf<String>()
@@ -110,7 +121,9 @@ class CollectionSubjectiveActivity : CollectionActivity() {
             return tempToggleList
         }
 
-    // Initiate subjective_ranking_counter panels for the three teams.
+    /**
+     * Initiate subjective_ranking_counter panels for the three teams.
+     */
     private fun initPanels() {
         panelOne =
             supportFragmentManager.findFragmentById(R.id.robotOne) as SubjectiveRankingCounterPanel
