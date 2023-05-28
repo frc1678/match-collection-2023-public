@@ -1,4 +1,4 @@
-// Copyright (c) 2019 FRC Team 1678: Citrus Circuits
+// Copyright (c) 2023 FRC Team 1678: Citrus Circuits
 package com.frc1678.match_collection
 
 import android.app.ActivityOptions
@@ -38,9 +38,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
     var scoringScreen = true
         set(value) {
             field = value
-            /** Set the current fragment to scoring or intake depending on the new value,if teleop is activated set intakePanel
-             * If auto, set intake auto panel
-             */
+            /* Set the current fragment to scoring or intake depending on the new value,
+            if teleop is activated set intakePanel. If auto, set intakeAutoPanel */
             supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame,
                 if (value) {
                     scoringPanel
@@ -96,8 +95,7 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
     /**
      * Set timer to start match when timer is started or reset.
-     * Resets all actions
-     * Resets the timeline
+     * Resets all actions and resets the timeline
      */
     private fun timerReset() {
         resetCollectionReferences()
@@ -144,14 +142,11 @@ class CollectionObjectiveActivity : CollectionActivity() {
      * Remove previously inputted action from timeline.
      */
     fun timelineRemove() {
-        /**
-         *    Decrement action values displayed on action counters.
-          */
+        //Decrement action values displayed on action counters.
         if (timeline.size>0) {
             when (timeline[timeline.size - 1]["action_type"].toString()) {
-                /**
-                 * Removes auto intake and scoring screen in timeline for specific game piece when undo button is used
-                 */
+                /* Removes auto intake and scoring screen in timeline for specific
+                game piece when undo button is used */
                 Constants.ActionType.AUTO_INTAKE_ONE.toString() -> {
                     autoIntakeGamePieceOne = 0
                     scoringScreen = false
@@ -243,13 +238,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
 
                 Constants.ActionType.CHARGE_ATTEMPT.toString() -> {
                     if (isTeleopActivated) {
-                        if ((prevTeleChargeLevel == Constants.ChargeLevel.F) || (teleChargeLevel == Constants.ChargeLevel.N)) {
+                        if ((prevTeleChargeLevel == Constants.ChargeLevel.F) ||
+                            (teleChargeLevel == Constants.ChargeLevel.N)) {
                             didTeleFail = false
                         }
                         didTeleCharge = false
                         teleChargeLevel = Constants.ChargeLevel.N
                     } else {
-                        if ((prevAutoChargeLevel == Constants.ChargeLevel.F) || (autoChargeLevel == Constants.ChargeLevel.N)) {
+                        if ((prevAutoChargeLevel == Constants.ChargeLevel.F) ||
+                            (autoChargeLevel == Constants.ChargeLevel.N)) {
                             didAutoFail = false
                         }
                         didAutoCharge = false
@@ -402,20 +399,13 @@ class CollectionObjectiveActivity : CollectionActivity() {
     }
 
     /**
-     * Updates the text on the undo and redo buttons based on the timeline actions to be undone or
-     * redone.
-     */
-
-    /**
-     * Enable and disable buttons based on actions in timeline and timer stage. If in teleop, enable intake panel,
-     * if teleop is not activated, enable intake auto panel
+     * Enable and disable buttons based on actions in timeline and timer stage. If in teleop, enable [intakePanel];
+     * if teleop is not activated, enable [intakeAutoPanel]
      */
     fun enableButtons() {
-        /**
-         * During teleop,
-         * When the intake screen is open it enables and disables the appropriate  buttons on the intakePanel
-         * Otherwise, if the scoring screen is enables and disables the appropriate  buttons on the scoringPanel
-         */
+        /* During teleop, when the intake screen is open it enables and disables the appropriate
+        buttons on the intakePanel. Otherwise, if the scoring screen is enables and disables the
+        appropriate buttons on the scoringPanel */
 
         if (!scoringScreen) {
             if(isTeleopActivated) {
@@ -428,14 +418,15 @@ class CollectionObjectiveActivity : CollectionActivity() {
             intake_header.text = "Scoring"
         }
 
-        // Enables the incap toggle button if teleop is activated, a popup isn't open, the robot hasn't charged, and the match hasn't ended
-        tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isMatchTimeEnded && (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() != Constants.ActionType.SUPERCHARGE.toString())
+        /* Enables the incap toggle button if teleop is activated, a popup isn't open, the
+        robot hasn't charged, and the match hasn't ended */
+        tb_action_one.isEnabled = isTeleopActivated && !popupOpen && !isMatchTimeEnded &&
+                (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString()
+                        != Constants.ActionType.SUPERCHARGE.toString())
 
-        /**
-         * Enables charge button during the match if the robot isn't incap and a popup isn't open
-         * And the robot did not charge during tele and didn't charge during auto
-         * Or if the match is over and the robot didn't charge during auto or teleop and a popup isn't open
-         */
+        /* Enables charge button during the match if the robot isn't incap, a popup isn't open,
+        and the robot did not charge during tele and didn't charge during auto, or if the match is
+        over and the robot didn't charge during auto or teleop and a popup isn't open */
         btn_charge.isEnabled = (
                 (
                         isTimerRunning && !popupOpen &&
@@ -444,13 +435,12 @@ class CollectionObjectiveActivity : CollectionActivity() {
                         || (isMatchTimeEnded && !didTeleCharge && !popupOpen &&
                         !(!isTeleopActivated && didAutoCharge))
                 )
-        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()) {
+        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() ==
+            Constants.ActionType.SUPERCHARGE.toString()) {
             btn_charge.isEnabled = false
         }
-        /**
-         * Sets the text of the charge button to New Charge Attempt... or Charge Attempted depending
-         * on if the robot has charged or not
-         */
+        /* Sets the text of the charge button to "New Charge Attempt..." or "Charge Attempted"
+        depending on if the robot has charged or not */
         btn_charge.text =
             if ((isTeleopActivated && didTeleCharge) || (!isTeleopActivated && didAutoCharge)) {
                 val chargeLevel = if (isTeleopActivated) teleChargeLevel else autoChargeLevel
@@ -459,10 +449,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 getString(R.string.btn_charge)
             }
 
-        /**
-         * If no actions have been made, it sets the frame to the preloaded fragment
-         * If an action is made, it sets the frame to the undo/redo fragment
-         */
+        /* If no actions have been made, it sets the frame to the preloaded fragment.
+        If an action is made, it sets the frame to the undo/redo fragment */
 
         if(timeline.size > 0) {
             supportFragmentManager.beginTransaction().replace(R.id.undo_redo_btn_frame,
@@ -497,7 +485,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             )
             && !popupOpen
         )
-        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() == Constants.ActionType.SUPERCHARGE.toString()) {
+        if (timeline.size > 0 && timeline[timeline.size - 1]["action_type"].toString() ==
+            Constants.ActionType.SUPERCHARGE.toString()) {
             btn_proceed_edit.isEnabled = false
         }
 
@@ -538,20 +527,20 @@ class CollectionObjectiveActivity : CollectionActivity() {
                 btn_timer.isEnabled = false
                 objective_match_collection_layout.setBackgroundColor(Color.WHITE)
 
-                /**
-                 * If you are in the ObjectiveAutoIntakeFragment screen switches you to the ObjectiveIntakeFragment
-                 */
+                /* If you are in the ObjectiveAutoIntakeFragment screen
+                switches you to the ObjectiveIntakeFragment */
                 if (!scoringScreen) {
                     supportFragmentManager.beginTransaction().replace(R.id.action_btn_frame, intakePanel).commit()
                 }
             }
             else {
                 endAction()
-                val intent = Intent(this, MatchInformationEditActivity::class.java).putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE)
-                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this, btn_proceed_edit, "proceed_button").toBundle())
+                val intent = Intent(this, MatchInformationEditActivity::class.java)
+                    .putExtra(PREVIOUS_SCREEN, Constants.Screens.COLLECTION_OBJECTIVE)
+                startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this,
+                    btn_proceed_edit, "proceed_button").toBundle())
             }
         }
-
 
         // Start timer on normal click if timer is not running.
         btn_timer.setOnClickListener {
@@ -618,7 +607,8 @@ class CollectionObjectiveActivity : CollectionActivity() {
             if (!isTeleopActivated) {
                 popupView.btn_parked.isVisible = false
             }
-            popupView.btn_failed.isVisible = !((!isTeleopActivated && didAutoFail) || (isTeleopActivated && didTeleFail))
+            popupView.btn_failed.isVisible =
+                !((!isTeleopActivated && didAutoFail) || (isTeleopActivated && didTeleFail))
             timelineAdd(matchTime, Constants.ActionType.CHARGE_ATTEMPT)
             enableButtons()
 
